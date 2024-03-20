@@ -1,7 +1,7 @@
 
 
 
-# Preface
+# Prologue
 
 Welcome to [340.600](https://publichealth.jhu.edu/course/38901) Stata Programming I (Basic)  
 
