@@ -1,6 +1,7 @@
 # Book settings
 # Learn more at https://jupyterbook.org/customize/config.html
 
+copyright: "2024"
 title: Stata Programming
 author: Abimereki Muzaale
 logo: https://brand.jhu.edu/assets/uploads/sites/5/2014/06/university_logo_small_vertical_blue.png
