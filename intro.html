@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Welcome to your Jupyter Book &#8212; My sample book</title>
+    <title>Preface &#8212; Stata Programming</title>
   
   
   
@@ -64,7 +64,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'intro';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Markdown Files" href="markdown.html" />
+    <link rel="next" title="1. Overview, commands, syntax" href="chapter1.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -140,8 +140,8 @@ const thebe_selector_output = ".output, .cell_output"
       
     
     
-    <img src="_static/logo.png" class="logo__image only-light" alt="Logo image"/>
-    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+    <img src="https://brand.jhu.edu/assets/uploads/sites/5/2014/06/university_logo_small_vertical_blue.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="https://brand.jhu.edu/assets/uploads/sites/5/2014/06/university_logo_small_vertical_blue.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
   
   
 </a></div>
@@ -151,14 +151,17 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1 current active">
                 <a class="reference internal" href="#">
-                    Welcome to your Jupyter Book
+                    Preface
                 </a>
             </li>
         </ul>
         <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="markdown.html">Markdown Files</a></li>
-<li class="toctree-l1"><a class="reference internal" href="notebooks.html">Content with notebooks</a></li>
-<li class="toctree-l1"><a class="reference internal" href="markdown-notebooks.html">Notebooks with MyST Markdown</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter1.html">1. Overview, commands, syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter2.html">2. Return values, macros, programs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter3.html">3. Loops and program syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter4.html">4. Advanced file management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter5.html">5. Graphs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickrefs.html">Quick References</a></li>
 </ul>
 
     </div>
@@ -329,7 +332,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -340,11 +345,19 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Welcome to your Jupyter Book</h1>
+    <h1>Preface</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#table-of-contents">Table of contents</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -354,20 +367,46 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="welcome-to-your-jupyter-book">
-<h1>Welcome to your Jupyter Book<a class="headerlink" href="#welcome-to-your-jupyter-book" title="Permalink to this heading">#</a></h1>
-<p>This is a small sample book to give you a feel for how book content is
-structured.
-It shows off a few of the major file types, as well as some sample content.
-It does not go in-depth into any particular topic - check out <a class="reference external" href="https://jupyterbook.org">the Jupyter Book documentation</a> for more information.</p>
-<p>Check out the content pages bundled with this sample book to see more.</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="preface">
+<h1>Preface<a class="headerlink" href="#preface" title="Permalink to this heading">#</a></h1>
+<p>Welcome to the <a class="reference external" href="https://www.jhsph.edu/courses/course/36824/2023/340.600.11/stata-programming">340.600</a> Summer Institute Course in Stata Programming!</p>
+<p>This class will be offered in a hybrid-format to cater to both those who will be in-person at the Bloomberg School Wolfe <strong>E2014</strong> (Sommer Hall) and those who will be joining us virtually (Zoom <a class="reference external" href="https://jhjhm.zoom.us/j/98481767907">link</a>). In-person attendees are encouraged to also log into zoom, which allows students to share code and to collectively <code class="docutils literal notranslate"><span class="pre">debug</span></code>. Students last summer described this as one of the best aspects of their learning experience.</p>
+<p>By contrast, exclusively in-person class formats without the zoom option make it difficult for students to articulate the issues they might be confronting. This makes collective troubleshooting a nightmare.</p>
+<p>Our class will be structured as follows:</p>
+<ul class="simple">
+<li><p>8:30-9:30 lecture</p></li>
+<li><p>9:30-10:00 lab</p></li>
+<li><p>10:00-10:15 break</p></li>
+<li><p>10:15-11:15 lecture</p></li>
+<li><p>11:15-11:50 lab</p></li>
+</ul>
+<p>Evaluation of your progress will be done on a daily basis:</p>
+<ul class="simple">
+<li><p>One graded lab per day (in-class)</p></li>
+<li><p>An optional assignment given at the end of the class</p></li>
+<li><p>We encourage you to do the in-class labs even if you’re not taking the class for credit</p></li>
+<li><p>Everyone who turns in every lab + the final assignment (on time) will get an A or a B</p></li>
+</ul>
+<p>Please use the <a class="reference external" href="https://courseplus.jhu.edu/core/index.cfm/go/home/">CoursePlus</a> Discussion Forum to ask general questions about Stata, course administration, etc. You may email your instructor if you have confidential questions (e.g. grades).</p>
+<p>Zoom protocol will be simple. Everyone but the lecturer will be muted. You are welcome to type questions into the zoom chat window, which we will check every few minutes. <strong>During labs</strong> please post questions and comments to the CoursePlus message board for fellow students to reference. We intend to record and post lectures; but there can be no guarantees. Please watch live if feasible.</p>
+<p>A few words on academic integrity. Copying small code snippets from books, the Internet, or classmates is permissible and even encouraged as long as it is accompanied with citation in the comments that may look something like this:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">tokenize</span> <span class="nv">`c(ALPHA)&#39;</span>  <span class="c1">// Adapted from code at https://www.statalist.org/forums/forum/general-stata-discussion/general/1380433-creating-a-counter-with-alphabets</span>
+</pre></div>
+</div>
+<p>Use of AI including chatGPT as a copilot, guide, or assistant is <u>strongly</u> encouraged during- and long after completion of this course<a class="reference internal" href="labs.html"><span class="doc std std-doc">.</span></a></p>
+<section id="table-of-contents">
+<h2>Table of contents<a class="headerlink" href="#table-of-contents" title="Permalink to this heading">#</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="markdown.html">Markdown Files</a></li>
-<li class="toctree-l1"><a class="reference internal" href="notebooks.html">Content with notebooks</a></li>
-<li class="toctree-l1"><a class="reference internal" href="markdown-notebooks.html">Notebooks with MyST Markdown</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter1.html">1. Overview, commands, syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter2.html">2. Return values, macros, programs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter3.html">3. Loops and program syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter4.html">4. Advanced file management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter5.html">5. Graphs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickrefs.html">Quick References</a></li>
 </ul>
 </div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -402,11 +441,11 @@ It does not go in-depth into any particular topic - check out <a class="referenc
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="right-next"
-       href="markdown.html"
+       href="chapter1.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Markdown Files</p>
+        <p class="prev-next-title">1. Overview, commands, syntax</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -420,6 +459,20 @@ It does not go in-depth into any particular topic - check out <a class="referenc
             
             
               
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#table-of-contents">Table of contents</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
             
           </div>
           <footer class="bd-footer-content">
@@ -429,7 +482,7 @@ It does not go in-depth into any particular topic - check out <a class="referenc
   <div class="footer-item">
     
 <p class="component-author">
-By The Jupyter Book Community
+By Abimereki Muzaale
 </p>
 
   </div>
