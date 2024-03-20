@@ -1,0 +1,5 @@
+cls
+clear
+import delimited https://raw.githubusercontent.com/jhustata/livre/main/transplants.txt
+encode transplant_date,gen(tx_date)
+order transplant_date tx_date 

@@ -1,0 +1,200 @@
+------------------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/d/Dropbox (Personal)/1f.ἡἔρις,κ/1.ontology/summer/lab3.log
+  log type:  text
+ opened on:  22 Jun 2023, 09:29:47
+
+. use transplants, clear //2pt
+
+. 
+. tab rec_work gender, chi2 //2pt
+
+   Recip. Working for |        gender
+               Income |         0          1 |     Total
+----------------------+----------------------+----------
+Not working for incom |       743        509 |     1,252 
+   Working for income |       297        142 |       439 
+----------------------+----------------------+----------
+                Total |     1,040        651 |     1,691 
+
+          Pearson chi2(1) =   9.4769   Pr = 0.002
+
+. local p = r(p) //2pt
+
+. 
+. if `p' < 0.05 { //2pt
+.     disp "Question 1: working for income is associated w gender, p=" %4.3f `p' //2pt
+Question 1: working for income is associated w gender, p=0.002
+. }
+
+. else { //2pt
+.     disp "Question 1: working for income is not associated w gender, p=" ///
+>     %3.2f `p' //2pt
+. }
+
+. 
+. //q2
+. assert !missing(dx)
+
+. gen byte hypertensive = dx==4 //2pt
+
+. gen byte male = gender==0 //2pt
+
+. gen byte college = inrange(rec_edu, 3, 5) if !missing(rec_edu) //2pt
+(201 missing values generated)
+
+. gen byte college2 = inrange(rec_edu, 4, 5) if !missing(rec_edu) //2pt 
+(201 missing values generated)
+
+. gen age_10y = age/10 //2pt
+
+. tab rec_edu college //2pt
+
+        Recipient |        college
+  Education Level |         0          1 |     Total
+------------------+----------------------+----------
+             None |        15          0 |        15 
+     Grade School |       154          0 |       154 
+  High School/GED |       824          0 |       824 
+ Attended College |         0        445 |       445 
+Assoc/Bach Degree |         0        242 |       242 
+  Graduate Degree |         0        119 |       119 
+------------------+----------------------+----------
+            Total |       993        806 |     1,799 
+
+. 
+. capture program drop table_loop //2pt
+
+. program define table_loop //2pt
+  1.     foreach v of varlist age bmi college male { //2pt
+  2.         disp "`v'" _col(15) %3.2f exp(_b[`v']) ///
+>             "  (" %3.2f exp(_b[`v'] + invnormal(0.025)*_se[`v']) "-" ///
+>                   %3.2f exp(_b[`v'] + invnormal(0.975)*_se[`v']) ")" //2pt
+  3.     }
+  4. end //2pt
+
+. 
+. logistic hypertensive age bmi college male //2pt
+
+Logistic regression                                     Number of obs =  1,667
+                                                        LR chi2(4)    =  12.80
+                                                        Prob > chi2   = 0.0123
+Log likelihood = -913.30856                             Pseudo R2     = 0.0070
+
+------------------------------------------------------------------------------
+hypertensive | Odds ratio   Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         age |   1.008927   .0040339     2.22   0.026     1.001052    1.016864
+         bmi |   1.019302   .0114898     1.70   0.090     .9970294    1.042072
+     college |   .9093511   .1062745    -0.81   0.416     .7231909    1.143432
+        male |   1.210551   .1455035     1.59   0.112     .9564717    1.532125
+       _cons |   .1088529   .0394582    -6.12   0.000     .0534918    .2215098
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. table_loop //2pt
+age           1.01  (1.00-1.02)
+bmi           1.02  (1.00-1.04)
+college       0.91  (0.72-1.14)
+male          1.21  (0.96-1.53)
+
+. 
+. //q3, 
+. capture program drop table_varlist //2pt
+
+. program define table_varlist //2pt
+  1.     syntax varlist //2pt
+  2.     foreach v of varlist `varlist' {
+  3.         disp "`v'" _col(15) %3.2f exp(_b[`v']) ///
+>             "  (" %3.2f exp(_b[`v'] + invnormal(0.025)*_se[`v']) "-" ///
+>                   %3.2f exp(_b[`v'] + invnormal(0.975)*_se[`v']) ")" //2pt
+  4.     }
+  5. end //2pt
+
+. 
+. //q4: 
+. 
+. sum rec_hgt_cm,det //2pt
+
+              Recipient/s Height in Centimeters
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%          101             79
+ 5%       149.86             81
+10%       154.94           81.5       Obs               1,933
+25%       162.56             84       Sum of wgt.       1,933
+
+50%       170.18                      Mean           168.6466
+                        Largest       Std. dev.      14.21801
+75%        177.8         198.12
+90%        182.9            225       Variance       202.1519
+95%       187.96            225       Skewness      -1.937771
+99%          193            225       Kurtosis       12.39124
+
+. gen tall = 1 if rec_hgt_cm>=r(p75) //2pt
+(1,396 missing values generated)
+
+. replace tall =0 if tall==. //2pt
+(1,396 real changes made)
+
+. replace tall = . if rec_hgt_cm ==. //2pt
+(67 real changes made, 67 to missing)
+
+. gen white = race==1 //2pt
+
+. 
+. 
+. lab var age_10y "Age (per 10y)" //1pt
+
+. lab var gender "Female Gender" //1pt
+
+. lab var white "White vs Non-white" //1pt
+
+. lab var rec_wgt "Weight in kg" //1pt
+
+. 
+. putexcel set lab3_test.xlsx, modify //3pt
+
+. putexcel A1=("Variable") B1=("OR") C1=("95% CI") //15pt
+file lab3_test.xlsx saved
+
+. logistic tall age_10y rec_wgt_kg gender white //1pt
+
+Logistic regression                                     Number of obs =  1,906
+                                                        LR chi2(4)    = 756.81
+                                                        Prob > chi2   = 0.0000
+Log likelihood = -746.35659                             Pseudo R2     = 0.3364
+
+------------------------------------------------------------------------------
+        tall | Odds ratio   Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+     age_10y |   .9264816   .0428706    -1.65   0.099     .8461544    1.014434
+  rec_wgt_kg |   1.057168   .0041077    14.31   0.000     1.049147    1.065249
+      gender |   .0492634   .0117162   -12.66   0.000      .030909    .0785172
+       white |   1.566174   .2027208     3.47   0.001     1.215243    2.018446
+       _cons |   .0078626   .0030539   -12.48   0.000     .0036724    .0168337
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. local row = 2 //1pt
+
+. foreach v of varlist age_10y rec_wgt_kg gender white { //2pt
+  2.     local varlabel: variable label `v' //2pt
+  3.     local beta: disp %3.2f exp(_b[`v']) //2pt
+  4.         local limits: disp %3.2f exp(_b[`v']+invnormal(0.025)*_se[`v']) "-" ///
+>         %3.2f exp(_b[`v']+invnormal(0.975)*_se[`v']) //1pt
+  5.         putexcel A`row'=("`varlabel'") B`row'=("`beta'") C`row'=("`limits'") //3pt
+  6.     local row = `row' + 1 //2pt
+  7. }
+file lab3_test.xlsx saved
+file lab3_test.xlsx saved
+file lab3_test.xlsx saved
+file lab3_test.xlsx saved
+
+. 
+. log close //2pt
+      name:  <unnamed>
+       log:  /Users/d/Dropbox (Personal)/1f.ἡἔρις,κ/1.ontology/summer/lab3.log
+  log type:  text
+ closed on:  22 Jun 2023, 09:29:48
+------------------------------------------------------------------------------------------------------------------------------------

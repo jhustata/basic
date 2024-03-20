@@ -1,0 +1,26 @@
+-----------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/d/Dropbox (Personal)/1f.ἡἔρις,κ/1.ontology/summer/merge.log
+  log type:  text
+ opened on:  22 Jun 2023, 07:44:20
+
+. use transplants, clear 
+
+. merge 1:1 fake_id ///
+>     using donors_recipients
+
+    Result                      Number of obs
+    -----------------------------------------
+    Not matched                         3,000
+        from master                         0  (_merge==1)
+        from using                      3,000  (_merge==2)
+
+    Matched                             2,000  (_merge==3)
+    -----------------------------------------
+
+. log close 
+      name:  <unnamed>
+       log:  /Users/d/Dropbox (Personal)/1f.ἡἔρις,κ/1.ontology/summer/merge.log
+  log type:  text
+ closed on:  22 Jun 2023, 07:44:20
+-----------------------------------------------------------------------------------------------------------
