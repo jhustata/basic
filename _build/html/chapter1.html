@@ -374,9 +374,9 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="overview-commands-syntax">
 <h1>1. Overview, commands, syntax<a class="headerlink" href="#overview-commands-syntax" title="Permalink to this heading">#</a></h1>
-<p>Please respond to the brief <code class="docutils literal notranslate"><span class="pre">entry</span> <span class="pre">survey</span></code> that helps us better understand what your needs might be on day one. I’ll launch it  on <a class="reference external" href="https://jhjhm.zoom.us/j/98481767907">zoom</a> for both the in-person and virtual attendees. The questions are listed here for your convenience. An identical <code class="docutils literal notranslate"><span class="pre">exit</span> <span class="pre">survey</span></code> will be launched on Friday to get a sense of what we’ve achieved over the five-day period.</p>
+<p>Please respond to the brief <code class="docutils literal notranslate"><span class="pre">entry</span> <span class="pre">survey</span></code> that helps us better understand what your needs might be in week one. I’ll launch it on <a class="reference external" href="https://jhjhm.zoom.us/j/98481767907">zoom</a> for both the in-person and virtual attendees. The questions are listed here for your convenience. An identical <code class="docutils literal notranslate"><span class="pre">exit</span> <span class="pre">survey</span></code> will be launched in week give to get a sense of what we’ve achieved over the five-week period.</p>
 <ol class="arabic simple">
-<li><p>How will you use Stata from 06/19/2023-06/23/2023?</p>
+<li><p>How will you use Stata from 04/01/2024-05/17/2024?</p>
 <ul class="simple">
 <li><p>Locally on my laptop</p></li>
 <li><p>Remotely on another desktop or terminal</p></li>
@@ -400,6 +400,50 @@ document.write(`
 </ol>
 </li>
 </ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="c1"># Adjust the height of bars here</span>
+<span class="n">bar_height</span> <span class="o">=</span> <span class="mf">0.5</span>
+
+<span class="c1"># Question 1</span>
+<span class="n">q1_values</span><span class="p">,</span> <span class="n">q1_counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">q1_responses</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">q1_values</span><span class="p">,</span> <span class="n">q1_counts</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="n">bar_height</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Question 1 Responses&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Number of Responses&#39;</span><span class="p">)</span>
+
+<span class="c1"># Question 2</span>
+<span class="n">q2_values</span><span class="p">,</span> <span class="n">q2_counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">q2_responses</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">q2_values</span><span class="p">,</span> <span class="n">q2_counts</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="n">bar_height</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Question 2 Responses&#39;</span><span class="p">)</span>
+
+<span class="c1"># Question 3</span>
+<span class="n">q3_values</span><span class="p">,</span> <span class="n">q3_counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">q3_responses</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">q3_values</span><span class="p">,</span> <span class="n">q3_counts</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="n">bar_height</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Question 3 Responses&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Experience Level&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([</span><span class="s1">&#39;No Experience&#39;</span><span class="p">,</span> <span class="s1">&#39;Basic Knowledge&#39;</span><span class="p">,</span> <span class="s1">&#39;Novice User&#39;</span><span class="p">,</span> <span class="s1">&#39;Competent User&#39;</span><span class="p">,</span> <span class="s1">&#39;Advanced User&#39;</span><span class="p">,</span> <span class="s1">&#39;Expert User&#39;</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="c1"># Adjust the height of bars here</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">bar_height</span> <span class="o">=</span> <span class="mf">0.5</span>
+
+<span class="ne">NameError</span>: name &#39;plt&#39; is not defined
+</pre></div>
+</div>
+</div>
+</div>
 <section id="overview">
 <h2>1.1 Overview 🦀<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
 <p><em>Ceci n’est pas une crabe</em></p>
@@ -455,7 +499,7 @@ document.write(`
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="_images/68b0bc74161d7710f53566e5ee9be406db910130ddbc8f918781f1977ed8e80e.png" src="_images/68b0bc74161d7710f53566e5ee9be406db910130ddbc8f918781f1977ed8e80e.png" />
+<img alt="_images/cf897162df8cde377a32eb942eea0152ade328c27161cecc7805ebaa9c2a1742.png" src="_images/cf897162df8cde377a32eb942eea0152ade328c27161cecc7805ebaa9c2a1742.png" />
 </div>
 </div>
 <p>We are going to distinguish between two fundamental perspectives in this class:</p>
@@ -666,7 +710,7 @@ document.write(`
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="_images/ba7a03497dffd11a80dc73ed024fddf10be1efa8e096461c7e513dcd71bdaf71.png" src="_images/ba7a03497dffd11a80dc73ed024fddf10be1efa8e096461c7e513dcd71bdaf71.png" />
+<img alt="_images/cfe31d0d46f542718e114068aef78e2bc3c5dae123b18e2f2c067688ca5ad747.png" src="_images/cfe31d0d46f542718e114068aef78e2bc3c5dae123b18e2f2c067688ca5ad747.png" />
 </div>
 </div>
 <ul class="simple">
