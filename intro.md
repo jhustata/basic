@@ -3,7 +3,7 @@
 
 # Preface
 
-Welcome to [340.600](https://publichealth.jhu.edu/course/38901) Stata Programming I (Basic)  
+Welcome to [340.600](https://publichealth.jhu.edu/course/38901) [Stata Programming](https://publichealth.jhu.edu/courses?keyword=stata+programming&yearId=2023&termId=All&instructor=&department=All&locationId=All) I (Basic)  
 
 If you have any questions about [340.700](https://publichealth.jhu.edu/course/38901) Stata Programming II (Intermediate), don't hesitate to seek clarification from your [Analytic Mentors](https://jhustata.github.io/basic/quickrefs.html). And if you wonder whether there's a course offering for Stata Programming III (Advanced), wonder no more: there will not be any offering this years. However, content of relevance to advanced Stata Programming can be found [here](https://jhufena.github.io/home/intro.html).  
 
