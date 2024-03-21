@@ -1,11 +1,11 @@
 
 
 
-# Prologue
+# Preface
 
 Welcome to [340.600](https://publichealth.jhu.edu/course/38901) Stata Programming I (Basic)  
 
-If you have any questions about [340.700](https://publichealth.jhu.edu/course/38901) Stata Programming II (Intermediate), don't hesitate to send either of your [Analytic Mentors](https://jhustata.github.io/basic/quickrefs.html) an email for clarification. A resource with some of the content for Stata Programming III (Advanced) can be found [here](https://jhufena.github.io/home/intro.html). But there'll be no course offering for Advanced Stata Programming this year.
+If you have any questions about [340.700](https://publichealth.jhu.edu/course/38901) Stata Programming II (Intermediate), don't hesitate to seek clarification from your [Analytic Mentors](https://jhustata.github.io/basic/quickrefs.html). And if you wonder there's a course offering for Stata Programming III (Advanced), unfortanetly there'll be offering this years. However, content of relevance to advanced Stata Programming can be found [here](https://jhufena.github.io/home/intro.html).  
 
 The `Basic` class will be offered in a hybrid-format to cater to both those who will be in-person at the Bloomberg School Wolfe **W1214** (Sheldon Hall) and those who will be joining us virtually (Zoom [link](https://jhjhm.zoom.us/j/98481767907)). In-person attendees are encouraged to also log into zoom, which allows students to share code and to collectively `debug`. Students last year described this as one of the best aspects of their learning experience. 
 
