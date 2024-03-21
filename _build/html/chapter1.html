@@ -358,7 +358,13 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">1.1 Overview 🦀</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">1.1 Installation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#receive-with-simplicity">Receive &amp; with Simplicity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#know-be-reverent">Know &amp; be Reverent</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#do-on-time">Do &amp; on Time</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">1.2 Overview 🦀</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#command">1.2 Command</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#syntax">1.3 Syntax</a></li>
 </ul>
@@ -461,8 +467,127 @@ document.write(`
 <img alt="_images/7c9ab48817d89ac3630adda93cba13d649557b61b70ba71b447a58197b7199e0.png" src="_images/7c9ab48817d89ac3630adda93cba13d649557b61b70ba71b447a58197b7199e0.png" />
 </div>
 </div>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">()</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;1. Root&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">2500</span><span class="p">,</span> <span class="mi">700</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;2. Pentatonic&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">4200</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;3. Diatonic&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">2500</span><span class="p">,</span> <span class="o">-</span><span class="mi">700</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;4. Chromatic&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;5. Temperament&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="mi">1500</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;6. Expression&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="mi">4000</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s2">&quot;1. Root&quot;</span><span class="p">,</span> <span class="s2">&quot;4. Chromatic&quot;</span><span class="p">)])</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s2">&quot;2. Pentatonic&quot;</span><span class="p">,</span> <span class="s2">&quot;4. Chromatic&quot;</span><span class="p">)])</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s2">&quot;3. Diatonic&quot;</span><span class="p">,</span> <span class="s2">&quot;4. Chromatic&quot;</span><span class="p">)])</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s2">&quot;4. Chromatic&quot;</span><span class="p">,</span> <span class="s2">&quot;5. Temperament&quot;</span><span class="p">)])</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s2">&quot;5. Temperament&quot;</span><span class="p">,</span> <span class="s2">&quot;6. Expression&quot;</span><span class="p">)])</span>
+
+<span class="n">pos</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">get_node_attributes</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="s1">&#39;pos&#39;</span><span class="p">)</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;4. Chromatic&quot;</span><span class="p">:</span> <span class="s2">&quot;4. Chromatic</span><span class="se">\n</span><span class="s2">(Agency)&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;1. Root&quot;</span><span class="p">:</span> <span class="s2">&quot;1. Root</span><span class="se">\n</span><span class="s2">(Tools)&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;2. Pentatonic&quot;</span><span class="p">:</span> <span class="s2">&quot;2. Pentatonic</span><span class="se">\n</span><span class="s2">(Challenges)&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;3. Diatonic&quot;</span><span class="p">:</span> <span class="s2">&quot;3. Diatonic</span><span class="se">\n</span><span class="s2">(Skills)&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;5. Temperament&quot;</span><span class="p">:</span> <span class="s2">&quot;5. Temperament</span><span class="se">\n</span><span class="s2">(Flow)&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;6. Expression&quot;</span><span class="p">:</span> <span class="s2">&quot;6. Expression</span><span class="se">\n</span><span class="s2">(Growth)&quot;</span><span class="p">}</span>  <span class="c1"># Added label for &quot;NDI&quot; node in the labels dictionary</span>
+
+<span class="c1"># Update color for the &quot;Scenarios&quot; node</span>
+<span class="n">node_colors</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;lightblue&quot;</span><span class="p">,</span><span class="s2">&quot;lightblue&quot;</span><span class="p">,</span> <span class="s2">&quot;lavender&quot;</span><span class="p">,</span> <span class="s2">&quot;lightblue&quot;</span><span class="p">,</span> <span class="s2">&quot;lightblue&quot;</span><span class="p">,</span> <span class="s2">&quot;lightblue&quot;</span><span class="p">]</span>
+<span class="c1"># node_colors = [&quot;lightblue&quot;,&quot;lavender&quot;, &quot;lavender&quot;, &quot;lightgreen&quot;, &quot;lightpink&quot;, &quot;lightpink&quot;]</span>
+<span class="c1"># Suppress the deprecation warning</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">DeprecationWarning</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">nx</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">with_labels</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">node_size</span><span class="o">=</span><span class="mi">20000</span><span class="p">,</span> <span class="n">node_color</span><span class="o">=</span><span class="n">node_colors</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">edge_color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;solid&#39;</span><span class="p">)</span>
+<span class="n">nx</span><span class="o">.</span><span class="n">draw_networkx_labels</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">font_size</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span> <span class="c1"># , font_weight=&#39;bold&#39;</span>
+<span class="n">nx</span><span class="o">.</span><span class="n">draw_networkx_edges</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">edge_color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;solid&#39;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">5000</span><span class="p">,</span> <span class="mi">5000</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/635dbd7faa26efd42673d0f03043d3e850b9cd1ab91e67266e244b8d1b7ee3cb.png" src="_images/635dbd7faa26efd42673d0f03043d3e850b9cd1ab91e67266e244b8d1b7ee3cb.png" />
+</div>
+</div>
+<section id="installation">
+<h2>1.1 Installation<a class="headerlink" href="#installation" title="Permalink to this heading">#</a></h2>
+<section id="receive-with-simplicity">
+<h3>Receive &amp; with Simplicity<a class="headerlink" href="#receive-with-simplicity" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Tools</p>
+<ul class="simple">
+<li><p>Workstation</p>
+<ul>
+<li><p>Remote: Terminal, <a class="reference external" href="https://ictr.johnshopkins.edu/service/informatics/safe-desktop/">Safe Desktop</a></p></li>
+<li><p>Local: <a class="reference external" href="https://download.stata.com/download/">Download</a> to your machine</p></li>
+</ul>
+</li>
+<li><p>Installation</p>
+<ul>
+<li><p><a class="reference external" href="http://download.stata.com">download.stata.com</a></p></li>
+<li><p>Username:  1682535723 (from email)</p>
+<ul>
+<li><p>You’ll use it again even with future purchases</p></li>
+</ul>
+</li>
+<li><p>Password: Nietzsche (your choice)</p></li>
+<li><p>Serial number (from purchase)</p></li>
+<li><p>Perpetual license (expensive)</p></li>
+<li><p>Subscription</p>
+<ul>
+<li><p>6 months</p></li>
+<li><p>12 month</p></li>
+</ul>
+</li>
+<li><p>Operating system (Windows, Mac, Linux)</p></li>
+<li><p>Contact Stata if you have other system</p></li>
+<li><p>Package Stata/MP, Stata/SE, Stata/BE</p></li>
+<li><p>Installed the parallel processing version for Mac, ado and help files, PDF documentation, tutorials, and support files. Requires a Stata/MO license</p></li>
+<li><p>Allow stata to access files in document folder</p></li>
+</ul>
+</li>
+<li><p>Courses</p>
+<ul>
+<li><p>340.600 Stata Programming I (Basic)</p></li>
+<li><p>340.700 Stata Programming II (Intermediate)</p></li>
+<li><p>340.800 Stata Programming III (Advanced)<code class="docutils literal notranslate"><span class="pre">?</span></code></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Challenges</p></li>
+</ol>
+</section>
+<section id="know-be-reverent">
+<h3>Know &amp; be Reverent<a class="headerlink" href="#know-be-reverent" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple" start="3">
+<li><p>Skills</p></li>
+<li><p>Agency</p></li>
+</ol>
+</section>
+<section id="do-on-time">
+<h3>Do &amp; on Time<a class="headerlink" href="#do-on-time" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple" start="5">
+<li><p>Flow</p></li>
+<li><p>Growth</p></li>
+</ol>
+</section>
+</section>
 <section id="overview">
-<h2>1.1 Overview 🦀<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
+<h2>1.2 Overview 🦀<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
 <p><em>Ceci n’est pas une crabe</em></p>
 <div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
@@ -523,7 +648,7 @@ document.write(`
 <ul class="simple">
 <li><p>System</p>
 <ul>
-<li><p>Native (stata application, support files, <code class="docutils literal notranslate"><span class="pre">.ado</span></code> files)</p>
+<li><p>Native (built-in stata application, support files, <code class="docutils literal notranslate"><span class="pre">.ado</span></code> files)</p>
 <ul>
 <li><p>If you type <code class="docutils literal notranslate"><span class="pre">which</span> <span class="pre">help</span></code> into your command window you get something like: <code class="docutils literal notranslate"><span class="pre">/Applications/Stata/ado/base/h/help.ado</span></code></p></li>
 </ul>
@@ -535,7 +660,7 @@ document.write(`
 </li>
 <li><p>Your <code class="docutils literal notranslate"><span class="pre">.ado</span></code> files (you’ll learn to write &amp; install your own programs)</p>
 <ul>
-<li><p>Since you don’t have <code class="docutils literal notranslate"><span class="pre">table1_afecdvi.ado</span></code> installed you’ll get <code class="docutils literal notranslate"><span class="pre">command</span> <span class="pre">table1_afecdv</span> <span class="pre">not</span> <span class="pre">found</span> <span class="pre">as</span> <span class="pre">either</span> <span class="pre">built-in</span> <span class="pre">or</span> <span class="pre">ado-file</span></code></p></li>
+<li><p>Since you don’t have <code class="docutils literal notranslate"><span class="pre">table1_fena.ado</span></code> installed you’ll get <code class="docutils literal notranslate"><span class="pre">command</span> <span class="pre">table1_fena</span> <span class="pre">not</span> <span class="pre">found</span> <span class="pre">as</span> <span class="pre">either</span> <span class="pre">built-in</span> <span class="pre">or</span> <span class="pre">ado-file</span></code></p></li>
 </ul>
 </li>
 </ul>
@@ -972,7 +1097,13 @@ command myfirstprogram is unrecognized
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">1.1 Overview 🦀</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">1.1 Installation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#receive-with-simplicity">Receive &amp; with Simplicity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#know-be-reverent">Know &amp; be Reverent</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#do-on-time">Do &amp; on Time</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">1.2 Overview 🦀</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#command">1.2 Command</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#syntax">1.3 Syntax</a></li>
 </ul>
