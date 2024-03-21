@@ -1,46 +1,54 @@
 
 
-
 # Preface
 
-Welcome to [340.600](https://publichealth.jhu.edu/course/38901) [Stata Programming](https://publichealth.jhu.edu/courses?keyword=stata+programming&yearId=2023&termId=All&instructor=&department=All&locationId=All) I (Basic)  
+Welcome to [340.600 Stata Programming I (Basic)](https://publichealth.jhu.edu/course/38901). 
 
-If you have any questions about [340.700](https://publichealth.jhu.edu/course/38901) Stata Programming II (Intermediate), don't hesitate to seek clarification from your [Analytic Mentors](https://jhustata.github.io/basic/quickrefs.html). And if you wonder whether there's a course offering for Stata Programming III (Advanced), wonder no more: there will not be any offering this years. However, content of relevance to advanced Stata Programming can be found [here](https://jhufena.github.io/home/intro.html).  
+Should you have inquiries about [340.700 Programming II (Intermediate)](https://publichealth.jhu.edu/course/38901), please do not hesitate to reach out to your [Analytic Mentors](https://jhustata.github.io/basic/quickrefs.html). For those curious about Stata Programming III (Advanced), we regret to inform you that no offering will be available this year. Nevertheless, you can explore content pertinent to advanced Stata Programming [here](https://jhufena.github.io/home/intro.html).
 
-The `Basic` class will be offered in a hybrid-format to cater to both those who will be in-person at the Bloomberg School Wolfe **W1214** (Sheldon Hall) and those who will be joining us virtually (Zoom [link](https://jhjhm.zoom.us/j/98481767907)). In-person attendees are encouraged to also log into zoom, which allows students to share code and to collectively `debug`. Students last year described this as one of the best aspects of their learning experience. 
+The `Basic` class adopts a hybrid format to accommodate both in-person attendees at the Bloomberg School's Wolfe **W1214** (Sheldon Hall) and virtual participants via Zoom ([link](https://jhjhm.zoom.us/j/98481767907)). We encourage in-person participants to also connect to Zoom, facilitating code sharing and collective debugging, a highlight of the learning experience as described by last year’s students.
 
-By contrast, exclusively in-person class formats without the zoom option make it difficult for students to articulate the issues they might be confronting. This makes collective troubleshooting a nightmare. 
+In contrast, solely in-person formats without a Zoom option hinder students' ability to express their challenges, complicating collective problem-solving.
 
-Our class will be structured as follows:
+Our class structure is as follows:
    
-   + Class: Thursday, 3:30-5:20pm lecture
-   + Labs: M T W Th F
-   + HW: Weeks [1, 2, 3], [4, 5], and [6, 7]     
-     
-Evaluation of your progress will be done on a weekly basis:
+- **Class:** Thursdays, 3:30-5:20pm lecture
+- **Labs:** Monday to Friday
+- **HW:** Sets for Weeks [1, 2, 3], [4, 5], and [6, 7]     
 
-   + One graded homework per week (for more frequent feedback compared with previous years)
-      - Content for Weeks 1, 2, 3 = HW 1 in previous years
-      - Content for Weeks 4, 5 = HW 2 in previous years
-      - Content for Weeks 6, 7 = HW 3 in previous years
-   + An optional assignment given at the end of the class 
-   + We encourage you to do each each weeks lab before submitting your homework
-   + Everyone who turns in every homework on time will get an A or a B
+We will evaluate your progress weekly:
 
-Please use the [CoursePlus](https://courseplus.jhu.edu/core/index.cfm/go/course.home/coid/21040/) Discussion Forum to ask general questions about Stata, course administration, etc. You may email your instructor if you have confidential questions (e.g. grades). 
+- A graded homework every week for more immediate feedback
+   - Week 1-3 content equals HW 1 from prior years
+   - Week 4-5 content equals HW 2 from prior years
+   - Week 6-7 content equals HW 3 from prior years
+- An optional assignment at the class's end
+- Complete and timely homework submission guarantees at least a B grade
 
-Zoom protocol will be simple. Everyone but the lecturer will be muted. You are welcome to type questions into the zoom chat window, which we will check every few minutes. **During labs** please post questions and comments to the CoursePlus message board for fellow students to reference. We intend to record and post lectures; but there can be no guarantees. Please watch live if feasible.
+For general inquiries about Stata, course logistics, etc., please use the [CoursePlus Discussion Forum](https://courseplus.jhu.edu/core/index.cfm/go/course.home/coid/21040/). For confidential matters (e.g., grades), email your instructor directly.
 
-A few words on academic integrity. Copying small code snippets from books, the Internet, or classmates is permissible and even encouraged as long as it is accompanied with citation in the comments that may look something like this:
+Zoom etiquette is straightforward: all participants will be muted except the lecturer. Feel free to ask questions via chat, which we’ll monitor regularly. **During class, labs, and homework attempts**, post questions and comments on CoursePlus for peer reference. While we aim to record lectures, live attendance is recommended when possible.
+
+Regarding academic integrity, we encourage the use of small code snippets from books, the internet, or peers, provided they're cited, as shown below:
 
 ```stata
-tokenize `c(ALPHA)'  // Adapted from code at https://www.statalist.org/forums/forum/general-stata-discussion/general/1380433-creating-a-counter-with-alphabets
+tokenize `c(ALPHA)'  // Adapted from https://www.statalist.org/forums/forum/general-stata-discussion/general/1380433-creating-a-counter-with-alphabets
 ```
 
-Use of AI including chatGPT as a copilot, guide, or assistant is <u>strongly</u> encouraged during- and long after completion of this course[.](labs.md)
+Leveraging AI, including ChatGPT, as a co-pilot, guide, or assistant, is <u>strongly encouraged</u> both during and after this course. [Learn more](labs.md).
 
-## Table of contents
+## Table of Contents
 
 ```{tableofcontents}
 ```
+
+
+
+
+
+
+
+
+
+
 
