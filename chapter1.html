@@ -416,6 +416,22 @@ document.write(`
 <span class="c1"># Adjust the height of bars here</span>
 <span class="n">bar_height</span> <span class="o">=</span> <span class="mf">0.5</span>
 
+<span class="c1">#</span>
+<span class="c1"># Set the random seed for reproducibility</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Simulate responses for question 1 (Stata usage location)</span>
+<span class="n">q1_responses</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="s1">&#39;Locally on my laptop&#39;</span><span class="p">,</span> <span class="s1">&#39;Remotely on another desktop or terminal&#39;</span><span class="p">],</span> <span class="mi">100</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">])</span>
+
+<span class="c1"># Simulate responses for question 2 (Operating system)</span>
+<span class="n">q2_responses</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="s1">&#39;MacOSX&#39;</span><span class="p">,</span> <span class="s1">&#39;Unix&#39;</span><span class="p">,</span> <span class="s1">&#39;Windows&#39;</span><span class="p">],</span> <span class="mi">100</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="p">[</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">])</span>
+
+<span class="c1"># Simulate responses for question 3 (Experience level)</span>
+<span class="c1"># Assuming a mean experience level of 2 (Novice User) with a standard deviation of 1</span>
+<span class="n">q3_responses</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="c1"># Ensure the experience level is within the 0 to 5 range and round to the nearest integer</span>
+<span class="n">q3_responses</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">q3_responses</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
 <span class="c1"># Question 1</span>
 <span class="n">q1_values</span><span class="p">,</span> <span class="n">q1_counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">q1_responses</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">q1_values</span><span class="p">,</span> <span class="n">q1_counts</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="n">bar_height</span><span class="p">)</span>
@@ -442,19 +458,7 @@ document.write(`
 </div>
 </details>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">11</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="n">bar_height</span> <span class="o">=</span> <span class="mf">0.5</span>
-<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="c1"># Question 1</span>
-<span class="ne">---&gt; </span><span class="mi">11</span> <span class="n">q1_values</span><span class="p">,</span> <span class="n">q1_counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">q1_responses</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">12</span> <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">q1_values</span><span class="p">,</span> <span class="n">q1_counts</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="n">bar_height</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Question 1 Responses&#39;</span><span class="p">)</span>
-
-<span class="ne">NameError</span>: name &#39;q1_responses&#39; is not defined
-</pre></div>
-</div>
-<img alt="_images/9aacd56fa3fd189a5c9f50c7b3250148beced7447dc9078dd425f47fe37830da.png" src="_images/9aacd56fa3fd189a5c9f50c7b3250148beced7447dc9078dd425f47fe37830da.png" />
+<img alt="_images/15831ef478bcc5a871c4659679569196bda2bff2bd4e394e4d05c8507b7a63c2.png" src="_images/15831ef478bcc5a871c4659679569196bda2bff2bd4e394e4d05c8507b7a63c2.png" />
 </div>
 </div>
 <section id="overview">
@@ -512,7 +516,7 @@ document.write(`
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="_images/cf897162df8cde377a32eb942eea0152ade328c27161cecc7805ebaa9c2a1742.png" src="_images/cf897162df8cde377a32eb942eea0152ade328c27161cecc7805ebaa9c2a1742.png" />
+<img alt="_images/68b0bc74161d7710f53566e5ee9be406db910130ddbc8f918781f1977ed8e80e.png" src="_images/68b0bc74161d7710f53566e5ee9be406db910130ddbc8f918781f1977ed8e80e.png" />
 </div>
 </div>
 <p>We are going to distinguish between two fundamental perspectives in this class:</p>
@@ -723,7 +727,7 @@ document.write(`
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="_images/cfe31d0d46f542718e114068aef78e2bc3c5dae123b18e2f2c067688ca5ad747.png" src="_images/cfe31d0d46f542718e114068aef78e2bc3c5dae123b18e2f2c067688ca5ad747.png" />
+<img alt="_images/ba7a03497dffd11a80dc73ed024fddf10be1efa8e096461c7e513dcd71bdaf71.png" src="_images/ba7a03497dffd11a80dc73ed024fddf10be1efa8e096461c7e513dcd71bdaf71.png" />
 </div>
 </div>
 <ul class="simple">
