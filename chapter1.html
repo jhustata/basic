@@ -427,7 +427,7 @@ document.write(`
 <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
 <span class="c1"># Simulate responses for question 1 (Stata usage location)</span>
-<span class="n">q1_responses</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="s1">&#39;Locally on my laptop&#39;</span><span class="p">,</span> <span class="s1">&#39;Remotely on another desktop or terminal&#39;</span><span class="p">],</span> <span class="mi">100</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="p">[</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">])</span>
+<span class="n">q1_responses</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="s1">&#39;Locally on my laptop&#39;</span><span class="p">,</span> <span class="s1">&#39;Remote computer&#39;</span><span class="p">],</span> <span class="mi">100</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="p">[</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">])</span>
 
 <span class="c1"># Simulate responses for question 2 (Operating system)</span>
 <span class="n">q2_responses</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="s1">&#39;MacOSX&#39;</span><span class="p">,</span> <span class="s1">&#39;Unix&#39;</span><span class="p">,</span> <span class="s1">&#39;Windows&#39;</span><span class="p">],</span> <span class="mi">100</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="p">[</span><span class="mf">0.67</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.32</span><span class="p">])</span>
@@ -442,7 +442,7 @@ document.write(`
 <span class="n">q1_values</span><span class="p">,</span> <span class="n">q1_counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">q1_responses</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">q1_values</span><span class="p">,</span> <span class="n">q1_counts</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="n">bar_height</span><span class="p">)</span>
 <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Question 1 Responses&#39;</span><span class="p">)</span>
-<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Number of Responses&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="c1"># Number of Responses</span>
 
 <span class="c1"># Question 2</span>
 <span class="n">q2_values</span><span class="p">,</span> <span class="n">q2_counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">q2_responses</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -453,7 +453,7 @@ document.write(`
 <span class="n">q3_values</span><span class="p">,</span> <span class="n">q3_counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">q3_responses</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">q3_values</span><span class="p">,</span> <span class="n">q3_counts</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="n">bar_height</span><span class="p">)</span>
 <span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Question 3 Responses&#39;</span><span class="p">)</span>
-<span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Experience Level&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="c1"># Experience Level</span>
 <span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">))</span>
 <span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([</span><span class="s1">&#39;No Experience&#39;</span><span class="p">,</span> <span class="s1">&#39;Basic Knowledge&#39;</span><span class="p">,</span> <span class="s1">&#39;Novice User&#39;</span><span class="p">,</span> <span class="s1">&#39;Competent User&#39;</span><span class="p">,</span> <span class="s1">&#39;Advanced User&#39;</span><span class="p">,</span> <span class="s1">&#39;Expert User&#39;</span><span class="p">])</span>
 
@@ -464,7 +464,7 @@ document.write(`
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="_images/7c9ab48817d89ac3630adda93cba13d649557b61b70ba71b447a58197b7199e0.png" src="_images/7c9ab48817d89ac3630adda93cba13d649557b61b70ba71b447a58197b7199e0.png" />
+<img alt="_images/ce0771be92977d5297fd1ae75a3be8d6719b0281e1ee84ec704965dbe15e4be0.png" src="_images/ce0771be92977d5297fd1ae75a3be8d6719b0281e1ee84ec704965dbe15e4be0.png" />
 </div>
 </div>
 <div class="cell tag_hide-input docutils container">
@@ -492,12 +492,12 @@ document.write(`
 <span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s2">&quot;5. Temperament&quot;</span><span class="p">,</span> <span class="s2">&quot;6. Expression&quot;</span><span class="p">)])</span>
 
 <span class="n">pos</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">get_node_attributes</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="s1">&#39;pos&#39;</span><span class="p">)</span>
-<span class="n">labels</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;4. Chromatic&quot;</span><span class="p">:</span> <span class="s2">&quot;4. Chromatic</span><span class="se">\n</span><span class="s2">(Agency)&quot;</span><span class="p">,</span>
-          <span class="s2">&quot;1. Root&quot;</span><span class="p">:</span> <span class="s2">&quot;1. Root</span><span class="se">\n</span><span class="s2">(Tools)&quot;</span><span class="p">,</span>
-          <span class="s2">&quot;2. Pentatonic&quot;</span><span class="p">:</span> <span class="s2">&quot;2. Pentatonic</span><span class="se">\n</span><span class="s2">(Challenges)&quot;</span><span class="p">,</span>
-          <span class="s2">&quot;3. Diatonic&quot;</span><span class="p">:</span> <span class="s2">&quot;3. Diatonic</span><span class="se">\n</span><span class="s2">(Skills)&quot;</span><span class="p">,</span>
-          <span class="s2">&quot;5. Temperament&quot;</span><span class="p">:</span> <span class="s2">&quot;5. Temperament</span><span class="se">\n</span><span class="s2">(Flow)&quot;</span><span class="p">,</span>
-          <span class="s2">&quot;6. Expression&quot;</span><span class="p">:</span> <span class="s2">&quot;6. Expression</span><span class="se">\n</span><span class="s2">(Growth)&quot;</span><span class="p">}</span>  <span class="c1"># Added label for &quot;NDI&quot; node in the labels dictionary</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;4. Chromatic&quot;</span><span class="p">:</span> <span class="s2">&quot;4. Agency&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;1. Root&quot;</span><span class="p">:</span> <span class="s2">&quot;1. Tools&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;2. Pentatonic&quot;</span><span class="p">:</span> <span class="s2">&quot;2. Challenges&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;3. Diatonic&quot;</span><span class="p">:</span> <span class="s2">&quot;3. Skills&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;5. Temperament&quot;</span><span class="p">:</span> <span class="s2">&quot;5. Flow&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;6. Expression&quot;</span><span class="p">:</span> <span class="s2">&quot;6. Growth&quot;</span><span class="p">}</span>  <span class="c1"># Added label for &quot;NDI&quot; node in the labels dictionary</span>
 
 <span class="c1"># Update color for the &quot;Scenarios&quot; node</span>
 <span class="n">node_colors</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;lightblue&quot;</span><span class="p">,</span><span class="s2">&quot;lightblue&quot;</span><span class="p">,</span> <span class="s2">&quot;lavender&quot;</span><span class="p">,</span> <span class="s2">&quot;lightblue&quot;</span><span class="p">,</span> <span class="s2">&quot;lightblue&quot;</span><span class="p">,</span> <span class="s2">&quot;lightblue&quot;</span><span class="p">]</span>
@@ -519,7 +519,7 @@ document.write(`
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="_images/635dbd7faa26efd42673d0f03043d3e850b9cd1ab91e67266e244b8d1b7ee3cb.png" src="_images/635dbd7faa26efd42673d0f03043d3e850b9cd1ab91e67266e244b8d1b7ee3cb.png" />
+<img alt="_images/931e5210b5af8aebf9a0ddf56abccf41d6a44d371877c6f1d6db6a58d81cef4d.png" src="_images/931e5210b5af8aebf9a0ddf56abccf41d6a44d371877c6f1d6db6a58d81cef4d.png" />
 </div>
 </div>
 <section id="installation">
@@ -591,15 +591,15 @@ document.write(`
 <ol class="arabic simple" start="3">
 <li><p><strong>Skills</strong></p>
 <ul class="simple">
-<li><p><strong>Analytical Thinking:</strong> Encourage students to not just learn the syntax but to understand the data they are working with. Stata is not just a tool but a gateway to meaningful insights.</p></li>
-<li><p><strong>Data Management Mastery:</strong> Knowing how to efficiently clean, manipulate, and prepare data is sacred in the realm of statistical analysis. Treat each dataset as a unique puzzle that tells a story.</p></li>
+<li><p><strong>Analytical Thinking:</strong> You are encouraged to not just learn Stata syntax but to understand the data you are working with. Stata is not just a tool but a gateway to meaningful insights.</p></li>
+<li><p><strong>Data Management Mastery:</strong> Knowing how to efficiently clean, manipulate, and prepare data is sacred in the realm of statistical analysis. Treat each <a class="reference external" href="https://jhustata.github.io/basic/quickrefs.html#datasets-and-supplementary-materials">dataset as a unique puzzle</a> that tells a story.</p></li>
 <li><p><strong>Statistical Techniques:</strong> A reverent understanding of the statistical methods behind the commands is crucial. It’s not about executing commands; it’s about knowing why and when to use them.</p></li>
 </ul>
 </li>
 <li><p><strong>Agency</strong></p>
 <ul class="simple">
-<li><p><strong>Self-directed Learning:</strong> Instill in students the value of exploration beyond the classroom. The most profound learning occurs through tackling real-world data challenges.</p></li>
-<li><p><strong>Community Contribution:</strong> Encourage students to engage with the <span class="xref myst">Stata community</span>, sharing knowledge, asking questions, and contributing solutions. Respect for the community’s collective wisdom and the software’s capabilities should guide their interactions.</p></li>
+<li><p><strong>Self-directed Learning:</strong> We hope you appreciate the value of exploration beyond the classroom. The most profound learning occurs through tackling real-world data challenges.</p></li>
+<li><p><strong>Community Contribution:</strong> Please engage with the our new <a class="reference external" href="https://github.com/jhufena/discussions/discussions">Stata-focused community</a>, share knowledge, ask questions, and contribute solutions. Respect for the community’s collective wisdom and the software’s capabilities should guide your interactions.</p></li>
 </ul>
 </li>
 </ol>
@@ -609,16 +609,16 @@ document.write(`
 <ol class="arabic simple" start="5">
 <li><p><strong>Flow</strong></p>
 <ul class="simple">
-<li><p><strong>Start with the Basics:</strong> Emphasize the importance of a strong foundation. Understanding the basics thoroughly ensures smoother progression to more complex topics.</p></li>
-<li><p><strong>Practical Applications:</strong> Assign projects that require students to apply their learning to real-world datasets. This approach fosters a deeper understanding and appreciation of Stata’s power.</p></li>
-<li><p><strong>Iterative Learning:</strong> Encourage an iterative approach to projects. The first attempt doesn’t have to be perfect; learning comes from refinement and persistence.</p></li>
+<li><p><strong>Start with the Basics:</strong> <a class="reference external" href="https://publichealth.jhu.edu/course/38901">This class</a>, as it’s name suggests, emphasizes the importance of a strong foundation. Understanding the <code class="docutils literal notranslate"><span class="pre">basics</span></code> thoroughly ensures smoother progression to <code class="docutils literal notranslate"><span class="pre">intermediate</span></code> and <code class="docutils literal notranslate"><span class="pre">advanced</span></code> topics.</p></li>
+<li><p><strong>Practical Applications:</strong> If you need a real-world dataset (e.g. NHANES) for your Biostats 140.624 project, we are happy to facilitate help curate it for you. Hopefully this will foster a deeper understanding and appreciation of Stata’s power.</p></li>
+<li><p><strong>Iterative Learning:</strong> Please use an iterative approach to all your labs and homeworks. The first attempt doesn’t have to be perfect; learning comes from refinement and persistence.</p></li>
 </ul>
 </li>
 <li><p><strong>Growth</strong></p>
 <ul class="simple">
-<li><p><strong>Feedback Loops:</strong> Constructive feedback is sacred. Create an environment where feedback is regularly given and received, promoting continuous improvement and learning.</p></li>
-<li><p><strong>Skill Expansion:</strong> Encourage students to progressively challenge themselves with more complex problems and datasets. Growth in this field is about pushing boundaries and constantly seeking to improve.</p></li>
-<li><p><strong>Lifelong Learning:</strong> Emphasize that learning Stata, like any other skill, is a journey without an end. The landscape of data analysis is always evolving, and so should their skills and understanding.</p></li>
+<li><p><strong>Feedback Loops:</strong> Constructive feedback is sacred. So we are offering an <a class="reference external" href="https://github.com/jhufena/discussions/discussions">open environment</a> where feedback is given and received, to promote continuous improvement and learning.</p></li>
+<li><p><strong>Skill Expansion:</strong> The course is structured to progressively challenge you with more complex problems and datasets. Growth in this field is about pushing boundaries and constantly seeking to improve.</p></li>
+<li><p><strong>Lifelong Learning:</strong> And remember that learning Stata, like any other skill, is a journey without an end. The landscape of data analysis is always evolving, and so should their skills and understanding. This is partly what motivated our new <a class="reference external" href="https://github.com/jhufena/discussions/discussions">Stata-focused community</a> as well as our <a class="reference external" href="https://jhufena.github.io/home/intro.html">general analytic community</a> that aims to discuss topics at the interface of Stata, R, Python, AI, code, version control, automation, open science, etc.</p></li>
 </ul>
 </li>
 </ol>
