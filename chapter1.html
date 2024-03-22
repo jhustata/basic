@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>1. Overview, commands, syntax &#8212; Stata Programming</title>
+    <title>1. Installation, overview, commands, syntax &#8212; Stata Programming</title>
   
   
   
@@ -159,7 +159,7 @@ const thebe_selector_output = ".output, .cell_output"
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">1. Overview, commands, syntax</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">1. Installation, overview, commands, syntax</a></li>
 <li class="toctree-l1"><a class="reference internal" href="chapter2.html">2. Return values, macros, programs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="chapter3.html">3. Loops and program syntax</a></li>
 <li class="toctree-l1"><a class="reference internal" href="chapter4.html">4. Advanced file management</a></li>
@@ -348,7 +348,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>1. Overview, commands, syntax</h1>
+    <h1>1. Installation, overview, commands, syntax</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -365,8 +365,8 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">1.2 Overview 🦀</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#command">1.2 Command</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#syntax">1.3 Syntax</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#commands">1.3 Commands</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#syntax">1.4 Syntax</a></li>
 </ul>
             </nav>
         </div>
@@ -378,8 +378,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="overview-commands-syntax">
-<h1>1. Overview, commands, syntax<a class="headerlink" href="#overview-commands-syntax" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="installation-overview-commands-syntax">
+<h1>1. Installation, overview, commands, syntax<a class="headerlink" href="#installation-overview-commands-syntax" title="Permalink to this heading">#</a></h1>
 <p>Please respond to the brief <code class="docutils literal notranslate"><span class="pre">entry</span> <span class="pre">survey</span></code> that helps us better understand what your needs might be in week one. I’ll launch it on <a class="reference external" href="https://jhjhm.zoom.us/j/98481767907">zoom</a> for both the in-person and virtual attendees. The questions are listed here for your convenience. An identical <code class="docutils literal notranslate"><span class="pre">exit</span> <span class="pre">survey</span></code> will be launched in week-five to get a sense of what we’ve achieved over the five-week period. Our goal is to “titrate” the challenges we present to you each week against your skill-level, to ensure a smooth process of <a class="reference external" href="https://jhufena.github.io/home/preface.html">growth</a> (a.k.a, <a class="reference external" href="https://en.wikipedia.org/wiki/Relaxation_(psychology)">flow)</a> over the next eight weeks.</p>
 <ol class="arabic simple">
 <li><p>How will you use Stata from 04/01/2024-05/17/2024?</p>
@@ -648,7 +648,7 @@ document.write(`
 <ul class="simple">
 <li><p><strong>Feedback Loops:</strong> Constructive feedback is sacred. So we are offering an <a class="reference external" href="https://github.com/jhufena/discussions/discussions">open environment</a> where feedback is given and received, to promote continuous improvement and learning.</p></li>
 <li><p><strong>Skill Expansion:</strong> The course is structured to progressively challenge you with more complex problems and datasets. Growth in this field is about pushing boundaries and constantly seeking to improve.</p></li>
-<li><p><strong>Lifelong Learning:</strong> And remember that learning Stata, like any other skill, is a journey without an end. The landscape of data analysis is always evolving, and so should their skills and understanding. This is partly what motivated our new <a class="reference external" href="https://github.com/jhufena/discussions/discussions">Stata-focused community</a> as well as our <a class="reference external" href="https://jhufena.github.io/home/intro.html">general analytic community</a> that aims to discuss topics at the interface of Stata, R, Python, AI, code, version control, automation, open science, etc.</p></li>
+<li><p><strong>Lifelong Learning:</strong> And remember that learning Stata, like any other skill, is a journey without an end. The landscape of data analysis is always evolving, and so should your skills and understanding. This is partly what motivated our new <a class="reference external" href="https://github.com/jhufena/discussions/discussions">Stata-focused community</a> as well as our <a class="reference external" href="https://jhufena.github.io/home/intro.html">general analytic community</a> that aims to discuss topics at the interface of Stata, R, Python, AI, code, version control, automation, open science, etc.</p></li>
 </ul>
 </li>
 </ol>
@@ -967,8 +967,8 @@ document.write(`
 <li><p>etc.</p></li>
 </ul>
 </section>
-<section id="command">
-<h2>1.2 Command<a class="headerlink" href="#command" title="Permalink to this heading">#</a></h2>
+<section id="commands">
+<h2>1.3 Commands<a class="headerlink" href="#commands" title="Permalink to this heading">#</a></h2>
 <p>Let’s instruct Stata to import some data:</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">webuse</span> lifeexp,<span class="k"> clear</span>
 </pre></div>
@@ -1025,7 +1025,7 @@ Sorted<span class="k"> by</span>:
 <li><p>Name (e.g. <code class="docutils literal notranslate"><span class="pre">c(N)</span></code> and <code class="docutils literal notranslate"><span class="pre">c(k)</span></code>)</p></li>
 <li><p>Content (i.e., number of observations and number of variables)</p></li>
 </ul>
-<p>Such values as we will learn tomorrow are called <u>macros</u>. In this given example, these are system-defined macros. And as you might have already guessed, there are also user-defined macros. More on this tomorrow!</p>
+<p>Such values as we will learn next week are called <a class="reference external" href="https://jhustata.github.io/basic/chapter2.html">macros</a>. In this given example, these are system-defined macros. And as you might have already guessed, there are also user-defined macros. More on this next week!</p>
 <p>For now, let’s perform a basic analysis on our imported data to learn a little more about syntax and output:</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">webuse</span> lifeexp,<span class="k"> clear</span> 
 <span class="k">encode</span> country,<span class="k"> gen</span>(Country)
@@ -1049,7 +1049,7 @@ Sorted<span class="k"> by</span>:
 <p><img alt="" src="_images/lexp_bycountry.png" /></p>
 </section>
 <section id="syntax">
-<h2>1.3 Syntax<a class="headerlink" href="#syntax" title="Permalink to this heading">#</a></h2>
+<h2>1.4 Syntax<a class="headerlink" href="#syntax" title="Permalink to this heading">#</a></h2>
 <p>A few commands are useful on their own:</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">chelp</span>
 <span class="k">pwd</span>
@@ -1172,8 +1172,8 @@ command myfirstprogram is unrecognized
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">1.2 Overview 🦀</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#command">1.2 Command</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#syntax">1.3 Syntax</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#commands">1.3 Commands</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#syntax">1.4 Syntax</a></li>
 </ul>
   </nav></div>
 
