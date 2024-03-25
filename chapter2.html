@@ -358,6 +358,8 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#results-output">Results/Output</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#display-files">Display/Files</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#xlsx">2.1 xlsx</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#log">2.2 log</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dta">2.3 dta</a></li>
@@ -387,7 +389,7 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="return-values-macros-programs">
 <h1>2. Return values, macros, programs<a class="headerlink" href="#return-values-macros-programs" title="Permalink to this heading">#</a></h1>
-<p>Let’s briefly recap what we covered yesterday</p>
+<p>Let’s briefly recap what we covered last week.</p>
 <div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -443,7 +445,8 @@ document.write(`
 <img alt="_images/68b0bc74161d7710f53566e5ee9be406db910130ddbc8f918781f1977ed8e80e.png" src="_images/68b0bc74161d7710f53566e5ee9be406db910130ddbc8f918781f1977ed8e80e.png" />
 </div>
 </div>
-<p>Results/Output</p>
+<section id="results-output">
+<h2>Results/Output<a class="headerlink" href="#results-output" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
 <li><p>A sequence or queue of instructions <code class="docutils literal notranslate"><span class="pre">commands</span> <span class="pre">+</span> <span class="pre">syntax</span> <span class="pre">=</span> <span class="pre">code</span></code> given to Stata via a do-file will generate results</p></li>
 <li><p><u>Never</u> include results in your do-file when you share your work in this class and with future collaborators</p></li>
@@ -451,7 +454,9 @@ document.write(`
 <li><p>Your duty is to share <u>only</u> the <code class="docutils literal notranslate"><span class="pre">input</span></code>, and ours is to reproduce your <code class="docutils literal notranslate"><span class="pre">output</span></code> so as to fullfil our shared Credo</p></li>
 <li><p>Please share your do-files and any third-party ado-files, if at all your script or do-file relies on third-party programs</p></li>
 </ul>
-<p>Display/Files</p>
+</section>
+<section id="display-files">
+<h2>Display/Files<a class="headerlink" href="#display-files" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
 <li><p>.xlsx</p></li>
 <li><p>.log</p></li>
@@ -459,6 +464,7 @@ document.write(`
 <li><p>.docx</p></li>
 <li><p><a class="reference external" href="https://jhustata.github.io/livre/dyndoc.html">.html</a></p></li>
 </ul>
+</section>
 <section id="xlsx">
 <h2>2.1 xlsx<a class="headerlink" href="#xlsx" title="Permalink to this heading">#</a></h2>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> transplants,<span class="k"> clear</span> 
@@ -467,6 +473,9 @@ putexcel A1=<span class="s">&quot;Table 1. Demographic and clinical characterist
 putexcel B1=<span class="s">&quot;N=</span><span class="nv">`c(N)&#39;</span><span class="s">&quot;</span>
 </pre></div>
 </div>
+<p>Please engage with our new <a class="reference external" href="https://github.com/jhufena/discussions/discussions">Stata-focused community</a>, share what you know about the <code class="docutils literal notranslate"><span class="pre">putexcel</span></code> command, ask questions about this command, and contribute solutions to posted problems.</p>
+<p>Copy and paste the code snippet under the title “Sharing Code” into your <code class="docutils literal notranslate"><span class="pre">.do</span></code> file and run the script. Are you able to find your output?</p>
+<p>If you get an error, it’s likely that you did not edit the file path in the code. Always remember to adopt borrrowed code to your needs!</p>
 </section>
 <section id="log">
 <h2>2.2 log<a class="headerlink" href="#log" title="Permalink to this heading">#</a></h2>
@@ -910,6 +919,8 @@ in .xlsx, .log, .dta, .docx, etc.</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#results-output">Results/Output</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#display-files">Display/Files</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#xlsx">2.1 xlsx</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#log">2.2 log</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dta">2.3 dta</a></li>
