@@ -402,7 +402,7 @@ document.write(`
 <li><p>String values as output</p></li>
 <li><p>Numeric values embedded within a string</p>
 <ul class="simple">
-<li><p>By using <code class="docutils literal notranslate"><span class="pre">macros</span></code></p></li>
+<li><p>Using <code class="docutils literal notranslate"><span class="pre">macros</span></code></p></li>
 </ul>
 </li>
 <li><p>Examples beyond .xlsx and .dta</p></li>
@@ -484,10 +484,20 @@ document.write(`
 </section>
 <section id="xlsx">
 <h2>2.1 xlsx<a class="headerlink" href="#xlsx" title="Permalink to this heading">#</a></h2>
+<p>Import a datafile</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> transplants,<span class="k"> clear</span> 
-putexcel<span class="k"> set</span> table1,<span class="k"> replace</span>
-putexcel A1=<span class="s">&quot;Table 1. Demographic and clinical characteristics of kidney transplant recipients&quot;</span>
-putexcel B1=<span class="s">&quot;N=</span><span class="nv">`c(N)&#39;</span><span class="s">&quot;</span>
+</pre></div>
+</div>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">putexcel</span></code> command to create an Excel spread sheet and name it “table1.xlsx”</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>putexcel<span class="k"> set</span> table1,<span class="k"> replace</span>
+</pre></div>
+</div>
+<p>Populate the first row and first column with the text “Table 1. Demographic and clinical characteristics of kidney transplant recipients”</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>putexcel A1=<span class="s">&quot;Table 1. Demographic and clinical characteristics of kidney transplant recipients&quot;</span>
+</pre></div>
+</div>
+<p>Now populate the second row and first column with the total number of observations in the <code class="docutils literal notranslate"><span class="pre">transplants.dta</span></code> dataset</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>putexcel B1=<span class="s">&quot;N=</span><span class="nv">`c(N)&#39;</span><span class="s">&quot;</span>
 </pre></div>
 </div>
 <p>Please engage with our new <a class="reference external" href="https://github.com/jhufena/discussions/discussions">Stata-focused community</a>, share what you know about the <code class="docutils literal notranslate"><span class="pre">putexcel</span></code> command, ask questions about this command, and contribute solutions to posted problems.</p>
@@ -496,11 +506,14 @@ putexcel B1=<span class="s">&quot;N=</span><span class="nv">`c(N)&#39;</span><sp
 </section>
 <section id="log">
 <h2>2.2 log<a class="headerlink" href="#log" title="Permalink to this heading">#</a></h2>
+<p>Input: Stata code in your .do file</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">log</span> using chi2<span class="m">.</span>log,<span class="k"> replace</span> 
 <span class="k">use</span> transplants
 <span class="k">tab</span> dx gender, row  chi2
+<span class="k">log close</span>
 </pre></div>
 </div>
+<p>Output: from the .log file created in the last line of code above</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>.<span class="k"> tab</span> dx gender, row  chi2
 
 <span class="o">+----------------+</span>
@@ -548,22 +561,34 @@ Pearson <span class="nf">chi2</span>(<span class="m">8</span>) =  <span class="m
 . 
 </pre></div>
 </div>
-<p>If you review your log-file you’ll find results similar to those above. But these are not in the typical format seen in peer-reviewed work. For instance, p-values are usually reported in a format that depends on their exact value:</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">return list</span> 
-<span class="k">qui</span> {
-<span class="k">    if</span> <span class="nf">r</span>(p) <span class="o">&lt;</span> <span class="m">0.01</span> {
-<span class="k">	   local</span> p:<span class="k"> di</span> <span class="s">&quot;p &lt; 0.01&quot;</span>
-    }
-<span class="k">    else if</span> <span class="nf">inrange</span>(<span class="nf">r</span>(p),<span class="m">0.01</span>,<span class="m">0.05</span>) {
-<span class="k">	   local</span> p:<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(p)
-    }
-<span class="k">    else</span> {
-<span class="k">	   local</span> p:<span class="k"> di</span> <span class="nx">%2.1f</span> <span class="nf">r</span>(p)
-    }
-<span class="k">	noi di</span> <span class="s">&quot;p = </span><span class="nv">`p&#39;</span><span class="s">&quot;</span>
-}
+<p>To refine and break down the explanation around the “return list” command and the subsequent conditional formatting of p-values in Stata, we can introduce this concept in more accessible parts. This approach will ensure that grad students not only grasp the technical execution but also the reasoning behind these practices in statistical analysis.</p>
+<hr class="docutils" />
+<p>When analyzing data in Stata, one often encounters the need to review or share results in a format that is both informative and easily interpretable. An essential step in this process involves examining the output stored in log-files. These files capture the essence of your analytical work, including statistical tests and their results. A common feature of interest in these results is the p-value, a metric that helps us understand the significance of our findings.</p>
+<p>To start, let’s consider the <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">list</span></code> command:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">return list</span>
 </pre></div>
 </div>
+<p>This command is your gateway to reviewing the most recent test results stored by Stata. It lists out all the statistics calculated by the last command, including the number of observations (<code class="docutils literal notranslate"><span class="pre">r(N)</span></code>), test statistics like chi-squared values (<code class="docutils literal notranslate"><span class="pre">r(chi2)</span></code>), and crucially, the p-value (<code class="docutils literal notranslate"><span class="pre">r(p)</span></code>).</p>
+<p>However, simply listing out the p-value isn’t always enough, especially when preparing your findings for a broader audience, such as in peer-reviewed publications. The reporting of p-values follows specific conventions to enhance clarity and understanding. Let’s explore how to apply these conventions using a conditional formatting approach:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> {
+<span class="k">    if</span> <span class="nf">r</span>(p) <span class="o">&lt;</span> <span class="m">0.01</span> {
+<span class="k">       local</span> p:<span class="k"> di</span> <span class="s">&quot;p &lt; 0.01&quot;</span>
+    }
+<span class="k">    else if</span> <span class="nf">inrange</span>(<span class="nf">r</span>(p),<span class="m">0.01</span>,<span class="m">0.05</span>) {
+<span class="k">       local</span> p:<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(p)
+    }<span class="nv">`</span>
+<span class="nv">    else {</span>
+<span class="nv">       local p: di %2.1f r(p)</span>
+<span class="nv">    }</span>
+<span class="nv">    noi di &quot;p = `p&#39;&quot;</span>
+<span class="nv">}</span>
+</pre></div>
+</div>
+<p>In this script, we start by checking if the p-value is less than 0.01. If so, we report it as “p &lt; 0.01” to indicate a very high level of statistical significance. This convention signals to the reader that the result is significant beyond the conventional thresholds.</p>
+<p>If the p-value falls between 0.01 and 0.05, we report it in a standard numeric format (e.g., 0.03), maintaining two decimal places for precision. This range indicates statistical significance at the conventional 5% level, which is widely accepted in many research disciplines.</p>
+<p>For p-values greater than 0.05, we format them with one decimal place, acknowledging that while the result may not meet the conventional threshold for statistical significance, it is still worth reporting for a comprehensive understanding of the analysis.</p>
+<p>This approach to formatting and reporting p-values is not just about following academic conventions; it’s about making your results clear and interpretable for your audience, facilitating better understanding and discussion of your research findings.</p>
+<p>In practice, here’s how the output might look after applying our formatting script:</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>.<span class="k"> return list</span> 
 
 scalars:
@@ -577,20 +602,9 @@ scalars:
 p = <span class="m">0.02</span>
 </pre></div>
 </div>
-<p>We’ll stop here for purposes of introducing the log-file as one of the file formats used to store output and results from analyes. Let’s close the file now.</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">log close</span> 
-</pre></div>
-</div>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>.<span class="k"> log close</span>
-name:  <span class="o">&lt;</span>unnamed<span class="o">&gt;</span>
-<span class="k">log</span>:  <span class="o">/</span>Users<span class="o">/</span>d<span class="o">/</span>Desktop<span class="o">/</span>chi2<span class="m">.</span>log
-<span class="k">log type</span>:  text
-closed<span class="k"> on</span>:  <span class="m">20</span> Jun <span class="m">2023</span>, <span class="m">05</span>:<span class="m">46</span>:<span class="m">13</span>
-	
-
-<span class="o">--------------------------------------------------------------</span>
-</pre></div>
-</div>
+<p>Notice how the p-value is processed and reported as “0.02” to fit the specified format for p-values between 0.01 and 0.05. This precision in reporting underscores the importance of statistical details in the broader narrative of your research findings.</p>
+<hr class="docutils" />
+<p>By breaking down the explanation around the “return list” command and the formatting of p-values, we aim to provide a clearer understanding for grad students on how to manage and present statistical results in Stata. This foundational knowledge is critical for developing rigorous and transparent research practices.</p>
 <p><a class="reference external" href="https://raw.githubusercontent.com/jhustata/livre/main/chi2.log">chi2.log</a></p>
 </section>
 <section id="dta">

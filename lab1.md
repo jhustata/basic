@@ -7,7 +7,7 @@ Please use this lab as an opportunity to review the course material and prepare 
 
 1. Start Stata and open your do-file editor. 
 
-2. You will now write your first do-file following the guidelines given in [lecture1.do](lecture1.do). 
+2. You will now write your first do-file following the guidelines given in [lecture1.do](https://raw.githubusercontent.com/jhustata/basic/main/lecture1.do). 
 
 3. We want to load `transplants.dta`. You may do so directly from the class website using a URL. Alternatively, you may download this file onto your local machine. In the latter case, let’s check your working directory. See the bottom left side of the console (the main Stata window). You may also type `pwd` on the console. Is it where your `transplants.dta` is located? If not, use one of these two methods:
 
