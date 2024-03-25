@@ -361,7 +361,15 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#results-output">Results/Output</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#display-files">Display/Files</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#xlsx">2.1 xlsx</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#log">2.2 log</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#log">2.2 log</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-the-quietly-command">2.2.1 Introduction to the “quietly” Command</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#handling-p-values-less-than-0-01">2.2.2 Handling p-values Less Than 0.01</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#formatting-p-values-between-0-01-and-0-05">2.2.3 Formatting p-values Between 0.01 and 0.05</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#formatting-p-values-greater-than-0-05">2.2.4 Formatting p-values Greater Than 0.05</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#combining-everything">2.2.5 Combining Everything</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recap-of-the-chi-square-test">2.2.6 Recap of the chi-square test</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dta">2.3 dta</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#docx">2.4 docx</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#putdocx">2.4.1. Putdocx</a></li>
@@ -488,7 +496,7 @@ document.write(`
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> transplants,<span class="k"> clear</span> 
 </pre></div>
 </div>
-<p>Use the <code class="docutils literal notranslate"><span class="pre">putexcel</span></code> command to create an Excel spread sheet and name it “table1.xlsx”</p>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">putexcel</span></code> command to create an Excel spreadsheet and name it “table1.xlsx”</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>putexcel<span class="k"> set</span> table1,<span class="k"> replace</span>
 </pre></div>
 </div>
@@ -506,14 +514,14 @@ document.write(`
 </section>
 <section id="log">
 <h2>2.2 log<a class="headerlink" href="#log" title="Permalink to this heading">#</a></h2>
-<p>Input: Stata code in your .do file</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">log</span> using chi2<span class="m">.</span>log,<span class="k"> replace</span> 
-<span class="k">use</span> transplants
-<span class="k">tab</span> dx gender, row  chi2
-<span class="k">log close</span>
+<p>Let’s input some Stata code into your .do file</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">log</span> using chi2<span class="m">.</span>log,<span class="k"> replace</span> <span class="c1">//creates a .log file</span>
+<span class="k">use</span> transplants,<span class="k"> clear</span> <span class="c1">//imports the datafile</span>
+<span class="k">tab</span> dx gender, row  chi2 <span class="c1">//performs a chi-square test</span>
+<span class="k">log close</span> <span class="c1">//closes the .log file</span>
 </pre></div>
 </div>
-<p>Output: from the .log file created in the last line of code above</p>
+<p>Now lets find the content of the .log file created. When analyzing data in Stata, one often encounters the need to review or share results in a format that is both informative and easily interpretable. An essential step in this process involves examining the output stored in log-files. These files capture the essence of your analytical work, including statistical tests and their results. A common feature of interest in these results is the p-value, a metric that helps us understand the significance of our findings.</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>.<span class="k"> tab</span> dx gender, row  chi2
 
 <span class="o">+----------------+</span>
@@ -561,29 +569,93 @@ Pearson <span class="nf">chi2</span>(<span class="m">8</span>) =  <span class="m
 . 
 </pre></div>
 </div>
-<p>To refine and break down the explanation around the “return list” command and the subsequent conditional formatting of p-values in Stata, we can introduce this concept in more accessible parts. This approach will ensure that grad students not only grasp the technical execution but also the reasoning behind these practices in statistical analysis.</p>
-<hr class="docutils" />
-<p>When analyzing data in Stata, one often encounters the need to review or share results in a format that is both informative and easily interpretable. An essential step in this process involves examining the output stored in log-files. These files capture the essence of your analytical work, including statistical tests and their results. A common feature of interest in these results is the p-value, a metric that helps us understand the significance of our findings.</p>
 <p>To start, let’s consider the <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">list</span></code> command:</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">return list</span>
 </pre></div>
 </div>
 <p>This command is your gateway to reviewing the most recent test results stored by Stata. It lists out all the statistics calculated by the last command, including the number of observations (<code class="docutils literal notranslate"><span class="pre">r(N)</span></code>), test statistics like chi-squared values (<code class="docutils literal notranslate"><span class="pre">r(chi2)</span></code>), and crucially, the p-value (<code class="docutils literal notranslate"><span class="pre">r(p)</span></code>).</p>
 <p>However, simply listing out the p-value isn’t always enough, especially when preparing your findings for a broader audience, such as in peer-reviewed publications. The reporting of p-values follows specific conventions to enhance clarity and understanding. Let’s explore how to apply these conventions using a conditional formatting approach:</p>
+<section id="introduction-to-the-quietly-command">
+<h3>2.2.1 Introduction to the “quietly” Command<a class="headerlink" href="#introduction-to-the-quietly-command" title="Permalink to this heading">#</a></h3>
+<p>The first block introduces the concept of running commands ‘quietly’ in Stata, which suppresses the output in the Results window.</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> {
+    <span class="c1">// Your Stata commands here</span>
+} 
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">qui</span> <span class="pre">{</span></code>: This command is short for ‘quietly’. It tells Stata to execute the commands within the braces without displaying the usual output in the Results window. It’s helpful for keeping your results clean or when you’re only interested in the final outcome rather than seeing every step.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">}</span></code>: This closing brace marks the end of the ‘quietly’ section. After this point, Stata will return to its default behavior, which is to display output for each command.</p></li>
+</ul>
+</section>
+<section id="handling-p-values-less-than-0-01">
+<h3>2.2.2 Handling p-values Less Than 0.01<a class="headerlink" href="#handling-p-values-less-than-0-01" title="Permalink to this heading">#</a></h3>
+<p>The second block explains how to handle cases where p-values are less than 0.01.</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> {
+<span class="k">    if</span> <span class="nf">r</span>(p) <span class="o">&lt;</span> <span class="m">0.01</span> {
+<span class="k">        local</span> p:<span class="k"> di</span> <span class="s">&quot;p &lt; 0.01&quot;</span>
+    }
+}
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">r(p)</span> <span class="pre">&lt;</span> <span class="pre">0.01</span> <span class="pre">{</span></code>: This line checks if the p-value (<code class="docutils literal notranslate"><span class="pre">r(p)</span></code>) from the last statistical test is less than 0.01. If true, the commands inside the braces will execute.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">local</span> <span class="pre">p:</span> <span class="pre">di</span> <span class="pre">&quot;p</span> <span class="pre">&lt;</span> <span class="pre">0.01&quot;</span></code>: Here, if the condition is met, we assign a formatted string “p &lt; 0.01” to a local macro named <code class="docutils literal notranslate"><span class="pre">p</span></code>. This is a concise way to communicate that the test results are highly significant.</p></li>
+</ul>
+</section>
+<section id="formatting-p-values-between-0-01-and-0-05">
+<h3>2.2.3 Formatting p-values Between 0.01 and 0.05<a class="headerlink" href="#formatting-p-values-between-0-01-and-0-05" title="Permalink to this heading">#</a></h3>
+<p>The third block focuses on p-values that fall between 0.01 and 0.05, using precision formatting.</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> {
+<span class="k">    else if</span> <span class="nf">inrange</span>(<span class="nf">r</span>(p),<span class="m">0.01</span>,<span class="m">0.05</span>) {
+<span class="k">        local</span> p:<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(p)
+    }
+}
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">else</span> <span class="pre">if</span> <span class="pre">inrange(r(p),0.01,0.05)</span> <span class="pre">{</span></code>: This line checks if the p-value is within the specified range. The <code class="docutils literal notranslate"><span class="pre">inrange()</span></code> function is versatile, allowing for clear boundary definitions.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">local</span> <span class="pre">p:</span> <span class="pre">di</span> <span class="pre">%3.2f</span> <span class="pre">r(p)</span></code>: For p-values in this range, we format the number to have two decimal places (e.g., 0.03), ensuring clarity and precision in our reporting.</p></li>
+</ul>
+</section>
+<section id="formatting-p-values-greater-than-0-05">
+<h3>2.2.4 Formatting p-values Greater Than 0.05<a class="headerlink" href="#formatting-p-values-greater-than-0-05" title="Permalink to this heading">#</a></h3>
+<p>The fourth block deals with formatting p-values greater than 0.05.</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> {
+<span class="k">    else</span> {
+<span class="k">        local</span> p:<span class="k"> di</span> <span class="nx">%2.1f</span> <span class="nf">r</span>(p)
+    }
+}
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">else</span> <span class="pre">{</span></code>: This part catches any cases not previously covered, essentially p-values greater than 0.05.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">local</span> <span class="pre">p:</span> <span class="pre">di</span> <span class="pre">%2.1f</span> <span class="pre">r(p)</span></code>: Here, we format the p-value to have one decimal place, indicating a less strict interpretation of statistical significance.</p></li>
+</ul>
+</section>
+<section id="combining-everything">
+<h3>2.2.5 Combining Everything<a class="headerlink" href="#combining-everything" title="Permalink to this heading">#</a></h3>
+<p>Finally, we combine all the parts into a cohesive whole, demonstrating how to format p-values based on their value, all within a ‘quietly’ block.</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> { <span class="c1">//asks Stata to work &quot;quietly&quot;, until the corresponding brace is closed at the end</span>
 <span class="k">    if</span> <span class="nf">r</span>(p) <span class="o">&lt;</span> <span class="m">0.01</span> {
 <span class="k">       local</span> p:<span class="k"> di</span> <span class="s">&quot;p &lt; 0.01&quot;</span>
     }
 <span class="k">    else if</span> <span class="nf">inrange</span>(<span class="nf">r</span>(p),<span class="m">0.01</span>,<span class="m">0.05</span>) {
 <span class="k">       local</span> p:<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(p)
-    }<span class="nv">`</span>
-<span class="nv">    else {</span>
-<span class="nv">       local p: di %2.1f r(p)</span>
-<span class="nv">    }</span>
-<span class="nv">    noi di &quot;p = `p&#39;&quot;</span>
-<span class="nv">}</span>
+    }
+<span class="k">    else</span> {
+<span class="k">       local</span> p:<span class="k"> di</span> <span class="nx">%2.1f</span> <span class="nf">r</span>(p)
+    }
+<span class="k">    noi di</span> <span class="s">&quot;p = </span><span class="nv">`p&#39;</span><span class="s">&quot;</span>
+} <span class="c1">//after this brace Stata may return to its default: &quot;noisely&quot; produce output as it runs the program</span>
 </pre></div>
 </div>
+<ul class="simple">
+<li><p>This final block puts everything together, showing how to use <code class="docutils literal notranslate"><span class="pre">qui</span></code> to suppress unnecessary output while precisely formatting p-values according to their significance level. The <code class="docutils literal notranslate"><span class="pre">noi</span> <span class="pre">di</span> <span class="pre">&quot;p</span> <span class="pre">=</span> </code>p’`” line then displays the formatted p-value, completing the explanation of how to communicate statistical results clearly and effectively.</p></li>
+</ul>
+</section>
+<section id="recap-of-the-chi-square-test">
+<h3>2.2.6 Recap of the chi-square test<a class="headerlink" href="#recap-of-the-chi-square-test" title="Permalink to this heading">#</a></h3>
 <p>In this script, we start by checking if the p-value is less than 0.01. If so, we report it as “p &lt; 0.01” to indicate a very high level of statistical significance. This convention signals to the reader that the result is significant beyond the conventional thresholds.</p>
 <p>If the p-value falls between 0.01 and 0.05, we report it in a standard numeric format (e.g., 0.03), maintaining two decimal places for precision. This range indicates statistical significance at the conventional 5% level, which is widely accepted in many research disciplines.</p>
 <p>For p-values greater than 0.05, we format them with one decimal place, acknowledging that while the result may not meet the conventional threshold for statistical significance, it is still worth reporting for a comprehensive understanding of the analysis.</p>
@@ -603,9 +675,8 @@ p = <span class="m">0.02</span>
 </pre></div>
 </div>
 <p>Notice how the p-value is processed and reported as “0.02” to fit the specified format for p-values between 0.01 and 0.05. This precision in reporting underscores the importance of statistical details in the broader narrative of your research findings.</p>
-<hr class="docutils" />
-<p>By breaking down the explanation around the “return list” command and the formatting of p-values, we aim to provide a clearer understanding for grad students on how to manage and present statistical results in Stata. This foundational knowledge is critical for developing rigorous and transparent research practices.</p>
 <p><a class="reference external" href="https://raw.githubusercontent.com/jhustata/livre/main/chi2.log">chi2.log</a></p>
+</section>
 </section>
 <section id="dta">
 <h2>2.3 dta<a class="headerlink" href="#dta" title="Permalink to this heading">#</a></h2>
@@ -887,7 +958,7 @@ in .xlsx, .log, .dta, .docx, etc.</p>
 <p>Please use this lab as an opportunity to review the course material and prepare yourself for the homework questions. An answer key will be on Friday April 5, 2024.</p>
 <ol class="arabic simple">
 <li><p>Start Stata and open your do-file editor.</p></li>
-<li><p>You will now write your first do-file following the guidelines given in <a class="reference download internal" download="" href="_downloads/a7787605d5052ecb514b957c4c83eb7c/lecture1.do"><span class="xref download myst">lecture1.do</span></a>.</p></li>
+<li><p>You will now write your first do-file following the guidelines given in <a class="reference external" href="https://raw.githubusercontent.com/jhustata/basic/main/lecture1.do">lecture1.do</a>.</p></li>
 <li><p>We want to load <code class="docutils literal notranslate"><span class="pre">transplants.dta</span></code>. You may do so directly from the class website using a URL. Alternatively, you may download this file onto your local machine. In the latter case, let’s check your working directory. See the bottom left side of the console (the main Stata window). You may also type <code class="docutils literal notranslate"><span class="pre">pwd</span></code> on the console. Is it where your <code class="docutils literal notranslate"><span class="pre">transplants.dta</span></code> is located? If not, use one of these two methods:</p></li>
 </ol>
 <p>       a) Next time, launch Stata by double-clicking on <code class="docutils literal notranslate"><span class="pre">transplants.dta</span></code>.</p>
@@ -910,6 +981,18 @@ in .xlsx, .log, .dta, .docx, etc.</p>
 </section>
 <section id="homework">
 <h2>2.7 Homework<a class="headerlink" href="#homework" title="Permalink to this heading">#</a></h2>
+<p>Your week 2 homework is nearly as simple as that from week 1:</p>
+<ol class="arabic simple">
+<li><p>Write a .do file which imports data from <a class="reference external" href="https://jhustata.github.io/book/_downloads/884b9e06eb29f89b1b87da4eab39775d/hw1.txt">hw1.txt</a></p></li>
+<li><p>Name it <code class="docutils literal notranslate"><span class="pre">hw2.lastname.firstname.do</span></code></p></li>
+<li><p>It should create a .log file called <code class="docutils literal notranslate"><span class="pre">hw2.lastname.firstname.log</span></code></p></li>
+<li><p>Make sure your log file displays only the output of interest</p></li>
+<li><p>But do not submit your log file as part of the assignment</p></li>
+<li><p>Evaluation will be based on the .log file produced when we run your script on our machines</p></li>
+</ol>
+<p>Questions</p>
+<p><strong>Question 1</strong>. Print the following sentence: <code class="docutils literal notranslate"><span class="pre">Question</span> <span class="pre">1:</span> <span class="pre">The</span> <span class="pre">median</span> <span class="pre">[IQR]</span> <span class="pre">age</span> <span class="pre">is</span> <span class="pre">XX</span> <span class="pre">[XX-XX]</span> <span class="pre">among</span> <span class="pre">males</span> <span class="pre">and</span> <span class="pre">XX</span> <span class="pre">[XX-XX]</span> <span class="pre">among</span> <span class="pre">females.</span></code> IQR stands for interquartile range. The <code class="docutils literal notranslate"><span class="pre">XX</span></code> values should be replaced with correct values, rounded to the nearest whole number (for example, <code class="docutils literal notranslate"><span class="pre">47</span></code>). Ignore missing values; that is, calculate median [IQR] only using the non-missing values.</p>
+<p><strong>Question 2</strong>. Print the following sentence: <code class="docutils literal notranslate"><span class="pre">Question</span> <span class="pre">2:</span> <span class="pre">XX.X%</span> <span class="pre">among</span> <span class="pre">males</span> <span class="pre">and</span> <span class="pre">XX.X%</span> <span class="pre">among</span> <span class="pre">females</span> <span class="pre">have</span> <span class="pre">history</span> <span class="pre">of</span> <span class="pre">previous</span> <span class="pre">transplant.</span></code> The <code class="docutils literal notranslate"><span class="pre">XX.X%</span></code> values should be replaced with correct percentage values, with <u>one decimal value</u> to the right of the decimal place (for example, <code class="docutils literal notranslate"><span class="pre">10.5%</span></code>).</p>
 </section>
 </section>
 
@@ -983,7 +1066,15 @@ in .xlsx, .log, .dta, .docx, etc.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#results-output">Results/Output</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#display-files">Display/Files</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#xlsx">2.1 xlsx</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#log">2.2 log</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#log">2.2 log</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-the-quietly-command">2.2.1 Introduction to the “quietly” Command</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#handling-p-values-less-than-0-01">2.2.2 Handling p-values Less Than 0.01</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#formatting-p-values-between-0-01-and-0-05">2.2.3 Formatting p-values Between 0.01 and 0.05</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#formatting-p-values-greater-than-0-05">2.2.4 Formatting p-values Greater Than 0.05</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#combining-everything">2.2.5 Combining Everything</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recap-of-the-chi-square-test">2.2.6 Recap of the chi-square test</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dta">2.3 dta</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#docx">2.4 docx</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#putdocx">2.4.1. Putdocx</a></li>
