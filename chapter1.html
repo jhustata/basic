@@ -1045,6 +1045,12 @@ Sorted<span class="k"> by</span>:
 </ul>
 <p>These are examples of what are known as macros. Specifically, they are system-defined macros. We will also explore user-defined macros, which you can create yourself, in our next session.</p>
 <p>Now, let’s practice some basic data analysis with our imported dataset to understand more about Stata syntax and outputs. We’ll go through each line of code and add explanations:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">webuse</span> <span class="n">lifeexp</span><span class="p">,</span> <span class="n">clear</span> 
+<span class="n">encode</span> <span class="n">country</span><span class="p">,</span> <span class="n">gen</span><span class="p">(</span><span class="n">Country</span><span class="p">)</span>
+<span class="n">twoway</span> <span class="n">scatter</span> <span class="n">lexp</span> <span class="n">Country</span><span class="p">,</span> <span class="n">xscale</span><span class="p">(</span><span class="n">off</span><span class="p">)</span>
+<span class="n">graph</span> <span class="n">export</span> <span class="n">lexp_bycountry</span><span class="o">.</span><span class="n">png</span><span class="p">,</span> <span class="n">replace</span> 
+</pre></div>
+</div>
 <ol class="arabic simple">
 <li><p><strong>Loading the Data</strong>: <code class="docutils literal notranslate"><span class="pre">webuse</span> <span class="pre">lifeexp,</span> <span class="pre">clear</span></code></p>
 <ul class="simple">
@@ -1069,13 +1075,19 @@ Sorted<span class="k"> by</span>:
 </ol>
 <p>By following these steps, you’re performing a basic yet insightful analysis of your data, exploring the relationship between countries and life expectancy. This hands-on approach will help you become more familiar with Stata’s syntax and how to interpret the outputs of your analyses.</p>
 <p><img alt="" src="_images/lexp_bycountry.png" /></p>
-<p>. webuse lifeexp, clear
-(Life expectancy, 1998)</p>
-<p>. encode country, gen(Country)</p>
-<p>. twoway scatter lexp Country, xscale(off)</p>
-<p>. graph export lexp_bycountry.png, replace
-file /Users/d/Desktop/lexp_bycountry.png saved as PNG format</p>
-<p>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">.</span> <span class="n">webuse</span> <span class="n">lifeexp</span><span class="p">,</span> <span class="n">clear</span> 
+<span class="p">(</span><span class="n">Life</span> <span class="n">expectancy</span><span class="p">,</span> <span class="mi">1998</span><span class="p">)</span>
+
+<span class="o">.</span> <span class="n">encode</span> <span class="n">country</span><span class="p">,</span> <span class="n">gen</span><span class="p">(</span><span class="n">Country</span><span class="p">)</span>
+
+<span class="o">.</span> <span class="n">twoway</span> <span class="n">scatter</span> <span class="n">lexp</span> <span class="n">Country</span><span class="p">,</span> <span class="n">xscale</span><span class="p">(</span><span class="n">off</span><span class="p">)</span>
+
+<span class="o">.</span> <span class="n">graph</span> <span class="n">export</span> <span class="n">lexp_bycountry</span><span class="o">.</span><span class="n">png</span><span class="p">,</span> <span class="n">replace</span> 
+<span class="n">file</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">d</span><span class="o">/</span><span class="n">Desktop</span><span class="o">/</span><span class="n">lexp_bycountry</span><span class="o">.</span><span class="n">png</span> <span class="n">saved</span> <span class="k">as</span> <span class="n">PNG</span> <span class="nb">format</span>
+
+<span class="o">.</span> 
+</pre></div>
+</div>
 </section>
 <section id="syntax">
 <h2>1.4 Syntax<a class="headerlink" href="#syntax" title="Permalink to this heading">#</a></h2>
