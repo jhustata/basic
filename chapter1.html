@@ -524,6 +524,7 @@ document.write(`
 </div>
 <section id="philosophy">
 <h2>1.1 Philosophy<a class="headerlink" href="#philosophy" title="Permalink to this heading">#</a></h2>
+<p>In embarking on the journey of mastering Stata for data analysis and statistical programming, we adhere to a philosophy that is both pragmatic and reflective.</p>
 <section id="receive-with-simplicity">
 <h3>1.1.1 Receive &amp; with Simplicity<a class="headerlink" href="#receive-with-simplicity" title="Permalink to this heading">#</a></h3>
 <ol class="arabic simple">
@@ -538,12 +539,12 @@ document.write(`
 <li><p>Installation</p>
 <ul>
 <li><p><a class="reference external" href="http://download.stata.com">download.stata.com</a></p></li>
-<li><p>Username:  01682535723 (from email)</p>
+<li><p>Username:  0123456789 (from email)</p>
 <ul>
 <li><p>You’ll use it again even with future purchases</p></li>
 </ul>
 </li>
-<li><p>Password: $3(re+ (your choice)</p></li>
+<li><p>Password: <code class="docutils literal notranslate"><span class="pre">$3(re+</span></code> (your choice)</p></li>
 <li><p>Serial number (from purchase)</p>
 <ul>
 <li><p>Perpetual license (expensive)</p></li>
@@ -572,14 +573,19 @@ document.write(`
 <ul>
 <li><p>340.600 Stata Programming I (Basic)</p></li>
 <li><p>340.700 Stata Programming II (Intermediate)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">340.800</span> <span class="pre">Stata</span> <span class="pre">Programming</span> <span class="pre">III</span> <span class="pre">(Advanced)?</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">340.800</span> <span class="pre">Stata</span> <span class="pre">Programming</span> <span class="pre">III</span> <span class="pre">(Advanced)</span></code></p></li>
 </ul>
 </li>
 </ul>
 </li>
 <li><p>Challenges</p>
 <ul class="simple">
-<li><p><a class="reference external" href="https://jhufena.github.io/home/intro.html">Foundational</a></p></li>
+<li><p><a class="reference external" href="https://jhufena.github.io/home/intro.html">Foundational</a></p>
+<ul>
+<li><p>Epi 750 series</p></li>
+<li><p>Biostats 140 series</p></li>
+</ul>
+</li>
 <li><p>Hopkins</p>
 <ul>
 <li><p><a class="reference external" href="https://jhustata.github.io/basic/quickrefs.html#labs-schedule">Labs/Practice</a></p></li>
@@ -605,6 +611,9 @@ document.write(`
 </li>
 </ul>
 </li>
+<li><p>National Databases</p></li>
+<li><p>Clinical Studies</p></li>
+<li><p>Longitudinal Cohorts</p></li>
 </ul>
 </li>
 </ul>
@@ -723,7 +732,7 @@ document.write(`
 </li>
 <li><p>Third-party (typically <code class="docutils literal notranslate"><span class="pre">.ado</span></code> files)</p>
 <ul>
-<li><p>When I type <code class="docutils literal notranslate"><span class="pre">which</span> <span class="pre">table1_afecdvi</span></code> I get <code class="docutils literal notranslate"><span class="pre">/Applications/Stata/ado/base/t/table1_afecdvi.ado</span></code></p></li>
+<li><p>When I type <code class="docutils literal notranslate"><span class="pre">which</span> <span class="pre">table1_fena</span></code> I get <code class="docutils literal notranslate"><span class="pre">/Applications/Stata/ado/base/t/table1_fena.ado</span></code></p></li>
 </ul>
 </li>
 <li><p>Your <code class="docutils literal notranslate"><span class="pre">.ado</span></code> files (you’ll learn to write &amp; install your own programs)</p>
@@ -755,7 +764,7 @@ document.write(`
 </ul>
 <p>The <code class="docutils literal notranslate"><span class="pre">system</span></code> is the <u>Stata application</u> and its a simple noun. It is not <strike>STATA</strike>, which gives the impression of being an acronym. I presume you’ve all installed Stata onto your local machines. If not I presume you’ll be doing so very soon or you will be remotely accessing it. The <code class="docutils literal notranslate"><span class="pre">user</span></code> includes you, me, the teaching assistants, collaborators, or strangers.</p>
 <p>As a user, you will or have already downloaded and installed a system of programs, mostly ado-files, which form the foundation of all the commands you will be using in Stata. These are the <strong>native</strong> Stata system files.</p>
-<p>But soon you will begin to write your own Stata programs or <code class="docutils literal notranslate"><span class="pre">.ado</span></code> files and install them into the system folders (as I’ve done with <code class="docutils literal notranslate"><span class="pre">table1_afecdvi.ado</span></code>). Then, it will be helpful to think of your role as part of the system. In your new role as system, it will be helpful to anticipate the needs of the known and unknown future users of your program. This will call for <strong>empathy</strong> (anticipating user needs), <strong>sharing</strong> (your code with others), and <strong>caring</strong> (that its user-friendly).</p>
+<p>But soon you will begin to write your own Stata programs or <code class="docutils literal notranslate"><span class="pre">.ado</span></code> files and install them into the system folders (as I’ve done with <code class="docutils literal notranslate"><span class="pre">table1_fena.ado</span></code>). Then, it will be helpful to think of your role as part of the system. In your new role as system, it will be helpful to anticipate the needs of the known and unknown future users of your program. This will call for <strong>empathy</strong> (anticipating user needs), <strong>sharing</strong> (your code with others), and <strong>caring</strong> (that its user-friendly).</p>
 <ul class="simple">
 <li><p>Installation</p>
 <ul>
@@ -1094,7 +1103,7 @@ command myfirstprogram is unrecognized
 . 
 </pre></div>
 </div>
-<p>The words that come after the command might be further commands or subcommands. If so, they’ll also be rendered blue on my machine. The ones that appear in white or black (dark or light mode) are either third-party programs/commands or they are part of the Stata syntax. By the end of tomorrow you’ll be writing your first program (which becomes a Stata command). And by Wednesday you’ll be adding requirements for syntax, which introduces <u>user-defined</u> input.</p>
+<p>The words that come after the command might be further commands or subcommands. If so, they’ll also be rendered blue on my machine. The ones that appear in white or black (dark or light mode) are either third-party programs/commands or they are part of the Stata syntax. By the end of next week you’ll be writing your first program (which becomes a Stata command). And by week three you’ll be adding requirements for syntax, which introduces <u>user-defined</u> input.</p>
 </section>
 </section>
 
