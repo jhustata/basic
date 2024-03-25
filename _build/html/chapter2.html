@@ -376,6 +376,8 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Author, MD MPH</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab">2.6 Lab</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#homework">2.7 Homework</a></li>
 </ul>
             </nav>
         </div>
@@ -389,7 +391,22 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="return-values-macros-programs">
 <h1>2. Return values, macros, programs<a class="headerlink" href="#return-values-macros-programs" title="Permalink to this heading">#</a></h1>
-<p>Let’s briefly recap what we covered last week.</p>
+<p>Let’s briefly recap what we covered last week and what you’ve practiced this week in <a class="reference internal" href="lab1.html"><span class="doc std std-doc">lab</span></a>:</p>
+<ol class="arabic simple">
+<li><p>Importing data</p></li>
+<li><p>Performing basic queries</p></li>
+<li><p>Outputing some of your findings into .xlsx, .log, etc.</p></li>
+</ol>
+<p>Today we’ll build on these ideas:</p>
+<ol class="arabic simple">
+<li><p>String values as output</p></li>
+<li><p>Numeric values embedded within a string</p>
+<ul class="simple">
+<li><p>By using <code class="docutils literal notranslate"><span class="pre">macros</span></code></p></li>
+</ul>
+</li>
+<li><p>Examples beyond .xlsx and .dta</p></li>
+</ol>
 <div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -475,7 +492,7 @@ putexcel B1=<span class="s">&quot;N=</span><span class="nv">`c(N)&#39;</span><sp
 </div>
 <p>Please engage with our new <a class="reference external" href="https://github.com/jhufena/discussions/discussions">Stata-focused community</a>, share what you know about the <code class="docutils literal notranslate"><span class="pre">putexcel</span></code> command, ask questions about this command, and contribute solutions to posted problems.</p>
 <p>Copy and paste the code snippet under the title “Sharing Code” into your <code class="docutils literal notranslate"><span class="pre">.do</span></code> file and run the script. Are you able to find your output?</p>
-<p>If you get an error, it’s likely that you did not edit the file path in the code. Always remember to adopt borrrowed code to your needs!</p>
+<p>If you get an error, it’s likely that you did not edit the file path in the code. Always remember to adapt borrrowed code to your needs!</p>
 </section>
 <section id="log">
 <h2>2.2 log<a class="headerlink" href="#log" title="Permalink to this heading">#</a></h2>
@@ -850,6 +867,36 @@ In walking you through syntax, do-file creation, queued commands, generated resu
 in .xlsx, .log, .dta, .docx, etc.</p>
 </section>
 </section>
+<section id="lab">
+<h2>2.6 Lab<a class="headerlink" href="#lab" title="Permalink to this heading">#</a></h2>
+<p>data: <a class="reference external" href="https://jhustata.github.io/basic/_downloads/34a8255f06036b44354b3c36c5583d7e/transplants.dta">transplants.dta</a></p>
+<p>Please use this lab as an opportunity to review the course material and prepare yourself for the homework questions. An answer key will be on Friday April 5, 2024.</p>
+<ol class="arabic simple">
+<li><p>Start Stata and open your do-file editor.</p></li>
+<li><p>You will now write your first do-file following the guidelines given in <a class="reference download internal" download="" href="_downloads/a7787605d5052ecb514b957c4c83eb7c/lecture1.do"><span class="xref download myst">lecture1.do</span></a>.</p></li>
+<li><p>We want to load <code class="docutils literal notranslate"><span class="pre">transplants.dta</span></code>. You may do so directly from the class website using a URL. Alternatively, you may download this file onto your local machine. In the latter case, let’s check your working directory. See the bottom left side of the console (the main Stata window). You may also type <code class="docutils literal notranslate"><span class="pre">pwd</span></code> on the console. Is it where your <code class="docutils literal notranslate"><span class="pre">transplants.dta</span></code> is located? If not, use one of these two methods:</p></li>
+</ol>
+<p>       a) Next time, launch Stata by double-clicking on <code class="docutils literal notranslate"><span class="pre">transplants.dta</span></code>.</p>
+<p>       b) Type <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">c:\your\actual\path</span></code> (windows OS) on the console (NOT in your do file). In class and on my Mac OS my directory was <code class="docutils literal notranslate"><span class="pre">/Users/d/desktop</span></code></p>
+<ol class="arabic simple" start="4">
+<li><p>Now let’s get back to your do file. Load <code class="docutils literal notranslate"><span class="pre">transplants.dta</span></code> (double-click on the file or type <code class="docutils literal notranslate"><span class="pre">use</span> <span class="pre">transplants.dta,</span> <span class="pre">clear</span></code>)</p></li>
+<li><p>How many observations does the dataset have?</p></li>
+<li><p>How many adults (age&gt;18) does the dataset have?</p></li>
+<li><p>How many observations have missing bmi?</p></li>
+<li><p>Generate a new variable called agecat. The value of agecat is 1 for patients younger than 18, 2 for those from 18 to 65, and 3 for those older than 65.</p></li>
+<li><p>What are the means of age and bmi?</p></li>
+<li><p>Now preserve your dataset (type <code class="docutils literal notranslate"><span class="pre">help</span> <span class="pre">preserve</span></code> to learn more).</p></li>
+<li><p>Drop all patients who are younger than 18 or older than 65, or have missing value for age.</p></li>
+<li><p>Again, what are the means of age and bmi? restore the dataset. Yet again, what are the means of age and bmi?</p></li>
+<li><p>What happened? Leave a comment on your do-file explaining what you just did. Remember, your homework (and all other) .do file scripts should have 1-3 comments per block of code. Do not use your comments/annotation to define the Stata commands you’ve used. Thats what the <code class="docutils literal notranslate"><span class="pre">help</span></code> command is for. Instead, give yourself or a reader some context.</p></li>
+<li><p>Lab 1 is almost over. Let Stata say “that was easy!”</p></li>
+<li><p>The last bit. Close your log file. Never forget to close log files! If you hadn’t created a log file, this is a reminder to do so.</p></li>
+<li><p>You have all your commands so far in your do file, right? Run your entire do file and make sure your do file does exactly the same thing.</p></li>
+</ol>
+</section>
+<section id="homework">
+<h2>2.7 Homework<a class="headerlink" href="#homework" title="Permalink to this heading">#</a></h2>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -937,6 +984,8 @@ in .xlsx, .log, .dta, .docx, etc.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Author, MD MPH</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab">2.6 Lab</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#homework">2.7 Homework</a></li>
 </ul>
   </nav></div>
 
