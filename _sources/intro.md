@@ -37,7 +37,7 @@ Regarding academic integrity, we encourage the use of small code snippets from b
 tokenize `c(ALPHA)'  // Adapted from https://www.statalist.org/forums/forum/general-stata-discussion/general/1380433-creating-a-counter-with-alphabets
 ```
 
-Leveraging AI, including ChatGPT, as a co-pilot, guide, or assistant, is <u>strongly encouraged</u> both during and after this course. [Learn more](labs.md).
+Leveraging AI, including ChatGPT, as a co-pilot, guide, or assistant, is <u>strongly encouraged</u> both during and after this course. **Learn more**.
 
 ## Table of Contents
 
