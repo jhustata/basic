@@ -388,7 +388,7 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab">2.6 Lab</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#homework">2.7 Homework</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#homework">2.6 Homework</a></li>
 </ul>
             </nav>
         </div>
@@ -953,33 +953,10 @@ in .xlsx, .log, .dta, .docx, etc.</p>
 </section>
 <section id="lab">
 <h2>2.6 Lab<a class="headerlink" href="#lab" title="Permalink to this heading">#</a></h2>
-<p>data: <a class="reference external" href="https://jhustata.github.io/basic/_downloads/34a8255f06036b44354b3c36c5583d7e/transplants.dta">transplants.dta</a></p>
-<p>Please use this lab as an opportunity to review the course material and prepare yourself for the homework questions. An answer key will be on Friday April 5, 2024.</p>
-<ol class="arabic simple">
-<li><p>Start Stata and open your do-file editor.</p></li>
-<li><p>You will now write your first do-file following the guidelines given in <a class="reference external" href="https://raw.githubusercontent.com/jhustata/basic/main/lecture1.do">lecture1.do</a>.</p></li>
-<li><p>We want to load <code class="docutils literal notranslate"><span class="pre">transplants.dta</span></code>. You may do so directly from the class website using a URL. Alternatively, you may download this file onto your local machine. In the latter case, let’s check your working directory. See the bottom left side of the console (the main Stata window). You may also type <code class="docutils literal notranslate"><span class="pre">pwd</span></code> on the console. Is it where your <code class="docutils literal notranslate"><span class="pre">transplants.dta</span></code> is located? If not, use one of these two methods:</p></li>
-</ol>
-<p>       a) Next time, launch Stata by double-clicking on <code class="docutils literal notranslate"><span class="pre">transplants.dta</span></code>.</p>
-<p>       b) Type <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">c:\your\actual\path</span></code> (windows OS) on the console (NOT in your do file). In class and on my Mac OS my directory was <code class="docutils literal notranslate"><span class="pre">/Users/d/desktop</span></code></p>
-<ol class="arabic simple" start="4">
-<li><p>Now let’s get back to your do file. Load <code class="docutils literal notranslate"><span class="pre">transplants.dta</span></code> (double-click on the file or type <code class="docutils literal notranslate"><span class="pre">use</span> <span class="pre">transplants.dta,</span> <span class="pre">clear</span></code>)</p></li>
-<li><p>How many observations does the dataset have?</p></li>
-<li><p>How many adults (age&gt;18) does the dataset have?</p></li>
-<li><p>How many observations have missing bmi?</p></li>
-<li><p>Generate a new variable called agecat. The value of agecat is 1 for patients younger than 18, 2 for those from 18 to 65, and 3 for those older than 65.</p></li>
-<li><p>What are the means of age and bmi?</p></li>
-<li><p>Now preserve your dataset (type <code class="docutils literal notranslate"><span class="pre">help</span> <span class="pre">preserve</span></code> to learn more).</p></li>
-<li><p>Drop all patients who are younger than 18 or older than 65, or have missing value for age.</p></li>
-<li><p>Again, what are the means of age and bmi? restore the dataset. Yet again, what are the means of age and bmi?</p></li>
-<li><p>What happened? Leave a comment on your do-file explaining what you just did. Remember, your homework (and all other) .do file scripts should have 1-3 comments per block of code. Do not use your comments/annotation to define the Stata commands you’ve used. Thats what the <code class="docutils literal notranslate"><span class="pre">help</span></code> command is for. Instead, give yourself or a reader some context.</p></li>
-<li><p>Lab 1 is almost over. Let Stata say “that was easy!”</p></li>
-<li><p>The last bit. Close your log file. Never forget to close log files! If you hadn’t created a log file, this is a reminder to do so.</p></li>
-<li><p>You have all your commands so far in your do file, right? Run your entire do file and make sure your do file does exactly the same thing.</p></li>
-</ol>
+<p>We’ll revise the questions you discussed in <a class="reference internal" href="lab1.html"><span class="doc std std-doc">lab 1</span></a>, and incorporate our new knowledge about macros and conditional statements</p>
 </section>
 <section id="homework">
-<h2>2.7 Homework<a class="headerlink" href="#homework" title="Permalink to this heading">#</a></h2>
+<h2>2.6 Homework<a class="headerlink" href="#homework" title="Permalink to this heading">#</a></h2>
 <p>Your week 2 homework is nearly as simple as that from week 1:</p>
 <ol class="arabic simple">
 <li><p>Write a .do file which imports data from <a class="reference external" href="https://jhustata.github.io/book/_downloads/884b9e06eb29f89b1b87da4eab39775d/hw1.txt">hw1.txt</a></p></li>
@@ -1089,7 +1066,7 @@ in .xlsx, .log, .dta, .docx, etc.</p>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab">2.6 Lab</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#homework">2.7 Homework</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#homework">2.6 Homework</a></li>
 </ul>
   </nav></div>
 
