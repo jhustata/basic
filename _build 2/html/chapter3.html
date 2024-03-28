@@ -1,0 +1,1855 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>3. Loops, Program Syntax, and Miscellany &#8212; Stata Programming</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapter3';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="4. Advanced file management" href="chapter4.html" />
+    <link rel="prev" title="2. Return values, macros, programs" href="chapter2.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="https://brand.jhu.edu/assets/uploads/sites/5/2014/06/university_logo_small_vertical_blue.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="https://brand.jhu.edu/assets/uploads/sites/5/2014/06/university_logo_small_vertical_blue.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Preface
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="chapter1.html">1. Philosophy, overview, commands, syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter2.html">2. Return values, macros, programs</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">3. Loops, Program Syntax, and Miscellany</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter4.html">4. Advanced file management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter5.html">5. Graphs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter6.html">6. Review of Weeks 1-5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter7.html">7. Survival Analysis: Non-parametric, Semi-parametric, Parametric</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter8.html">8. Multilevel, Hierarchical Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickrefs.html">Quick References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fchapter3.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/chapter3.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>3. Loops, Program Syntax, and Miscellany</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loops">3.1 Loops</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iterating-over-numeric-values-in-stata">3.1.1 Iterating Over Numeric Values in Stata</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#what-this-does">What This Does</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#why-it-s-useful">Why It’s Useful</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#but-here-s-the-catch">But Here’s the Catch</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-opinionated-part">The Opinionated Part</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#in-conclusion">In Conclusion</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#output">Output</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iterating-over-variables-with-foreach-in-stata">Iterating Over Variables with <code class="docutils literal notranslate"><span class="pre">foreach</span></code> in Stata</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-mechanics">The Mechanics</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#why-it-s-a-game-changer">Why It’s a Game-Changer</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-caveat">The Caveat</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-opinionated-angle">The Opinionated Angle</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#wrapping-up">Wrapping Up</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Output</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#over-string-values">3.1.2 Over string values</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-subtle-twist-in-variable-iteration-quotation-marks-in-foreach">A Subtle Twist in Variable Iteration: Quotation Marks in <code class="docutils literal notranslate"><span class="pre">foreach</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-subtle-change">The Subtle Change</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#why-it-matters">Why It Matters</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#beyond-syntax-embracing-good-practices">Beyond Syntax: Embracing Good Practices</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-larger-lesson">The Larger Lesson</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#final-thoughts">Final Thoughts</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Output</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analyzing-variable-significance-with-loops">Analyzing Variable Significance with Loops</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-process">The Process</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#output-interpretation">Output Interpretation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#insights-and-notes">Insights and Notes</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-bigger-picture">The Bigger Picture</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Output</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#finessed-by-gpt-3">Finessed by GPT-3</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#enhancing-data-presentation-with-putexcel">Enhancing Data Presentation with <code class="docutils literal notranslate"><span class="pre">putexcel</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-process-in-detail">The Process in Detail</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bridging-lectures-the-continuity-from-lecture-2">Bridging Lectures: The Continuity from Lecture 2</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#engage-and-explore">Engage and Explore</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Final Thoughts</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#decoding-the-process">Decoding the Process</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-underlying-wisdom">The Underlying Wisdom</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#embrace-the-complexity">Embrace the Complexity</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#programming">3.2 Programming</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#myfirst">3.2.1 myfirst</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mysecond">3.2.2 mysecond</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mythird">3.2.3 mythird</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#myfourth">3.2.4. myfourth</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#miscellany">3.3 Miscellany</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="loops-program-syntax-and-miscellany">
+<h1>3. Loops, Program Syntax, and Miscellany<a class="headerlink" href="#loops-program-syntax-and-miscellany" title="Permalink to this heading">#</a></h1>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="c1">#import numpy as np</span>
+<span class="c1">#import sklearn as skl</span>
+<span class="c1"># </span>
+
+<span class="c1">#plt.figure(figsize=[2, 2])</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">()</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;user&quot;</span><span class="p">,</span>  <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="mi">550</span><span class="p">,</span><span class="mi">500</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;system&quot;</span><span class="p">,</span>  <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">550</span><span class="p">,</span><span class="mi">500</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;program&quot;</span><span class="p">,</span>  <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">2000</span><span class="p">,</span> <span class="mi">960</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;syntax&quot;</span><span class="p">,</span>  <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="mi">950</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;ado&quot;</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">3000</span><span class="p">,</span> <span class="mi">550</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;do&quot;</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3000</span><span class="p">,</span> <span class="mi">550</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;command&quot;</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">1900</span><span class="p">,</span> <span class="mi">150</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;queue&quot;</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1900</span><span class="p">,</span> <span class="mi">150</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;results&quot;</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;dta&quot;</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">475</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">1900</span><span class="p">,</span> <span class="o">-</span><span class="mi">475</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;excel&quot;</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">4000</span><span class="p">,</span> <span class="o">-</span><span class="mi">475</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;word&quot;</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1900</span><span class="p">,</span> <span class="o">-</span><span class="mi">475</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;html&quot;</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="mi">4000</span><span class="p">,</span> <span class="o">-</span><span class="mi">475</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;publish&quot;</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">950</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([</span> <span class="p">(</span><span class="s2">&quot;program&quot;</span><span class="p">,</span><span class="s2">&quot;ado&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;syntax&quot;</span><span class="p">,</span> <span class="s2">&quot;do&quot;</span><span class="p">)])</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s2">&quot;ado&quot;</span><span class="p">,</span> <span class="s2">&quot;command&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;do&quot;</span><span class="p">,</span> <span class="s2">&quot;queue&quot;</span><span class="p">)</span> <span class="p">])</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s2">&quot;command&quot;</span><span class="p">,</span> <span class="s2">&quot;results&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;queue&quot;</span><span class="p">,</span> <span class="s2">&quot;results&quot;</span><span class="p">),(</span><span class="s2">&quot;results&quot;</span><span class="p">,</span><span class="s2">&quot;excel&quot;</span><span class="p">),(</span><span class="s2">&quot;results&quot;</span><span class="p">,</span><span class="s2">&quot;word&quot;</span><span class="p">),(</span><span class="s2">&quot;results&quot;</span><span class="p">,</span><span class="s2">&quot;html&quot;</span><span class="p">)])</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s2">&quot;results&quot;</span><span class="p">,</span><span class="s2">&quot;dta&quot;</span><span class="p">),(</span><span class="s2">&quot;results&quot;</span><span class="p">,</span><span class="s2">&quot;log&quot;</span><span class="p">)])</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s2">&quot;dta&quot;</span><span class="p">,</span><span class="s2">&quot;publish&quot;</span><span class="p">),(</span><span class="s2">&quot;log&quot;</span><span class="p">,</span><span class="s2">&quot;publish&quot;</span><span class="p">),(</span><span class="s2">&quot;excel&quot;</span><span class="p">,</span><span class="s2">&quot;publish&quot;</span><span class="p">),(</span><span class="s2">&quot;word&quot;</span><span class="p">,</span><span class="s2">&quot;publish&quot;</span><span class="p">),(</span><span class="s2">&quot;html&quot;</span><span class="p">,</span><span class="s2">&quot;publish&quot;</span><span class="p">)])</span>
+<span class="n">nx</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> 
+        <span class="n">nx</span><span class="o">.</span><span class="n">get_node_attributes</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="s1">&#39;pos&#39;</span><span class="p">),</span> 
+        <span class="n">with_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
+        <span class="n">font_weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span> 
+        <span class="n">node_size</span> <span class="o">=</span> <span class="mi">4500</span><span class="p">,</span>
+        <span class="n">node_color</span> <span class="o">=</span> <span class="s2">&quot;lightblue&quot;</span><span class="p">,</span>
+        <span class="n">linewidths</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">collections</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_edgecolor</span><span class="p">(</span><span class="s2">&quot;#000000&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="o">-</span><span class="mi">5000</span><span class="p">,</span> <span class="mi">5000</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="o">-</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/68b0bc74161d7710f53566e5ee9be406db910130ddbc8f918781f1977ed8e80e.png" src="_images/68b0bc74161d7710f53566e5ee9be406db910130ddbc8f918781f1977ed8e80e.png" />
+</div>
+</div>
+<p>By now you should be aware that our key ambitions are to:</p>
+<ol class="arabic simple">
+<li><p>Learn the commands and syntax that generate output, typically for statistical inference</p></li>
+<li><p>Identify the names of the <code class="docutils literal notranslate"><span class="pre">c()</span></code>, <code class="docutils literal notranslate"><span class="pre">r()</span></code>, or <code class="docutils literal notranslate"><span class="pre">e()</span></code> class <u>system-defined</u> macros that define key parameters in our output</p></li>
+<li><p>Format these values to fit aesthetic, publication, or editorial criteria and save them as <u>user-defined</u> macros</p></li>
+<li><p>Embed the macros into text, graph, or file (.xlsx, .log, .dta, .docx, .html)</p></li>
+<li><p>Achieve these aims in a workflow that is automated, collaborative, open, reproducible, legible, user-friendly, and therefore <strong>rigorous</strong></p></li>
+</ol>
+<p>Today we are going to focus on commands and syntax that exponentially increase our efficiency in coding, a key step towards automation. One way to achieve this is by learning about loops. The other is by writing flexible programs that are driven by user-defined inputs. We’ll also include miscellaneous code-snippets that you’ll incorporate into your loops and programs</p>
+<section id="loops">
+<h2>3.1 Loops<a class="headerlink" href="#loops" title="Permalink to this heading">#</a></h2>
+<section id="iterating-over-numeric-values-in-stata">
+<h3>3.1.1 Iterating Over Numeric Values in Stata<a class="headerlink" href="#iterating-over-numeric-values-in-stata" title="Permalink to this heading">#</a></h3>
+<p>In the realm of data analysis, especially when dealing with repetitive tasks, loops are your steadfast allies. They save time, reduce errors, and make your code cleaner. Consider the following Stata code snippet:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">forvalues</span> i = <span class="m">1</span><span class="o">/</span><span class="m">26</span> {
+<span class="k">    di</span> <span class="nv">`i&#39;</span>
+}
+</pre></div>
+</div>
+<section id="what-this-does">
+<h4>What This Does<a class="headerlink" href="#what-this-does" title="Permalink to this heading">#</a></h4>
+<p>This loop iterates over a series of numbers—from 1 to 26, in this case. For each iteration, it executes the command <code class="docutils literal notranslate"><span class="pre">di</span></code> (short for “display”), printing the current value of <code class="docutils literal notranslate"><span class="pre">i</span></code> to the screen. At its core, this is a demonstration of Stata’s <code class="docutils literal notranslate"><span class="pre">forvalues</span></code> command, a powerful tool for numeric iterations.</p>
+</section>
+<section id="why-it-s-useful">
+<h4>Why It’s Useful<a class="headerlink" href="#why-it-s-useful" title="Permalink to this heading">#</a></h4>
+<p>Imagine you’re tasked with generating a report that requires you to repeatedly perform an action for a set range of numbers. Doing this manually is not only tedious but prone to error. By employing a loop like the one above, you automate the process, ensuring accuracy and efficiency. It’s particularly handy for batch processing of data, running simulations, or automating the generation of graphs for different subsets of your dataset.</p>
+</section>
+<section id="but-here-s-the-catch">
+<h4>But Here’s the Catch<a class="headerlink" href="#but-here-s-the-catch" title="Permalink to this heading">#</a></h4>
+<p>While loops are powerful, they come with a caveat: misuse can lead to inefficiencies or, worse, infinite loops that can crash your system or bog down your computations. Always ensure your loop has a clear exit condition. In the example provided, the exit condition is built into the <code class="docutils literal notranslate"><span class="pre">forvalues</span></code> structure, terminating the loop after reaching the number 26.</p>
+</section>
+<section id="the-opinionated-part">
+<h4><a class="reference external" href="https://jhufena.github.io/home/act3/act_3_0/act_3_0_1.html">The Opinionated Part</a><a class="headerlink" href="#the-opinionated-part" title="Permalink to this heading">#</a></h4>
+<p>Some may argue that the simplicity of loops in Stata doesn’t match the flexibility and power of loops in more comprehensive programming languages like Python or R. However, for Stata’s typical use cases—data manipulation, statistical analysis, and econometrics—its looping constructs are perfectly tailored. They offer a balance of simplicity and functionality that aligns well with the needs of its primary audience: economists, social scientists, and public health researchers.</p>
+<p>Stata’s <code class="docutils literal notranslate"><span class="pre">forvalues</span></code> loop may not be the flashiest tool in the computational toolbox, but it’s a prime example of Stata’s design philosophy: making complex data analysis tasks accessible without requiring deep programming expertise. This accessibility is a boon for grad students and professionals alike, allowing them to focus on their research questions rather than getting bogged down in intricate code.</p>
+</section>
+<section id="in-conclusion">
+<h4>In Conclusion<a class="headerlink" href="#in-conclusion" title="Permalink to this heading">#</a></h4>
+<p>As you venture further into data analysis, embrace the power of loops. They’re a testament to the elegance of automation in data science. The <code class="docutils literal notranslate"><span class="pre">forvalues</span></code> command in Stata, with its straightforward syntax and clear applicability to a range of tasks, is an excellent starting point for understanding the broader concept of iteration in programming. Just remember, with great power comes great responsibility—use loops wisely to enhance your analysis, not complicate it.</p>
+</section>
+<section id="output">
+<h4>Output<a class="headerlink" href="#output" title="Permalink to this heading">#</a></h4>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>.<span class="k"> forvalues</span> i =	<span class="m">1</span><span class="o">/</span><span class="m">26</span>	{
+<span class="m">2</span>.    <span class="k"> di</span> <span class="nv">`i&#39;</span>
+<span class="m">3</span>. }
+<span class="m">1</span>
+<span class="m">2</span>
+<span class="m">3</span>
+<span class="m">4</span>
+<span class="m">5</span>
+<span class="m">6</span>
+<span class="m">7</span>
+<span class="m">8</span>
+<span class="m">9</span>
+<span class="m">10</span>
+<span class="m">11</span>
+<span class="m">12</span>
+<span class="m">13</span>
+<span class="m">14</span>
+<span class="m">15</span>
+<span class="m">16</span>
+<span class="m">17</span>
+<span class="m">18</span>
+<span class="m">19</span>
+<span class="m">20</span>
+<span class="m">21</span>
+<span class="m">22</span>
+<span class="m">23</span>
+<span class="m">24</span>
+<span class="m">25</span>
+<span class="m">26</span>
+
+. 
+</pre></div>
+</div>
+</section>
+</section>
+<section id="iterating-over-variables-with-foreach-in-stata">
+<h3>Iterating Over Variables with <code class="docutils literal notranslate"><span class="pre">foreach</span></code> in Stata<a class="headerlink" href="#iterating-over-variables-with-foreach-in-stata" title="Permalink to this heading">#</a></h3>
+<p>Looping through numeric ranges is just the tip of the iceberg. When you’re knee-deep in data analysis, more often than not, you’ll find yourself needing to apply operations across numerous variables within your dataset. Here’s where the <code class="docutils literal notranslate"><span class="pre">foreach</span></code> loop comes into play, showcasing its versatility:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> transplants,<span class="k"> clear</span>
+<span class="k">foreach</span> v of<span class="k"> varlist</span> <span class="o">*</span> {
+<span class="k">	di</span> <span class="nv">`v&#39;</span>
+}
+</pre></div>
+</div>
+<section id="the-mechanics">
+<h4>The Mechanics<a class="headerlink" href="#the-mechanics" title="Permalink to this heading">#</a></h4>
+<p>At first glance, this loop might seem akin to its numeric counterpart, but it’s tailored for a different beast—variables. After loading the <code class="docutils literal notranslate"><span class="pre">transplants</span></code> dataset, the loop iterates over each variable within it. The <code class="docutils literal notranslate"><span class="pre">foreach</span> <span class="pre">v</span> <span class="pre">of</span> <span class="pre">varlist</span> <span class="pre">*</span></code> command is the heart of this operation, where <code class="docutils literal notranslate"><span class="pre">v</span></code> serves as a placeholder for each variable in turn. For every cycle of the loop, <code class="docutils literal notranslate"><span class="pre">di</span></code> (short for “display”) outputs the name of the current variable to the screen.</p>
+</section>
+<section id="why-it-s-a-game-changer">
+<h4>Why It’s a Game-Changer<a class="headerlink" href="#why-it-s-a-game-changer" title="Permalink to this heading">#</a></h4>
+<p>Data often comes in wide formats, brimming with variables that require inspection, transformation, or analysis. Manually handling each variable is a Sisyphean task that’s error-prone and inefficient. The <code class="docutils literal notranslate"><span class="pre">foreach</span></code> loop automates this process, enabling batch operations that can save hours of manual labor and significantly reduce the margin for error. It’s ideal for preliminary data exploration, batch transformations, or even creating dynamic models that adjust based on variable-specific criteria.</p>
+</section>
+<section id="the-caveat">
+<h4>The Caveat<a class="headerlink" href="#the-caveat" title="Permalink to this heading">#</a></h4>
+<p>With great power comes the need for precise control. The <code class="docutils literal notranslate"><span class="pre">foreach</span></code> loop iterates over <em>every</em> variable in the specified list, which means you need to be specific about which variables you’re including. Failure to do so might result in operations being applied inappropriately, leading to data corruption or misleading results. Always double-check your varlist and ensure it only contains the variables you intend to manipulate.</p>
+</section>
+<section id="the-opinionated-angle">
+<h4>The Opinionated Angle<a class="headerlink" href="#the-opinionated-angle" title="Permalink to this heading">#</a></h4>
+<p>While Stata’s looping constructs, including <code class="docutils literal notranslate"><span class="pre">foreach</span></code>, are designed with the non-programmer in mind, offering a straightforward path to automate repetitive tasks, they do have their limitations. Critics might argue that the language’s focus on simplicity can at times limit the depth of customization and optimization available in more complex programming environments. However, for the statistical tasks and data manipulation needs of most social scientists and policy researchers, Stata’s approach hits the sweet spot—efficiently balancing simplicity and power.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">foreach</span></code> loop exemplifies Stata’s philosophy of making data analysis accessible, yet powerful. It’s a testament to the software’s design ethos: empowering researchers to focus on their analyses rather than getting tangled in complex coding syntax. For grad students, mastering the <code class="docutils literal notranslate"><span class="pre">foreach</span></code> loop is a stepping stone to efficient data management and a gateway to more sophisticated statistical modeling.</p>
+</section>
+<section id="wrapping-up">
+<h4>Wrapping Up<a class="headerlink" href="#wrapping-up" title="Permalink to this heading">#</a></h4>
+<p>As you delve deeper into the capabilities of Stata, the <code class="docutils literal notranslate"><span class="pre">foreach</span></code> loop will undoubtedly become one of your go-to tools for data manipulation. It exemplifies the efficiency and practicality of Stata’s programming environment, enabling you to manage and analyze your data with greater agility and precision. Embrace it, but remember to wield it with care and specificity to avoid unintended consequences in your data analysis journey.</p>
+</section>
+<section id="id1">
+<h4>Output<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h4>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>.<span class="k"> use</span> transplants,<span class="k"> clear</span>
+
+.<span class="k"> foreach</span> v of<span class="k"> varlist</span> <span class="o">*</span>	{
+<span class="m">2</span>.        <span class="k"> di</span> <span class="nv">`v&#39;</span>
+<span class="m">3</span>. }
+<span class="m">1</span>
+<span class="m">12</span>
+<span class="m">18551.324</span>
+<span class="m">177</span>
+<span class="m">79</span>
+<span class="m">2</span>
+<span class="m">0</span>
+<span class="m">9</span>
+<span class="m">4</span>
+<span class="m">157.48</span>
+<span class="m">69.58</span>
+<span class="m">28</span>
+<span class="m">0</span>
+<span class="m">56</span>
+<span class="m">28</span>
+<span class="m">20421.895</span>
+<span class="m">0</span>
+<span class="m">1</span>
+<span class="m">5.1937032</span>
+<span class="m">4</span>
+<span class="m">1</span>
+<span class="m">0</span>
+<span class="m">0</span>
+<span class="m">1</span>
+<span class="m">1</span>
+REFLUX NEPHROPATHY
+
+. 
+</pre></div>
+</div>
+</section>
+</section>
+<section id="over-string-values">
+<h3>3.1.2 Over string values<a class="headerlink" href="#over-string-values" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="a-subtle-twist-in-variable-iteration-quotation-marks-in-foreach">
+<h3>A Subtle Twist in Variable Iteration: Quotation Marks in <code class="docutils literal notranslate"><span class="pre">foreach</span></code><a class="headerlink" href="#a-subtle-twist-in-variable-iteration-quotation-marks-in-foreach" title="Permalink to this heading">#</a></h3>
+<p>The modified code snippet presents a minor but crucial alteration:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> transplants,<span class="k"> clear</span>
+<span class="k">foreach</span> v of<span class="k"> varlist</span> <span class="o">*</span> {
+<span class="k">	di</span> <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">&quot;</span>
+}
+</pre></div>
+</div>
+<section id="the-subtle-change">
+<h4>The Subtle Change<a class="headerlink" href="#the-subtle-change" title="Permalink to this heading">#</a></h4>
+<p>The essence of the loop remains the same: it iterates over every variable in the <code class="docutils literal notranslate"><span class="pre">transplants</span></code> dataset, displaying their names. However, the introduction of double quotation marks around <code class="docutils literal notranslate"><span class="pre">v</span></code> in the display command (<code class="docutils literal notranslate"><span class="pre">di</span></code>) marks the significant tweak. At first glance, this might seem trivial, but it’s a prime example of Stata’s syntactical precision.</p>
+</section>
+<section id="why-it-matters">
+<h4>Why It Matters<a class="headerlink" href="#why-it-matters" title="Permalink to this heading">#</a></h4>
+<p>In Stata, wrapping a variable or expression in double quotation marks within a command tells the program to interpret it as a single string. This is particularly important when dealing with variable names that might contain spaces or special characters. While the <code class="docutils literal notranslate"><span class="pre">transplants</span></code> dataset may not have such variable names, adopting this practice ensures your code remains robust and error-free across a wider range of datasets.</p>
+</section>
+<section id="beyond-syntax-embracing-good-practices">
+<h4>Beyond Syntax: Embracing Good Practices<a class="headerlink" href="#beyond-syntax-embracing-good-practices" title="Permalink to this heading">#</a></h4>
+<p>This modification isn’t just about making the code work; it’s about instilling good programming habits. Encouraging the use of quotation marks around variables in loops or other command constructs prepares you for scenarios where you’ll encounter more complex data structures. It’s a simple practice that enhances the readability and reliability of your code, ensuring it’s prepared to handle the quirks and nuances of real-world data.</p>
+</section>
+<section id="the-larger-lesson">
+<h4>The Larger Lesson<a class="headerlink" href="#the-larger-lesson" title="Permalink to this heading">#</a></h4>
+<p>While we’ve previously discussed the power and utility of Stata’s <code class="docutils literal notranslate"><span class="pre">foreach</span></code> loop, this subtle modification highlights a broader theme in data analysis and programming: the devil is often in the details. Being mindful of syntax and adopting best practices early on can save you from headaches down the line, whether it’s debugging mysterious errors or ensuring your analysis is reproducible and robust.</p>
+</section>
+<section id="final-thoughts">
+<h4>Final Thoughts<a class="headerlink" href="#final-thoughts" title="Permalink to this heading">#</a></h4>
+<p>As you progress in your data analysis journey, remember that mastering the tools of the trade is as much about understanding their nuances as it is about leveraging their power. This subtle tweak to the <code class="docutils literal notranslate"><span class="pre">foreach</span></code> loop is a perfect illustration of how small adjustments can have broad implications for your work’s quality and integrity. Embrace these practices, and you’ll find yourself not just a competent analyst but a prudent and thoughtful one.</p>
+</section>
+<section id="id2">
+<h4>Output<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h4>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>.<span class="k"> use</span> transplants,<span class="k"> clear</span>
+
+.<span class="k"> foreach</span> v of<span class="k"> varlist</span> <span class="o">*</span>	{
+<span class="m">2</span>.        <span class="k"> di</span> <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">&quot;</span>
+<span class="m">3</span>. }
+fake_id
+ctr_id
+transplant_date
+don_hgt_cm
+don_wgt_kg
+don_cod
+don_ecd
+dx
+race
+rec_hgt_cm
+rec_wgt_kg
+bmi
+prev_ki
+age
+peak_pra
+end_date
+died
+tx_failed
+wait_yrs
+abo
+gender
+rec_hcv_antibody
+rec_work
+pretx_cmv
+rec_education
+extended_dgn
+
+. 
+</pre></div>
+</div>
+<p>What is the output:code ratio in these two examples I’ve given? Might that be a crude metric of efficiency?</p>
+<p>Consider the following code snippet:</p>
+<p>This code snippet and its output are a fascinating exploration of applying statistical analysis within a programming loop to evaluate the significance of various variables in a dataset. Let’s break down what’s happening, intersperse with notes for clarity, and discuss the implications of the output.</p>
+</section>
+</section>
+<section id="analyzing-variable-significance-with-loops">
+<h3>Analyzing Variable Significance with Loops<a class="headerlink" href="#analyzing-variable-significance-with-loops" title="Permalink to this heading">#</a></h3>
+<p>The code provided performs a logistic regression for each variable in the <code class="docutils literal notranslate"><span class="pre">transplants</span></code> dataset, comparing them against the outcome variable <code class="docutils literal notranslate"><span class="pre">died</span></code>, excluding the variables <code class="docutils literal notranslate"><span class="pre">died</span></code> and <code class="docutils literal notranslate"><span class="pre">extended_dgn</span></code> themselves. Here’s a step-by-step breakdown:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> transplants,<span class="k"> clear</span>
+<span class="k">foreach</span> v of<span class="k"> varlist</span> <span class="o">*</span> {
+<span class="k">    if</span> <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">&quot;</span> <span class="o">!=</span> <span class="s">&quot;died&quot;</span> | <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">&quot;</span> <span class="o">!=</span><span class="s">&quot;extended_dgn&quot;</span> {
+<span class="k">        capture logistic</span> died <span class="nv">`v&#39;</span>
+<span class="k">        capture lincom</span> <span class="nv">`v&#39;</span>
+<span class="k">        scalar</span> p = <span class="nf">r</span>(p)
+<span class="k">        di</span> <span class="s">&quot;p-value for </span><span class="nv">`v&#39;</span><span class="s"> : &quot;</span> p     
+    }
+<span class="k">    else</span> {
+<span class="k">        di</span> <span class="s">&quot; &quot;</span>
+    }
+}
+</pre></div>
+</div>
+<section id="the-process">
+<h4>The Process<a class="headerlink" href="#the-process" title="Permalink to this heading">#</a></h4>
+<ol class="arabic simple">
+<li><p><strong>Data Loading</strong>: The <code class="docutils literal notranslate"><span class="pre">transplants</span></code> dataset is loaded with the <code class="docutils literal notranslate"><span class="pre">use</span></code> command, clearing any previous data in memory.</p></li>
+<li><p><strong>Looping Through Variables</strong>: The <code class="docutils literal notranslate"><span class="pre">foreach</span></code> loop iterates over all variables.</p></li>
+<li><p><strong>Conditional Check</strong>: Excludes the <code class="docutils literal notranslate"><span class="pre">died</span></code> and <code class="docutils literal notranslate"><span class="pre">extended_dgn</span></code> variables from analysis.</p></li>
+<li><p><strong>Logistic Regression</strong>: Executes a logistic regression using <code class="docutils literal notranslate"><span class="pre">died</span></code> as the dependent variable and each of the other variables in turn as the independent variable.</p></li>
+<li><p><strong>Linear Combination Command</strong>: The <code class="docutils literal notranslate"><span class="pre">lincom</span></code> command, though captured, seems intended to perform post-estimation analysis but isn’t directly utilized here for output.</p></li>
+<li><p><strong>P-Value Extraction</strong>: Extracts the p-value associated with the logistic regression analysis and displays it.</p></li>
+<li><p><strong>Conditional Display</strong>: Skips the excluded variables, opting to print a blank line instead.</p></li>
+</ol>
+</section>
+<section id="output-interpretation">
+<h4>Output Interpretation<a class="headerlink" href="#output-interpretation" title="Permalink to this heading">#</a></h4>
+<p>The output lists the p-values for each variable, indicating the statistical significance of each variable in relation to the outcome variable <code class="docutils literal notranslate"><span class="pre">died</span></code>. P-values are a statistical measure that helps determine the significance of results from a hypothesis test. In general, a p-value less than 0.05 is considered statistically significant, indicating strong evidence against the null hypothesis.</p>
+</section>
+<section id="insights-and-notes">
+<h4>Insights and Notes<a class="headerlink" href="#insights-and-notes" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Significant Variables</strong>: Variables like <code class="docutils literal notranslate"><span class="pre">transplant_date</span></code>, <code class="docutils literal notranslate"><span class="pre">don_ecd</span></code>, <code class="docutils literal notranslate"><span class="pre">dx</span></code>, <code class="docutils literal notranslate"><span class="pre">race</span></code>, and several others show p-values below the 0.05 threshold, suggesting they are statistically significant predictors of the outcome variable <code class="docutils literal notranslate"><span class="pre">died</span></code>.</p></li>
+<li><p><strong>Insignificant Variables</strong>: Variables with p-values above 0.05, such as <code class="docutils literal notranslate"><span class="pre">fake_id</span></code>, <code class="docutils literal notranslate"><span class="pre">ctr_id</span></code>, <code class="docutils literal notranslate"><span class="pre">don_hgt_cm</span></code>, and others, might not be significant predictors of the outcome in this context.</p></li>
+<li><p><strong>Methodological Consideration</strong>: The use of <code class="docutils literal notranslate"><span class="pre">capture</span></code> before the <code class="docutils literal notranslate"><span class="pre">logistic</span></code> and <code class="docutils literal notranslate"><span class="pre">lincom</span></code> commands is a strategic choice to prevent the entire loop from stopping if an error occurs in the regression. It allows the loop to continue even if some models fail to converge or other issues arise.</p></li>
+</ul>
+</section>
+<section id="the-bigger-picture">
+<h4>The Bigger Picture<a class="headerlink" href="#the-bigger-picture" title="Permalink to this heading">#</a></h4>
+<p>This analysis technique demonstrates a powerful approach to preliminary data analysis, allowing researchers to quickly identify variables that warrant further investigation. However, caution is warranted:</p>
+<ul class="simple">
+<li><p><strong>Multiple Testing Concern</strong>: Performing multiple hypothesis tests increases the chance of Type I errors (false positives). Adjustments for multiple comparisons might be necessary depending on the research context.</p></li>
+<li><p><strong>Contextual Interpretation</strong>: Statistical significance does not equate to clinical or practical significance. The real-world impact and relevance of variables should be considered.</p></li>
+<li><p><strong>Further Analysis</strong>: Significant variables identified in this loop should be examined more closely in a multivariable context to control for potential confounding factors.</p></li>
+</ul>
+<p>In essence, this Stata script exemplifies the intersection of programming efficiency with statistical analysis, offering a streamlined method to sift through data for meaningful insights. It underscores the importance of statistical rigour and the need for nuanced interpretation of results, emphasizing that while automated methods can highlight potential areas of interest, deep statistical knowledge and critical thinking are irreplaceable in research.</p>
+</section>
+<section id="id3">
+<h4>Output<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h4>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>.<span class="k"> use</span> transplants,<span class="k"> clear</span>
+
+.<span class="k"> foreach</span> v of<span class="k"> varlist</span> <span class="o">*</span> {
+<span class="m">2</span>.        <span class="k"> if</span> <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">&quot;</span> <span class="o">!=</span> <span class="s">&quot;died&quot;</span>  <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">&quot;</span> <span class="o">!=</span><span class="s">&quot;extended_dgn&quot;</span>	{
+<span class="m">3</span>.            <span class="k"> capture logistic</span> died <span class="nv">`v&#39;</span>
+<span class="m">4</span>.            <span class="k"> capture lincom</span> <span class="nv">`v&#39;</span>
+<span class="m">5</span>.            <span class="k"> scalar</span> p = <span class="nf">r</span>(p)
+<span class="m">6</span>.            <span class="k"> di</span> <span class="s">&quot;p-value for </span><span class="nv">`v&#39;</span><span class="s"> : &quot;</span> p   
+<span class="m">7</span>.         }
+<span class="m">8</span>.        <span class="k"> else</span> {
+<span class="m">9</span>.                <span class="k"> di</span> <span class="s">&quot; &quot;</span>
+<span class="m">10</span>.         }
+<span class="m">11</span>.         
+.         
+. }
+p<span class="o">-</span>value<span class="k"> for</span> fake_id : .<span class="m">46371117</span>
+p<span class="o">-</span>value<span class="k"> for</span> ctr_id : .<span class="m">52178434</span>
+p<span class="o">-</span>value<span class="k"> for</span> transplant_date : <span class="m">2.926e-24</span>
+p<span class="o">-</span>value<span class="k"> for</span> don_hgt_cm : .<span class="m">93751316</span>
+p<span class="o">-</span>value<span class="k"> for</span> don_wgt_kg : .<span class="m">49371195</span>
+p<span class="o">-</span>value<span class="k"> for</span> don_cod : .<span class="m">25255576</span>
+p<span class="o">-</span>value<span class="k"> for</span> don_ecd : <span class="m">6.736e-13</span>
+p<span class="o">-</span>value<span class="k"> for</span> dx : .<span class="m">00894634</span>
+p<span class="o">-</span>value<span class="k"> for</span> race : .<span class="m">00028468</span>
+p<span class="o">-</span>value<span class="k"> for</span> rec_hgt_cm : .<span class="m">01878141</span>
+p<span class="o">-</span>value<span class="k"> for</span> rec_wgt_kg : .<span class="m">10279242</span>
+p<span class="o">-</span>value<span class="k"> for</span> bmi : .<span class="m">67785746</span>
+p<span class="o">-</span>value<span class="k"> for</span> prev_ki : .<span class="m">02051579</span>
+p<span class="o">-</span>value<span class="k"> for</span> age : <span class="m">1.648e-20</span>
+p<span class="o">-</span>value<span class="k"> for</span> peak_pra : .<span class="m">02585959</span>
+p<span class="o">-</span>value<span class="k"> for</span> end_date : <span class="m">2.891e-63</span>
+p<span class="o">-</span>value<span class="k"> for</span> died : .
+p<span class="o">-</span>value<span class="k"> for</span> tx_failed : .
+p<span class="o">-</span>value<span class="k"> for</span> wait_yrs : .<span class="m">49225994</span>
+p<span class="o">-</span>value<span class="k"> for</span> abo : .<span class="m">03522145</span>
+p<span class="o">-</span>value<span class="k"> for</span> gender : .<span class="m">10388923</span>
+p<span class="o">-</span>value<span class="k"> for</span> rec_hcv_antibody : .<span class="m">02039008</span>
+p<span class="o">-</span>value<span class="k"> for</span> rec_work : .<span class="m">00018548</span>
+p<span class="o">-</span>value<span class="k"> for</span> pretx_cmv : .<span class="m">17525206</span>
+p<span class="o">-</span>value<span class="k"> for</span> rec_education : .<span class="m">47738727</span>
+p<span class="o">-</span>value<span class="k"> for</span> extended_dgn : .
+</pre></div>
+</div>
+</section>
+<section id="finessed-by-gpt-3">
+<h4>Finessed by GPT-3<a class="headerlink" href="#finessed-by-gpt-3" title="Permalink to this heading">#</a></h4>
+<p><img alt="" src="_images/chatgpt4.png" /></p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">local</span> decimal_format <span class="s">&quot;%.2f&quot;</span>
+
+<span class="k">foreach</span> v of<span class="k"> varlist</span> <span class="o">*</span> {
+<span class="k">    if</span> <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">&quot;</span> <span class="o">!=</span> <span class="s">&quot;died&quot;</span> <span class="o">&amp;</span> <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">&quot;</span> <span class="o">!=</span> <span class="s">&quot;extended_dgn&quot;</span> {
+<span class="k">        capture logistic</span> died <span class="nv">`v&#39;</span>
+<span class="k">        capture lincom</span> <span class="nv">`v&#39;</span>
+<span class="k">        scalar</span> p = <span class="nf">r</span>(p)
+<span class="k">        </span>
+<span class="k">        local</span> p_value_label <span class="s">&quot;&quot;</span>
+<span class="k">        </span>
+<span class="k">        if</span> p <span class="o">&lt;</span> <span class="m">0.01</span> {
+<span class="k">            local</span> p_value_label <span class="s">&quot;p&lt;0.01&quot;</span>
+        }
+<span class="k">        else if</span> p <span class="o">&lt;=</span> <span class="m">0.05</span> {
+<span class="k">            local</span> p_value_label <span class="nf">string</span>(<span class="nf">round</span>(p, <span class="m">0.01</span>))
+        }
+<span class="k">        else</span> {
+<span class="k">            local</span> p_value_label <span class="nf">string</span>(<span class="nf">round</span>(p, <span class="m">0.1</span>))
+        }
+<span class="k">        </span>
+<span class="k">        di</span> <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s"> : &quot;</span> <span class="nv">`p_value_label&#39;</span>
+    }
+<span class="k">    else</span> {
+<span class="k">        di</span> <span class="s">&quot; &quot;</span>
+    }
+}
+</pre></div>
+</div>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>.<span class="k"> local</span> decimal_format <span class="s">&quot;%.2f&quot;</span>
+
+. 
+.<span class="k"> foreach</span> v of<span class="k"> varlist</span> <span class="o">*</span> {
+<span class="m">2</span>.    <span class="k"> if</span> <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">&quot;</span> <span class="o">!=</span> <span class="s">&quot;died&quot;</span> <span class="o">&amp;</span> <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">&quot;</span> <span class="o">!=</span> <span class="s">&quot;extended_dgn&quot;</span> {
+<span class="m">3</span>.        <span class="k"> capture logistic</span> died <span class="nv">`v&#39;</span>
+<span class="m">4</span>.        <span class="k"> capture lincom</span> <span class="nv">`v&#39;</span>
+<span class="m">5</span>.        <span class="k"> scalar</span> p = <span class="nf">r</span>(p)
+<span class="m">6</span>.         
+.        <span class="k"> local</span> p_value_label <span class="s">&quot;&quot;</span>
+<span class="m">7</span>.         
+.        <span class="k"> if</span> p <span class="o">&lt;</span> <span class="m">0.01</span> {
+<span class="m">8</span>.            <span class="k"> local</span> p_value_label <span class="s">&quot;p&lt;0.01&quot;</span>
+<span class="m">9</span>.         }
+<span class="m">10</span>.        <span class="k"> else if</span> p <span class="o">&lt;=</span> <span class="m">0.05</span> {
+<span class="m">11</span>.            <span class="k"> local</span> p_value_label <span class="nf">string</span>(<span class="nf">round</span>(p, <span class="m">0.01</span>))
+<span class="m">12</span>.         }
+<span class="m">13</span>.        <span class="k"> else</span> {
+<span class="m">14</span>.            <span class="k"> local</span> p_value_label <span class="nf">string</span>(<span class="nf">round</span>(p, <span class="m">0.1</span>))
+<span class="m">15</span>.         }
+<span class="m">16</span>.         
+.        <span class="k"> di</span> <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s"> : &quot;</span> <span class="nv">`p_value_label&#39;</span>
+<span class="m">17</span>.     }
+<span class="m">18</span>.    <span class="k"> else</span> {
+<span class="m">19</span>.        <span class="k"> di</span> <span class="s">&quot; &quot;</span>
+<span class="m">20</span>.     }
+<span class="m">21</span>. }
+fake_id : .<span class="m">5</span>
+ctr_id : .<span class="m">5</span>
+transplant_date : <span class="m">1</span>
+don_hgt_cm : .<span class="m">9</span>
+don_wgt_kg : .<span class="m">5</span>
+don_cod : .<span class="m">3</span>
+don_ecd : <span class="m">1</span>
+dx : <span class="m">1</span>
+race : <span class="m">1</span>
+rec_hgt_cm : .<span class="m">02</span>
+rec_wgt_kg : .<span class="m">1</span>
+bmi : .<span class="m">7</span>
+prev_ki : .<span class="m">02</span>
+age : <span class="m">1</span>
+peak_pra : .<span class="m">03</span>
+end_date : <span class="m">1</span>
+
+tx_failed : .
+wait_yrs : .<span class="m">5</span>
+abo : .<span class="m">04</span>
+gender : .<span class="m">1</span>
+rec_hcv_antibody : .<span class="m">02</span>
+rec_work : <span class="m">1</span>
+pretx_cmv : .<span class="m">2</span>
+rec_education : .<span class="m">5</span>
+</pre></div>
+</div>
+<p><img alt="" src="_images/chatGPT6.png" /></p>
+<p>And so you can use AI as an assistant or copilot for labs, work, and fun!</p>
+</section>
+</section>
+<section id="enhancing-data-presentation-with-putexcel">
+<h3>Enhancing Data Presentation with <code class="docutils literal notranslate"><span class="pre">putexcel</span></code><a class="headerlink" href="#enhancing-data-presentation-with-putexcel" title="Permalink to this heading">#</a></h3>
+<p>In this session, we explore the power of Stata’s <code class="docutils literal notranslate"><span class="pre">putexcel</span></code> command as a bridge between statistical analysis and accessible, professional reporting. By automating the export of our results to Excel, we not only save valuable time but also open up new avenues for collaboration and dissemination of our work.</p>
+<section id="the-process-in-detail">
+<h4>The Process in Detail<a class="headerlink" href="#the-process-in-detail" title="Permalink to this heading">#</a></h4>
+<p>Starting with the <code class="docutils literal notranslate"><span class="pre">transplants</span></code> dataset, we employ a strategic approach to identify significant variables and their corresponding p-values, formatting and exporting this critical information to an Excel spreadsheet:</p>
+<ol class="arabic simple">
+<li><p><strong>Initialization</strong>: We begin by setting up an empty Excel file named <code class="docutils literal notranslate"><span class="pre">results.xlsx</span></code>, ensuring any existing file with the same name is replaced. This is the canvas on which we’ll paint our results.</p></li>
+<li><p><strong>Header Creation</strong>: The first row of the Excel file is populated with headers: “Variable” in column A and “p-value” in column B, setting the stage for a clear and structured presentation of our findings.</p></li>
+<li><p><strong>Iterative Analysis</strong>: Through a <code class="docutils literal notranslate"><span class="pre">foreach</span></code> loop, we sift through each variable in the dataset, excluding “died” and “extended_dgn” for focused analysis. For each relevant variable, we:</p>
+<ul class="simple">
+<li><p>Conduct a logistic regression.</p></li>
+<li><p>Calculate the p-value.</p></li>
+<li><p>Format the p-value based on predefined thresholds, showcasing Stata’s ability to handle conditional logic and formatting with finesse.</p></li>
+</ul>
+</li>
+<li><p><strong>Exporting Results</strong>: For each variable analyzed, its name and the formatted p-value are written to subsequent rows in the Excel file, systematically building a comprehensive overview of our statistical findings.</p></li>
+<li><p><strong>Finalization</strong>: With all relevant data neatly encapsulated in our Excel file, we close the file through <code class="docutils literal notranslate"><span class="pre">putexcel</span> <span class="pre">close</span></code>, solidifying our results in a tangible, shareable format.</p></li>
+</ol>
+</section>
+<section id="bridging-lectures-the-continuity-from-lecture-2">
+<h4>Bridging Lectures: The Continuity from Lecture 2<a class="headerlink" href="#bridging-lectures-the-continuity-from-lecture-2" title="Permalink to this heading">#</a></h4>
+<p>As you engage with Lecture 3, recall the introductory exercises with <code class="docutils literal notranslate"><span class="pre">putexcel</span></code> in Lecture 2, where we first dipped our toes into exporting data to Excel. Here, we not only reinforce those initial skills but also expand them to include dynamic data analysis and presentation. The transition from creating a simple demographic table to a nuanced export of logistic regression results exemplifies the progression from basic commands to complex, real-world applications.</p>
+</section>
+</section>
+<section id="engage-and-explore">
+<h3>Engage and Explore<a class="headerlink" href="#engage-and-explore" title="Permalink to this heading">#</a></h3>
+<p>I encourage you to immerse yourselves in the practical exercises provided, linking the theoretical knowledge from Lecture 2 with the applied skills of Lecture 3. This journey from importing and preparing data to conducting meaningful analysis and exporting results encapsulates the essence of data science—turning raw data into actionable insights.</p>
+<p>Furthermore, your participation in our <a class="reference external" href="https://github.com/jhufena/discussions/discussions">Stata-focused community</a> is invaluable. Share your experiences, challenges, and solutions related to the <code class="docutils literal notranslate"><span class="pre">putexcel</span></code> command and beyond. This collaborative learning environment is where theory meets practice, enabling you to refine your skills and contribute to the broader discourse on data analysis.</p>
+</section>
+<section id="id4">
+<h3>Final Thoughts<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
+<p>As we move forward, remember that the skills you are developing are not just about mastering Stata commands; they are about cultivating an analytical mindset that leverages technology to solve real-world problems. The ability to efficiently transition from analysis to presentation is a hallmark of skilled data scientists and researchers.</p>
+<p>Happy analyzing, and I look forward to seeing your results and contributions to our community discussions!</p>
+<p>Sharpening our Stata prowess, we venture into the realm of discerning variable types and executing conditional commands—a skill set essential for adept data analysts. The following Stata code snippet not only broadens our toolkit but also exemplifies strategic data handling:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> transplants,<span class="k"> clear</span>
+<span class="k">foreach</span> v of<span class="k"> varlist</span> <span class="o">*</span> {
+<span class="k">    qui ds</span>, has(type string)
+<span class="k">    if</span> <span class="nf">r</span>(varlist) <span class="o">==</span> <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">&quot;</span> {
+<span class="k">        di</span> <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s"> is a string&quot;</span>
+    }
+<span class="k">    else if</span> <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">&quot;</span> <span class="o">==</span> <span class="s">&quot;died&quot;</span> {
+<span class="k">        di</span> <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s"> is the outcome&quot;</span>
+    }
+<span class="k">    else</span> {
+<span class="k">        di</span> <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s"> is numeric&quot;</span>
+<span class="k">        logistic</span> died <span class="nv">`v&#39;</span>
+<span class="k">        di</span> _b[<span class="nv">`v&#39;</span>]
+    }
+    
+}
+</pre></div>
+</div>
+</section>
+<section id="decoding-the-process">
+<h3>Decoding the Process<a class="headerlink" href="#decoding-the-process" title="Permalink to this heading">#</a></h3>
+<p>At its heart, this snippet iterates through each variable in the “transplants” dataset, but the approach it takes is nuanced and instructive. Here’s a breakdown:</p>
+<ol class="arabic simple">
+<li><p><strong>Identifying Variable Types</strong>: Utilizing the <code class="docutils literal notranslate"><span class="pre">ds</span></code> command with the <code class="docutils literal notranslate"><span class="pre">has(type</span> <span class="pre">string)</span></code> option, the code first identifies if the current variable (<code class="docutils literal notranslate"><span class="pre">v</span></code>) is of the string type. This step is crucial for data preparation, as string variables often require different handling or processing than numeric variables.</p></li>
+<li><p><strong>Handling String Variables</strong>: If a variable is identified as a string, the code outputs “`v’ is a string”. This simple notification serves as a reminder to consider alternative analysis strategies or data transformations for string variables.</p></li>
+<li><p><strong>Identifying the Outcome Variable</strong>: The snippet specifically looks for the variable “died”, flagging it as the outcome variable. This step is vital for analyses focusing on this key variable, highlighting its central role in subsequent modeling efforts.</p></li>
+<li><p><strong>Analyzing Numeric Variables</strong>: For variables not flagged as strings and not the outcome variable “died”, the code presumes they are numeric. It then fits a logistic regression model using “died” as the dependent variable and the current numeric variable as the independent variable. The fitting of the logistic regression model here is pivotal, as it allows for the examination of the relationship between each numeric predictor and the outcome, providing insights into potential risk factors or associations.</p></li>
+<li><p><strong>Displaying Coefficients</strong>: Lastly, for each numeric variable analyzed, the code displays its coefficient (<code class="docutils literal notranslate"><span class="pre">_b[v']</span></code>) from the logistic regression model. This step is critical for interpreting the strength and direction of the relationship between the variable and the outcome of interest.</p></li>
+</ol>
+</section>
+<section id="the-underlying-wisdom">
+<h3>The Underlying Wisdom<a class="headerlink" href="#the-underlying-wisdom" title="Permalink to this heading">#</a></h3>
+<p>This snippet embodies more than mere code; it represents a thoughtful approach to data analysis. By systematically distinguishing between variable types and tailoring the analysis accordingly, it ensures that each variable is utilized to its fullest potential within the analytic framework. The inclusion of conditional logic not only streamlines the process but also instills a discipline of rigorous data examination and model interpretation.</p>
+</section>
+<section id="embrace-the-complexity">
+<h3>Embrace the Complexity<a class="headerlink" href="#embrace-the-complexity" title="Permalink to this heading">#</a></h3>
+<p>While some may shy away from the meticulousness required in annotating and explaining code, embracing this complexity head-on enriches your understanding and mastery of data analysis. The code snippet, with its careful delineation of variable types and conditional execution, serves as a potent example of the nuanced decision-making that underpins sophisticated data analysis.</p>
+<p>Remember, the art of data science lies not just in executing commands but in understanding the why and how behind each line of code. As you continue to build your skills, let this example inspire you to delve deeper, question assumptions, and seek out the stories hidden within your data.</p>
+</section>
+</section>
+<section id="programming">
+<h2>3.2 Programming<a class="headerlink" href="#programming" title="Permalink to this heading">#</a></h2>
+<p>We wrote our first program on Monday and today we should build on that foundation.</p>
+<section id="myfirst">
+<h3>3.2.1 myfirst<a class="headerlink" href="#myfirst" title="Permalink to this heading">#</a></h3>
+<p>Remember the program? The quickest way to locate it among the sytem ado-files is as follows:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">which</span> myfirst
+</pre></div>
+</div>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>.<span class="k"> which</span> myfirst
+<span class="o">/</span>Applications<span class="o">/</span>Stata<span class="o">/</span>ado<span class="o">/</span>base<span class="o">/</span>m<span class="o">/</span>myfirst<span class="m">.</span>ado
+
+. 
+</pre></div>
+</div>
+<p>Here it is:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">program</span> define myfirst
+<span class="k">   display</span> <span class="s">&quot;Hello, class!&quot;</span>
+<span class="k">end</span> 
+
+myfirst
+</pre></div>
+</div>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>. myfirst
+Hello,<span class="k"> class</span><span class="o">!</span>
+
+. 
+</pre></div>
+</div>
+</section>
+<section id="mysecond">
+<h3>3.2.2 mysecond<a class="headerlink" href="#mysecond" title="Permalink to this heading">#</a></h3>
+<p>Consider the following program. No, its not your second. We are going to use it as a springboard for many other programs. This Program enables a user with Stata versions before 16 (i.e., c(version) &lt; 17) to extract macros for beta p-values and 95%CI after a regression. W</p>
+<p>While troubleshooting, we learned yesterday that Stata version 15 and earlier return only r(estimate) and r(se) after <code class="docutils literal notranslate"><span class="pre">regression</span></code> and <code class="docutils literal notranslate"><span class="pre">lincom</span></code> commands. So might we be able to provide the additional macros including p-values and 95%CI via a program we write?</p>
+<p>The answer is an emphatic yes! And here is such a program. I lay it out here just so you can test it. But we will gradually build our skills from a simple premise to this level of sophistication.</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">capture program drop</span> stata13
+<span class="k">program</span> define stata13
+<span class="k">    syntax varlist</span>,<span class="k"> test</span>(numlist)
+<span class="k">	</span>
+<span class="k">	local</span> y:<span class="k"> di</span> <span class="nf">word</span>(<span class="s">&quot;</span><span class="nv">`varlist&#39;</span><span class="s">&quot;</span>,<span class="m">1</span>)
+<span class="k">	if</span> <span class="nv">`test&#39;</span> <span class="o">==</span> <span class="m">1</span> {
+<span class="k">		di in</span> red <span class="s">&quot;The outcome can&#39;t be tested!&quot;</span>
+<span class="k">		exit</span> <span class="m">340</span>
+	}
+<span class="k">	noi logistic</span> <span class="nv">`varlist&#39;</span>
+<span class="k">	local</span> x<span class="nv">`test&#39;</span>:<span class="k"> di</span> <span class="nf">word</span>(<span class="s">&quot;</span><span class="nv">`varlist&#39;</span><span class="s">&quot;</span>,<span class="nv">`test&#39;</span>)	
+	cls
+<span class="k">	scalar</span> z = _b[<span class="nv">`x`test&#39;&#39;</span>]<span class="o">/</span>_se[<span class="nv">`x`test&#39;&#39;</span>]
+<span class="k">	noi di</span> <span class="s">&quot;z statistic for </span><span class="nv">`x`test&#39;&#39;</span><span class="s">: &quot;</span> z
+<span class="k">	scalar</span> p = <span class="m">2</span><span class="o">*</span>(<span class="m">1</span><span class="o">-</span><span class="nf">normal</span>(<span class="nf">abs</span>(z)))
+<span class="k">	noi di</span> <span class="s">&quot;p-value for </span><span class="nv">`x`test&#39;&#39;</span><span class="s">: &quot;</span> p 
+<span class="k">	di</span> <span class="s">&quot;lower bound of 95% CI for </span><span class="nv">`x`test&#39;&#39;</span><span class="s">: &quot;</span> <span class="nf">exp</span>(_b[<span class="nv">`x`test&#39;&#39;</span>]<span class="o">+</span><span class="nf">invnormal</span>(<span class="m">0.025</span>) <span class="o">*</span> _se[<span class="nv">`x`test&#39;&#39;</span>])
+<span class="k">	di</span> <span class="s">&quot;upper bound of 95% CI for </span><span class="nv">`x`test&#39;&#39;</span><span class="s">: &quot;</span> <span class="nf">exp</span>(_b[<span class="nv">`x`test&#39;&#39;</span>]<span class="o">+</span><span class="nf">invnormal</span>(<span class="m">0.975</span>) <span class="o">*</span> _se[<span class="nv">`x`test&#39;&#39;</span>])	
+<span class="k">	lincom</span> <span class="nv">`x`test&#39;&#39;</span>
+
+<span class="k">end</span> 
+
+<span class="k">use</span> transplants,<span class="k"> clear</span> 
+stata13 died prev age gender race dx bmi peak_pra don_ecd wait_yrs,<span class="k"> test</span>(<span class="m">4</span>)
+</pre></div>
+</div>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>.<span class="k"> use</span> transplants,<span class="k"> clear</span> 
+
+. stata13 died prev age gender race dx bmi peak_pra don_ecd wait_yrs,<span class="k"> test</span>(<span class="m">4</span>)
+
+Logistic regression                                     Number of obs =  <span class="m">1</span>,<span class="m">518</span>
+                                                        LR <span class="nf">chi2</span>(<span class="m">9</span>)    = <span class="m">114.86</span>
+                                                        Prob <span class="o">&gt;</span> chi2   = <span class="m">0.0000</span>
+Log likelihood = <span class="o">-</span><span class="m">518.87252</span>                             Pseudo R2     = <span class="m">0.0996</span>
+
+<span class="o">------------------------------------------------------------------------------</span>
+        died | Odds<span class="k"> ratio</span>   Std.<span class="k"> err</span>.      z    P<span class="o">&gt;</span>|z|     [<span class="m">95</span>%<span class="k"> conf</span>. interval]
+<span class="o">-------------+----------------------------------------------------------------</span>
+     prev_ki |    .<span class="m">941235</span>   .<span class="m">3097531</span>    <span class="o">-</span><span class="m">0.18</span>   <span class="m">0.854</span>     .<span class="m">4938263</span>    <span class="m">1.793998</span>
+         age |   <span class="m">1.052174</span>   .<span class="m">0078088</span>     <span class="m">6.85</span>   <span class="m">0.000</span>      <span class="m">1.03698</span>    <span class="m">1.067591</span>
+      gender |   .<span class="m">8965847</span>   .<span class="m">1610239</span>    <span class="o">-</span><span class="m">0.61</span>   <span class="m">0.543</span>     .<span class="m">6305479</span>    <span class="m">1.274866</span>
+        race |   .<span class="m">8689853</span>   .<span class="m">0496138</span>    <span class="o">-</span><span class="m">2.46</span>   <span class="m">0.014</span>     .<span class="m">7769875</span>     .<span class="m">971876</span>
+          dx |   <span class="m">1.036562</span>   .<span class="m">0277149</span>     <span class="m">1.34</span>   <span class="m">0.179</span>     .<span class="m">9836403</span>    <span class="m">1.092331</span>
+         bmi |   .<span class="m">9869627</span>   .<span class="m">0165649</span>    <span class="o">-</span><span class="m">0.78</span>   <span class="m">0.434</span>     .<span class="m">9550244</span>    <span class="m">1.019969</span>
+    peak_pra |   .<span class="m">9989866</span>   .<span class="m">0034624</span>    <span class="o">-</span><span class="m">0.29</span>   <span class="m">0.770</span>     .<span class="m">9922234</span>    <span class="m">1.005796</span>
+     don_ecd |   <span class="m">1.775691</span>   .<span class="m">3403014</span>     <span class="m">3.00</span>   <span class="m">0.003</span>     <span class="m">1.219662</span>    <span class="m">2.585208</span>
+    wait_yrs |   .<span class="m">9609635</span>   .<span class="m">0432799</span>    <span class="o">-</span><span class="m">0.88</span>   <span class="m">0.377</span>     .<span class="m">8797726</span>    <span class="m">1.049647</span>
+       _cons |   .<span class="m">0143836</span>   .<span class="m">0095138</span>    <span class="o">-</span><span class="m">6.41</span>   <span class="m">0.000</span>     .<span class="m">0039342</span>    .<span class="m">0525873</span>
+<span class="o">------------------------------------------------------------------------------</span>
+Note: _cons<span class="k"> estimates</span> baseline odds.
+z statistic<span class="k"> for</span> gender: <span class="o">-</span>.<span class="m">60781897</span>
+p<span class="o">-</span>value<span class="k"> for</span> gender: .<span class="m">54330755</span>
+lower bound of <span class="m">95</span>% CI<span class="k"> for</span> gender: .<span class="m">63054792</span>
+upper bound of <span class="m">95</span>% CI<span class="k"> for</span> gender: <span class="m">1.2748661</span>
+
+ ( <span class="m">1</span>)  [died]gender = <span class="m">0</span>
+
+<span class="o">------------------------------------------------------------------------------</span>
+        died | Odds<span class="k"> ratio</span>   Std.<span class="k"> err</span>.      z    P<span class="o">&gt;</span>|z|     [<span class="m">95</span>%<span class="k"> conf</span>. interval]
+<span class="o">-------------+----------------------------------------------------------------</span>
+         (<span class="m">1</span>) |   .<span class="m">8965847</span>   .<span class="m">1610239</span>    <span class="o">-</span><span class="m">0.61</span>   <span class="m">0.543</span>     .<span class="m">6305479</span>    <span class="m">1.274866</span>
+<span class="o">------------------------------------------------------------------------------</span>
+</pre></div>
+</div>
+<p>Let our second program extract the <code class="docutils literal notranslate"><span class="pre">syntax</span> <span class="pre">varlist</span></code> code that has been introduced</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">capture program drop</span> mysecond
+<span class="k">program</span> define my second
+<span class="k">     syntax varlist</span>
+<span class="k">     di</span> <span class="s">&quot;This is my second program&quot;</span>
+<span class="k">end</span>
+
+mysecond
+</pre></div>
+</div>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>.<span class="k"> capture program drop</span> mysecond
+
+.<span class="k"> program</span> define mysecond
+<span class="m">1</span>.     <span class="k"> syntax varlist</span>
+<span class="m">2</span>.     <span class="k"> di</span> <span class="s">&quot;This is my second	program&quot;</span>
+<span class="m">3</span>.<span class="k"> end</span>
+
+. 
+. mysecond
+<span class="k">varlist</span> required
+<span class="nf">r</span>(<span class="m">100</span>);
+</pre></div>
+</div>
+</section>
+<section id="mythird">
+<h3>3.2.3 mythird<a class="headerlink" href="#mythird" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">capture program drop</span> mythird
+<span class="k">program</span> define mysecond
+<span class="k">     syntax varlist</span>
+<span class="k">	 qui logistic</span> <span class="nv">`varlist&#39;</span>
+<span class="k">     di</span> <span class="s">&quot;This is my third program&quot;</span>
+<span class="k">	 </span>
+<span class="k">end</span>
+
+<span class="k">use</span> transplants,<span class="k"> clear</span>
+mythird died gender
+</pre></div>
+</div>
+</section>
+<section id="myfourth">
+<h3>3.2.4. myfourth<a class="headerlink" href="#myfourth" title="Permalink to this heading">#</a></h3>
+<p>capture program drop myfourth
+program define myfourth
+syntax varlist
+qui logistic `varlist’
+di e(cmdline)</p>
+<p>end</p>
+<p>use transplants, clear
+mytfourth died gender</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>.<span class="k"> capture program drop</span> mythird
+
+.<span class="k"> program</span> define mythird
+<span class="m">1</span>.     <span class="k"> syntax varlist</span>
+<span class="m">2</span>.         <span class="k"> qui logistic</span> <span class="nv">`varlist&#39;</span>
+<span class="m">3</span>.     <span class="k"> di e</span>(cmdline) 
+<span class="m">4</span>.          
+.<span class="k"> end</span>
+
+. 
+.<span class="k"> use</span> transplants,<span class="k"> clear</span>
+
+. mythird died gender
+<span class="k">logistic</span> died gender
+
+. 
+<span class="k">end</span> of<span class="k"> do</span><span class="o">-</span>file
+
+. 
+</pre></div>
+</div>
+</section>
+</section>
+<section id="miscellany">
+<h2>3.3 Miscellany<a class="headerlink" href="#miscellany" title="Permalink to this heading">#</a></h2>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> transplants,<span class="k"> clear</span>
+</pre></div>
+</div>
+<p>What if we want a variable of the total number of records in each ABO blood type? This is not the same question from your homework 2, where you were interested in the total number of records in the dataset.</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span><span class="k">bys</span> abo:<span class="k"> gen</span> cat_n = _N
+</pre></div>
+</div>
+<p>So what did this code achieve?</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span><span class="k">tab</span> cat_n
+</pre></div>
+</div>
+<p>Let’s add labels to the groups:</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span>#delimit ;
+<span class="k">lab</span> define abo_lab
+   <span class="m">1</span> <span class="s">&quot;A&quot;</span>
+   <span class="m">2</span> <span class="s">&quot;B&quot;</span>
+   <span class="m">3</span> <span class="s">&quot;AB&quot;</span>
+   <span class="m">4</span> <span class="s">&quot;O&quot;</span>
+;
+#delimit cr
+
+<span class="k">lab</span> values abo abo_lab
+</pre></div>
+</div>
+<p>Now lets tabulate once again:</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span><span class="k">tab</span> abo
+</pre></div>
+</div>
+<p>Nice!</p>
+<p>Ok. Do you remember these commands?</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span><span class="k">di</span> <span class="nf">c</span>(N)
+
+<span class="k">di</span> <span class="nf">c</span>(k)
+</pre></div>
+</div>
+<p>Lets create a <code class="docutils literal notranslate"><span class="pre">disturbance</span></code> to our setup to learn a few additional commands and their value to us:</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui do</span> https:<span class="o">//</span>raw<span class="m">.</span>githubusercontent<span class="m">.</span>com<span class="o">/</span>jhustata<span class="o">/</span>book<span class="o">/</span>main<span class="o">/</span>sample<span class="o">-</span>keep<span class="m">.</span>ado
+</pre></div>
+</div>
+<p>Is that a new command? Or are you already familiar with it? How about this:</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span>samplekeep
+</pre></div>
+</div>
+<p>What just happened?</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span><span class="k">di</span> <span class="nf">c</span>(N)
+
+<span class="k">di</span> <span class="nf">c</span>(k)
+</pre></div>
+</div>
+<p>Let’s rerun earlier commands to restore our sanity!</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span><span class="k">tab</span> abo
+</pre></div>
+</div>
+<p>Ok, then. It was a temporary disturbance and peace was <code class="docutils literal notranslate"><span class="pre">restored</span></code>!! We will talk more about the <code class="docutils literal notranslate"><span class="pre">preserve</span></code> and <code class="docutils literal notranslate"><span class="pre">restore</span></code> commands, often used together.</p>
+<p>Back to the <code class="docutils literal notranslate"><span class="pre">by</span></code> command:</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span><span class="k">bys</span> abo:<span class="k"> egen</span> age_byabo =<span class="k"> mean</span>(age)
+</pre></div>
+</div>
+<p>Any idea what this command just achieved?</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span><span class="k">codebook</span> age_byabo
+</pre></div>
+</div>
+<p>What do you notice? Only four unique values! The <code class="docutils literal notranslate"><span class="pre">egen</span></code> command, like the <code class="docutils literal notranslate"><span class="pre">gen</span></code> command is used to define new variables in the dataset. However, the <code class="docutils literal notranslate"><span class="pre">gen</span></code> command applies values at the level of the individual. The <code class="docutils literal notranslate"><span class="pre">egen</span></code> command does so <code class="docutils literal notranslate"><span class="pre">by</span></code> group and yields summary statistics. To learn more type <code class="docutils literal notranslate"><span class="pre">h</span> <span class="pre">egen</span></code>.</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui regress</span> peak_pra prev_ki
+<span class="k">local</span> coef_of_det:<span class="k"> di</span> <span class="nx">%3.2f</span><span class="k"> e</span>(r2_a)<span class="o">*</span><span class="m">100</span>
+
+<span class="k">di</span> <span class="s">&quot;History of kidney transplant explains </span><span class="nv">`coef_of_det&#39;</span><span class="s">% of the variance in peak_pra.&quot;</span>
+</pre></div>
+</div>
+<p>From whence does <code class="docutils literal notranslate"><span class="pre">e(r2_a)</span></code> come? Where does it fit into our schema? (Hint: <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">list</span></code>, <code class="docutils literal notranslate"><span class="pre">ereturn</span> <span class="pre">list</span></code>, <code class="docutils literal notranslate"><span class="pre">creturn</span> <span class="pre">list</span></code>)</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//lets revisit this </span>
+<span class="k">regress</span> age i<span class="m">.</span>abo
+<span class="k">lincom</span> _b[<span class="m">3.</span>abo]
+</pre></div>
+</div>
+<p>What blood group has value 3?</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span><span class="k">return list</span>
+<span class="k">di</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(p)
+<span class="k">di</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(estimate)
+</pre></div>
+</div>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//does this output look familiar?</span>
+<span class="k"> lincom</span> _cons <span class="o">+</span> _b[<span class="m">3.</span>abo]
+<span class="k"> return list</span> 
+
+<span class="c1">//regression is a fancy way of estimating means for specified groups</span>
+<span class="k"> codebook</span> age_byabo
+</pre></div>
+</div>
+<p>Remember to use <code class="docutils literal notranslate"><span class="pre">lincom</span></code> appropriately, depending on what you wish to describe!</p>
+<p>After a regression we may type <code class="docutils literal notranslate"><span class="pre">ereturn</span> <span class="pre">list</span></code> for all sorts of estimated values:</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span><span class="k">matrix</span> define b =<span class="k"> e</span>(b)
+<span class="k">matrix list</span> b
+<span class="k">di</span> b[<span class="m">1</span>,<span class="m">3</span>]
+</pre></div>
+</div>
+<p>You should explore the following commands, one-by-one, on your own:</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span><span class="k">tab</span> rec_education,<span class="k"> sum</span>(age)
+<span class="k">regress</span> wait_yrs age, level(<span class="m">90</span>)
+<span class="k">count if</span> age <span class="o">&gt;</span> <span class="m">50</span>
+<span class="k">count if</span> <span class="nf">inrange</span>(age,<span class="m">50</span>,<span class="m">90</span>)
+<span class="k">list</span> age dx rec_education<span class="k"> in</span> <span class="m">1</span><span class="o">/</span><span class="m">5</span>
+
+<span class="c1">//di c(N) &quot; &amp; &quot; c(k)</span>
+<span class="k">use</span> age dx using transplants,<span class="k"> clear</span>
+<span class="k">use</span> transplants<span class="k"> in</span> <span class="m">1</span><span class="o">/</span><span class="m">50</span>,<span class="k"> clear</span>
+<span class="k">use</span> transplants<span class="k"> in</span> <span class="m">44</span>
+<span class="k">use</span> transplants<span class="k"> if</span> rec_work<span class="o">==</span><span class="m">1</span>
+<span class="k">use</span> a<span class="o">*</span> p<span class="o">*</span> using transplants<span class="k"> in</span> <span class="m">1</span><span class="o">/</span><span class="m">100</span>
+</pre></div>
+</div>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//describe</span>
+<span class="k">describe</span>, simple
+<span class="k">describe</span>, short
+<span class="k">describe</span> a<span class="o">*</span>
+<span class="k">describe</span> using transplants<span class="m">.</span>dta 
+<span class="k">describe</span> r<span class="o">*</span>, fullnames
+
+<span class="c1">//codebook</span>
+<span class="k">codebook</span>
+<span class="k">codebook</span> rec_education rec_work abo
+<span class="k">codebook</span> a<span class="o">*</span><span class="k"> e</span><span class="o">*</span>, compact
+<span class="k">codebook</span>, problems
+
+<span class="c1">//list </span>
+<span class="k">list</span> 
+<span class="k">list</span> prev_ki wait_yrs<span class="k"> if</span> race<span class="o">==</span><span class="m">9</span>
+<span class="k">list</span> <span class="o">*</span>date<span class="k"> in</span> <span class="m">1</span><span class="o">/</span><span class="m">10</span>
+<span class="k">list</span> dx<span class="k"> in</span> <span class="m">1</span><span class="o">/</span><span class="m">10</span>, clean noobs
+<span class="k">list</span> age, fast
+
+<span class="c1">//count</span>
+<span class="k">count</span>
+<span class="k">count if</span> rec_work<span class="o">==</span><span class="m">1</span>
+<span class="k">count if</span> rec_work<span class="o">!=</span><span class="m">1</span>
+<span class="k">count if</span> bmi<span class="o">&lt;</span><span class="m">20</span> | bmi <span class="o">&gt;</span> <span class="m">35</span>
+<span class="k">count if</span> bmi<span class="o">&gt;</span><span class="m">25</span> <span class="o">&amp;</span> bmi <span class="o">&lt;</span><span class="m">30</span>
+<span class="k">count if</span> <span class="o">!</span>(age<span class="o">&gt;</span><span class="m">18</span>)
+<span class="k">count if</span> <span class="nf">inrange</span>(wait_yrs,<span class="m">4</span>,<span class="m">6</span>)
+<span class="k">count if</span> <span class="o">!</span><span class="nf">inlist</span>(gender,<span class="m">0</span>,<span class="m">1</span>)
+
+<span class="c1">//tabulate</span>
+<span class="k">tab</span> abo
+<span class="k">tab</span> abo rec_hcv
+<span class="k">tab</span> gender,<span class="k"> sum</span>(age)
+<span class="k">tab</span> dx gender<span class="k"> if</span> age<span class="o">&lt;</span><span class="m">40</span>
+<span class="k">tab</span> dx gender,row
+<span class="k">tab</span> dx gender,col nofreq
+
+<span class="k">tab</span> dx gender, col nofreq chi2
+<span class="k">return list</span> 
+
+<span class="c1">//summarize</span>
+<span class="k">sum</span>
+<span class="k">return list</span> <span class="c1">//not very useful; see schema above</span>
+
+<span class="k">sum</span> age wait_yrs
+<span class="k">return list</span> <span class="c1">//much more useful!</span>
+
+<span class="k">sum</span> age wait_yrs, detail
+
+<span class="c1">//missingness</span>
+<span class="k">count if</span> bmi <span class="o">&gt;</span> <span class="m">30</span>
+<span class="k">count if</span> bmi <span class="o">&gt;</span> <span class="m">1000</span> <span class="c1">//wha? </span>
+<span class="k">sum</span> bmi <span class="c1">//whats going on?</span>
+<span class="k">assert</span> <span class="nf">c</span>(N) <span class="o">==</span> <span class="nf">r</span>(N) <span class="c1">//when do these diverge?</span>
+<span class="k">tab</span> bmi<span class="k"> if</span> bmi <span class="o">&gt;</span> <span class="m">1000</span>
+<span class="k">tab</span> bmi<span class="k"> if</span> bmi <span class="o">&gt;</span> <span class="m">1000</span>, missing
+
+<span class="k">count if</span> bmi<span class="o">==</span>.
+<span class="k">count if</span> bmi<span class="o">==</span>.a
+<span class="k">count if</span> <span class="nf">missing</span>(bmi)
+</pre></div>
+</div>
+<p>Let’s discuss <a class="reference external" href="https://stats.oarc.ucla.edu/stata/faq/how-can-i-recode-missing-values-into-different-categories/">missingness</a> as its relevance emerges.</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//manipulating data</span>
+<span class="k">gen</span> age_lastyear=age<span class="m">-1</span>
+<span class="k">gen</span> any_college=(rec_educ<span class="o">&gt;=</span><span class="m">3</span>)
+<span class="k">g</span> youngman=(age<span class="o">&lt;</span><span class="m">40</span><span class="o">&gt;</span>)<span class="o">&amp;</span>(gender<span class="o">==</span><span class="m">0</span>)
+</pre></div>
+</div>
+<p>Lets recap something from week 1:</p>
+<p>Variable <strong>types</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">byte</span></code>: integer range -127 to 100</p>
+<p><code class="docutils literal notranslate"><span class="pre">int</span></code>: integer range -32767 to 32740</p>
+<p><code class="docutils literal notranslate"><span class="pre">long</span></code>: integer range <span class="math notranslate nohighlight">\(\pm\)</span> 2 billion</p>
+<p><code class="docutils literal notranslate"><span class="pre">float</span></code>: decimal, range <span class="math notranslate nohighlight">\(\pm\)</span> <span class="math notranslate nohighlight">\(10^{38}\)</span></p>
+<p><code class="docutils literal notranslate"><span class="pre">double</span></code>: decimal, range <span class="math notranslate nohighlight">\(\pm\)</span> <span class="math notranslate nohighlight">\(10^{307}\)</span></p>
+<p><code class="docutils literal notranslate"><span class="pre">strings</span></code>: e.g. str5 = string of length 5</p>
+<p>You’ll need to specify the variable types as you start to right flexible programs with the <code class="docutils literal notranslate"><span class="pre">program</span> <span class="pre">define</span></code> command and <code class="docutils literal notranslate"><span class="pre">syntax</span></code> command with options such as<code class="docutils literal notranslate"><span class="pre">,</span> <span class="pre">time(varname)</span> <span class="pre">event(varname)</span> <span class="pre">tmax(float)</span></code></p>
+<p>If you wish to better understand these variables types, please explore those available to you in <code class="docutils literal notranslate"><span class="pre">transplants.dta</span></code>. Open the dataset and type <code class="docutils literal notranslate"><span class="pre">desc</span></code>.</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> transplants,<span class="k"> clear</span>
+<span class="k">describe</span>
+</pre></div>
+</div>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//generate</span>
+<span class="k">g</span> byte young=(age<span class="o">&lt;</span><span class="m">30</span><span class="o">&gt;</span>)
+<span class="k">g</span> age_f=age<span class="k"> if</span> gender<span class="o">==</span><span class="m">1</span>
+<span class="k">g</span> age_spline=(age<span class="o">&gt;</span><span class="m">40</span>)<span class="o">*</span>(age<span class="m">-40</span>)
+
+<span class="c1">//_n and _N</span>
+<span class="k">g</span> new_id=_n
+<span class="k">gen</span> total_records=_N
+<span class="k">g</span> percentile=<span class="m">100</span><span class="o">*</span>_n<span class="o">/</span>_N
+
+<span class="c1">//drop/keep</span>
+<span class="k">keep</span> age gender bmi fake_id ra<span class="o">*</span>
+<span class="k">drop</span> end_date
+
+<span class="c1">//remember: to load the original dataset again</span>
+<span class="k">use</span> transplants,<span class="k"> clear</span>
+<span class="k">keep in</span> <span class="m">1</span><span class="o">/</span><span class="m">100</span>
+<span class="k">drop if</span> wait_yrs<span class="o">&lt;</span><span class="m">1</span>
+<span class="k">keep if</span> prev_ki<span class="o">==</span><span class="m">1</span>
+<span class="k">drop if</span> age<span class="o">&lt;</span><span class="m">18</span> <span class="o">&amp;</span> abo<span class="o">==</span><span class="m">2</span>
+
+<span class="c1">//load data again</span>
+<span class="k">use</span> transplants,<span class="k"> clear</span>
+<span class="k">replace</span> prev=<span class="m">0</span>
+<span class="k">replace</span> wait_yrs=<span class="m">5</span><span class="k"> if</span> wait_yrs<span class="o">&gt;</span><span class="m">5</span>
+<span class="k">replace</span> gender=gender<span class="m">+1</span>
+<span class="k">replace</span> bmi=.<span class="k"> if</span> <span class="o">!</span><span class="nf">inrange</span>(bmi,<span class="m">17</span>,<span class="m">50</span>)
+
+<span class="c1">//rename</span>
+<span class="k">rename</span> age age_at_transplant
+<span class="k">rename</span> gender female
+
+<span class="k">use</span> transplants,<span class="k"> clear</span>
+<span class="k">rename</span> (age gender)(age_at_transplant female)
+
+<span class="c1">//sort, gsort</span>
+<span class="k">list in</span> <span class="m">1</span><span class="o">/</span><span class="m">10</span> 
+<span class="k">sort</span> age
+<span class="k">list in</span> <span class="m">1</span><span class="o">/</span><span class="m">10</span>
+<span class="k">sort</span> age dx
+<span class="k">list in</span> <span class="m">1</span><span class="o">/</span><span class="m">10</span>
+<span class="k">gsort</span> <span class="o">-</span>age dx <span class="o">-</span>race 
+<span class="k">list in</span> <span class="m">1</span><span class="o">/</span><span class="m">10</span>
+
+<span class="c1">//recode</span>
+<span class="k">recode</span> rec_education (<span class="m">3</span> <span class="m">4</span> <span class="m">5</span> =<span class="m">9</span>)
+<span class="k">recode</span> dx (<span class="m">1</span>=<span class="m">1</span>)(<span class="m">2</span>=<span class="m">2</span>)(<span class="o">*</span>=<span class="m">9</span>)
+<span class="k">recode</span> gender (<span class="m">0</span>=<span class="m">1</span>)(<span class="m">1</span>=<span class="m">0</span>),gen(male)
+
+<span class="c1">//display</span>
+<span class="k">sum</span> wait_yrs
+<span class="k">di</span> <span class="s">&quot;variable&quot;</span> _col(<span class="m">20</span>) <span class="s">&quot;mean&quot;</span>
+<span class="k">di</span> <span class="s">&quot;wait time&quot;</span> _col(<span class="m">20</span>) <span class="nf">r</span>(mean)
+
+<span class="c1">//capture</span>
+<span class="k">capture sum</span> nonexistent_variable
+<span class="k">capture di</span> <span class="m">4+3</span>
+<span class="k">capture di</span> <span class="m">4</span><span class="o">+</span>
+
+<span class="c1">//assert </span>
+<span class="k">assert</span> age<span class="o">&lt;</span><span class="m">100</span>
+<span class="k">assert</span> end_date<span class="o">&gt;=</span>transplant_date
+<span class="k">assert</span> <span class="nf">inlist</span>(gender,<span class="m">0</span>,<span class="m">1</span>)
+<span class="k">assert</span> <span class="m">2</span><span class="o">&lt;</span><span class="m">1</span>
+<span class="k">assert</span> <span class="m">0</span>
+<span class="k">assert</span> <span class="nf">c</span>(edition_real)<span class="o">==</span><span class="s">&quot;BE&quot;</span>
+<span class="k">assert</span> <span class="nf">c</span>(edition_real)<span class="o">==</span><span class="s">&quot;MP&quot;</span>
+
+<span class="c1">//recode+label</span>
+#delimit ;
+<span class="k">recode</span> race 
+    (<span class="m">1</span>=<span class="m">0</span> <span class="s">&quot;Cauc&quot;</span>)
+    (<span class="m">2</span>=<span class="m">1</span> <span class="s">&quot;AA)</span>
+    (<span class="m">4</span>=<span class="m">2</span> <span class="s">&quot;Hisp/Latino&quot;</span>)
+    (<span class="m">5</span><span class="o">/</span><span class="m">9</span>=<span class="m">3</span> <span class="s">&quot;Other&quot;</span>),
+<span class="k">        gen</span>(race_cat)
+;
+#delimit cr
+
+<span class="c1">//preserve &amp; restore</span>
+<span class="k">sum</span> age
+
+<span class="c1">//indentation!</span>
+<span class="k">preserve</span>
+<span class="k">    drop if</span> age<span class="o">&lt;</span><span class="nf">r</span>(mean)
+<span class="k">    sum</span> age
+<span class="k">restore</span> 
+
+<span class="k">sum</span> age
+</pre></div>
+</div>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//comments</span>
+
+<span class="k">sum</span> age <span class="c1">//this displays mean, range, etc.</span>
+
+<span class="cm">/*</span>
+<span class="cm">Here&#39;s a long comment. It takes up several</span>
+<span class="cm">lines, so I use the slash/asterisk.</span>
+<span class="cm">*/</span>
+
+<span class="cm">* Asterisk as first characater=comment</span>
+
+<span class="k">tab</span> race <span class="o">*</span> However, this doesn&#39;t work
+
+<span class="k">if</span> <span class="m">0</span> { <span class="c1">//background: ph.340.600</span>
+
+    <span class="m">1</span>. we prefer <span class="nv">`if 0 {&#39;</span><span class="k"> for</span> comments
+    <span class="m">2</span>. and brief <span class="nv">`//&#39;</span> annotations per <span class="nv">`if int {&#39;</span> code<span class="o">-</span>block
+    <span class="m">3</span>.<span class="k"> do</span> not<span class="k"> use</span> comments to explain a command
+    <span class="m">4</span>. that is what <span class="nv">`help&#39;</span> is<span class="k"> for</span>
+    <span class="m">5</span>. our approach is avant<span class="o">-</span>garde
+
+}
+</pre></div>
+</div>
+<p>Notebooks such as Jupyter notebook enable analysts to merge richer documentation together with analysis code, that isn’t quite possible in Stata. This class book is such an example of notebook that I have “hacked” from its Python roots for our Stata class.</p>
+<p>For the curious few who looked closer at the schema outlined at the beginning of this class, you might have found some hidden but strange-looking code that produced the figure. That is python code.</p>
+<p>I’m unable to input Stata code and display output in this Jupyter book. But the <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">integer</span> <span class="pre">{</span></code> blocks that I’ve recommended for this class are actually inspired by Jupyter notebooks, where <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">0</span> <span class="pre">{</span></code> represent documentation blocks and <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">int</span> <span class="pre">{</span></code> represent code-blocks.</p>
+<p>To me, <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">0</span> <span class="pre">{</span></code> is infinitely more aesthetic than blocked-off green chuncks of annotated text, an approach familiar to most Stata users.</p>
+<p>Jupyter books such as this are a major step forward in efforts toward reproducible research.</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//line continuation</span>
+
+<span class="c1">//Use `///` to make a Stata command span several lines in a .do file</span>
+
+<span class="k">recode</span> race <span class="cs">///</span>
+    (<span class="m">1</span>=<span class="m">1</span>) <span class="cs">///</span>
+    (<span class="m">2</span>=<span class="m">2</span>) <span class="cs">///</span>
+    (<span class="m">4</span> <span class="m">5</span> <span class="m">6</span> <span class="m">7</span> <span class="m">9</span> = <span class="m">9</span>)
+
+<span class="c1">//That is the main-stream approach to line continuation. Ours?</span>
+
+#delimit ;
+<span class="k">recode</span> race
+    (<span class="m">1</span>=<span class="m">1</span>)
+    (<span class="m">2</span>=<span class="m">2</span>)
+    (<span class="m">4</span> <span class="m">5</span> <span class="m">6</span> <span class="m">7</span> <span class="m">9</span>)
+;
+#delimit cr
+</pre></div>
+</div>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//labels</span>
+<span class="k">describe</span> dx
+<span class="k">label var</span> dx <span class="s">&quot;kidney disease diagnosis&quot;</span>
+
+<span class="k">tab</span> gender <span class="c1">//is 1 male or female?</span>
+#delimit ;
+<span class="k">label</span> define g_label 
+    <span class="m">0</span> <span class="s">&quot;0=Male&quot;</span>
+    <span class="m">1</span> <span class="s">&quot;1-Female&quot;</span>
+;
+#delimit cr
+<span class="k">label</span> values gender g_label
+<span class="k">tab</span> gender <span class="c1">//much better</span>
+<span class="k">tab</span> gender, nolabel <span class="c1">//don&#39;t show label</span>
+
+<span class="c1">//or?</span>
+<span class="k">g</span> female=gender<span class="o">==</span><span class="m">1</span> <span class="c1">//intuitive meaning of 1 &amp; 0</span>
+</pre></div>
+</div>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//r-class examples</span>
+<span class="k">count if</span> age <span class="o">&lt;</span> <span class="m">45</span>
+<span class="k">di</span> <span class="nf">r</span>(N) <span class="s">&quot; young patients&quot;</span>
+
+<span class="k">tab</span> race abo, chi2
+<span class="k">di</span> <span class="s">&quot;p-value: &quot;</span> <span class="nf">r</span>(p)
+</pre></div>
+</div>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">sum</span> age
+<span class="k">assert</span> <span class="nf">inrange</span>(<span class="nf">r</span>(mean),<span class="m">45</span>,<span class="m">55</span>)
+
+<span class="k">tab</span> race abo, chi2
+asset <span class="nf">r</span>(p) <span class="o">&lt;</span> <span class="m">0.05</span>
+</pre></div>
+</div>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//display formats</span>
+<span class="k">sum</span> bmi <span class="c1">//command</span>
+<span class="k">local</span> bmi_mean:<span class="k"> di</span> <span class="nx">%4.1f</span> <span class="nf">r</span>(mean) <span class="c1">//r() -&gt; local</span>
+<span class="k">di</span> <span class="s">&quot;Mean BMI: </span><span class="nv">`bmi_mean&#39;</span><span class="s"> &quot;</span> <span class="c1">//embed in text or other final output</span>
+</pre></div>
+</div>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//_b coefficient matrix</span>
+
+<span class="k">regress</span> bmi gender age
+
+#delimit ;
+<span class="k">di</span> <span class="s">&quot;estimated BMI: &quot;</span> <span class="nx">%3.2f</span> _b[_cons] <span class="s">&quot; + &quot;</span> 
+                     <span class="nx">%3.2f</span> _b[age] <span class="s">&quot;*age (+ &quot;</span> 
+                           _b[gender] <span class="s">&quot; if male)&quot;</span>
+;
+#delimit cr
+</pre></div>
+</div>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//local macros</span>
+<span class="k">qui sum</span> age<span class="k"> if</span> gender<span class="o">==</span><span class="m">0</span>
+<span class="k">local</span> age_m: <span class="nx">%3.1f</span> <span class="nf">r</span>(mean)
+
+<span class="k">qui sum</span> age<span class="k"> if</span> gender<span class="o">==</span><span class="m">1</span>
+<span class="k">local</span> age_f: <span class="nx">%3.1f</span> <span class="nf">r</span>(mean)
+
+<span class="k">di</span> <span class="s">&quot;Mean age: </span><span class="nv">`age_m&#39;</span><span class="s"> (males) </span><span class="nv">`age_f&#39;</span><span class="s"> (females) &quot;</span> 
+</pre></div>
+</div>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//more local macros</span>
+<span class="k">local</span> confounders age gender peak_pra
+<span class="k">regress</span> bmi wait_yrs <span class="nv">`confoundres&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//program define</span>
+<span class="k">capture program drop</span> table1
+<span class="k">program</span> define table1
+    #delimit ;
+<span class="k">    disp</span> <span class="s">&quot;Variable&quot;</span> _col(<span class="m">20</span>) <span class="s">&quot;mean (SD)&quot;</span> 
+                    _col(<span class="m">40</span>) <span class="s">&quot;range&quot;</span>
+                    ;
+    #delimit cr
+
+<span class="k">    quietly sum</span> age
+    #delimit ;
+<span class="k">    disp</span> <span class="s">&quot;age&quot;</span> _col(<span class="m">20</span>) <span class="nx">%3.2f</span> <span class="nf">r</span>(mean) 
+              <span class="s">&quot; (&quot;</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(sd) <span class="s">&quot;)&quot;</span>
+               _col(<span class="m">40</span>)  <span class="nx">%3.2f</span> <span class="nf">r</span>(min) <span class="s">&quot;-&quot;</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(max)
+               ;
+    #delimit cr
+     <span class="c1">//add more variables!</span>
+<span class="k">    end</span>
+
+    table1
+</pre></div>
+</div>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//tagging</span>
+<span class="k">list</span> abo gender spread
+<span class="k">egen</span> = tag
+<span class="k">egen</span> grouptag = tag(abo gender)
+<span class="k">list</span> abo gender spread<span class="k"> if</span> grouptag
+</pre></div>
+</div>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> transplants,<span class="k"> clear</span>
+<span class="k">egen</span> ethtag = tag(ethcat)
+<span class="k">bys</span> ethcat:<span class="k"> egen</span> mean_bmi=mean(bmi)<span class="k"> bys</span> ethcat:<span class="k"> egen</span> mean_age=mean(age)
+</pre></div>
+</div>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">twoway scatter m</span><span class="o">~</span>_bmi<span class="k"> m</span><span class="o">~</span>_age<span class="k"> if</span> ethtag
+</pre></div>
+</div>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//conditionals</span>
+<span class="k">count if</span> abo<span class="o">==</span><span class="m">1</span>
+
+<span class="k">if</span> _N <span class="o">&gt;</span> <span class="m">100</span> {
+<span class="k">   </span>
+<span class="k">    di</span> <span class="s">&quot;Thats a big dataset</span>
+
+}
+
+<span class="k">if</span> _N <span class="o">&gt;</span> <span class="m">10000</span> {
+
+<span class="k">    di</span> <span class="s">&quot;That&#39;s a huge dataset&quot;</span>
+
+}
+</pre></div>
+</div>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//if and else</span>
+<span class="k">if</span> _N <span class="o">&gt;</span> <span class="m">10000</span> {
+
+<span class="k">    di</span> <span class="s">&quot;That&#39;s a huge dataset&quot;</span>
+
+}
+
+<span class="k">else</span> {
+
+<span class="k">    di</span> <span class="s">&quot;Bah! Not so big.&quot;</span>
+
+}
+</pre></div>
+</div>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//some `if` examples</span>
+<span class="k">quietly tab</span> dx gender, chi2
+
+<span class="k">if</span> <span class="nf">r</span>(p) <span class="o">&lt;</span> <span class="m">0.01</span> {
+
+<span class="k">    di</span> <span class="s">&quot;p&lt;0.01</span>
+
+}
+
+<span class="k">else</span> {
+
+<span class="k">    di</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(p)
+}
+</pre></div>
+</div>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">count if</span> age<span class="o">&lt;</span><span class="m">18</span>
+<span class="k">if</span> <span class="nf">r</span>(N) <span class="o">&gt;=</span><span class="m">200</span> {
+
+<span class="k">    tab</span> gender prev_ki, chi2
+
+}
+
+<span class="k">else</span> {
+
+<span class="k">    tab</span> gender prev_ki, exact
+    
+}
+</pre></div>
+</div>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">count if</span> <span class="o">!</span><span class="nf">inlist</span>(rec_hcv_antibody,<span class="m">0</span>,<span class="m">1</span>,.)
+
+<span class="k">if</span> <span class="nf">r</span>(N) <span class="o">==</span><span class="m">0</span> {
+
+<span class="k">    logistic</span> rec_hcv_antibody age
+
+}
+
+<span class="k">else</span> {
+
+<span class="k">    di</span> <span class="s">&quot;Non-binary outcome.&quot;</span>
+<span class="k">    di</span> <span class="s">&quot;Can&#39;t do logistic regression&quot;</span>
+}
+</pre></div>
+</div>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//loops</span>
+
+<span class="k">forvalues</span> i = <span class="m">1</span><span class="o">/</span><span class="m">5</span> {
+
+<span class="k">    di</span> <span class="nv">`i&#39;</span> <span class="c1">//a local macro, given the notation!!</span>
+
+}
+</pre></div>
+</div>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">forvalues</span> b = <span class="m">35</span><span class="o">/</span><span class="m">45</span> {
+<span class="k">    </span>
+<span class="k">    quietly count if</span> age<span class="o">&gt;=</span><span class="nv">`b&#39;</span> <span class="o">&amp;</span> age<span class="o">&lt;</span><span class="nv">`b&#39;</span><span class="o">+</span><span class="m">1</span> 
+<span class="k">    disp</span> <span class="s">&quot;Age of </span><span class="nv">`b&#39;</span><span class="s">: &quot;</span> <span class="nf">r</span>(N) <span class="s">&quot; patients&quot;</span>
+    
+}
+</pre></div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="chapter2.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">2. Return values, macros, programs</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="chapter4.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">4. Advanced file management</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loops">3.1 Loops</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iterating-over-numeric-values-in-stata">3.1.1 Iterating Over Numeric Values in Stata</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#what-this-does">What This Does</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#why-it-s-useful">Why It’s Useful</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#but-here-s-the-catch">But Here’s the Catch</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-opinionated-part">The Opinionated Part</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#in-conclusion">In Conclusion</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#output">Output</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iterating-over-variables-with-foreach-in-stata">Iterating Over Variables with <code class="docutils literal notranslate"><span class="pre">foreach</span></code> in Stata</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-mechanics">The Mechanics</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#why-it-s-a-game-changer">Why It’s a Game-Changer</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-caveat">The Caveat</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-opinionated-angle">The Opinionated Angle</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#wrapping-up">Wrapping Up</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Output</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#over-string-values">3.1.2 Over string values</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-subtle-twist-in-variable-iteration-quotation-marks-in-foreach">A Subtle Twist in Variable Iteration: Quotation Marks in <code class="docutils literal notranslate"><span class="pre">foreach</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-subtle-change">The Subtle Change</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#why-it-matters">Why It Matters</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#beyond-syntax-embracing-good-practices">Beyond Syntax: Embracing Good Practices</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-larger-lesson">The Larger Lesson</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#final-thoughts">Final Thoughts</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Output</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analyzing-variable-significance-with-loops">Analyzing Variable Significance with Loops</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-process">The Process</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#output-interpretation">Output Interpretation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#insights-and-notes">Insights and Notes</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-bigger-picture">The Bigger Picture</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Output</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#finessed-by-gpt-3">Finessed by GPT-3</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#enhancing-data-presentation-with-putexcel">Enhancing Data Presentation with <code class="docutils literal notranslate"><span class="pre">putexcel</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-process-in-detail">The Process in Detail</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bridging-lectures-the-continuity-from-lecture-2">Bridging Lectures: The Continuity from Lecture 2</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#engage-and-explore">Engage and Explore</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Final Thoughts</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#decoding-the-process">Decoding the Process</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-underlying-wisdom">The Underlying Wisdom</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#embrace-the-complexity">Embrace the Complexity</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#programming">3.2 Programming</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#myfirst">3.2.1 myfirst</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mysecond">3.2.2 mysecond</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mythird">3.2.3 mythird</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#myfourth">3.2.4. myfourth</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#miscellany">3.3 Miscellany</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Abimereki Muzaale
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

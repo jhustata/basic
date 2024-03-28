@@ -1,0 +1,1286 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>1. Philosophy, overview, commands, syntax &#8212; Stata Programming</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapter1';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="2. Return values, macros, programs" href="chapter2.html" />
+    <link rel="prev" title="Preface" href="intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="https://brand.jhu.edu/assets/uploads/sites/5/2014/06/university_logo_small_vertical_blue.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="https://brand.jhu.edu/assets/uploads/sites/5/2014/06/university_logo_small_vertical_blue.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Preface
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">1. Philosophy, overview, commands, syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter2.html">2. Return values, macros, programs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter3.html">3. Loops, Program Syntax, and Miscellany</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter4.html">4. Advanced file management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter5.html">5. Graphs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter6.html">6. Review of Weeks 1-5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter7.html">7. Survival Analysis: Non-parametric, Semi-parametric, Parametric</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter8.html">8. Multilevel, Hierarchical Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickrefs.html">Quick References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fchapter1.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/chapter1.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>1. Philosophy, overview, commands, syntax</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#philosophy">1.1 Philosophy</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#receive-with-simplicity">1.1.1 Receive &amp; with Simplicity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#know-be-reverent">1.1.2 Know &amp; be Reverent</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#do-on-time">1.1.3 Do &amp; on Time</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">1.2 Overview 🦀</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#commands">1.3 Commands</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#syntax">1.4 Syntax</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#homework">1.5 Homework</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="philosophy-overview-commands-syntax">
+<h1>1. Philosophy, overview, commands, syntax<a class="headerlink" href="#philosophy-overview-commands-syntax" title="Permalink to this heading">#</a></h1>
+<p>Please respond to the brief <code class="docutils literal notranslate"><span class="pre">entry</span> <span class="pre">survey</span></code> that helps us better understand what your needs might be in week one. I’ll launch it on <a class="reference external" href="https://jhjhm.zoom.us/j/98481767907">zoom</a> for both the in-person and virtual attendees. The questions are listed here for your convenience. An identical <code class="docutils literal notranslate"><span class="pre">exit</span> <span class="pre">survey</span></code> will be launched in week-five to get a sense of what we’ve achieved over a five-week period. Our goal is to “titrate” the challenges we present to you each week against your skill-level, to ensure a smooth process of <a class="reference external" href="https://jhufena.github.io/home/preface.html">growth</a> (a.k.a, <a class="reference external" href="https://en.wikipedia.org/wiki/Relaxation_(psychology)">flow)</a> over the next eight weeks.</p>
+<ol class="arabic simple">
+<li><p>How will you use Stata from 04/01/2024-05/17/2024?</p>
+<ul class="simple">
+<li><p>Locally on my laptop</p></li>
+<li><p>Remotely on another desktop or terminal</p></li>
+</ul>
+</li>
+<li><p>What operating system will you use locally or remotely?</p>
+<ul class="simple">
+<li><p>MacOSX</p></li>
+<li><p>Unix</p></li>
+<li><p>Windows</p></li>
+</ul>
+</li>
+<li><p>Do you have any experience using Stata, SAS, R, Python, or any other statistical software?</p>
+<ol class="arabic simple" start="0">
+<li><p><strong>No Experience.</strong> I have no prior experience with Stata and am unfamiliar with the software. Also, I have no experience with other statistical software such as SAS, R, Python, etc.</p></li>
+<li><p><strong>Basic Knowledge.</strong> I have a general understanding of basic commands but I require asistance to perform tasks.</p></li>
+<li><p><strong>Novice User.</strong> I am familiar with basic commands and can import data and do basic data cleaning. But I require guidance for more complex analyses.</p></li>
+<li><p><strong>Competent User.</strong> I am proficient in using Stata, SAS, R, Python, etc. for data exploration, descriptive statistics, basic inference (t-tests, chi-square tests), and regression</p></li>
+<li><p><strong>Advanced User.</strong> I can do multivariable regression and understand various statistical modeling options and techniques available in Stata, SAS, R, etc.</p></li>
+<li><p><strong>Expert User.</strong> I can write custom programs, macros, ado-files in Stata. Or I am an expert user of SAS, R, Python, etc. but have little to no experience with Stata.</p></li>
+</ol>
+</li>
+</ol>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># House cleaning</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="c1"># Adjust the height of bars here</span>
+<span class="n">bar_height</span> <span class="o">=</span> <span class="mf">0.5</span>
+
+<span class="c1">#</span>
+<span class="c1"># Set the random seed for reproducibility</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Simulate responses for question 1 (Stata usage location)</span>
+<span class="n">q1_responses</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="s1">&#39;Locally on my laptop&#39;</span><span class="p">,</span> <span class="s1">&#39;Remote computer&#39;</span><span class="p">],</span> <span class="mi">100</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="p">[</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">])</span>
+
+<span class="c1"># Simulate responses for question 2 (Operating system)</span>
+<span class="n">q2_responses</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="s1">&#39;MacOSX&#39;</span><span class="p">,</span> <span class="s1">&#39;Unix&#39;</span><span class="p">,</span> <span class="s1">&#39;Windows&#39;</span><span class="p">],</span> <span class="mi">100</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="p">[</span><span class="mf">0.67</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.32</span><span class="p">])</span>
+
+<span class="c1"># Simulate responses for question 3 (Experience level)</span>
+<span class="c1"># Assuming a mean experience level of 2 (Novice User) with a standard deviation of 1</span>
+<span class="n">q3_responses</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="c1"># Ensure the experience level is within the 0 to 5 range and round to the nearest integer</span>
+<span class="n">q3_responses</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">q3_responses</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="c1"># Question 1</span>
+<span class="n">q1_values</span><span class="p">,</span> <span class="n">q1_counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">q1_responses</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">q1_values</span><span class="p">,</span> <span class="n">q1_counts</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="n">bar_height</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Question 1 Responses&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="c1"># Number of Responses</span>
+
+<span class="c1"># Question 2</span>
+<span class="n">q2_values</span><span class="p">,</span> <span class="n">q2_counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">q2_responses</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">q2_values</span><span class="p">,</span> <span class="n">q2_counts</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="n">bar_height</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Question 2 Responses&#39;</span><span class="p">)</span>
+
+<span class="c1"># Question 3</span>
+<span class="n">q3_values</span><span class="p">,</span> <span class="n">q3_counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">q3_responses</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">q3_values</span><span class="p">,</span> <span class="n">q3_counts</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="n">bar_height</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Question 3 Responses&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="c1"># Experience Level</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([</span><span class="s1">&#39;No Experience&#39;</span><span class="p">,</span> <span class="s1">&#39;Basic Knowledge&#39;</span><span class="p">,</span> <span class="s1">&#39;Novice User&#39;</span><span class="p">,</span> <span class="s1">&#39;Competent User&#39;</span><span class="p">,</span> <span class="s1">&#39;Advanced User&#39;</span><span class="p">,</span> <span class="s1">&#39;Expert User&#39;</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/ce0771be92977d5297fd1ae75a3be8d6719b0281e1ee84ec704965dbe15e4be0.png" src="_images/ce0771be92977d5297fd1ae75a3be8d6719b0281e1ee84ec704965dbe15e4be0.png" />
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">()</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;1. Root&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">2500</span><span class="p">,</span> <span class="mi">700</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;2. Pentatonic&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">4200</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;3. Diatonic&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">2500</span><span class="p">,</span> <span class="o">-</span><span class="mi">700</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;4. Chromatic&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;5. Temperament&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="mi">1500</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;6. Expression&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="mi">4000</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s2">&quot;1. Root&quot;</span><span class="p">,</span> <span class="s2">&quot;4. Chromatic&quot;</span><span class="p">)])</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s2">&quot;2. Pentatonic&quot;</span><span class="p">,</span> <span class="s2">&quot;4. Chromatic&quot;</span><span class="p">)])</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s2">&quot;3. Diatonic&quot;</span><span class="p">,</span> <span class="s2">&quot;4. Chromatic&quot;</span><span class="p">)])</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s2">&quot;4. Chromatic&quot;</span><span class="p">,</span> <span class="s2">&quot;5. Temperament&quot;</span><span class="p">)])</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s2">&quot;5. Temperament&quot;</span><span class="p">,</span> <span class="s2">&quot;6. Expression&quot;</span><span class="p">)])</span>
+
+<span class="n">pos</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">get_node_attributes</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="s1">&#39;pos&#39;</span><span class="p">)</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;4. Chromatic&quot;</span><span class="p">:</span> <span class="s2">&quot;4. Agency&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;1. Root&quot;</span><span class="p">:</span> <span class="s2">&quot;1. Tools&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;2. Pentatonic&quot;</span><span class="p">:</span> <span class="s2">&quot;2. Challenges&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;3. Diatonic&quot;</span><span class="p">:</span> <span class="s2">&quot;3. Skills&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;5. Temperament&quot;</span><span class="p">:</span> <span class="s2">&quot;5. Flow&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;6. Expression&quot;</span><span class="p">:</span> <span class="s2">&quot;6. Growth&quot;</span><span class="p">}</span>  <span class="c1"># Added label for &quot;NDI&quot; node in the labels dictionary</span>
+
+<span class="c1"># Update color for the &quot;Scenarios&quot; node</span>
+<span class="n">node_colors</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;lightblue&quot;</span><span class="p">,</span><span class="s2">&quot;lightblue&quot;</span><span class="p">,</span> <span class="s2">&quot;lavender&quot;</span><span class="p">,</span> <span class="s2">&quot;lightblue&quot;</span><span class="p">,</span> <span class="s2">&quot;lightblue&quot;</span><span class="p">,</span> <span class="s2">&quot;lightblue&quot;</span><span class="p">]</span>
+<span class="c1"># node_colors = [&quot;lightblue&quot;,&quot;lavender&quot;, &quot;lavender&quot;, &quot;lightgreen&quot;, &quot;lightpink&quot;, &quot;lightpink&quot;]</span>
+<span class="c1"># Suppress the deprecation warning</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">DeprecationWarning</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">nx</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">with_labels</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">node_size</span><span class="o">=</span><span class="mi">20000</span><span class="p">,</span> <span class="n">node_color</span><span class="o">=</span><span class="n">node_colors</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">edge_color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;solid&#39;</span><span class="p">)</span>
+<span class="n">nx</span><span class="o">.</span><span class="n">draw_networkx_labels</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">font_size</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span> <span class="c1"># , font_weight=&#39;bold&#39;</span>
+<span class="n">nx</span><span class="o">.</span><span class="n">draw_networkx_edges</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">edge_color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;solid&#39;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">5000</span><span class="p">,</span> <span class="mi">5000</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/931e5210b5af8aebf9a0ddf56abccf41d6a44d371877c6f1d6db6a58d81cef4d.png" src="_images/931e5210b5af8aebf9a0ddf56abccf41d6a44d371877c6f1d6db6a58d81cef4d.png" />
+</div>
+</div>
+<section id="philosophy">
+<h2>1.1 Philosophy<a class="headerlink" href="#philosophy" title="Permalink to this heading">#</a></h2>
+<p>In embarking on the journey of mastering Stata for data analysis and statistical programming, we adhere to a philosophy that is both pragmatic and reflective.</p>
+<section id="receive-with-simplicity">
+<h3>1.1.1 Receive &amp; with Simplicity<a class="headerlink" href="#receive-with-simplicity" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Tools</p>
+<ul class="simple">
+<li><p>Workstation</p>
+<ul>
+<li><p>Remote: Terminal, <a class="reference external" href="https://ictr.johnshopkins.edu/service/informatics/safe-desktop/">Safe Desktop</a></p></li>
+<li><p>Local: <a class="reference external" href="https://download.stata.com/download/">Download</a> to your machine</p></li>
+</ul>
+</li>
+<li><p>Installation</p>
+<ul>
+<li><p><a class="reference external" href="http://download.stata.com">download.stata.com</a></p></li>
+<li><p>Username:  0123456789 (from email)</p>
+<ul>
+<li><p>You’ll use it again even with future purchases</p></li>
+</ul>
+</li>
+<li><p>Password: <code class="docutils literal notranslate"><span class="pre">$3(re+</span></code> (your choice)</p></li>
+<li><p>Serial number (from purchase)</p>
+<ul>
+<li><p>Perpetual license (expensive)</p></li>
+<li><p>Subscription</p>
+<ul>
+<li><p>6 months</p></li>
+<li><p>12 month</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Operating system (Windows, Mac, Linux)</p>
+<ul>
+<li><p>Contact Stata if you have other system</p></li>
+</ul>
+</li>
+<li><p>Package Stata/MP, Stata/SE, Stata/BE</p>
+<ul>
+<li><p>e.g. Installed the parallel processing version for Mac, ado and help files, PDF documentation, tutorials, and support files. Requires a Stata/MP license</p></li>
+</ul>
+</li>
+<li><p>Allow stata to access files in document folder</p></li>
+</ul>
+</li>
+<li><p>Courses</p>
+<ul>
+<li><p>340.600 Stata Programming I (Basic)</p></li>
+<li><p>340.700 Stata Programming II (Intermediate)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">340.800</span> <span class="pre">Stata</span> <span class="pre">Programming</span> <span class="pre">III</span> <span class="pre">(Advanced)</span></code></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Challenges</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://jhufena.github.io/home/intro.html">Foundational</a></p>
+<ul>
+<li><p>Epi 750 series</p></li>
+<li><p>Biostats 140 series</p></li>
+</ul>
+</li>
+<li><p>Hopkins</p>
+<ul>
+<li><p><a class="reference external" href="https://jhustata.github.io/basic/quickrefs.html#labs-schedule">Labs/Practice</a></p></li>
+<li><p>Homework</p></li>
+<li><p>Capstone/Thesis</p></li>
+<li><p>Biostats 140.624</p></li>
+</ul>
+</li>
+<li><p>Real-World</p>
+<ul>
+<li><p><a class="reference external" href="https://wwwn.cdc.gov/nchs/nhanes/Default.aspx">NHANES</a></p>
+<ul>
+<li><p>Demographic</p></li>
+<li><p>Questionnaire</p></li>
+<li><p>Nutrition</p></li>
+<li><p>Lab</p></li>
+<li><p>Exam</p></li>
+<li><p>Outcomes (30-year followup)</p>
+<ul>
+<li><p>Mortality</p></li>
+<li><p>Kidney failure</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>National Databases</p></li>
+<li><p>Clinical Studies</p></li>
+<li><p>Longitudinal Cohorts</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="know-be-reverent">
+<h3>1.1.2 Know &amp; be Reverent<a class="headerlink" href="#know-be-reverent" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple" start="3">
+<li><p><strong>Skills</strong></p>
+<ul class="simple">
+<li><p><strong>Analytical Thinking:</strong> You are encouraged to not just learn Stata syntax but to understand the data you are working with. Stata is not just a tool but a gateway to meaningful insights. This class assumes that you have received some training in epidemiology and biostatistics and will not be emphasizing any of these points.</p></li>
+<li><p><strong>Data Management Mastery:</strong> Knowing how to efficiently clean, manipulate, and prepare data is sacred in the realm of statistical analysis. Treat each <a class="reference external" href="https://jhustata.github.io/basic/quickrefs.html#datasets-and-supplementary-materials">dataset as a unique puzzle</a> that tells a story. I’ve two datasets that have the same information, but in different formats. From a technical perspective, there might be nuanced differences in the challenges you’ll encounter while using one dataset compared with another.</p>
+<ul>
+<li><p><a class="reference external" href="https://raw.githubusercontent.com/jhustata/livre/main/transplants.txt">transplants.txt</a></p></li>
+<li><p><a class="reference external" href="https://jhustata.github.io/basic/_downloads/34a8255f06036b44354b3c36c5583d7e/transplants.dta">transplants.dta</a></p></li>
+</ul>
+</li>
+<li><p><strong>Statistical Techniques:</strong> A reverent understanding of the statistical methods behind the commands is crucial but beyond the scope of this class. For instance, we will not discuss the relative merits of three approaches to survival analysis: non-parametric, semi-parametric, and parametric. This class assumes you know why and when to use each method. But we will provide you with the tools to do so efficiently.</p></li>
+</ul>
+</li>
+<li><p><strong>Agency</strong></p>
+<ul class="simple">
+<li><p><strong>Self-directed Learning:</strong> We hope you appreciate the value of exploration beyond the classroom. The most profound learning occurs through tackling real-world data challenges.</p></li>
+<li><p><strong>Community Contribution:</strong> Please engage with our new <a class="reference external" href="https://github.com/jhufena/discussions/discussions">Stata-focused community</a>, share knowledge, ask questions, and contribute solutions. Respect for the community’s collective wisdom and the software’s capabilities should guide your interactions.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="do-on-time">
+<h3>1.1.3 Do &amp; on Time<a class="headerlink" href="#do-on-time" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple" start="5">
+<li><p><strong>Flow</strong></p>
+<ul class="simple">
+<li><p><strong>Start with the Basics:</strong> <a class="reference external" href="https://publichealth.jhu.edu/course/38901">This class</a>, as it’s name suggests, emphasizes the importance of a strong foundation. Understanding the <code class="docutils literal notranslate"><span class="pre">basics</span></code> thoroughly ensures smoother progression to <code class="docutils literal notranslate"><span class="pre">intermediate</span></code> and <code class="docutils literal notranslate"><span class="pre">advanced</span></code> topics.</p></li>
+<li><p><strong>Practical Applications:</strong> If you need a real-world dataset (e.g. NHANES) for your Biostats 140.624 project, we’d be happy to facilitate you and help curate it for you. Hopefully this will foster a deeper understanding and appreciation of Stata’s power.</p></li>
+<li><p><strong>Iterative Learning:</strong> Please use an iterative approach to all your labs and homeworks. The first attempt doesn’t have to be perfect; learning comes from refinement and persistence.</p></li>
+</ul>
+</li>
+<li><p><strong>Growth</strong></p>
+<ul class="simple">
+<li><p><strong>Feedback Loops:</strong> Constructive feedback is sacred. So we are offering an <a class="reference external" href="https://github.com/jhufena/discussions/discussions">open environment</a> where feedback is given and received, to promote continuous improvement and learning.</p></li>
+<li><p><strong>Skill Expansion:</strong> The course is structured to progressively challenge you with more complex problems and datasets. Growth in the realm of Stata Programming, and in any aspect of life in general, is about matching challenges with skills. But gradually and systematically increasing the challenges we present to you, and by offering you prompt feedback on your performance, we believe we’ll nurture an environemnt that ensures growth in your skills.</p></li>
+<li><p><strong>Lifelong Learning:</strong> And remember that learning Stata, like any other skill, is a journey without an end. The landscape of data analysis is always evolving, and so should your skills and understanding. This is partly what motivated our new <a class="reference external" href="https://github.com/jhufena/discussions/discussions">Stata-focused community</a> as well as our <a class="reference external" href="https://jhufena.github.io/home/intro.html">general analytic community</a> that aims to discuss topics at the interface of Stata, R, Python, AI, code, version control, automation, open science, etc.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+</section>
+<section id="overview">
+<h2>1.2 Overview 🦀<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
+<p><em>Ceci n’est pas une crabe</em></p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="c1">#import numpy as np</span>
+<span class="c1">#import sklearn as skl</span>
+<span class="c1"># </span>
+
+<span class="c1">#plt.figure(figsize=[2, 2])</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">()</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;user&quot;</span><span class="p">,</span>  <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="mi">550</span><span class="p">,</span><span class="mi">500</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;system&quot;</span><span class="p">,</span>  <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">550</span><span class="p">,</span><span class="mi">500</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;program&quot;</span><span class="p">,</span>  <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">2000</span><span class="p">,</span> <span class="mi">960</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;syntax&quot;</span><span class="p">,</span>  <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="mi">950</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;ado&quot;</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">3000</span><span class="p">,</span> <span class="mi">550</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;do&quot;</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3000</span><span class="p">,</span> <span class="mi">550</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;command&quot;</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">1900</span><span class="p">,</span> <span class="mi">150</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;queue&quot;</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1900</span><span class="p">,</span> <span class="mi">150</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;results&quot;</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;dta&quot;</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">475</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">1900</span><span class="p">,</span> <span class="o">-</span><span class="mi">475</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;excel&quot;</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">4000</span><span class="p">,</span> <span class="o">-</span><span class="mi">475</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;word&quot;</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1900</span><span class="p">,</span> <span class="o">-</span><span class="mi">475</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;html&quot;</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="mi">4000</span><span class="p">,</span> <span class="o">-</span><span class="mi">475</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;publish&quot;</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">950</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([</span> <span class="p">(</span><span class="s2">&quot;program&quot;</span><span class="p">,</span><span class="s2">&quot;ado&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;syntax&quot;</span><span class="p">,</span> <span class="s2">&quot;do&quot;</span><span class="p">)])</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s2">&quot;ado&quot;</span><span class="p">,</span> <span class="s2">&quot;command&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;do&quot;</span><span class="p">,</span> <span class="s2">&quot;queue&quot;</span><span class="p">)</span> <span class="p">])</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s2">&quot;command&quot;</span><span class="p">,</span> <span class="s2">&quot;results&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;queue&quot;</span><span class="p">,</span> <span class="s2">&quot;results&quot;</span><span class="p">),(</span><span class="s2">&quot;results&quot;</span><span class="p">,</span><span class="s2">&quot;excel&quot;</span><span class="p">),(</span><span class="s2">&quot;results&quot;</span><span class="p">,</span><span class="s2">&quot;word&quot;</span><span class="p">),(</span><span class="s2">&quot;results&quot;</span><span class="p">,</span><span class="s2">&quot;html&quot;</span><span class="p">)])</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s2">&quot;results&quot;</span><span class="p">,</span><span class="s2">&quot;dta&quot;</span><span class="p">),(</span><span class="s2">&quot;results&quot;</span><span class="p">,</span><span class="s2">&quot;log&quot;</span><span class="p">)])</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s2">&quot;dta&quot;</span><span class="p">,</span><span class="s2">&quot;publish&quot;</span><span class="p">),(</span><span class="s2">&quot;log&quot;</span><span class="p">,</span><span class="s2">&quot;publish&quot;</span><span class="p">),(</span><span class="s2">&quot;excel&quot;</span><span class="p">,</span><span class="s2">&quot;publish&quot;</span><span class="p">),(</span><span class="s2">&quot;word&quot;</span><span class="p">,</span><span class="s2">&quot;publish&quot;</span><span class="p">),(</span><span class="s2">&quot;html&quot;</span><span class="p">,</span><span class="s2">&quot;publish&quot;</span><span class="p">)])</span>
+<span class="n">nx</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> 
+        <span class="n">nx</span><span class="o">.</span><span class="n">get_node_attributes</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="s1">&#39;pos&#39;</span><span class="p">),</span> 
+        <span class="n">with_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
+        <span class="n">font_weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span> 
+        <span class="n">node_size</span> <span class="o">=</span> <span class="mi">4500</span><span class="p">,</span>
+        <span class="n">node_color</span> <span class="o">=</span> <span class="s2">&quot;lightblue&quot;</span><span class="p">,</span>
+        <span class="n">linewidths</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">collections</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_edgecolor</span><span class="p">(</span><span class="s2">&quot;#000000&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="o">-</span><span class="mi">5000</span><span class="p">,</span> <span class="mi">5000</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="o">-</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/68b0bc74161d7710f53566e5ee9be406db910130ddbc8f918781f1977ed8e80e.png" src="_images/68b0bc74161d7710f53566e5ee9be406db910130ddbc8f918781f1977ed8e80e.png" />
+</div>
+</div>
+<p>We are going to distinguish between two fundamental perspectives in this class:</p>
+<ul class="simple">
+<li><p>System</p>
+<ul>
+<li><p>Native (built-in stata application, support files, <code class="docutils literal notranslate"><span class="pre">.ado</span></code> files)</p>
+<ul>
+<li><p>If you type <code class="docutils literal notranslate"><span class="pre">which</span> <span class="pre">help</span></code> into your command window you get something like: <code class="docutils literal notranslate"><span class="pre">/Applications/Stata/ado/base/h/help.ado</span></code></p></li>
+</ul>
+</li>
+<li><p>Third-party (typically <code class="docutils literal notranslate"><span class="pre">.ado</span></code> files)</p>
+<ul>
+<li><p>When I type <code class="docutils literal notranslate"><span class="pre">which</span> <span class="pre">table1_fena</span></code> I get <code class="docutils literal notranslate"><span class="pre">/Applications/Stata/ado/base/t/table1_fena.ado</span></code></p></li>
+</ul>
+</li>
+<li><p>Your <code class="docutils literal notranslate"><span class="pre">.ado</span></code> files (you’ll learn to write &amp; install your own programs)</p>
+<ul>
+<li><p>Since you don’t have <code class="docutils literal notranslate"><span class="pre">table1_fena.ado</span></code> installed you’ll get <code class="docutils literal notranslate"><span class="pre">command</span> <span class="pre">table1_fena</span> <span class="pre">not</span> <span class="pre">found</span> <span class="pre">as</span> <span class="pre">either</span> <span class="pre">built-in</span> <span class="pre">or</span> <span class="pre">ado-file</span></code></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>User</p>
+<ul>
+<li><p>Known</p>
+<ul>
+<li><p>Instructor</p></li>
+<li><p>Teaching assistants</p></li>
+<li><p>Students</p></li>
+<li><p>Collaborators</p></li>
+</ul>
+</li>
+<li><p>Unknown</p>
+<ul>
+<li><p>Anticipate (emphathize with different kinds of users)</p></li>
+<li><p>Share code (on GitHub, for instance)</p></li>
+<li><p>Care (user-friendly, annotated code)</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">system</span></code> is the <u>Stata application</u> and its a simple noun. It is not <strike>STATA</strike>, which gives the impression of being an acronym. I presume you’ve all installed Stata onto your local machines. If not I presume you’ll be doing so very soon or you will be remotely accessing it. The <code class="docutils literal notranslate"><span class="pre">user</span></code> includes you, me, the teaching assistants, collaborators, or strangers.</p>
+<p>As a user, you will or have already downloaded and installed a system of programs, mostly ado-files, which form the foundation of all the commands you will be using in Stata. These are the <strong>native</strong> Stata system files.</p>
+<p>But soon you will begin to write your own Stata programs or <code class="docutils literal notranslate"><span class="pre">.ado</span></code> files and install them into the system folders (as I’ve done with <code class="docutils literal notranslate"><span class="pre">table1_fena.ado</span></code>). Then, it will be helpful to think of your role as part of the system. In your new role as system, it will be helpful to anticipate the needs of the known and unknown future users of your program. This will call for <strong>empathy</strong> (anticipating user needs), <strong>sharing</strong> (your code with others), and <strong>caring</strong> (that its user-friendly).</p>
+<ul class="simple">
+<li><p>Installation</p>
+<ul>
+<li><p>Local</p>
+<ul>
+<li><p>MacOSX</p></li>
+<li><p>Unix</p></li>
+<li><p>Windows</p></li>
+</ul>
+</li>
+<li><p>Remote</p>
+<ul>
+<li><p>Desktop</p>
+<ul>
+<li><p>Windows</p></li>
+</ul>
+</li>
+<li><p>Cluster</p>
+<ul>
+<li><p>Unix/Terminal</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Local</p>
+<ul>
+<li><p><a class="reference external" href="https://www.stata.com/manuals13/gsw2.pdf#gsw2TheStatauserinterface">Menu</a></p>
+<ul>
+<li><p>file</p></li>
+<li><p>edit</p></li>
+<li><p>view</p></li>
+<li><p>data</p></li>
+<li><p>graphics</p></li>
+<li><p>statistics</p></li>
+<li><p>user</p></li>
+<li><p>window</p>
+<ul>
+<li><p>command ⌘ 1</p></li>
+<li><p>results ⌘ 2</p></li>
+<li><p>history ⌘ 3</p></li>
+<li><p>variables ⌘ 4</p></li>
+<li><p>properties ⌘ 5</p></li>
+<li><p>graph ⌘ 6</p></li>
+<li><p>viewer ⌘ 7</p></li>
+<li><p>editor ⌘ 8</p></li>
+<li><p>do-file ⌘ 9</p></li>
+<li><p>manager ⌘ 10</p></li>
+</ul>
+</li>
+<li><p>help</p></li>
+</ul>
+</li>
+<li><p>Command</p>
+<ul>
+<li><p>The very first <code class="docutils literal notranslate"><span class="pre">valid</span></code> word you type into the command window or on a line of code in a do file</p>
+<ul>
+<li><p>Some <a class="reference external" href="https://www.stata.com/manuals13/u27.pdf">basic</a> commands that the folks at Stata think you ought to know by the end of this class. Please keep checking</p></li>
+<li><p>In your week 1 <a class="reference external" href="https://jhustata.github.io/basic/chapter1.html#homework">homework</a> you’ll learn to use the <code class="docutils literal notranslate"><span class="pre">display</span></code> command</p></li>
+</ul>
+</li>
+<li><p>Rendered blue in color if its a <u>native</u> Stata command (on my machine)</p></li>
+<li><p>A <u>third-party</u> program/command appears white and may not work if you share your do file with others</p></li>
+<li><p>Your collaborators, TAs, and instructors must be warned about the need to first install such third-party programs</p></li>
+</ul>
+</li>
+<li><p>Syntax</p>
+<ul>
+<li><p>The arrangement of words after a Stata command</p></li>
+<li><p>Create well-formed instructions in Stata (i.e., the syntax of Stata)</p></li>
+<li><p>Other terms or synonyms include code, Stata code, code snippet.</p></li>
+</ul>
+</li>
+<li><p>Input</p>
+<ul>
+<li><p>Menu (<strong>see above:</strong> a menu-driven task outputs command and syntax in the results window)</p></li>
+<li><p>do files (Stata script with a sequence of commands; you can copy &amp; paste some from the results window)</p></li>
+<li><p>ado files (Stata script with a program or a series of programs for specific or general tasks)</p></li>
+</ul>
+</li>
+<li><p>Output/Results</p>
+<ul>
+<li><p>String</p>
+<ul>
+<li><p>text (e.g., <code class="docutils literal notranslate"><span class="pre">str49</span></code> below = string of 49 characters <u>including spaces</u>)</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">The</span> <span class="pre">median</span> <span class="pre">age</span> <span class="pre">in</span> <span class="pre">this</span> <span class="pre">population</span> <span class="pre">is</span> <span class="pre">40</span> <span class="pre">years</span> <span class="pre">old</span></code></p></li>
+</ul>
+</li>
+<li><p>url</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">https://www.stata-press.com/data/r8</span></code></p></li>
+</ul>
+</li>
+<li><p>filepath</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">/users/d/desktop</span></code></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Numeric (types by range)</p>
+<ul>
+<li><p>integer</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">byte</span></code>: <span class="math notranslate nohighlight">\(-127\)</span> to <span class="math notranslate nohighlight">\(100\)</span></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int</span></code>: <span class="math notranslate nohighlight">\(-32767\)</span> to <span class="math notranslate nohighlight">\(32740\)</span></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">long</span></code>: <span class="math notranslate nohighlight">\(\pm   2\)</span> billion</p></li>
+</ul>
+</li>
+<li><p>decimal</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">float</span></code>: <span class="math notranslate nohighlight">\(\pm   10^{38}\)</span> billion</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">double</span></code>: <span class="math notranslate nohighlight">\(\pm   10^{307}\)</span> billion</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1">#plt.figure(figsize=[2, 2])</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">()</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;results&quot;</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="mi">500</span><span class="p">,</span><span class="mi">960</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;numeric&quot;</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1900</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">3000</span><span class="p">,</span> <span class="o">-</span><span class="mi">250</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;url&quot;</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">1000</span><span class="p">,</span> <span class="o">-</span><span class="mi">250</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;filepath&quot;</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="o">-</span><span class="mi">250</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;long&quot;</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="o">-</span><span class="mi">960</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;int&quot;</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">1400</span><span class="p">,</span> <span class="o">-</span><span class="mi">960</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;byte&quot;</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">3500</span><span class="p">,</span> <span class="o">-</span><span class="mi">960</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2400</span><span class="p">,</span> <span class="o">-</span><span class="mi">960</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;double&quot;</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="mi">4500</span><span class="p">,</span> <span class="o">-</span><span class="mi">960</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([</span> <span class="p">(</span><span class="s2">&quot;results&quot;</span><span class="p">,</span><span class="s2">&quot;string&quot;</span><span class="p">)])</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">),(</span><span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="s2">&quot;url&quot;</span><span class="p">)</span> <span class="p">,(</span><span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="s2">&quot;filepath&quot;</span><span class="p">)])</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s2">&quot;numeric&quot;</span><span class="p">,</span><span class="s2">&quot;byte&quot;</span><span class="p">),(</span><span class="s2">&quot;numeric&quot;</span><span class="p">,</span><span class="s2">&quot;float&quot;</span><span class="p">),(</span><span class="s2">&quot;numeric&quot;</span><span class="p">,</span><span class="s2">&quot;double&quot;</span><span class="p">),(</span><span class="s2">&quot;numeric&quot;</span><span class="p">,</span><span class="s2">&quot;int&quot;</span><span class="p">)])</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s2">&quot;numeric&quot;</span><span class="p">,</span><span class="s2">&quot;long&quot;</span><span class="p">),(</span><span class="s2">&quot;results&quot;</span><span class="p">,</span><span class="s2">&quot;numeric&quot;</span><span class="p">)])</span>
+
+<span class="n">nx</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> 
+        <span class="n">nx</span><span class="o">.</span><span class="n">get_node_attributes</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="s1">&#39;pos&#39;</span><span class="p">),</span> 
+        <span class="n">with_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
+        <span class="n">font_weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span> 
+        <span class="n">node_size</span> <span class="o">=</span> <span class="mi">4500</span><span class="p">,</span>
+        <span class="n">node_color</span> <span class="o">=</span> <span class="s2">&quot;lightblue&quot;</span><span class="p">,</span>
+        <span class="n">linewidths</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">collections</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_edgecolor</span><span class="p">(</span><span class="s2">&quot;#000000&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="o">-</span><span class="mi">5000</span><span class="p">,</span> <span class="mi">5000</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="o">-</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/ba7a03497dffd11a80dc73ed024fddf10be1efa8e096461c7e513dcd71bdaf71.png" src="_images/ba7a03497dffd11a80dc73ed024fddf10be1efa8e096461c7e513dcd71bdaf71.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p>Embed</p>
+<ul>
+<li><p>Results window</p></li>
+<li><p>Graph</p></li>
+<li><p>File: excel, log, dta, word, <a class="reference internal" href="dyndoc.html"><span class="doc std std-doc">html</span></a>, etc.</p></li>
+</ul>
+</li>
+<li><p>Publish/<a class="reference external" href="https://en.wikipedia.org/wiki/Markup_language">Markup</a></p>
+<ul>
+<li><p>Self (e.g., GitHub)</p></li>
+<li><p>Journal (e.g. JAMA)</p></li>
+<li><p>Commercial (e.g. Pfizer Ad)</p></li>
+</ul>
+</li>
+</ul>
+<p>Let’s use a simple example to illustrate some of the terms we’ve introduced:</p>
+<ul class="simple">
+<li><p>Menu</p>
+<ul>
+<li><p>file &gt; example datasets &gt; lifeexp.dta &gt; use</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sysuse</span> <span class="pre">lifeexp.dta</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">webuse</span> <span class="pre">lifeexp.dta</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">use</span> <span class="pre">https://www.stata-press.com/data/r8/lifeexp.dta</span></code></p></li>
+</ul>
+</li>
+</ul>
+<ul class="simple">
+<li><p>do file</p>
+<ul>
+<li><p>Importing data</p></li>
+<li><p>Exploring data</p></li>
+<li><p>Analyzing data</p></li>
+<li><p>Outputing results</p></li>
+</ul>
+</li>
+<li><p>ado file</p>
+<ul>
+<li><p>basis of Stata commands</p></li>
+</ul>
+</li>
+<li><p>etc.</p></li>
+</ul>
+</section>
+<section id="commands">
+<h2>1.3 Commands<a class="headerlink" href="#commands" title="Permalink to this heading">#</a></h2>
+<p>Let’s instruct Stata to import some data:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">webuse</span> lifeexp,<span class="k"> clear</span>
+</pre></div>
+</div>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>.<span class="k"> webuse</span> lifeexp,<span class="k"> clear</span>
+(Life expectancy, <span class="m">1998</span>)
+
+. 
+</pre></div>
+</div>
+<p>The results window has some output informing us that we’ve imported Life expectancy data from 1998. Now let’s explore these imported data:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">display</span> <span class="nf">c</span>(N) 
+<span class="k">display</span> <span class="nf">c</span>(k)
+<span class="k">describe</span> 
+</pre></div>
+</div>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>.<span class="k"> display</span> <span class="nf">c</span>(N) 
+<span class="m">68</span>
+
+.<span class="k"> display</span> <span class="nf">c</span>(k)
+<span class="m">6</span>
+
+.<span class="k"> describe</span> 
+
+Contains data from https:<span class="o">//</span>www<span class="m">.</span>stata<span class="o">-</span>press<span class="m">.</span>com<span class="o">/</span>data<span class="o">/</span>r18<span class="o">/</span>lifeexp<span class="m">.</span>dta
+Observations:            <span class="m">68</span>                  Life expectancy, <span class="m">1998</span>
+Variables:                <span class="m">6</span>                  <span class="m">26</span> Mar <span class="m">2022</span> <span class="m">09</span>:<span class="m">40</span>
+(_dta has<span class="k"> notes</span>)
+		
+Variable      Storage   Display    Value
+name           <span class="k"> type</span>   <span class="k"> format</span>    <span class="k"> label</span>      Variable<span class="k"> label</span>
+		
+region          byte    <span class="nx">%16.0g</span>     region     Region
+country         str28   <span class="nx">%28s</span>                  Country
+popgrowth       float   <span class="nx">%9.0g</span>               <span class="o">*</span> Avg. annual % growth
+lexp            byte    <span class="nx">%9.0g</span>               <span class="o">*</span> Life expectancy at birth
+gnppc           float   <span class="nx">%9.0g</span>               <span class="o">*</span> GNP per capita
+safewater       byte    <span class="nx">%9.0g</span>               <span class="o">*</span> Safe water
+<span class="c1">* indicated variables have	notes</span>
+		
+Sorted<span class="k"> by</span>: 
+
+. 
+</pre></div>
+</div>
+<p>By now you should be quick to point out that <code class="docutils literal notranslate"><span class="pre">display</span></code> is a command. To better understand what this command does, you can type <code class="docutils literal notranslate"><span class="pre">help</span> <span class="pre">display</span></code> in the command window. If you do so, you’ll learn the following:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>[P]<span class="k"> display</span>	<span class="o">--</span>	Display strings and values of<span class="k"> scalar</span> expressions
+			(View complete PDF manual entry)
+</pre></div>
+</div>
+<p>In our earlier discussion, we covered two main types of data output in Stata: string and numeric values. The <code class="docutils literal notranslate"><span class="pre">display</span></code> command is used to show these values, formatted according to the syntax you specify.</p>
+<p>Data outputs generally have two main features:</p>
+<ul class="simple">
+<li><p><strong>Name</strong>: For example, <code class="docutils literal notranslate"><span class="pre">c(N)</span></code> refers to the number of observations, and <code class="docutils literal notranslate"><span class="pre">c(k)</span></code> refers to the number of variables.</p></li>
+<li><p><strong>Content</strong>: This is the actual value associated with the name, such as the actual number of observations and variables.</p></li>
+</ul>
+<p>These are examples of what are known as macros. Specifically, they are system-defined macros. We will also explore user-defined macros, which you can create yourself, in our next session.</p>
+<p>Now, let’s practice some basic data analysis with our imported dataset to understand more about Stata syntax and outputs. We’ll go through each line of code and add explanations:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">webuse</span> lifeexp,<span class="k"> clear</span> 
+<span class="k">encode</span> country,<span class="k"> gen</span>(Country)
+<span class="k">twoway scatter</span> lexp Country, xscale(off)
+<span class="k">graph</span> export lexp_bycountry<span class="m">.</span>png,<span class="k"> replace</span> 
+</pre></div>
+</div>
+<ol class="arabic simple">
+<li><p><strong>Loading the Data</strong>: <code class="docutils literal notranslate"><span class="pre">webuse</span> <span class="pre">lifeexp,</span> <span class="pre">clear</span></code></p>
+<ul class="simple">
+<li><p>This command loads a dataset named <code class="docutils literal notranslate"><span class="pre">lifeexp</span></code> into Stata. The <code class="docutils literal notranslate"><span class="pre">clear</span></code> option is used to ensure that any previously loaded data is removed from memory, making room for this new dataset.</p></li>
+</ul>
+</li>
+<li><p><strong>Creating a New Variable</strong>: <code class="docutils literal notranslate"><span class="pre">encode</span> <span class="pre">country,</span> <span class="pre">gen(Country)</span></code></p>
+<ul class="simple">
+<li><p>Here, we’re taking the <code class="docutils literal notranslate"><span class="pre">country</span></code> variable, which contains country names, and converting it into a new numeric variable named <code class="docutils literal notranslate"><span class="pre">Country</span></code>. This process assigns a unique number to each country name, making it easier to work with in statistical analyses.</p></li>
+</ul>
+</li>
+<li><p><strong>Generating a Scatter Plot</strong>: <code class="docutils literal notranslate"><span class="pre">twoway</span> <span class="pre">scatter</span> <span class="pre">lexp</span> <span class="pre">Country,</span> <span class="pre">xscale(off)</span></code></p>
+<ul class="simple">
+<li><p>This line of code creates a scatter plot with life expectancy (<code class="docutils literal notranslate"><span class="pre">lexp</span></code>) on one axis and the newly created <code class="docutils literal notranslate"><span class="pre">Country</span></code> variable on the other. The <code class="docutils literal notranslate"><span class="pre">xscale(off)</span></code> part means we’re not scaling the x-axis, keeping it in its original state for clarity.</p></li>
+</ul>
+</li>
+<li><p><strong>Exporting the Graph</strong>: <code class="docutils literal notranslate"><span class="pre">graph</span> <span class="pre">export</span> <span class="pre">lexp_bycountry.png,</span> <span class="pre">replace</span></code></p>
+<ul class="simple">
+<li><p>Finally, this command saves the scatter plot as an image file named <code class="docutils literal notranslate"><span class="pre">lexp_bycountry.png</span></code>. The <code class="docutils literal notranslate"><span class="pre">replace</span></code> option allows the file to be overwritten if it already exists, ensuring your latest graph is saved.</p></li>
+</ul>
+</li>
+</ol>
+<p>By following these steps, you’re performing a basic yet insightful analysis of your data, exploring the relationship between countries and life expectancy. This hands-on approach will help you become more familiar with Stata’s syntax and how to interpret the outputs of your analyses.</p>
+<p><img alt="" src="_images/lexp_bycountry.png" /></p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>.<span class="k"> webuse</span> lifeexp,<span class="k"> clear</span> 
+(Life expectancy, <span class="m">1998</span>)
+
+.<span class="k"> encode</span> country,<span class="k"> gen</span>(Country)
+
+.<span class="k"> twoway scatter</span> lexp Country, xscale(off)
+
+.<span class="k"> graph</span> export lexp_bycountry<span class="m">.</span>png,<span class="k"> replace</span> 
+<span class="k">file</span> <span class="o">/</span>Users<span class="o">/</span>d<span class="o">/</span>Desktop<span class="o">/</span>lexp_bycountry<span class="m">.</span>png saved<span class="k"> as</span> PNG<span class="k"> format</span>
+
+. 
+</pre></div>
+</div>
+</section>
+<section id="syntax">
+<h2>1.4 Syntax<a class="headerlink" href="#syntax" title="Permalink to this heading">#</a></h2>
+<p>A few commands are useful on their own:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">chelp</span>
+<span class="k">pwd</span>
+</pre></div>
+</div>
+<p>To name but a few. But the vast majority of commands will only work in context of the appropriate syntax. In this example below, the command <code class="docutils literal notranslate"><span class="pre">clear</span></code> is useful on its own. But <code class="docutils literal notranslate"><span class="pre">set</span></code> only becomes useful with additional syntax. Here we have <code class="docutils literal notranslate"><span class="pre">obs</span> <span class="pre">1000</span></code>, instructing Stata to create an empty dataset with 1000 observations. The command <code class="docutils literal notranslate"><span class="pre">generate</span></code> with syntax <code class="docutils literal notranslate"><span class="pre">bmi=rnormal(28,5)</span></code> then instructs Stata to create a new variable <code class="docutils literal notranslate"><span class="pre">bmi</span></code> in a simulation of a random sampling process with replacement, 1000 times over, from a population with mean bmi of 28 and standard deviation of 5. Stata is then instructed to create a histogram of these simulated bmi sample and save the figure as a .PNG image. Hopefully this clarifies what a Stata command is and what syntax is. Together these make up Stata code.</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k"> clear</span> 
+<span class="k"> set</span> obs <span class="m">1000</span>
+<span class="k"> generate</span> bmi=<span class="nf">rnormal</span>(<span class="m">28</span>,<span class="m">5</span>)
+<span class="k"> histogram</span> bmi, normal
+<span class="k"> graph</span> export bmi<span class="m">.</span>png,<span class="k"> replace</span> 
+</pre></div>
+</div>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>. <span class="k"> clear</span> 
+
+. <span class="k"> set</span> obs <span class="m">1000</span>
+Number of observations (_N) was <span class="m">0</span>, now <span class="m">1</span>,<span class="m">000</span>.
+
+. <span class="k"> generate</span> bmi=<span class="nf">rnormal</span>(<span class="m">28</span>,<span class="m">5</span>)
+
+. <span class="k"> histogram</span> bmi, normal
+(bin=<span class="m">29</span>, start=<span class="m">13.457429</span>, width=.<span class="m">99248317</span>)
+
+. <span class="k"> graph</span> export bmi<span class="m">.</span>png,<span class="k"> replace</span> 
+<span class="k">file</span> <span class="o">/</span>Users<span class="o">/</span>d<span class="o">/</span>Desktop<span class="o">/</span>bmi<span class="m">.</span>png saved<span class="k">	as</span>	PNG<span class="k">	format</span>
+
+. 
+<span class="k">end</span> of<span class="k"> do</span><span class="o">-</span>file
+
+. 
+</pre></div>
+</div>
+<p><img alt="" src="_images/bmi.png" /></p>
+<p>In the above example the very first <code class="docutils literal notranslate"><span class="pre">valid</span></code> word is a command and is rendered blue on my machine but purple in this book. If you type any random word that has no corresponding ado-file, you’ll get an error message. Notice also that since its not a native Stata command, it appears black (or white), but not purple.</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>myfirstprogram
+</pre></div>
+</div>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>. myfirstprogram
+command myfirstprogram is unrecognized
+<span class="nf">r</span>(<span class="m">199</span>);
+
+. 
+</pre></div>
+</div>
+<p>The words that come after the command might be further commands or subcommands. If so, they’ll also be rendered blue on my machine. The ones that appear in white or black (dark or light mode) are either third-party programs/commands or they are part of the Stata syntax. By the end of next week you’ll be writing your first program (which becomes a Stata command). And by week three you’ll be adding requirements for syntax, which introduces <u>user-defined</u> input.</p>
+</section>
+<section id="homework">
+<h2>1.5 Homework<a class="headerlink" href="#homework" title="Permalink to this heading">#</a></h2>
+<p>Your week 1 homework is very simple:</p>
+<ol class="arabic simple">
+<li><p>Write a .do file which imports data from <a class="reference external" href="https://jhustata.github.io/book/_downloads/884b9e06eb29f89b1b87da4eab39775d/hw1.txt">hw1.txt</a></p></li>
+<li><p>Name it <code class="docutils literal notranslate"><span class="pre">hw1.lastname.firstname.do</span></code></p></li>
+<li><p>It should create a .log file called <code class="docutils literal notranslate"><span class="pre">hw1.lastname.firstname.log</span></code></p></li>
+<li><p>Make sure your log file displays only the output of interest</p></li>
+<li><p>But do not submit your log file as part of the assignment</p></li>
+<li><p>Evaluation will be based on the .log file produced when we run your script on our machines</p></li>
+</ol>
+<p>Question:</p>
+<p>Print the following sentence: <code class="docutils literal notranslate"><span class="pre">Question</span> <span class="pre">1:</span> <span class="pre">There</span> <span class="pre">are</span> <span class="pre">xxxx</span> <span class="pre">records</span> <span class="pre">in</span> <span class="pre">the</span> <span class="pre">dataset</span></code>. The <code class="docutils literal notranslate"><span class="pre">xxxx</span></code> should be replaced with the actual number of records in the dataset.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Preface</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="chapter2.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">2. Return values, macros, programs</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#philosophy">1.1 Philosophy</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#receive-with-simplicity">1.1.1 Receive &amp; with Simplicity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#know-be-reverent">1.1.2 Know &amp; be Reverent</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#do-on-time">1.1.3 Do &amp; on Time</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">1.2 Overview 🦀</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#commands">1.3 Commands</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#syntax">1.4 Syntax</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#homework">1.5 Homework</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Abimereki Muzaale
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
