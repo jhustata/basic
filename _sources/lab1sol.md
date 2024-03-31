@@ -4,7 +4,7 @@ data: [transplants.dta](https://jhustata.github.io/basic/_downloads/34a8255f0603
 
 Please use this lab as an opportunity to review the course material and prepare yourself for the homework 1 & 2 questions. An answer key will be on Friday April 5, 2024. Question 14 will prepare you for homework 1.
 
-1. Start Stata and open your do-file editor. [lab1.do](https://raw.githubusercontent.com/jhustata/book/main/lab1.do)
+1. Start Stata and open your do-file editor. [lab1sol.do](./lab1solution.do)
 
 2. You will now write your first do-file following the guidelines on `structure`, `indentation`, and `annotation` given in [chapter: pwd](eee.md).
 
