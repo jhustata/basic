@@ -4,9 +4,12 @@ data: [transplants.dta](https://jhustata.github.io/basic/_downloads/34a8255f0603
 
 Please use this lab as an opportunity to review the course material and prepare yourself for the homework 1 & 2 questions. An answer key will be on Friday April 5, 2024. Question 14 will prepare you for homework 1.
 
-1. Start Stata and open your do-file editor. [lab1sol.do](./lab1solution.do)
+1. Start Stata and open your do-file editor. [lab1sol.do](https://raw.githubusercontent.com/jhustata/basic/main/lab1solution.do)
 
-2. You will now write your first do-file following the guidelines on `structure`, `indentation`, and `annotation` given in [chapter: pwd](eee.md).
+2. You will now write your first do-file following the guidelines from lecture1.do
+   - Read [about](https://www.stata.com/support/faqs/web/common-connection-error-messages/) `set timeout1 180`
+   - Helpful when your internet connection is slow, as was the case at Hopkins in week 1
+   - A few of you got error messages when you attempted to import the dataset from its remote location
 
 3. We want to load `transplants.dta`. But before that, let’s check your working directory. See the bottom left side of the console (the main Stata window). You may also type `pwd` on the console. Is it where your `transplants.dta` is located? If not, use one of these two methods:
 
