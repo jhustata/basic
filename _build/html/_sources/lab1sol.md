@@ -95,7 +95,7 @@ sum age bmi
 di "that was easy!"
 ```
 
-15. The last bit. Close your log file. Never forget to close log files! If you hadn't created a log file, this is a reminder to do so. Preferably in the block of code that you may have designated using `if 1 {`
+15. The last bit. Close your log file. Never forget to close log files! If you hadn't created a log file, this is a reminder to do so. 
 
 ```stata
 log close 
