@@ -5,46 +5,17 @@ log using lecture02.log, replace text
 //Stata Programming and Data Management, along with additional explanations
 //and examples.
 
-//commented out "version 12" because I want to use some Stata 15 features
-//version 12 //I'm using Stata 16, but some students may have earlier versions
+//This is a gentle reminder to respond to the class survey
+//The response rate so far is 55%
+version 12 //I'm using Stata 16, but some students may have earlier versions
 clear all //clear all data from memory
 macro drop _all //clear all macros in memory
 set more off   //give output all at once (not one screenful at a time)
 set linesize 80 //maximum allowed width for output
 
 //open up transplants.dta
+//another reminder to rename transplants2022.dta -> transplants.dta 
 use transplants, clear
-
-//a very brief overview of statistical commands
-
-//chi2
-tab dx gender, row
-tab dx gender, row chi2
-
-//exact
-tab abo gender in 1/100, row
-tab abo gender in 1/100, row exact
-
-//t test, 2 sample unpaired by group
-ttest age, by(prev)
-
-//t test, 2 sample unpaired - comparing two variables
-ttest don_wgt_kg==rec_wgt_kg, unpaired
-
-//t test, 2 sample paired
-ttest don_wgt_kg==rec_wgt_kg
-
-//linear regression
-regress rec_wgt_kg rec_hgt
-
-regress rec_wgt rec_hgt age gender
-
-//logistic regression
-logit rec_work age
-logit rec_work age gender 
-logistic rec_work age
-logistic rec_work age gender 
-
 
 //review.
 sum age   //get summary data for age variable
@@ -98,11 +69,11 @@ tab race abo, chi2
 assert r(p) < 0.05 //check that there is a statistically significant 
 //relationship between race and abo, per chi2 test
 
-sum age
-disp "Mean: " r(mean) " years"  //display mean age, in a sentence
+sum bmi
+disp "Mean BMI: " r(mean) //display mean bmi, in a sentence
 
-sum age
-disp "Mean: " %4.0f r(mean) " years" //dispay, formatted. 
+sum bmi
+disp "Mean BMI: " %4.0f r(mean) //dispay, formatted. 
 //output: Mean: 50 years 
 //the "0" of "%4.0f" means "display zero digits after the decimal point"
 //the "4" doesn't mean much - it just has to be any number higher than "0"
@@ -179,20 +150,30 @@ disp _b[gender] + _se[gender]*invttail(e(df_r), 0.025)
 //example: disp exp(_b[age]+invnormal(0.025)*_se[age]) //lower bound
 //example: disp exp(_b[age]+invnormal(0.975)*_se[age]) //upper bound
 
-//Stata 15.1: an easier way to do confidence intervals and p values
-if c(version) >= 15.09 {
-    regress bmi age
-    lincom age
-    disp r(p)
-    disp r(lb) " - " r(ub)
+//an easier way to do 95% CIs (version 15 and up)
+version 15
+regress bmi gender age
+lincom age
+return list
+disp "Beta: " %3.2f r(estimate)
+disp "CI: " %3.2f r(lb) "-" %3.2f r(ub)
+lincom _cons
+disp "Beta: " %3.2f r(estimate)
+disp "CI: " %3.2f r(lb) "-" %3.2f r(ub)
 
-    logit rec_work age prev
-    lincom prev
-    disp r(p)
-    //the coefficient is the log odds ratio, 
-    //so let's see the 95% CI of the odds ratio
-    disp exp(r(lb)) " - " exp(r(ub))
-}
+logit don_ecd i.don_cod
+lincom 2.don_cod
+return list
+disp "OR: " %3.2f exp(r(estimate))
+disp "CI: " %3.2f exp(r(lb)) "-" %3.2f exp(r(ub))
+lincom 2.don_cod, eform
+disp "OR: " %3.2f r(estimate)
+disp "CI: " %3.2f r(lb) "-" %3.2f r(ub)
+
+disp "r(p): " r(p)
+
+
+
 
 //creturn examples. This information isn't as useful as return/ereturn
 //but it might come in handy
@@ -236,9 +217,13 @@ local my_var age  //my_var is a macro which equals "age"
 disp "Here's a summary of `my_var'"  //displays "Here's a summary of age"
 sum `my_var' //sumarizes age
 
+local my_option detail
+summarize `my_var', `my_option'
+//Stata sees "summarize age, detail"
+
 local my_command summarize  //my_command is a macro which equals "summarize"
 //Stata sees "summarize age, detail"
-`my_command' `my_var', detail
+`my_command' `my_var', `my_option'
 
 //here are some additional macros not in the slides.
 //they are a bit more complex but they show how this macro thing works
@@ -328,7 +313,7 @@ capture program drop table1
 program define table1
     disp "Variable" _col(20) "mean (SD)" _col(40) "range"
     quietly sum age
-    disp "age" _col(20) %3.2f r(mean) " (" %3.2f r(sd) ")" ///
+    disp "age " _col(20) %3.2f r(mean) " (" %3.2f r(sd) ")" ///
             _col(40) %3.2f r(min) "-" %3.2f r(max)
     quietly sum wait_yrs
     disp "wait_yrs" _col(20) %3.2f r(mean) " (" %3.2f r(sd) ")" ///

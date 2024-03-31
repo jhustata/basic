@@ -6,7 +6,7 @@ Please use this lab as an opportunity to review the course material and prepare 
 
 1. Start Stata and open your do-file editor. [lab1sol.do](https://raw.githubusercontent.com/jhustata/basic/main/lab1solution.do)
 
-2. You will now write your first do-file following the guidelines from lecture1.do
+2. You will now write your first do-file following the guidelines from [lecture1.do](https://raw.githubusercontent.com/jhustata/basic/main/lecture1.do)
    - Read [about](https://www.stata.com/support/faqs/web/common-connection-error-messages/) `set timeout1 180`
    - Helpful when your internet connection is slow, as was the case at Hopkins in week 1
    - A few of you got error messages when you attempted to import the dataset from its remote location

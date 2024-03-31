@@ -1,11 +1,11 @@
 capture log close
-log using lecture3.log, replace text
+log using lecture03.log, replace text
 
 //This log file contains most of the examples used in Lecture 3 of
 //Stata Programming and Data Management, along with additional explanations
 //and examples.
 
-version 12 //I'm using Stata 15, but some students may have earlier versions
+version 12 //I'm using Stata 16, but the courseplus survey tells us that some students have earlier versions 
 clear all //clear all data from memory
 macro drop _all //clear all macros in memory
 set more off   //give output all at once (not one screenful at a time)
@@ -16,6 +16,80 @@ disp %3.2f `p'
 
 local p = 1/7778
 disp %3.2f `p'
+
+//by
+
+use transplants, clear
+sort abo
+by abo: gen cat_n = _N //cat_n = # records in each abo category
+
+sort abo age
+by abo: gen cat_id = _n //1 for youngest patient, 2 for next youngest, etc.
+
+
+//egen
+
+//obtaining mean age and storing it in a variable
+use transplants, clear
+egen mean_age = mean(age)
+
+//more egen examples
+egen median_age = median(age)
+egen max_age = max(age)
+egen min_age = min(age)
+egen age_q1 = pctile(age), p(25) //25th percentile
+egen age_sd = sd(age)  //standard deviation
+egen total_prev = sum(prev) //add all the values (all are 1 or 0 in this case)
+
+//using egen with by
+use transplants, clear
+sort dx
+by dx: egen mean_age = mean(age)
+by dx: egen min_bmi = min(bmi)
+
+//combining sort and by to get bysort / bys
+use transplants, clear
+bys abo: egen m_bmi=mean(bmi)
+bys abo gender: egen max_bmi = max(bmi)
+bys abo gender: egen min_bmi = min(bmi)
+gen spread = max_bmi - min_bmi
+
+//egen = tag
+egen grouptag = tag(abo gender)
+//now, for all gorups of abo/gender, (1/M, 3/F, etc), there's exactly one
+//record that has grouptag = "1". All others have grouptag = "0".
+
+list abo gender spread if grouptag
+
+
+//graphing example with egen and tag
+use transplants, clear
+egen tag_race = tag(race)
+bys race: egen mean_bmi=mean(bmi)
+bys race: egen mean_age=mean(age)
+
+label define race_label 1 "White" ///
+    2 "Black/AA" 4 "Hispanic/Latino" ///
+    5 "East Asian" 6 "Native American" ///
+    7 "Asian Indian" 9 "Other"  //create a label race_label
+
+//I personally find this more legible than cond() with seven cases,
+//although cond() has its champions
+gen racedesc = "White/Caucasian" if race==1
+replace racedesc = "Black/AA" if race==2
+replace racedesc = "Hispanic/Latino" if race==4
+replace racedesc = "Native American" if race==5
+replace racedesc = "East Asian" if race==6
+replace racedesc = "Asian Indian" if race==7
+replace racedesc = "Other" if race==9
+
+twoway scatter m~_bmi m~_age if tag_race, ///
+    title("Mean age and BMI by race/ethnicity") ///
+    xtitle("Mean age") ytitle("Mean BMI") ///
+    xlabel(40(2)60) ylabel(20(2)30) ///
+    mlabel(racedesc)
+graph export graph_lecture3.png, replace width(2400)
+
 
 use transplants, clear
 
@@ -144,9 +218,8 @@ program define table1_v
     disp "Variable" _col(15) "mean(SD)" _col(30) "range"
     foreach v of varlist `varlist' {
         quietly sum `v'
-        disp "`v'" ///
-            _col(15) %3.2f r(mean) "(" %3.2f r(sd) ")" ///
-            _col(30) %3.2f r(min) "-" %3.2f r(max)
+        disp "`v'" _col(15) %3.2f r(mean) "(" %3.2f r(sd) ")" _col(30) ///
+            %3.2f r(min) "-" %3.2f r(max)
     }
 end
 
@@ -227,6 +300,7 @@ end
 table1_if age peak_pra wait_yrs
 table1_if age peak_pra wait_yrs if race==1 //summarize for only race==1
 
+//tempvar
 
 //non-working program - as an example
 capture program drop tabyear0
@@ -256,102 +330,46 @@ tabyear end_date
 capture program drop savesample0
 program define savesample0
     //save random 10% of records
+    syntax using/ , [replace]
     sample 10 //delete 90% of records!
-    save sample_data, replace
+    save `using', `replace'
 end
 
 //here's how you should do it
 capture program drop savesample
 program define savesample
     //save random 10% of records
+    syntax using/ , [replace]
     preserve   //save a temporary copy of the data
     sample 10 //no worries
-    save sample_data , replace
+    save `using' , `replace'
     //when the program reaches the end, the temporary copy is reloaded,
     //undoing any changes
 end
 
 count
-savesample
+savesample using tenpct.dta, replace
 count
 
-//combining several of the above techniques into a "table1" program
-capture program drop table1_nice
-program define table1_nice
-    syntax varlist  [if] 
-    //if: specify records to include in analysis (optional)
-    //replace: overwrite log file if it exists (optional)
-
+//another way to do table1_if
+capture program drop table1_if2
+program define table1_if2
+    syntax varlist [if]
     preserve
-    capture quietly keep `if' //temporarily drop any records not required
-
-
+    capture keep `if'
+    //write out a nicely formatted table
     disp "Variable" _col(12) "mean(SD)" _col(25) "range"
     foreach v of varlist `varlist' {
-        quietly sum `v' `if'
-        disp "`v'" _col(12) %3.1f r(mean) "(" %3.1f r(sd) ")" _col(25) ///
-            %3.1f r(min) "-" %3.1f r(max)  
+        quietly sum `v' `if' 
+        disp "`v'" _col(12) %3.2f r(mean) "(" %3.2f r(sd) ")" _col(25) ///
+            %3.2f r(min) "-" %3.2f r(max)
     }
 end
 
-//run the new program using options and if
-table1_nice age bmi wait_yr if age>40 
+table1_if2 age peak_pra wait_yrs
+table1_if age peak_pra wait_yrs if age<40 //summarize for only age<40
 
-
-//extended macro functions
-local ll: variable label race
-disp "`ll'"   //display "Patient race"
-
-local ll: variable label gender
-disp "`ll'"   //nothing
-
-sum wait_yrs
-local m1: disp %3.2f r(mean)
-disp "`m1'"
-
-sum wait_yrs
-local m2: di "Mean: " %3.2f r(mean)
-display "`m2'"
-
-//putexcel
-
-version 13  //need Stata 13 or higher to use putexcel
-
-use transplants, clear
-
-
-//begin with putexcel set to specify the filename 
-putexcel set lecture3.xlsx
-
-putexcel set lecture3,replace //completely overwrites excel file
-
-putexcel set lecture3,modify //allows you to keep excel formatting
-putexcel A1=("Variable") B1=("Median (IQR)") 
-
-//age bmi peak_pra wait_yrs
-sum age, detail 
-
-//extended macro for putexcel
-local med_iqr: disp r(p50) " (" r(p25) "-" r(p75) ")"
-putexcel A2=("Age at transplant") B2=("`med_iqr'") //can putexcel multiple cells
-
-//four variables
-
-label var age "Age at transplant"
-label var bmi "BMI"
-label var peak_pra "Peak PRA"
-label var wait_yrs "Years on waitlist"
-
-local row=2
-foreach v of varlist age bmi peak_pra wait_yrs {
-    sum `v', detail
-    local varlabel: variable label `v'
-    local med_iqr: disp %3.1f r(p50) " (" %3.1f r(p25) "-" %3.1f r(p75) ")"
-    putexcel A`row'=("`varlabel'") B`row'=("`med_iqr'")
-    local row = `row' + 1
-}
 
 log close
-
 exit
 

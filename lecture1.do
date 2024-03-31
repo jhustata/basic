@@ -6,11 +6,15 @@ log using lecture01.log, replace text
 //Stata Programming and Data Management, along with additional explanations
 //and examples.
 
-version 11 //I'm using Stata 15, but some students may have earlier versions
+version 12 //I'm using Stata 16, but some students may have earlier versions
 clear all //clear all data from memory
 macro drop _all //clear all macros in memory
 set more off   //give output all at once (not one screenful at a time)
 set linesize 80 //maximum allowed width for output
+ 
+//logging
+//remember "log using lecture01.txt, replace" above
+// ", replace" = if the file exists, overwrite it
 
 //getting help
 //usually you won't have this in your .do file
@@ -24,32 +28,12 @@ man legend option //show help for the legend option
 //some help files are not for a specific command - just general info
 man language 
 
-//logging
-//remember "log using lecture01.txt, replace" above
-// ", replace" = if the file exists, overwrite it
-
-//here's an example of starting a second log so there are two logs at once
-//the file is called another_log.smcl
-//it's smcl format
-//its name within this Stata session is "colorful_log"
-log using another_log.smcl, smcl name(colorful_log) replace
-
-//and a commandlog, which logs commands but not output.
-//NOTE: cmdlog only logs commands that are *TYPED into Stata
-//so putting it in a .do file (as in this example) is silly
-//commands.do will be empty
-cmdlog using commands.do, replace
-
 //do some stuff
 display "hello everybody"
 use transplants, clear
-sum age
-regress age gender
-
-//close colorful_log
-log close colorful_log
-//close the command log. Remember, it will be empty
-cmdlog close 
+summarize wait_yrs age 
+tab rec_hcv
+regress wait_yrs age rec_hcv
 
 
 //loading a data file into memory
@@ -62,19 +46,19 @@ use transplants.dta
 use transplants.dta, clear
 
 //load only records from females (gender=1)
-use transplants if gender==1
+use transplants if pretx_cmv==1
 
 //load only the first fifty records
 use transplants in 1/50
 
 //load only certain variables
-use age gender fake_id using transplants
+use age gender rec_hcv_antibody wait_yrs fake_id using transplants
 
 //more examples.
-use age bmi using transplants  //only age and BMI
+use age dx using transplants  //only age and diagnosis
 use transplants in 1/50, clear //only the first 50 records
 use transplants in 44  //only the 44th record
-use transplants if age>50 //only records with age greater than 50 years
+use transplants if rec_work==1 //only records of patients who work for an income
 use a* p* using transplants in 1/100 //all variables that the name starts
 // with A or P. Only the first 100 rows.
 
@@ -104,15 +88,15 @@ describe, replace clear
 use transplants, clear
 
 codebook //list codebook info: type, mean, range, etc
-codebook age bmi wait_yrs  //do it for only a few variables
+codebook rec_education rec_work abo  //do it for only a few variables
 codebook a* e*, compact //compact format
 codebook, problems   //ask Stata to identify problems with the dataset
 //codebook, problems is a good check, but don't let it substitute for your 
 //judgment
 
 list  //print all the data in memory
-list age gender if race==7  //list two variables (age+gender) for records
-//that have race variable equal to 7
+list prev_ki wait_yrs if race==7  //list two variables  
+//(previous KT & time on waitlist) for records that have race variable equal to 7
 
 list *date in 1/10 //list all variables that the name ends with "date". List
 //only the first ten observations.
@@ -120,7 +104,7 @@ list *date in 1/10 //list all variables that the name ends with "date". List
 //by default, "list" draws these weird ASCII boxes around the data. Also
 //it lists a record # for each record. 
 //list, clean" gets rid of the boxes. "list, noobs" gets rid of record #s.
-list gender in 1/10, clean noobs
+list dx in 1/10, clean noobs
 
 //usually, before displaying anything, list goes through the data to try
 //to determine how much width to give each variable for the display.
@@ -129,13 +113,13 @@ list age, fast
 
 //Count. 
 count  //display a count of all the records in memory
-count if race==1   //display a count of records with "race" equal to 1
-count if race != 1  //records with race *not* equal to 1
+count if rec_work==1   //display a count of records with "race" equal to 1
+count if rec_work != 1  //records with race *not* equal to 1
 count if bmi<20 | bmi > 35  //records with BMI less than 20 or greater than 35
 count if bmi>25 & bmi < 30  //records with BMI greater than 25 and less than 30
 count if !(age>18)    //count if not (age>18) - records with age 18 and under
 
-count if inrange(bmi, 20, 25) //records w BMI of 20, 25, or anything in between
+count if inrange(wait_yrs, 4, 6) //records w BMI of 20, 25, or anything in between
 count if !inlist(gender, 0, 1)  //gender equals either zero or 1
 count if !inlist(age, 20, 30, 40, 50)  //age is 20 or 30 etc
 
@@ -145,9 +129,9 @@ count if !inlist(age, 20, 30, 40, 50)  //age is 20 or 30 etc
 
 
 //Tabulate/tab.
-tab race  //1-way frequency table of variable "race"
-tab race gender  //2-way table of "race" and "gender"
-tab gender, sum(age) //display mean, SD and frequency of age, by gender
+tab abo  //1-way frequency table of variable "abo"
+tab abo rec_hcv  //2-way table of "abo" and "rec_hcv"
+tab rec_hcv, sum(age) //display mean, SD and frequency of age, by gender
 tab dx gender if age<40 //2-way table. Only for patients under age 40
 
 //more examples
@@ -158,8 +142,8 @@ tab dx gender, col nofreq chi2 //add a chi-squared test
 //summarize/sum
 
 sum //summarize all variables
-sum age bmi  //summarize only two variables
-sum age bmi, detail //give more detailed summary
+sum age wait_yrs  //summarize only two variables
+sum age wait_yrs, detail //give more detailed summary
 
 //missingness.
 //if data is not available for a record - maybe it wasn't obtained, maybe 
@@ -188,15 +172,16 @@ count if missing(bmi)  //this one counts _all_ missing values
 //create new variable age_lastyear. Calculate it as current age minus 1
 gen age_lastyear=age-1 
 
-//create new variable obese. Set to 1 if BMI > 30, 0 otherwise
-gen obese=(bmi>30)
+//create new variable any_college. Set to 1 if rec_education >= 3, 0 otherwise
+gen any_college=(rec_educ>=3)
+
 
 //create new variable youngman. Set to 1 if age<40 and gender is 0;
 //otherwise set to 0 
 gen youngman=(age<40)&(gender==0)
 
 //more examples
-gen byte young=(age<30) //1 if age<30, 0 otherwise
+gen byte thin=(bmi<22) //1 if BMI < 22, 0 otherwise
 
 //if patient is female, age_f is the same as age. Otherwise it's missing
 gen age_f = age if gender==1
@@ -215,6 +200,18 @@ gen total_records = _N  //total_records = count of records in the dataset
 //ranges from near zero for first record, to 1 for the last record
 gen percentile = 100*_n/_N 
 
+
+//sort and gsort. They are the same, except that with sort you can only
+//sort an ascending order (e.g. A-Z or 1-10) whereas gsort allows you to 
+//sort in either ascending or *descending* order (e.g. Z-A or 10-1)
+
+sort age //sort on age
+sort age dx //sort first on age, then diagnosis
+
+//reverse sort on age, then gender, then reverse sort on ethnicity category
+gsort -age dx -race 
+
+
 //drop most variables from the database. Keep only age, gender, BMI, 
 //fake_id, and any variable whose name starts with e
 keep age gender bmi fake_id e*
@@ -227,8 +224,8 @@ use transplants, clear
 //using "keep" and "drop" to drop records instead of variables
 keep in 1/100  //keep only the first 100 records
 drop if wait_yrs < 1  //drop everyone who was on waitlist for less than 1 year
-keep if gender==1  //keep only females
-drop if age<18 & prev==1 //drop people age<18 who had a previous transplant
+keep if prev_ki==1  //keep only those with previous kidney transplant
+drop if age<18 & abo==2 //drop people age<18 with blood type B
 
 //reload original dataset
 use transplants, clear
@@ -248,21 +245,16 @@ rename gender female
 //reverse the above "rename"
 rename female gender 
 
-//sort and gsort. They are the same, except that with sort you can only
-//sort an ascending order (e.g. A-Z or 1-10) whereas gsort allows you to 
-//sort in either ascending or *descending* order (e.g. Z-A or 10-1)
-
-sort age //sort on age
-sort age gender //sort first on age, then gender
-
-//reverse sort on age, then gender, then reverse sort on ethnicity category
-gsort -age gender -race 
-
 //recode
-recode race (4 5 6 7 = 9) //any record with race of 4,5,6 or 7 changes to 9
+recode rec_education (3 4 5 = 9) //any record with rec_education of 3, 4, or 5 changes to 9
+
+recode dx (1=1) (2=2) (*=9) //any dx value other than 1 or 2 gets changed to 9
 
 //create new variable male. Any record that has gender=0, male=1 and vice versa
 recode gender (0=1) (1=0), gen(male)
+
+
+
 
 //erase data in memory
 clear
@@ -290,25 +282,35 @@ save, replace //overwrite the current filename. Usually, you don't want to
 //these are all commented out because I didn't actually create all these
 //text files.
 /*
-insheet using textfile.txt //pull in data from a text file.
+
+import delimited textfile.txt
+import delimited text2.txt, clear
+import delimited text3.txt, delim(" ")
+import delimited text4.txt, delim(tab)
+import delimited text5.txt, varnames(1)
+import delimited text6.txt, varnames(nonames)
+
+import delimited using textfile.txt //pull in data from a text file.
 //Stata tries to make a reasonable guess as to what character is the
 // *delimiter* separating columns within a row.
 
-//insheet, but clear the memory first. If there's unsaved data in memory, and 
-//you run insheet, you'll get an error
-insheet using text2.txt, clear
+//import, but clear the memory first. If there's unsaved data in memory, and 
+//you run import delimited, you'll get an error
+import delimited using text2.txt, clear
 
 //tell Stata that the delimiter is a comma
-insheet using text3.txt, comma
+import delimited using text3.txt, delimiter(",")
 
-insheet using text4.txt, tab //tell Stata the delimiter is a tab
-insheet using text5.txt, delimiter (" ")  //delimiter is a space
+//tell Stata the delimiter is a tab
+import delimited using text4.txt, delimiter(tab) 
+
+import delimited using text5.txt, delimiter (" ")  //delimiter is a space
 
 //first row contains variable names, not data
-insheet using text5.txt, names
+import delimited using text5.txt, varnames(1)
 
 //first row contains data, not variable names
-insheet using text5.txt, nonames
+import delimited using text5.txt, nonames
 
 //here are other commands for importing data.
 //we won't go over these in detail; see the help file for each command,
@@ -323,19 +325,19 @@ import odbc
 //display / disp
 display "hi there"  //print "hi there"
 disp 4+7  //print "11"
-sum age  //summarize age
+sum wait_yrs  //summarize age
 
-/*
+/* 
 print this:
 variable            mean
 */
-disp "variable" _col(20) "mean" 
+disp "Variable" _col(20) "mean" 
 
 /*
 print this:
-age                 [mean age obtained from "sum" command above]
+Wait time          [mean wait_yrs obtained from "sum" command above]
 */
-disp "age" _col(20) r(mean)
+disp "Wait time" _col(20) r(mean)
 
 //capture. Run a command, but if there's an error, don't display the error
 
@@ -359,8 +361,8 @@ assert inlist(gender, 0, 1)
 
 //quietly
 //run a command, but suppress output
-quietly sum age  //silently computes summary for age
-disp "Mean age: " r(mean)  //we can display mean age calculated by "sum age"
+quietly sum wait_yrs  //silently computes summary for wait_yrs
+disp "Mean wait time: " r(mean)  //we can display mean wait time calculated by "sum wait_yrs"
 
 //using "quietly" on several commands at once. Suppress all output.
 quietly {
@@ -382,8 +384,9 @@ sum age, detail /*multiline comments can just be on one line */
 
 //line continuation
 // type /// and two lines are run as a single command
-describe age gender prev_ki ///
+describe age rec_hcv pretx_cmv ///
     don_ecd
+
 
 recode race ///
     (1=1) ///
@@ -410,6 +413,14 @@ label values gender g_label
 
 tab gender //much better
 tab gender, nolabel //don't show label
+
+//recode+labels
+recode race (1=0 "Cauc") ///
+            (2=1 "AA") ///
+            (4=2 "Hisp/Latino") ///
+            (5/9=3 "Other"), /// Discuss this with Sam
+            gen(race_cat)
+tab race_cat
 
 //preserve and restore
 sum age //mean = 50 years
