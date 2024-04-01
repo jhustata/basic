@@ -160,6 +160,7 @@ const thebe_selector_output = ".output, .cell_output"
         </ul>
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">1. Philosophy, overview, commands, syntax</a></li>
+
 <li class="toctree-l1"><a class="reference internal" href="chapter2.html">2. Return values, macros, programs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="chapter3.html">3. Loops, Program Syntax, and Miscellany</a></li>
 <li class="toctree-l1"><a class="reference internal" href="chapter4.html">4. Advanced file management</a></li>
@@ -361,24 +362,37 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">1. Philosophy, overview, commands, syntax</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#entry-poll">1.0 Entry Poll</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#survey">1.0.1 Survey</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#results">1.0.2 Results</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#format-e-g-9s">1.0.3 Format, e.g. <code class="docutils literal notranslate"><span class="pre">%9s</span></code></a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"></a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#philosophy">1.1 Philosophy</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#receive-with-simplicity">1.1.1 Receive &amp; with Simplicity</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#know-be-reverent">1.1.2 Know &amp; be Reverent</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#do-on-time">1.1.3 Do &amp; on Time</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">1.2 Overview 🦀</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">1.2 Overview 🦀</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#user-vs-system">1.2.1 User vs. System</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interface">1.2.2 Interface</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variable-types">1.2.3 Variable Types</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#final-products">1.2.4 Final Products</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#commands">1.3 Commands</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#syntax">1.4 Syntax</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab">1.5 Lab</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#homework">1.6 Homework</a></li>
 </ul>
+</li>
+</ul>
+
             </nav>
         </div>
     </div>
@@ -507,7 +521,20 @@ document.write(`
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>import delimited <span class="s">&quot;https://raw.githubusercontent.com/jhustata/basic/main/entry_poll.csv&quot;</span>,<span class="k"> clear</span> 
 </pre></div>
 </div>
-<p>Can you visualize these data using bar graphs?</p>
+<ul class="simple">
+<li><p>Type <code class="docutils literal notranslate"><span class="pre">help</span> <span class="pre">import</span> <span class="pre">delimited</span></code> to review optional syntax</p></li>
+<li><p>Under <em>import_delimited_options</em>, consider the description for “<u>varn</u>ames”</p></li>
+<li><p>If the first row of these raw data is a variable name, what then?</p></li>
+</ul>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>import delimited <span class="s">&quot;https://raw.githubusercontent.com/jhustata/basic/main/entry_poll.csv&quot;</span>,<span class="k"> clear</span> varn(<span class="m">1</span>)
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1><a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h1>
+<p>Can you visualize these data using bar graphs? Data are either numeric or string. How may we know what we’re dealing with here?</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">describe</span>
 </pre></div>
 </div>
@@ -592,8 +619,6 @@ Note: Dataset has	changed since last	saved.
 <img alt="_images/931e5210b5af8aebf9a0ddf56abccf41d6a44d371877c6f1d6db6a58d81cef4d.png" src="_images/931e5210b5af8aebf9a0ddf56abccf41d6a44d371877c6f1d6db6a58d81cef4d.png" />
 </div>
 </div>
-</section>
-</section>
 <section id="philosophy">
 <h2>1.1 Philosophy<a class="headerlink" href="#philosophy" title="Permalink to this heading">#</a></h2>
 <p>In embarking on the journey of mastering Stata for data analysis and statistical programming, we adhere to a philosophy that is both pragmatic and reflective.</p>
@@ -793,6 +818,8 @@ Note: Dataset has	changed since last	saved.
 <img alt="_images/68b0bc74161d7710f53566e5ee9be406db910130ddbc8f918781f1977ed8e80e.png" src="_images/68b0bc74161d7710f53566e5ee9be406db910130ddbc8f918781f1977ed8e80e.png" />
 </div>
 </div>
+<section id="user-vs-system">
+<h3>1.2.1 User vs. System<a class="headerlink" href="#user-vs-system" title="Permalink to this heading">#</a></h3>
 <p>We are going to distinguish between two fundamental perspectives in this class:</p>
 <ul class="simple">
 <li><p>System</p>
@@ -837,6 +864,9 @@ Note: Dataset has	changed since last	saved.
 <p>The <code class="docutils literal notranslate"><span class="pre">system</span></code> is the <u>Stata application</u> and its a simple noun. It is not <strike>STATA</strike>, which gives the impression of being an acronym. I presume you’ve all installed Stata onto your local machines. If not I presume you’ll be doing so very soon or you will be remotely accessing it. The <code class="docutils literal notranslate"><span class="pre">user</span></code> includes you, me, the teaching assistants, collaborators, or strangers.</p>
 <p>As a user, you will or have already downloaded and installed a system of programs, mostly ado-files, which form the foundation of all the commands you will be using in Stata. These are the <strong>native</strong> Stata system files.</p>
 <p>But soon you will begin to write your own Stata programs or <code class="docutils literal notranslate"><span class="pre">.ado</span></code> files and install them into the system folders (as I’ve done with <code class="docutils literal notranslate"><span class="pre">table1_fena.ado</span></code>). Then, it will be helpful to think of your role as part of the system. In your new role as system, it will be helpful to anticipate the needs of the known and unknown future users of your program. This will call for <strong>empathy</strong> (anticipating user needs), <strong>sharing</strong> (your code with others), and <strong>caring</strong> (that its user-friendly).</p>
+</section>
+<section id="interface">
+<h3>1.2.2 Interface<a class="headerlink" href="#interface" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Installation</p>
 <ul>
@@ -918,6 +948,13 @@ Note: Dataset has	changed since last	saved.
 <li><p>ado files (Stata script with a program or a series of programs for specific or general tasks)</p></li>
 </ul>
 </li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="variable-types">
+<h3>1.2.3 Variable Types<a class="headerlink" href="#variable-types" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
 <li><p>Output/Results</p>
 <ul>
 <li><p>String</p>
@@ -952,8 +989,6 @@ Note: Dataset has	changed since last	saved.
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">float</span></code>: <span class="math notranslate nohighlight">\(\pm   10^{38}\)</span> billion</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">double</span></code>: <span class="math notranslate nohighlight">\(\pm   10^{307}\)</span> billion</p></li>
-</ul>
-</li>
 </ul>
 </li>
 </ul>
@@ -1009,6 +1044,9 @@ Note: Dataset has	changed since last	saved.
 <img alt="_images/ba7a03497dffd11a80dc73ed024fddf10be1efa8e096461c7e513dcd71bdaf71.png" src="_images/ba7a03497dffd11a80dc73ed024fddf10be1efa8e096461c7e513dcd71bdaf71.png" />
 </div>
 </div>
+</section>
+<section id="final-products">
+<h3>1.2.4 Final Products<a class="headerlink" href="#final-products" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Embed</p>
 <ul>
@@ -1050,8 +1088,14 @@ Note: Dataset has	changed since last	saved.
 <li><p>basis of Stata commands</p></li>
 </ul>
 </li>
-<li><p>etc.</p></li>
+<li><p>etc.</p>
+<ul>
+<li><p>In the <code class="docutils literal notranslate"><span class="pre">Basic</span></code> class we’ll emphasize .log file and .xlsx as our key output products</p></li>
+<li><p>However, we’ll demonstrate how to output .dta, .docx, .html as well</p></li>
 </ul>
+</li>
+</ul>
+</section>
 </section>
 <section id="commands">
 <h2>1.3 Commands<a class="headerlink" href="#commands" title="Permalink to this heading">#</a></h2>
@@ -1320,24 +1364,37 @@ command myfirstprogram is unrecognized
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">1. Philosophy, overview, commands, syntax</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#entry-poll">1.0 Entry Poll</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#survey">1.0.1 Survey</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#results">1.0.2 Results</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#format-e-g-9s">1.0.3 Format, e.g. <code class="docutils literal notranslate"><span class="pre">%9s</span></code></a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"></a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#philosophy">1.1 Philosophy</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#receive-with-simplicity">1.1.1 Receive &amp; with Simplicity</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#know-be-reverent">1.1.2 Know &amp; be Reverent</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#do-on-time">1.1.3 Do &amp; on Time</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">1.2 Overview 🦀</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">1.2 Overview 🦀</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#user-vs-system">1.2.1 User vs. System</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interface">1.2.2 Interface</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variable-types">1.2.3 Variable Types</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#final-products">1.2.4 Final Products</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#commands">1.3 Commands</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#syntax">1.4 Syntax</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab">1.5 Lab</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#homework">1.6 Homework</a></li>
 </ul>
+</li>
+</ul>
+
   </nav></div>
 
 </div></div>
