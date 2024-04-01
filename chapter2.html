@@ -361,15 +361,21 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#results-output">Results/Output</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#display-files">Display/Files</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#xlsx">2.1 xlsx</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#log">2.2 log</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-the-quietly-command">2.2.1 Introduction to the “quietly” Command</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#handling-p-values-less-than-0-01">2.2.2 Handling p-values Less Than 0.01</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#formatting-p-values-between-0-01-and-0-05">2.2.3 Formatting p-values Between 0.01 and 0.05</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#formatting-p-values-greater-than-0-05">2.2.4 Formatting p-values Greater Than 0.05</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#combining-everything">2.2.5 Combining Everything</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#last-week">2.0 Last week</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#results-output">2.01 Results/output</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#display-files">2.02 Display/files</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#examples">2.03 Examples</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#xlsx">2.031 xlsx</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#log">2.032 log</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-the-quietly-command">Introduction to the “quietly” Command</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#handling-p-values-less-than-0-01">Handling p-values Less Than 0.01</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#formatting-p-values-between-0-01-and-0-05">Formatting p-values Between 0.01 and 0.05</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#formatting-p-values-greater-than-0-05">Formatting p-values Greater Than 0.05</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#combining-everything">Combining Everything</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recap-of-the-chi-square-test">2.2.6 Recap of the chi-square test</a></li>
 </ul>
 </li>
@@ -402,11 +408,13 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="return-values-macros-programs">
 <h1>2. Return values, macros, programs<a class="headerlink" href="#return-values-macros-programs" title="Permalink to this heading">#</a></h1>
-<p>Let’s briefly recap what we covered last week and what you’ve practiced this week in <a class="reference internal" href="lab1.html"><span class="doc std std-doc">lab</span></a>:</p>
+<section id="last-week">
+<h2>2.0 Last week<a class="headerlink" href="#last-week" title="Permalink to this heading">#</a></h2>
+<p>Let’s briefly recap what we covered last week (<a class="reference external" href="https://jhustata.github.io/basic/chapter1.html#entry-poll">survey</a>, <a class="reference external" href="https://jhustata.github.io/basic/chapter1.html#overview">overview</a>) and what you’ve practiced this week in <a class="reference internal" href="lab1.html"><span class="doc std std-doc">lab</span></a>:</p>
 <ol class="arabic simple">
-<li><p>Importing data</p></li>
+<li><p><a class="reference external" href="https://jhustata.github.io/basic/chapter1.html#lab">Importing data</a></p></li>
 <li><p>Performing basic queries</p></li>
-<li><p>Outputing some of your findings into .xlsx, .log, etc.</p></li>
+<li><p>Outputing some of your findings into .xlsx, <code class="docutils literal notranslate"><span class="pre">.log</span></code>, etc.</p></li>
 </ol>
 <p>Today we’ll build on these ideas:</p>
 <ol class="arabic simple">
@@ -474,7 +482,7 @@ document.write(`
 </div>
 </div>
 <section id="results-output">
-<h2>Results/Output<a class="headerlink" href="#results-output" title="Permalink to this heading">#</a></h2>
+<h3>2.01 Results/output<a class="headerlink" href="#results-output" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
 <li><p>A sequence or queue of instructions <code class="docutils literal notranslate"><span class="pre">commands</span> <span class="pre">+</span> <span class="pre">syntax</span> <span class="pre">=</span> <span class="pre">code</span></code> given to Stata via a do-file will generate results</p></li>
 <li><p><u>Never</u> include results in your do-file when you share your work in this class and with future collaborators</p></li>
@@ -484,8 +492,14 @@ document.write(`
 </ul>
 </section>
 <section id="display-files">
-<h2>Display/Files<a class="headerlink" href="#display-files" title="Permalink to this heading">#</a></h2>
+<h3>2.02 Display/files<a class="headerlink" href="#display-files" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
+<li><p>Stata’s <a class="reference external" href="https://jhustata.github.io/basic/chapter1.html#interface">Results Window</a></p>
+<ul>
+<li><p>Only useful to the user</p></li>
+<li><p>Not a mode of publication</p></li>
+</ul>
+</li>
 <li><p>.xlsx</p></li>
 <li><p>.log</p></li>
 <li><p>.dta</p></li>
@@ -493,8 +507,10 @@ document.write(`
 <li><p><a class="reference external" href="https://jhustata.github.io/livre/dyndoc.html">.html</a></p></li>
 </ul>
 </section>
+<section id="examples">
+<h3>2.03 Examples<a class="headerlink" href="#examples" title="Permalink to this heading">#</a></h3>
 <section id="xlsx">
-<h2>2.1 xlsx<a class="headerlink" href="#xlsx" title="Permalink to this heading">#</a></h2>
+<h4>2.031 xlsx<a class="headerlink" href="#xlsx" title="Permalink to this heading">#</a></h4>
 <p>Import a datafile</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> transplants,<span class="k"> clear</span> 
 </pre></div>
@@ -516,7 +532,7 @@ document.write(`
 <p>If you get an error, it’s likely that you did not edit the file path in the code. Always remember to adapt borrrowed code to your needs!</p>
 </section>
 <section id="log">
-<h2>2.2 log<a class="headerlink" href="#log" title="Permalink to this heading">#</a></h2>
+<h4>2.032 log<a class="headerlink" href="#log" title="Permalink to this heading">#</a></h4>
 <p>Let’s input some Stata code into your .do file</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">log</span> using chi2<span class="m">.</span>log,<span class="k"> replace</span> <span class="c1">//creates a .log file</span>
 <span class="k">use</span> transplants,<span class="k"> clear</span> <span class="c1">//imports the datafile</span>
@@ -579,7 +595,7 @@ Pearson <span class="nf">chi2</span>(<span class="m">8</span>) =  <span class="m
 <p>This command is your gateway to reviewing the most recent test results stored by Stata. It lists out all the statistics calculated by the last command, including the number of observations (<code class="docutils literal notranslate"><span class="pre">r(N)</span></code>), test statistics like chi-squared values (<code class="docutils literal notranslate"><span class="pre">r(chi2)</span></code>), and crucially, the p-value (<code class="docutils literal notranslate"><span class="pre">r(p)</span></code>).</p>
 <p>However, simply listing out the p-value isn’t always enough, especially when preparing your findings for a broader audience, such as in peer-reviewed publications. The reporting of p-values follows specific conventions to enhance clarity and understanding. Let’s explore how to apply these conventions using a conditional formatting approach:</p>
 <section id="introduction-to-the-quietly-command">
-<h3>2.2.1 Introduction to the “quietly” Command<a class="headerlink" href="#introduction-to-the-quietly-command" title="Permalink to this heading">#</a></h3>
+<h5>Introduction to the “quietly” Command<a class="headerlink" href="#introduction-to-the-quietly-command" title="Permalink to this heading">#</a></h5>
 <p>The first block introduces the concept of running commands ‘quietly’ in Stata, which suppresses the output in the Results window.</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> {
     <span class="c1">// Your Stata commands here</span>
@@ -592,7 +608,7 @@ Pearson <span class="nf">chi2</span>(<span class="m">8</span>) =  <span class="m
 </ul>
 </section>
 <section id="handling-p-values-less-than-0-01">
-<h3>2.2.2 Handling p-values Less Than 0.01<a class="headerlink" href="#handling-p-values-less-than-0-01" title="Permalink to this heading">#</a></h3>
+<h5>Handling p-values Less Than 0.01<a class="headerlink" href="#handling-p-values-less-than-0-01" title="Permalink to this heading">#</a></h5>
 <p>The second block explains how to handle cases where p-values are less than 0.01.</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> {
 <span class="k">    if</span> <span class="nf">r</span>(p) <span class="o">&lt;</span> <span class="m">0.01</span> {
@@ -607,7 +623,7 @@ Pearson <span class="nf">chi2</span>(<span class="m">8</span>) =  <span class="m
 </ul>
 </section>
 <section id="formatting-p-values-between-0-01-and-0-05">
-<h3>2.2.3 Formatting p-values Between 0.01 and 0.05<a class="headerlink" href="#formatting-p-values-between-0-01-and-0-05" title="Permalink to this heading">#</a></h3>
+<h5>Formatting p-values Between 0.01 and 0.05<a class="headerlink" href="#formatting-p-values-between-0-01-and-0-05" title="Permalink to this heading">#</a></h5>
 <p>The third block focuses on p-values that fall between 0.01 and 0.05, using precision formatting.</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> {
 <span class="k">    else if</span> <span class="nf">inrange</span>(<span class="nf">r</span>(p),<span class="m">0.01</span>,<span class="m">0.05</span>) {
@@ -622,7 +638,7 @@ Pearson <span class="nf">chi2</span>(<span class="m">8</span>) =  <span class="m
 </ul>
 </section>
 <section id="formatting-p-values-greater-than-0-05">
-<h3>2.2.4 Formatting p-values Greater Than 0.05<a class="headerlink" href="#formatting-p-values-greater-than-0-05" title="Permalink to this heading">#</a></h3>
+<h5>Formatting p-values Greater Than 0.05<a class="headerlink" href="#formatting-p-values-greater-than-0-05" title="Permalink to this heading">#</a></h5>
 <p>The fourth block deals with formatting p-values greater than 0.05.</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> {
 <span class="k">    else</span> {
@@ -637,7 +653,7 @@ Pearson <span class="nf">chi2</span>(<span class="m">8</span>) =  <span class="m
 </ul>
 </section>
 <section id="combining-everything">
-<h3>2.2.5 Combining Everything<a class="headerlink" href="#combining-everything" title="Permalink to this heading">#</a></h3>
+<h5>Combining Everything<a class="headerlink" href="#combining-everything" title="Permalink to this heading">#</a></h5>
 <p>Finally, we combine all the parts into a cohesive whole, demonstrating how to format p-values based on their value, all within a ‘quietly’ block.</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> { <span class="c1">//asks Stata to work &quot;quietly&quot;, until the corresponding brace is closed at the end</span>
 <span class="k">    if</span> <span class="nf">r</span>(p) <span class="o">&lt;</span> <span class="m">0.01</span> {
@@ -656,6 +672,8 @@ Pearson <span class="nf">chi2</span>(<span class="m">8</span>) =  <span class="m
 <ul class="simple">
 <li><p>This final block puts everything together, showing how to use <code class="docutils literal notranslate"><span class="pre">qui</span></code> to suppress unnecessary output while precisely formatting p-values according to their significance level. The <code class="docutils literal notranslate"><span class="pre">noi</span> <span class="pre">di</span> <span class="pre">&quot;p</span> <span class="pre">=</span> </code>p’`” line then displays the formatted p-value, completing the explanation of how to communicate statistical results clearly and effectively.</p></li>
 </ul>
+</section>
+</section>
 </section>
 <section id="recap-of-the-chi-square-test">
 <h3>2.2.6 Recap of the chi-square test<a class="headerlink" href="#recap-of-the-chi-square-test" title="Permalink to this heading">#</a></h3>
@@ -1039,15 +1057,21 @@ in .xlsx, .log, .dta, .docx, etc.</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#results-output">Results/Output</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#display-files">Display/Files</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#xlsx">2.1 xlsx</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#log">2.2 log</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-the-quietly-command">2.2.1 Introduction to the “quietly” Command</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#handling-p-values-less-than-0-01">2.2.2 Handling p-values Less Than 0.01</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#formatting-p-values-between-0-01-and-0-05">2.2.3 Formatting p-values Between 0.01 and 0.05</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#formatting-p-values-greater-than-0-05">2.2.4 Formatting p-values Greater Than 0.05</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#combining-everything">2.2.5 Combining Everything</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#last-week">2.0 Last week</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#results-output">2.01 Results/output</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#display-files">2.02 Display/files</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#examples">2.03 Examples</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#xlsx">2.031 xlsx</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#log">2.032 log</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-the-quietly-command">Introduction to the “quietly” Command</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#handling-p-values-less-than-0-01">Handling p-values Less Than 0.01</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#formatting-p-values-between-0-01-and-0-05">Formatting p-values Between 0.01 and 0.05</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#formatting-p-values-greater-than-0-05">Formatting p-values Greater Than 0.05</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#combining-everything">Combining Everything</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recap-of-the-chi-square-test">2.2.6 Recap of the chi-square test</a></li>
 </ul>
 </li>
