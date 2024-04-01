@@ -160,7 +160,6 @@ const thebe_selector_output = ".output, .cell_output"
         </ul>
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">1. Philosophy, overview, commands, syntax</a></li>
-
 <li class="toctree-l1"><a class="reference internal" href="chapter2.html">2. Return values, macros, programs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="chapter3.html">3. Loops, Program Syntax, and Miscellany</a></li>
 <li class="toctree-l1"><a class="reference internal" href="chapter4.html">4. Advanced file management</a></li>
@@ -362,16 +361,12 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">1. Philosophy, overview, commands, syntax</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#entry-poll">1.0 Entry Poll</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#survey">1.0.1 Survey</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#results">1.0.2 Results</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#format-e-g-9s">1.0.3 Format, e.g. <code class="docutils literal notranslate"><span class="pre">%9s</span></code></a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"></a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#philosophy">1.1 Philosophy</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#receive-with-simplicity">1.1.1 Receive &amp; with Simplicity</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#know-be-reverent">1.1.2 Know &amp; be Reverent</a></li>
@@ -390,9 +385,6 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab">1.5 Lab</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#homework">1.6 Homework</a></li>
 </ul>
-</li>
-</ul>
-
             </nav>
         </div>
     </div>
@@ -529,12 +521,8 @@ document.write(`
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>import delimited <span class="s">&quot;https://raw.githubusercontent.com/jhustata/basic/main/entry_poll.csv&quot;</span>,<span class="k"> clear</span> varn(<span class="m">1</span>)
 </pre></div>
 </div>
-</section>
-</section>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="id1">
-<h1><a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h1>
-<p>Can you visualize these data using bar graphs? Data are either numeric or string. How may we know what we’re dealing with here?</p>
+<p>For those who are not familiar with Stata syntax, any syntax seen after a comma is called an <code class="docutils literal notranslate"><span class="pre">option.</span></code> This hands the user a lot of control when importing and analyzing data, and when outputting products. Soon you’ll be writing your own programs and, through your powers of empathy, you’ll extend such control to the end-user by enabling “options” in the execution of your program.</p>
+<p>That said, can you visualize these imported data using bar graphs? As we are going to learn, data are either numeric or string. And so how may we know what we’re dealing with here?</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">describe</span>
 </pre></div>
 </div>
@@ -619,6 +607,8 @@ Note: Dataset has	changed since last	saved.
 <img alt="_images/931e5210b5af8aebf9a0ddf56abccf41d6a44d371877c6f1d6db6a58d81cef4d.png" src="_images/931e5210b5af8aebf9a0ddf56abccf41d6a44d371877c6f1d6db6a58d81cef4d.png" />
 </div>
 </div>
+</section>
+</section>
 <section id="philosophy">
 <h2>1.1 Philosophy<a class="headerlink" href="#philosophy" title="Permalink to this heading">#</a></h2>
 <p>In embarking on the journey of mastering Stata for data analysis and statistical programming, we adhere to a philosophy that is both pragmatic and reflective.</p>
@@ -1364,16 +1354,12 @@ command myfirstprogram is unrecognized
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">1. Philosophy, overview, commands, syntax</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#entry-poll">1.0 Entry Poll</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#survey">1.0.1 Survey</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#results">1.0.2 Results</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#format-e-g-9s">1.0.3 Format, e.g. <code class="docutils literal notranslate"><span class="pre">%9s</span></code></a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"></a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#philosophy">1.1 Philosophy</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#receive-with-simplicity">1.1.1 Receive &amp; with Simplicity</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#know-be-reverent">1.1.2 Know &amp; be Reverent</a></li>
@@ -1392,9 +1378,6 @@ command myfirstprogram is unrecognized
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab">1.5 Lab</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#homework">1.6 Homework</a></li>
 </ul>
-</li>
-</ul>
-
   </nav></div>
 
 </div></div>
