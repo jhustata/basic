@@ -420,13 +420,13 @@ document.write(`
 </ol>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/-cH9b5HzF4Y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/SKYbqprIy0U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-<div class="cell tag_hide-input docutils container">
+<div class="cell tag_hide-input tag_hide-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
 <span class="collapsed">Show code cell source</span>
 <span class="expanded">Hide code cell source</span>
 </summary>
-<div class="cell_input docutils container">
+<div class="cell_input above-output-prompt docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># House cleaning</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -477,9 +477,49 @@ document.write(`
 </div>
 </div>
 </details>
+<details class="hide below-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell output</span>
+<span class="expanded">Hide code cell output</span>
+</summary>
 <div class="cell_output docutils container">
 <img alt="_images/ce0771be92977d5297fd1ae75a3be8d6719b0281e1ee84ec704965dbe15e4be0.png" src="_images/ce0771be92977d5297fd1ae75a3be8d6719b0281e1ee84ec704965dbe15e4be0.png" />
 </div>
+</details>
+</div>
+<p>Alternatively, you could import the .csv file directly into Stata</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>import delimited <span class="s">&quot;https://raw.githubusercontent.com/jhustata/basic/main/entry_poll.csv&quot;</span>,<span class="k"> clear</span> 
+</pre></div>
+</div>
+<p>Can you visualize these data using bar graphs?</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">describe</span>
+</pre></div>
+</div>
+<p>What variable format are they? (Hint: revise seciton <a class="reference external" href="https://jhustata.github.io/basic/chapter1.html#overview">1.2 Overview</a>)</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>.<span class="k"> describe</span>
+
+Contains data
+Observations:	<span class="m">66</span>	    
+Variables:	<span class="m">9</span>	    
+				
+Variable      Storage	Display    Value
+name        <span class="k"> type	format</span>   <span class="k"> label</span>	Variable<span class="k">	label</span>
+				
+v1              strL	<span class="nx">%9s</span>	    
+v2              str65	<span class="nx">%65s</span>	    
+v3              str178	<span class="nx">%178s</span>	    
+v4              str7	<span class="nx">%9s</span>	    
+v5              str26	<span class="nx">%26s</span>	    
+v6              str23	<span class="nx">%23s</span>	    
+v7              str25	<span class="nx">%25s</span>	    
+v8              str18	<span class="nx">%18s</span>	    
+v9              str16	<span class="nx">%16s</span>	    
+				
+Sorted<span class="k"> by</span>: 
+Note: Dataset has	changed since last	saved.
+
+. 
+</pre></div>
 </div>
 <div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
@@ -1187,7 +1227,7 @@ command myfirstprogram is unrecognized
 </ol>
 <p>Question:</p>
 <p>Print the following sentence: <code class="docutils literal notranslate"><span class="pre">Question</span> <span class="pre">1:</span> <span class="pre">There</span> <span class="pre">are</span> <span class="pre">xxxx</span> <span class="pre">records</span> <span class="pre">in</span> <span class="pre">the</span> <span class="pre">dataset</span></code>. The <code class="docutils literal notranslate"><span class="pre">xxxx</span></code> should be replaced with the actual number of records in the dataset.</p>
-<p>If you are not sure where the back quote is, its to the left of “1” on most keyboards. The forward quote is to the left of “return” on a Mac. You need to get familiar with these quotes, since they’ll be used to specify “macros” throughout this class and your programming life. While using a .do file, the use of a back quote will automatically generate a forward quote to enclose the specified macro as seen below.</p>
+<p>If you are not sure where the <code class="docutils literal notranslate"><span class="pre">backquote</span></code> is, its to the left of “1” on most keyboards. The forwardquote is to the left of “return” on a Mac. You need to get familiar with these quotes, since they’ll be used to specify “macros” throughout this class and your programming life. While using a .do file, the use of a back quote will automatically generate a forward quote to enclose the specified macro as seen below.</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">di</span> <span class="nv">`c(N)&#39;</span>
 </pre></div>
 </div>
