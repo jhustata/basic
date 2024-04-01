@@ -29,6 +29,15 @@ For **general** inquiries about Course logistics, etc., please use the [CoursePl
 
 Join our new [Stata-focused discussion community on GitHub](https://github.com/jhufena/discussions/discussions) for all your code-related queries! Whether you're looking to share snippets, troubleshoot issues with your peers, or dive into broader discussions within the Hopkins Stata community, GitHub is your go-to platform. Don't have a GitHub account yet? No worries—it's quick and easy to [sign up](https://github.com/join). This platform not only facilitates collaboration with your classmates and instructors but also connects you to the wider Stata-using community at Hopkins even after completion of this course. Get ready to enhance your coding journey by tapping into the collective wisdom and insights available right at your fingertips.
 
+
+Sharing code on the GitHub discussion forum is straightforward. Simply enclose your code snippet or an entire `.do` file's contents within triple [backquotes](https://jhustata.github.io/basic/chapter1.html#homework) for syntax highlighting, like this:
+
+\```stata      
+copy & paste your code snippet here     
+\```   
+
+You don't need to upload `.do` files. For Python or R code, just replace "stata" with "python" or "r" respectively. This syntax highlighting enhances readability, making it easier for peers to understand your code. This is why we prefer GitHub for discussing code-related queries over CoursePlus. Feel free to mix your explanations with code snippets to better illustrate your points.
+
 Zoom etiquette is straightforward: all participants will be muted except the lecturer. Feel free to ask questions via chat, which we’ll monitor regularly. **During class, labs, and homework attempts**, post questions and comments the [Stata-focused discussion community on GitHub](https://github.com/jhufena/discussions/discussions) for peer reference. While we aim to record lectures, live attendance is recommended when possible.
 
 Regarding academic integrity, we encourage the use of small code snippets from books, the internet, or peers, provided they're cited, as shown below:
