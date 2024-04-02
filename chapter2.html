@@ -372,25 +372,30 @@ document.write(`
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#formatting-p-values-between-0-01-and-0-05">Formatting p-values Between 0.01 and 0.05</a></li>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#formatting-p-values-greater-than-0-05">Formatting p-values Greater Than 0.05</a></li>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#combining-everything">Combining Everything</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#recap-of-the-chi-square-test">Recap of the chi-square test</a></li>
 </ul>
 </li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dta">2.033 dta</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-clearing-the-workspace">Step 1: Clearing the Workspace</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-setting-up-a-new-posted-file">Step 2: Setting Up a New Posted File</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-populating-the-dataset">Step 3: Populating the Dataset</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-finalizing-the-dataset">Step 4: Finalizing the Dataset</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-using-and-viewing-the-dataset">Step 5: Using and Viewing the Dataset</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recap-of-the-chi-square-test">2.2.6 Recap of the chi-square test</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#docx">2.034 docx</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#putdocx">Putdocx</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#dyndoc">dyndoc</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dta">2.3 dta</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#docx">2.4 docx</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#putdocx">2.4.1. Putdocx</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dyndoc">2.4.2. dyndoc</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#author-md-mph">Author, MD MPH</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#html">2.035 html</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-embed-stata-results-in-html">How to embed Stata results in .html</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Author, MD MPH</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#html">2.5 html</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-embed-stata-results-in-html">2.5.1. How to embed Stata results in .html</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Author, MD MPH</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab">2.6 Lab</a></li>
@@ -673,10 +678,8 @@ Pearson <span class="nf">chi2</span>(<span class="m">8</span>) =  <span class="m
 <li><p>This final block puts everything together, showing how to use <code class="docutils literal notranslate"><span class="pre">qui</span></code> to suppress unnecessary output while precisely formatting p-values according to their significance level. The <code class="docutils literal notranslate"><span class="pre">noi</span> <span class="pre">di</span> <span class="pre">&quot;p</span> <span class="pre">=</span> </code>p’`” line then displays the formatted p-value, completing the explanation of how to communicate statistical results clearly and effectively.</p></li>
 </ul>
 </section>
-</section>
-</section>
 <section id="recap-of-the-chi-square-test">
-<h3>2.2.6 Recap of the chi-square test<a class="headerlink" href="#recap-of-the-chi-square-test" title="Permalink to this heading">#</a></h3>
+<h5>Recap of the chi-square test<a class="headerlink" href="#recap-of-the-chi-square-test" title="Permalink to this heading">#</a></h5>
 <p>In this script, we start by checking if the p-value is less than 0.01. If so, we report it as “p &lt; 0.01” to indicate a very high level of statistical significance. This convention signals to the reader that the result is significant beyond the conventional thresholds.</p>
 <p>If the p-value falls between 0.01 and 0.05, we report it in a standard numeric format (e.g., 0.03), maintaining two decimal places for precision. This range indicates statistical significance at the conventional 5% level, which is widely accepted in many research disciplines.</p>
 <p>For p-values greater than 0.05, we format them with one decimal place, acknowledging that while the result may not meet the conventional threshold for statistical significance, it is still worth reporting for a comprehensive understanding of the analysis.</p>
@@ -700,8 +703,9 @@ p = <span class="m">0.02</span>
 </section>
 </section>
 <section id="dta">
-<h2>2.3 dta<a class="headerlink" href="#dta" title="Permalink to this heading">#</a></h2>
-<p><strong>Step 1: Clearing the Workspace</strong></p>
+<h4>2.033 dta<a class="headerlink" href="#dta" title="Permalink to this heading">#</a></h4>
+<section id="step-1-clearing-the-workspace">
+<h5>Step 1: Clearing the Workspace<a class="headerlink" href="#step-1-clearing-the-workspace" title="Permalink to this heading">#</a></h5>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>cls
 <span class="k">clear</span> 
 <span class="k">postutil clear</span> 
@@ -712,14 +716,18 @@ p = <span class="m">0.02</span>
 <li><p><code class="docutils literal notranslate"><span class="pre">clear</span></code>: Removes all data from memory. This ensures that the workspace is clean before starting new data manipulations.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">postutil</span> <span class="pre">clear</span></code>: Clears any existing posted datasets from memory. This is particularly useful when you’re about to create new posted datasets, ensuring no conflicts or errors arise from previous sessions.</p></li>
 </ul>
-<p><strong>Step 2: Setting Up a New Posted File</strong></p>
+</section>
+<section id="step-2-setting-up-a-new-posted-file">
+<h5>Step 2: Setting Up a New Posted File<a class="headerlink" href="#step-2-setting-up-a-new-posted-file" title="Permalink to this heading">#</a></h5>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">postfile</span> pp str80 a <span class="nf">float</span>(b c) using output<span class="m">.</span>dta,<span class="k"> replace</span> 
 </pre></div>
 </div>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">postfile</span> <span class="pre">pp</span> <span class="pre">str80</span> <span class="pre">a</span> <span class="pre">float(b</span> <span class="pre">c)</span> <span class="pre">using</span> <span class="pre">output.dta,</span> <span class="pre">replace</span></code>: This line initiates the creation of a new dataset (<code class="docutils literal notranslate"><span class="pre">output.dta</span></code>) with specific variables <code class="docutils literal notranslate"><span class="pre">a</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code>, and <code class="docutils literal notranslate"><span class="pre">c</span></code>. Here, <code class="docutils literal notranslate"><span class="pre">pp</span></code> is the name given to this posting session, <code class="docutils literal notranslate"><span class="pre">str80</span> <span class="pre">a</span></code> defines <code class="docutils literal notranslate"><span class="pre">a</span></code> as a string variable with a maximum length of 80 characters, and <code class="docutils literal notranslate"><span class="pre">float(b</span> <span class="pre">c)</span></code> defines <code class="docutils literal notranslate"><span class="pre">b</span></code> and <code class="docutils literal notranslate"><span class="pre">c</span></code> as floating-point numbers. The <code class="docutils literal notranslate"><span class="pre">replace</span></code> option allows overwriting any existing file with the same name, ensuring that your new data is saved without issues.</p></li>
 </ul>
-<p><strong>Step 3: Populating the Dataset</strong></p>
+</section>
+<section id="step-3-populating-the-dataset">
+<h5>Step 3: Populating the Dataset<a class="headerlink" href="#step-3-populating-the-dataset" title="Permalink to this heading">#</a></h5>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">post</span> pp (<span class="s">&quot;1&quot;</span>) (<span class="m">24.4</span>) (<span class="m">123</span>)
 <span class="k">post</span> pp (<span class="s">&quot;2&quot;</span>) (<span class="m">31.5</span>) (<span class="m">164</span>)
 <span class="k">post</span> pp (<span class="s">&quot;3&quot;</span>) (<span class="m">29.0</span>) (<span class="m">118</span>)
@@ -728,14 +736,18 @@ p = <span class="m">0.02</span>
 <ul class="simple">
 <li><p>These lines use the <code class="docutils literal notranslate"><span class="pre">post</span></code> command to add records to the dataset you’ve started. Each <code class="docutils literal notranslate"><span class="pre">post</span></code> command adds a new row with the specified values for <code class="docutils literal notranslate"><span class="pre">a</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code>, and <code class="docutils literal notranslate"><span class="pre">c</span></code>. For example, <code class="docutils literal notranslate"><span class="pre">post</span> <span class="pre">pp</span> <span class="pre">(&quot;1&quot;)</span> <span class="pre">(24.4)</span> <span class="pre">(123)</span></code> adds a row with <code class="docutils literal notranslate"><span class="pre">a</span></code> as “1”, <code class="docutils literal notranslate"><span class="pre">b</span></code> as 24.4, and <code class="docutils literal notranslate"><span class="pre">c</span></code> as 123.</p></li>
 </ul>
-<p><strong>Step 4: Finalizing the Dataset</strong></p>
+</section>
+<section id="step-4-finalizing-the-dataset">
+<h5>Step 4: Finalizing the Dataset<a class="headerlink" href="#step-4-finalizing-the-dataset" title="Permalink to this heading">#</a></h5>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">postclose</span> pp
 </pre></div>
 </div>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">postclose</span> <span class="pre">pp</span></code>: This command closes the posting session named <code class="docutils literal notranslate"><span class="pre">pp</span></code>, finalizing the dataset. After this, no more data can be added to <code class="docutils literal notranslate"><span class="pre">output.dta</span></code> under this posting session.</p></li>
 </ul>
-<p><strong>Step 5: Using and Viewing the Dataset</strong></p>
+</section>
+<section id="step-5-using-and-viewing-the-dataset">
+<h5>Step 5: Using and Viewing the Dataset<a class="headerlink" href="#step-5-using-and-viewing-the-dataset" title="Permalink to this heading">#</a></h5>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> output,<span class="k"> clear</span> 
 <span class="k">list</span> 
 </pre></div>
@@ -745,15 +757,16 @@ p = <span class="m">0.02</span>
 <li><p><code class="docutils literal notranslate"><span class="pre">list</span></code>: Displays the contents of the active dataset in the Results window. This provides a quick way to review the data you’ve just posted, ensuring it looks as expected.</p></li>
 </ul>
 </section>
+</section>
 <section id="docx">
-<h2>2.4 docx<a class="headerlink" href="#docx" title="Permalink to this heading">#</a></h2>
+<h4>2.034 docx<a class="headerlink" href="#docx" title="Permalink to this heading">#</a></h4>
 <p>We may embed Stata results in a .docx file in two very distinct ways:</p>
 <ul class="simple">
 <li><p>putdocx</p></li>
 <li><p>dyndoc</p></li>
 </ul>
 <section id="putdocx">
-<h3>2.4.1. Putdocx<a class="headerlink" href="#putdocx" title="Permalink to this heading">#</a></h3>
+<h5>Putdocx<a class="headerlink" href="#putdocx" title="Permalink to this heading">#</a></h5>
 <ul class="simple">
 <li><p>putdocx begin (Tell Stata you want to create a Word doc)</p></li>
 <li><p>putdocx text etc. (Define the contents of the Word doc you will create)</p></li>
@@ -783,12 +796,14 @@ putdocx<span class="k"> save</span> myfirst<span class="m">.</span>docx,<span cl
 <p>Conclusion. In walking you through syntax, do-file creation, queued commands, generated results, through to embedding neatly formatted output in .html, we believe you now have a solid sense of all that Stata has to offer you. These ideas can be generalized to embedding results in .xlsx, .log, .dta, .docx, etc.</p>
 </section>
 <section id="dyndoc">
-<h3>2.4.2. dyndoc<a class="headerlink" href="#dyndoc" title="Permalink to this heading">#</a></h3>
+<h5>dyndoc<a class="headerlink" href="#dyndoc" title="Permalink to this heading">#</a></h5>
 <ul class="simple">
 <li><p>Identical to the .html approach discussed in the next section</p></li>
 <li><p>But has some caveats that we will discuss</p></li>
 <li><p>Word documents are not able to render LaTeX format</p></li>
 </ul>
+</section>
+</section>
 <section id="author-md-mph">
 <h4>Author, MD MPH<a class="headerlink" href="#author-md-mph" title="Permalink to this heading">#</a></h4>
 <p><strong>Background:</strong>
@@ -875,15 +890,13 @@ In walking you through syntax, do-file creation, queued commands, generated resu
 .html, we believe you now have a solid sense of all that Stata has to offer you. These ideas can be generalized to embedding results
 in .xlsx, .log, .dta, .docx, etc.</p>
 </section>
-</section>
-</section>
 <section id="html">
-<h2>2.5 html<a class="headerlink" href="#html" title="Permalink to this heading">#</a></h2>
+<h4>2.035 html<a class="headerlink" href="#html" title="Permalink to this heading">#</a></h4>
 <section id="how-to-embed-stata-results-in-html">
-<h3>2.5.1. How to embed Stata results in .html<a class="headerlink" href="#how-to-embed-stata-results-in-html" title="Permalink to this heading">#</a></h3>
+<h5>How to embed Stata results in .html<a class="headerlink" href="#how-to-embed-stata-results-in-html" title="Permalink to this heading">#</a></h5>
 </section>
 <section id="id1">
-<h3>Author, MD MPH<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<h5>Author, MD MPH<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h5>
 <p><strong>Background:</strong>
 A <u>user</u> downloads and installs a <u>system</u> of program files, mostly ado-files, which form the foundation of most of the commands
 used in Stata Programming. Using those commands and additional syntax written out sequentially in a do-file, the user creates
@@ -967,6 +980,8 @@ results. There were 68 observations and 6 observations in the analyzed dataset. 
 In walking you through syntax, do-file creation, queued commands, generated results, through to embedding neatly formatted output in
 .html, we believe you now have a solid sense of all that Stata has to offer you. These ideas can be generalized to embedding results
 in .xlsx, .log, .dta, .docx, etc.</p>
+</section>
+</section>
 </section>
 </section>
 <section id="lab">
@@ -1068,25 +1083,30 @@ in .xlsx, .log, .dta, .docx, etc.</p>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#formatting-p-values-between-0-01-and-0-05">Formatting p-values Between 0.01 and 0.05</a></li>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#formatting-p-values-greater-than-0-05">Formatting p-values Greater Than 0.05</a></li>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#combining-everything">Combining Everything</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#recap-of-the-chi-square-test">Recap of the chi-square test</a></li>
 </ul>
 </li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dta">2.033 dta</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-clearing-the-workspace">Step 1: Clearing the Workspace</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-setting-up-a-new-posted-file">Step 2: Setting Up a New Posted File</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-populating-the-dataset">Step 3: Populating the Dataset</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-finalizing-the-dataset">Step 4: Finalizing the Dataset</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-using-and-viewing-the-dataset">Step 5: Using and Viewing the Dataset</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recap-of-the-chi-square-test">2.2.6 Recap of the chi-square test</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#docx">2.034 docx</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#putdocx">Putdocx</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#dyndoc">dyndoc</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dta">2.3 dta</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#docx">2.4 docx</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#putdocx">2.4.1. Putdocx</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dyndoc">2.4.2. dyndoc</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#author-md-mph">Author, MD MPH</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#html">2.035 html</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-embed-stata-results-in-html">How to embed Stata results in .html</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Author, MD MPH</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#html">2.5 html</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-embed-stata-results-in-html">2.5.1. How to embed Stata results in .html</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Author, MD MPH</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab">2.6 Lab</a></li>
