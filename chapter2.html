@@ -398,8 +398,21 @@ document.write(`
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab">2.6 Lab</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#homework">2.6 Homework</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variables">2.1 Variables</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-a-dataset">Loading a Dataset</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#listing-variables">Listing Variables</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-help">Getting Help</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-variables-by-type">Filtering Variables by Type</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#string">2.2 String</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#numeric">2.3 Numeric</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#return-values">2.4 Return values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#macros">2.5 Macros</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#programs">2.6 Programs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab">2.7 Lab</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#homework">2.8 Homework</a></li>
 </ul>
             </nav>
         </div>
@@ -984,12 +997,76 @@ in .xlsx, .log, .dta, .docx, etc.</p>
 </section>
 </section>
 </section>
+<section id="variables">
+<h2>2.1 Variables<a class="headerlink" href="#variables" title="Permalink to this heading">#</a></h2>
+<section id="loading-a-dataset">
+<h3>Loading a Dataset<a class="headerlink" href="#loading-a-dataset" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> https:<span class="o">//</span>jhustata<span class="m">.</span>github<span class="m">.</span>io<span class="o">/</span>basic<span class="o">/</span>_downloads<span class="o">/</span>34a8255f06036b44354b3c36c5583d7e<span class="o">/</span>transplants<span class="m">.</span>dta,<span class="k"> clear</span>
+</pre></div>
+</div>
+<p><strong>Note for Students:</strong> This command is your starting point. It loads a dataset from a specified URL into Stata, clearing anything that was in memory before. Always ensure you’re working with the correct dataset by loading it appropriately. This particular dataset, <code class="docutils literal notranslate"><span class="pre">transplants.dta</span></code>, is likely related to medical transplant records, given its name.</p>
+</section>
+<section id="listing-variables">
+<h3>Listing Variables<a class="headerlink" href="#listing-variables" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">ds</span>
+</pre></div>
+</div>
+<p><strong>Note for Students:</strong> The <code class="docutils literal notranslate"><span class="pre">ds</span></code> command is a quick way to list all variables in your dataset. It’s a good practice to familiarize yourself with the variables available to you before starting any analysis. Knowing what data you have is the first step in understanding what questions you can answer.</p>
+<p><strong>Example Output from <code class="docutils literal notranslate"><span class="pre">ds</span></code> Command:</strong></p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>.<span class="k"> ds</span>
+fake_id       don_hgt_cm    don_ecd       rec_hgt_cm    prev_ki       end_date      wait_yrs      rec_hcv_an<span class="o">~</span>y  rec_educat<span class="o">~</span>n
+ctr_id        don_wgt_kg    dx            rec_wgt_kg    age           died          abo           rec_work      extended_dgn
+transplant<span class="o">~</span>e  don_cod       race          bmi           peak_pra      tx_failed     gender        pretx_cmv
+</pre></div>
+</div>
+<p><strong>Note for Students:</strong> This output lists the variables in your dataset. From <code class="docutils literal notranslate"><span class="pre">fake_id</span></code> to <code class="docutils literal notranslate"><span class="pre">pretx_cmv</span></code>, each variable represents a different attribute related to the transplants. For example, <code class="docutils literal notranslate"><span class="pre">don_hgt_cm</span></code> might stand for donor height in centimeters, and <code class="docutils literal notranslate"><span class="pre">rec_wgt_kg</span></code> could be the recipient’s weight in kilograms. Understanding each variable’s meaning is essential for any analysis.</p>
+</section>
+<section id="getting-help">
+<h3>Getting Help<a class="headerlink" href="#getting-help" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">help ds</span>
+</pre></div>
+</div>
+<p><strong>Note for Students:</strong> Whenever you’re unsure about a command or need to know more about its options and syntax, use <code class="docutils literal notranslate"><span class="pre">help</span> <span class="pre">&lt;command&gt;</span></code>. It’s a lifesaver and a fast way to access documentation directly within Stata.</p>
+</section>
+<section id="filtering-variables-by-type">
+<h3>Filtering Variables by Type<a class="headerlink" href="#filtering-variables-by-type" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">ds</span>, has(type)
+</pre></div>
+</div>
+<p><strong>Note for Students:</strong> This command uses the <code class="docutils literal notranslate"><span class="pre">has</span></code> option with the <code class="docutils literal notranslate"><span class="pre">ds</span></code> command to filter variables by a specific attribute, in this case, <code class="docutils literal notranslate"><span class="pre">type</span></code>. However, this example is incomplete because it doesn’t specify what type to filter by. In practice, you would use something like <code class="docutils literal notranslate"><span class="pre">ds,</span> <span class="pre">has(type</span> <span class="pre">numeric)</span></code> to list only numeric variables. It’s a powerful feature for when you need to narrow down your list of variables to those that meet specific criteria, such as numeric, string, or date variables.</p>
+</section>
+<section id="summary">
+<h3>Summary<a class="headerlink" href="#summary" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Start with data</strong>: Loading your data correctly is step one. Ensure the dataset you’re using is the one you intend to analyze.</p></li>
+<li><p><strong>Know your tools</strong>: Use commands like <code class="docutils literal notranslate"><span class="pre">ds</span></code> to understand what variables you have at your disposal. This knowledge is crucial for planning your analysis.</p></li>
+<li><p><strong>Learn continuously</strong>: Use the <code class="docutils literal notranslate"><span class="pre">help</span></code> feature liberally to deepen your understanding of Stata’s commands and their options.</p></li>
+<li><p><strong>Be selective</strong>: Learn to use commands in ways that filter and narrow down to the information you need, making your analysis more efficient and your code cleaner.</p></li>
+</ul>
+<p>I encourage you to experiment with these commands and options to get comfortable working with data in Stata. Practical exercises that require you to load, inspect, and manipulate datasets will reinforce these concepts and improve your proficiency in Stata programming. The labs focus on such activity.</p>
+</section>
+</section>
+<section id="string">
+<h2>2.2 String<a class="headerlink" href="#string" title="Permalink to this heading">#</a></h2>
+</section>
+<section id="numeric">
+<h2>2.3 Numeric<a class="headerlink" href="#numeric" title="Permalink to this heading">#</a></h2>
+</section>
+<section id="return-values">
+<h2>2.4 Return values<a class="headerlink" href="#return-values" title="Permalink to this heading">#</a></h2>
+</section>
+<section id="macros">
+<h2>2.5 Macros<a class="headerlink" href="#macros" title="Permalink to this heading">#</a></h2>
+</section>
+<section id="programs">
+<h2>2.6 Programs<a class="headerlink" href="#programs" title="Permalink to this heading">#</a></h2>
+</section>
 <section id="lab">
-<h2>2.6 Lab<a class="headerlink" href="#lab" title="Permalink to this heading">#</a></h2>
+<h2>2.7 Lab<a class="headerlink" href="#lab" title="Permalink to this heading">#</a></h2>
 <p>We’ll revise the questions you discussed in <a class="reference internal" href="lab1.html"><span class="doc std std-doc">lab 1</span></a>, and incorporate our new knowledge about macros and conditional statements</p>
 </section>
 <section id="homework">
-<h2>2.6 Homework<a class="headerlink" href="#homework" title="Permalink to this heading">#</a></h2>
+<h2>2.8 Homework<a class="headerlink" href="#homework" title="Permalink to this heading">#</a></h2>
 <p>Your week 2 homework is nearly as simple as that from week 1:</p>
 <ol class="arabic simple">
 <li><p>Write a .do file which imports data from <a class="reference external" href="https://jhustata.github.io/book/_downloads/884b9e06eb29f89b1b87da4eab39775d/hw1.txt">hw1.txt</a></p></li>
@@ -1109,8 +1186,21 @@ in .xlsx, .log, .dta, .docx, etc.</p>
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab">2.6 Lab</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#homework">2.6 Homework</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variables">2.1 Variables</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-a-dataset">Loading a Dataset</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#listing-variables">Listing Variables</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-help">Getting Help</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-variables-by-type">Filtering Variables by Type</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#string">2.2 String</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#numeric">2.3 Numeric</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#return-values">2.4 Return values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#macros">2.5 Macros</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#programs">2.6 Programs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab">2.7 Lab</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#homework">2.8 Homework</a></li>
 </ul>
   </nav></div>
 
