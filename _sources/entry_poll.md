@@ -81,6 +81,21 @@ These commands help in understanding the distribution of responses, both with an
 
 After cleaning, it's crucial to visualize your data to uncover any patterns or insights. Use Stata's graphing capabilities to explore your data further.
 
+```stata
+histogram local
+histogram mac
+histogram experi
+```
+
+Let's rotate the graphs so that they lay horizontally:
+
+```stata
+histogram local, horizontal
+histogram mac, horizontal
+histogram experi, horizontal
+```
+### 
+
 ### Leveraging GPT-4 for Analysis
 
 <details>
