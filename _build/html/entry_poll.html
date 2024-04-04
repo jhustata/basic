@@ -372,9 +372,9 @@ document.write(`
   <p><img alt="" src="_images/survey.jpg" /></p>
 <ol class="arabic simple">
 <li><p>Right-click <a class="reference external" href="https://raw.githubusercontent.com/jhustata/basic/main/entry_poll.csv">this link</a> to download the .csv entry-poll results to your machine</p></li>
-<li><p>Open Stata’s Menu &gt; File &gt; Import &gt; Text data (delimited, *.csv)</p></li>
+<li><p>Open Stata’s <code class="docutils literal notranslate"><span class="pre">Menu</span> <span class="pre">&gt;</span> <span class="pre">File</span> <span class="pre">&gt;</span> <span class="pre">Import</span> <span class="pre">&gt;</span> <span class="pre">Text</span> <span class="pre">data</span> <span class="pre">(delimited,</span> <span class="pre">*.csv)</span></code></p></li>
 </ol>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>import delimited <span class="s">&quot;/Users/d/Downloads/entry_poll.csv&quot;</span>, bindquote(strict) <span class="c1">//why this option?</span>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>import delimited <span class="s">&quot;/Users/d/Downloads/entry_poll.csv&quot;</span>, bindquote(strict) <span class="c1">//edit file path</span>
 </pre></div>
 </div>
 <ol class="arabic simple" start="3">
@@ -393,9 +393,7 @@ document.write(`
 <li><p>Now do some basic descriptive stats</p></li>
 </ol>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">tab</span> v1
-
 <span class="k">tab</span> v2
-
 <span class="k">tab</span> v3
 </pre></div>
 </div>
@@ -421,66 +419,11 @@ document.write(`
 <span class="k">tab</span> os, nolab
 </pre></div>
 </div>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>.<span class="k"> tab</span> os
-
-os	Freq.	Percent	Cum.
-			
-MacOSX	<span class="m">28</span>	<span class="m">51.85</span>	<span class="m">51.85</span>
-MacOSX;
-Windows	<span class="m">4</span>	<span class="m">7.41</span>	<span class="m">59.26</span>
-Windows	<span class="m">22</span>	<span class="m">40.74</span>	<span class="m">100.00</span>
-			
-Total	<span class="m">54</span>	<span class="m">100.00</span>
-
-.<span class="k">	tab</span>	os, nolab
-
-		os	Freq.	Percent	Cum.
-					
-		<span class="m">1</span>	<span class="m">28</span>	<span class="m">51.85</span>	<span class="m">51.85</span>
-		<span class="m">2</span>	<span class="m">4</span>	<span class="m">7.41</span>	<span class="m">59.26</span>
-		<span class="m">3</span>	<span class="m">22</span>	<span class="m">40.74</span>	<span class="m">100.00</span>
-					
-		Total	<span class="m">54</span>	<span class="m">100.00</span>
-</pre></div>
-</div>
 <ol class="arabic simple" start="9">
 <li><p>Let’s clean up the skill variable</p></li>
 </ol>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">tab</span> skill
 <span class="k">tab</span> skill, nolab
-</pre></div>
-</div>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>skill	Freq.	Percent	Cum.
-			
-Advanced User. I can<span class="k"> do</span> multivariable r	<span class="m">4</span>	<span class="m">7.41</span>	<span class="m">7.41</span>
-Basic Knowledge. I have a general under	<span class="m">21</span>	<span class="m">38.89</span>	<span class="m">46.30</span>
-Basic Knowledge. I have a general under	<span class="m">2</span>	<span class="m">3.70</span>	<span class="m">50.00</span>
-Competent User. I am proficient<span class="k"> in</span> usin	<span class="m">8</span>	<span class="m">14.81</span>	<span class="m">64.81</span>
-Competent User. I am proficient<span class="k"> in</span> usin	<span class="m">3</span>	<span class="m">5.56</span>	<span class="m">70.37</span>
-Expert User. I can write custom<span class="k"> program</span>	<span class="m">1</span>	<span class="m">1.85</span>	<span class="m">72.22</span>
-No Experience. I have<span class="k"> no</span> prior experien	<span class="m">3</span>	<span class="m">5.56</span>	<span class="m">77.78</span>
-No Experience. I have<span class="k"> no</span> prior experien	<span class="m">1</span>	<span class="m">1.85</span>	<span class="m">79.63</span>
-Novice User. I am familiar with basic c	<span class="m">10</span>	<span class="m">18.52</span>	<span class="m">98.15</span>
-Novice User. I am familiar with basic c	<span class="m">1</span>	<span class="m">1.85</span>	<span class="m">100.00</span>
-			
-Total	<span class="m">54</span>	<span class="m">100.00</span>
-
-.<span class="k"> tab</span> skill, nolab
-
-      skill |      Freq.     Percent        Cum.
-<span class="o">------------+-----------------------------------</span>
-          <span class="m">1</span> |          <span class="m">4</span>        <span class="m">7.41</span>        <span class="m">7.41</span>
-          <span class="m">2</span> |         <span class="m">21</span>       <span class="m">38.89</span>       <span class="m">46.30</span>
-          <span class="m">3</span> |          <span class="m">2</span>        <span class="m">3.70</span>       <span class="m">50.00</span>
-          <span class="m">4</span> |          <span class="m">8</span>       <span class="m">14.81</span>       <span class="m">64.81</span>
-          <span class="m">5</span> |          <span class="m">3</span>        <span class="m">5.56</span>       <span class="m">70.37</span>
-          <span class="m">6</span> |          <span class="m">1</span>        <span class="m">1.85</span>       <span class="m">72.22</span>
-          <span class="m">7</span> |          <span class="m">3</span>        <span class="m">5.56</span>       <span class="m">77.78</span>
-          <span class="m">8</span> |          <span class="m">1</span>        <span class="m">1.85</span>       <span class="m">79.63</span>
-          <span class="m">9</span> |         <span class="m">10</span>       <span class="m">18.52</span>       <span class="m">98.15</span>
-         <span class="m">10</span> |          <span class="m">1</span>        <span class="m">1.85</span>      <span class="m">100.00</span>
-<span class="o">------------+-----------------------------------</span>
-      Total |         <span class="m">54</span>      <span class="m">100.00</span>
 </pre></div>
 </div>
 <details>

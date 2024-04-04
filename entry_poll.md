@@ -5,10 +5,10 @@
 
 1. Right-click [this link](https://raw.githubusercontent.com/jhustata/basic/main/entry_poll.csv) to download the .csv entry-poll results to your machine
 
-2. Open Stata's Menu > File > Import > Text data (delimited, *.csv)
+2. Open Stata's `Menu > File > Import > Text data (delimited, *.csv)`
 
 ```stata
-import delimited "/Users/d/Downloads/entry_poll.csv", bindquote(strict) //why this option?
+import delimited "/Users/d/Downloads/entry_poll.csv", bindquote(strict) //edit file path
 
 ```
 
@@ -28,9 +28,7 @@ drop in 1/1
 
 ```stata
 tab v1
-
 tab v2
-
 tab v3
 ```
 
@@ -56,77 +54,12 @@ tab os
 tab os, nolab
 ```
 
-```stata
-. tab os
-
-os	Freq.	Percent	Cum.
-			
-MacOSX	28	51.85	51.85
-MacOSX;
-Windows	4	7.41	59.26
-Windows	22	40.74	100.00
-			
-Total	54	100.00
-
-.	tab	os, nolab
-
-		os	Freq.	Percent	Cum.
-					
-		1	28	51.85	51.85
-		2	4	7.41	59.26
-		3	22	40.74	100.00
-					
-		Total	54	100.00
-
-
-```
-
 9. Let's clean up the skill variable
 
 ```stata
 tab skill
 tab skill, nolab
 ```
-
-```stata
-skill	Freq.	Percent	Cum.
-			
-Advanced User. I can do multivariable r	4	7.41	7.41
-Basic Knowledge. I have a general under	21	38.89	46.30
-Basic Knowledge. I have a general under	2	3.70	50.00
-Competent User. I am proficient in usin	8	14.81	64.81
-Competent User. I am proficient in usin	3	5.56	70.37
-Expert User. I can write custom program	1	1.85	72.22
-No Experience. I have no prior experien	3	5.56	77.78
-No Experience. I have no prior experien	1	1.85	79.63
-Novice User. I am familiar with basic c	10	18.52	98.15
-Novice User. I am familiar with basic c	1	1.85	100.00
-			
-Total	54	100.00
-
-. tab skill, nolab
-
-      skill |      Freq.     Percent        Cum.
-------------+-----------------------------------
-          1 |          4        7.41        7.41
-          2 |         21       38.89       46.30
-          3 |          2        3.70       50.00
-          4 |          8       14.81       64.81
-          5 |          3        5.56       70.37
-          6 |          1        1.85       72.22
-          7 |          3        5.56       77.78
-          8 |          1        1.85       79.63
-          9 |         10       18.52       98.15
-         10 |          1        1.85      100.00
-------------+-----------------------------------
-      Total |         54      100.00
-
-
-
-```
-
-
-
 
 
 <details>
