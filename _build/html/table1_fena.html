@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>&lt;no title&gt; &#8212; Stata Programming</title>
+    <title>Simplified Workflow for Embedding Stata Results in Excel &#8212; Stata Programming</title>
   
   
   
@@ -347,7 +347,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1><no title></h1>
+    <h1>Simplified Workflow for Embedding Stata Results in Excel</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -356,9 +356,13 @@ document.write(`
                 <h2> Contents </h2>
             </div>
             <nav aria-label="Page">
-                <ul class="simple visible nav section-nav flex-column">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-by-step-guide">Step-by-Step Guide</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-aspects-of-the-workflow">Key Aspects of the Workflow</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-tips">Additional Tips</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
 </ul>
-
             </nav>
         </div>
     </div>
@@ -369,9 +373,56 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <p>use <a class="reference external" href="https://jhustata.github.io/basic/_downloads/34a8255f06036b44354b3c36c5583d7e/transplants.dta">https://jhustata.github.io/basic/_downloads/34a8255f06036b44354b3c36c5583d7e/transplants.dta</a>, clear
-do <a class="reference external" href="https://raw.githubusercontent.com/jhustata/basic/main/table1_fena.ado">https://raw.githubusercontent.com/jhustata/basic/main/table1_fena.ado</a>
-table1_fena, var(“age gender race bmi abo peak_pra prev_ki don_hgt don_wgt don_cod don_ecd dx”)</p>
+  <section id="simplified-workflow-for-embedding-stata-results-in-excel">
+<h1>Simplified Workflow for Embedding Stata Results in Excel<a class="headerlink" href="#simplified-workflow-for-embedding-stata-results-in-excel" title="Permalink to this heading">#</a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
+<p>This guide outlines a simplified workflow for graduate students on how to use a third-party <code class="docutils literal notranslate"><span class="pre">.ado</span></code> program in Stata. We’ll focus on embedding Stata results seamlessly into your projects without diving into the complexities of the <code class="docutils literal notranslate"><span class="pre">.ado</span></code> file itself.</p>
+</section>
+<section id="step-by-step-guide">
+<h2>Step-by-Step Guide<a class="headerlink" href="#step-by-step-guide" title="Permalink to this heading">#</a></h2>
+<ol class="arabic">
+<li><p><strong>Setting Up Your Environment</strong></p>
+<p>Before diving into the specifics of the third-party <code class="docutils literal notranslate"><span class="pre">.ado</span></code> program, ensure your Stata environment is prepared. This involves clearing the current workspace and loading the necessary data.</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> https:<span class="o">//</span>jhustata<span class="m">.</span>github<span class="m">.</span>io<span class="o">/</span>basic<span class="o">/</span>_downloads<span class="o">/</span>34a8255f06036b44354b3c36c5583d7e<span class="o">/</span>transplants<span class="m">.</span>dta,<span class="k"> clear</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Running the <code class="docutils literal notranslate"><span class="pre">.ado</span></code> Program</strong></p>
+<p>Execute the <code class="docutils literal notranslate"><span class="pre">.ado</span></code> program directly from an online source. This step is crucial as it performs the analysis or operation defined within the <code class="docutils literal notranslate"><span class="pre">.ado</span></code> file. Here, we’re using a hypothetical <code class="docutils literal notranslate"><span class="pre">table1_fena.ado</span></code> file.</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">do</span> https:<span class="o">//</span>raw<span class="m">.</span>githubusercontent<span class="m">.</span>com<span class="o">/</span>jhustata<span class="o">/</span>basic<span class="o">/</span>main<span class="o">/</span>table1_fena<span class="m">.</span>ado
+</pre></div>
+</div>
+</li>
+<li><p><strong>Utilizing the Program’s Functionality</strong></p>
+<p>Once the <code class="docutils literal notranslate"><span class="pre">.ado</span></code> program is running, use its function to generate results. This involves specifying variables and other parameters as required by the program. The example below demonstrates generating a table with specified variables.</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>table1_fena,<span class="k"> var</span>(<span class="s">&quot;age gender race bmi abo peak_pra prev_ki don_hgt don_wgt don_cod don_ecd dx&quot;</span>)
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+<section id="key-aspects-of-the-workflow">
+<h2>Key Aspects of the Workflow<a class="headerlink" href="#key-aspects-of-the-workflow" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Simplicity and Automation:</strong> The workflow is designed to be straightforward, minimizing manual data manipulation and focusing on automating tasks where possible.</p></li>
+<li><p><strong>Flexibility:</strong> While the example provided uses specific data and commands, the workflow is adaptable. You can replace these with your data and relevant commands based on the analysis you’re conducting.</p></li>
+<li><p><strong>Focus on Results:</strong> The primary goal is to help you generate and embed Stata results efficiently. Understanding the intricate details of the <code class="docutils literal notranslate"><span class="pre">.ado</span></code> file is not necessary for utilizing its functionality.</p></li>
+</ul>
+</section>
+<section id="additional-tips">
+<h2>Additional Tips<a class="headerlink" href="#additional-tips" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Error Handling:</strong> Use the <code class="docutils literal notranslate"><span class="pre">capture</span></code> command before running the <code class="docutils literal notranslate"><span class="pre">.ado</span></code> program to prevent interruptions from potential errors.</p></li>
+<li><p><strong>Customization:</strong> Modify the variables and options in the <code class="docutils literal notranslate"><span class="pre">table1_fena</span></code> command to fit your data analysis needs.</p></li>
+<li><p><strong>Further Exploration:</strong> Encourage experimenting with different parameters and options provided by the <code class="docutils literal notranslate"><span class="pre">.ado</span></code> program to fully leverage its capabilities.</p></li>
+</ul>
+</section>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">#</a></h2>
+<p>This guide provides a streamlined approach to using third-party <code class="docutils literal notranslate"><span class="pre">.ado</span></code> programs in Stata, focusing on embedding results into your work effectively. By following these steps, you can enhance your data analysis projects with advanced statistical methods, without needing in-depth knowledge of the program’s underlying code.</p>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -421,9 +472,13 @@ table1_fena, var(“age gender race bmi abo peak_pra prev_ki don_hgt don_wgt don
     <i class="fa-solid fa-list"></i> Contents
   </div>
   <nav class="bd-toc-nav page-toc">
-    <ul class="simple visible nav section-nav flex-column">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-by-step-guide">Step-by-Step Guide</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-aspects-of-the-workflow">Key Aspects of the Workflow</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-tips">Additional Tips</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
 </ul>
-
   </nav></div>
 
 </div></div>
