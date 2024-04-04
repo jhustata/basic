@@ -357,7 +357,6 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Importing Datasets in Stata</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-csv-files">1. Importing CSV Files</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-excel-files">2. Importing Excel Files</a></li>
@@ -373,13 +372,6 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-data-from-fred">12. Importing Data from FRED</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tips-for-importing-data">Tips for Importing Data</a></li>
 </ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Importing Datasets in Stata</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Introduction</a></li>
-</ul>
-</li>
-</ul>
-
             </nav>
         </div>
     </div>
@@ -494,12 +486,15 @@ document.write(`
 </pre></div>
 </div>
 <p>For <code class="docutils literal notranslate"><span class="pre">.v8xpt</span></code> and <code class="docutils literal notranslate"><span class="pre">.xpt</span></code> files, the command remains the same.</p>
-</li>
-</ul>
-<p>Visit the <a class="reference external" href="https://wwwn.cdc.gov/nchs/nhanes/search/datapage.aspx?Component=Demographics&amp;CycleBeginYear=1999">CDC.gov</a> website to practice importing a .XPT file:</p>
 <ul class="simple">
+<li><p>Visit the <a class="reference external" href="https://wwwn.cdc.gov/nchs/nhanes/search/datapage.aspx?Component=Demographics&amp;CycleBeginYear=1999">CDC.gov</a> website to practice importing a .XPT file:</p>
+<ul>
 <li><p><a class="reference external" href="https://wwwn.cdc.gov/Nchs/Nhanes/1999-2000/DEMO.XPT">DEMO</a> Data from the 2009 survey</p></li>
 <li><p>Use <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">timeout</span> <span class="pre">1000</span></code> if you have poor internet connectivity</p></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </section>
 <section id="importing-data-from-jdbc-data-sources">
@@ -545,17 +540,6 @@ document.write(`
 <li><p><strong>Inspect your data post-import</strong> using <code class="docutils literal notranslate"><span class="pre">describe</span></code>, <code class="docutils literal notranslate"><span class="pre">list</span></code>, and <code class="docutils literal notranslate"><span class="pre">summarize</span></code>.</p></li>
 <li><p><strong>Be alert for import errors</strong>; Stata provides helpful error messages to guide troubleshooting.</p></li>
 </ol>
-<hr class="docutils" />
-<p>This guide, now complete with your essential note, should serve as a thorough resource for your students as they navigate the diverse functionalities of Stata for importing data.</p>
-<p>Let’s update and expand the notes to include the new data formats you’ve mentioned. This expanded guide will ensure your graduate students are well-equipped to handle a broader range of datasets in Stata.</p>
-</section>
-</section>
-<hr class="docutils" />
-<section class="tex2jax_ignore mathjax_ignore" id="id1">
-<h1>Importing Datasets in Stata<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h1>
-<section id="id2">
-<h2>Introduction<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
-<p>Stata supports numerous data formats including <code class="docutils literal notranslate"><span class="pre">.dta</span></code>, <code class="docutils literal notranslate"><span class="pre">.csv</span></code>, <code class="docutils literal notranslate"><span class="pre">.xls/.xlsx</span></code> (Excel), <code class="docutils literal notranslate"><span class="pre">.sav</span></code> (SPSS), <code class="docutils literal notranslate"><span class="pre">.sas7bdat</span></code> (SAS), <code class="docutils literal notranslate"><span class="pre">.dbf</span></code> (dBase), and more. Utilizing Stata’s graphical interface or command line for importing data not only facilitates diverse data analysis projects but also helps in archiving reproducible steps in <code class="docutils literal notranslate"><span class="pre">.do</span></code> files.</p>
 </section>
 </section>
 
@@ -608,7 +592,6 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Importing Datasets in Stata</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-csv-files">1. Importing CSV Files</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-excel-files">2. Importing Excel Files</a></li>
@@ -624,13 +607,6 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-data-from-fred">12. Importing Data from FRED</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tips-for-importing-data">Tips for Importing Data</a></li>
 </ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Importing Datasets in Stata</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Introduction</a></li>
-</ul>
-</li>
-</ul>
-
   </nav></div>
 
 </div></div>
