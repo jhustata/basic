@@ -80,9 +80,9 @@ Stata supports numerous data formats including `.dta`, `.csv`, `.xls/.xlsx` (Exc
   ```
   For `.v8xpt` and `.xpt` files, the command remains the same.
 
-Visit the [CDC.gov](https://wwwn.cdc.gov/nchs/nhanes/search/datapage.aspx?Component=Demographics&CycleBeginYear=1999) website to practice importing a .XPT file:
-   - [DEMO](https://wwwn.cdc.gov/Nchs/Nhanes/1999-2000/DEMO.XPT) Data from the 2009 survey
-   - Use `set timeout 1000` if you have poor internet connectivity
+   - Visit the [CDC.gov](https://wwwn.cdc.gov/nchs/nhanes/search/datapage.aspx?Component=Demographics&CycleBeginYear=1999) website to practice importing a .XPT file:
+      - [DEMO](https://wwwn.cdc.gov/Nchs/Nhanes/1999-2000/DEMO.XPT) Data from the 2009 survey
+      - Use `set timeout 1000` if you have poor internet connectivity
 
 ## 10. Importing Data from JDBC Data Sources
 
@@ -116,18 +116,4 @@ Visit the [CDC.gov](https://wwwn.cdc.gov/nchs/nhanes/search/datapage.aspx?Compon
 1. **Backup your raw data** before starting any analysis.
 2. **Inspect your data post-import** using `describe`, `list`, and `summarize`.
 3. **Be alert for import errors**; Stata provides helpful error messages to guide troubleshooting.
-
----
-
-This guide, now complete with your essential note, should serve as a thorough resource for your students as they navigate the diverse functionalities of Stata for importing data.
-
-Let's update and expand the notes to include the new data formats you've mentioned. This expanded guide will ensure your graduate students are well-equipped to handle a broader range of datasets in Stata.
-
----
-
-# Importing Datasets in Stata
-
-## Introduction
-
-Stata supports numerous data formats including `.dta`, `.csv`, `.xls/.xlsx` (Excel), `.sav` (SPSS), `.sas7bdat` (SAS), `.dbf` (dBase), and more. Utilizing Stata's graphical interface or command line for importing data not only facilitates diverse data analysis projects but also helps in archiving reproducible steps in `.do` files.
 

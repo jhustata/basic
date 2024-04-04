@@ -551,7 +551,7 @@ document.write(`
 </section>
 <section id="log">
 <h4>2.032 log<a class="headerlink" href="#log" title="Permalink to this heading">#</a></h4>
-<p>Let’s input some Stata code into your .do file</p>
+<p>Let’s input some Stata code into your .do file. The <a class="reference external" href="https://jhustata.github.io/basic/_downloads/34a8255f06036b44354b3c36c5583d7e/transplants.dta">transplants.dta</a> datafile is here for your convenience. You may download it to use it locally or use the URL to import the data directly from the remote location.</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">log</span> using chi2<span class="m">.</span>log,<span class="k"> replace</span> <span class="c1">//creates a .log file</span>
 <span class="k">use</span> transplants,<span class="k"> clear</span> <span class="c1">//imports the datafile</span>
 <span class="k">tab</span> dx gender, row  chi2 <span class="c1">//performs a chi-square test</span>
