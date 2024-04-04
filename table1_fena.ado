@@ -258,7 +258,8 @@ qui {
 					local excel : di "Table 1 Outputs"
 				}
 				if ("`orders'" == "") {
-					local o
+					ds
+					local orders `r(varlist)'
 				}
 			}
 			
@@ -383,22 +384,38 @@ qui {
 			}
 			
 			// run through continuous variable
-				if 10 {
-					foreach var in `con' {
-						// print out the variable
-						// first detect if variable label exist
-						local var_l : variable label `var'
-						if ("`var_l'" == "") {
-							local var_lab : di "`var'"
-						}
-						else if ("`var_l'" != "") {
-							local var_lab : di "`var_l'"
-						}
-						// no need to detect value label since it is continuous
-						noi di "`var_lab'" ", median[IQR]", _continue
-						local erc = `erc' + 1
+			local bincat `bin' `cat'
+			foreach var in `orders' {
+				if (strpos("`con'", "`var'") != 0) {
+					// print out the variable
+					// first detect if variable label exist
+					local var_l : variable label `var'
+					if ("`var_l'" == "") {
+						local var_lab : di "`var'"
+					}
+					else if ("`var_l'" != "") {
+						local var_lab : di "`var_l'"
+					}
+					// no need to detect value label since it is continuous
+					noi di "`var_lab'" ", median[IQR]", _continue
+					local erc = `erc' + 1
+					${ind}
+					putexcel ${ul_cell} = "`var_lab', median[IQR]"
+					// detect if string var accidentally got into cont vars
+					local stringvar = 1
+					qui capture confirm string var `var'
+					if _rc {
+						local stringvar = 0
+					}
+					if (`stringvar' == 1) {
+						local ctemp = `csep'
+						local col_s : di "_col(`ctemp')"
+						noi di as error `col_s' "`var' is in string format and not valid as continuous variables", _continue
+						local ecc = `ecc' + 1
 						${ind}
-						putexcel ${ul_cell} = "`var_lab', median[IQR]"
+						putexcel ${ul_cell} = "`var' is in string format and not valid as continuous variables"
+					}
+					else {
 						local cheader = 0
 						// loop through byvar is enough
 						foreach k in `b_vals' {
@@ -415,16 +432,12 @@ qui {
 							${ind}
 							putexcel ${ul_cell} = "`m_iqr'"
 						}
-						noi di ""
-						local ecc = 1
 					}
+					noi di in g ""
+					local ecc = 1
 				}
-			
-			// run through binary and categorical variable
-			if 9 {
-				local bincat `bin' `cat'
-				foreach var in `bincat' {
-					
+				else if (strpos("`bincat'", "`var'") != 0) {
+					// run through binary and categorical variable
 					// print out the variable
 					// first detect if variable label exist
 					
