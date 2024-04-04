@@ -1,7 +1,7 @@
 ﻿
 ## A Step-by-Step Guide to Data Analysis with Stata: Case of the Entry Poll
 
-We begin our journey into data analysis by utilizing Stata, a powerful tool for data management and statistical analysis. Here's a practical walkthrough, starting with our entry poll dataset.
+Here's a practical walkthrough of our entry poll dataset.
 
 ### Preparing Your Dataset
 
@@ -94,6 +94,3 @@ Embedding insightful videos or tutorials can complement your understanding of da
 
 </details>
 
----
-
-This guide aims to provide a structured approach to data analysis with Stata, making each step clear and actionable. Encourage your students to experiment with these commands and options to gain a deeper understanding of Stata's capabilities.
