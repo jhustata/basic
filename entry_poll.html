@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>&lt;no title&gt; &#8212; Stata Programming</title>
+    <title>A Step-by-Step Guide to Data Analysis with Stata: Case of the Entry Poll &#8212; Stata Programming</title>
   
   
   
@@ -347,7 +347,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1><no title></h1>
+    <h1>A Step-by-Step Guide to Data Analysis with Stata: Case of the Entry Poll</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -356,9 +356,13 @@ document.write(`
                 <h2> Contents </h2>
             </div>
             <nav aria-label="Page">
-                <ul class="simple visible nav section-nav flex-column">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preparing-your-dataset">Preparing Your Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inspecting-and-cleaning-your-data">Inspecting and Cleaning Your Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#refining-your-dataset">Refining Your Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizing-and-understanding-your-data">Visualizing and Understanding Your Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#leveraging-gpt-4-for-analysis">Leveraging GPT-4 for Analysis</a></li>
 </ul>
-
             </nav>
         </div>
     </div>
@@ -369,68 +373,100 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <p><img alt="" src="_images/survey.jpg" /></p>
+  <section id="a-step-by-step-guide-to-data-analysis-with-stata-case-of-the-entry-poll">
+<h1>A Step-by-Step Guide to Data Analysis with Stata: Case of the Entry Poll<a class="headerlink" href="#a-step-by-step-guide-to-data-analysis-with-stata-case-of-the-entry-poll" title="Permalink to this heading">#</a></h1>
+<p>We begin our journey into data analysis by utilizing Stata, a powerful tool for data management and statistical analysis. Here’s a practical walkthrough, starting with our entry poll dataset.</p>
+<section id="preparing-your-dataset">
+<h2>Preparing Your Dataset<a class="headerlink" href="#preparing-your-dataset" title="Permalink to this heading">#</a></h2>
 <ol class="arabic simple">
-<li><p>Right-click <a class="reference external" href="https://raw.githubusercontent.com/jhustata/basic/main/entry_poll.csv">this link</a> to download the .csv entry-poll results to your machine</p></li>
-<li><p>Open Stata’s <code class="docutils literal notranslate"><span class="pre">Menu</span> <span class="pre">&gt;</span> <span class="pre">File</span> <span class="pre">&gt;</span> <span class="pre">Import</span> <span class="pre">&gt;</span> <span class="pre">Text</span> <span class="pre">data</span> <span class="pre">(delimited,</span> <span class="pre">*.csv)</span></code></p></li>
+<li><p><strong>Download the Dataset:</strong> First, ensure you have the dataset by right-clicking <a class="reference external" href="https://raw.githubusercontent.com/jhustata/basic/main/entry_poll.csv">this link</a> and choosing to download the .csv file containing entry-poll results to your machine.</p></li>
+<li><p><strong>Import the Dataset in Stata:</strong> Use Stata’s graphical interface at <code class="docutils literal notranslate"><span class="pre">Menu</span> <span class="pre">&gt;</span> <span class="pre">File</span> <span class="pre">&gt;</span> <span class="pre">Import</span> <span class="pre">&gt;</span> <span class="pre">Text</span> <span class="pre">data</span> <span class="pre">(delimited,</span> <span class="pre">*.csv)</span></code>, or execute the command below. Remember to adjust the file path to where you’ve saved the .csv file on your computer.</p></li>
 </ol>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>import delimited <span class="s">&quot;/Users/d/Downloads/entry_poll.csv&quot;</span>, bindquote(strict) <span class="c1">//edit file path</span>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>import delimited <span class="s">&quot;/Users/d/Downloads/entry_poll.csv&quot;</span>, bindquote(strict) varn(<span class="m">1</span>)<span class="k"> clear</span> <span class="c1">//edit file path as needed</span>
 </pre></div>
 </div>
+<ul class="simple">
+<li><p><strong>Understanding the Options:</strong></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">bindquote(strict)</span></code> ensures that quotes within your data do not disrupt the import process.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">varn(1)</span></code> treats the first row as variable names, making your data more readable.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">clear</span></code> clears any existing data in memory, preventing any data merging issues.</p></li>
+</ul>
+</li>
+</ul>
+<p>These options were determined through trial and error, highlighting the importance of experimenting to understand the nuances of data importation.</p>
+</section>
+<section id="inspecting-and-cleaning-your-data">
+<h2>Inspecting and Cleaning Your Data<a class="headerlink" href="#inspecting-and-cleaning-your-data" title="Permalink to this heading">#</a></h2>
 <ol class="arabic simple" start="3">
-<li><p>Inspect your data. Notice anything that needs to be fixed?</p></li>
+<li><p><strong>Inspect Your Imported Data:</strong></p></li>
 </ol>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">list in</span> <span class="m">1</span><span class="o">/</span><span class="m">3</span>
+<span class="k">di</span> <span class="nf">c</span>(N)
+<span class="k">di</span> <span class="nf">c</span>(k)
+<span class="k">ds</span>
 </pre></div>
 </div>
+<p>This will give you a preliminary view of your data, including the number of observations and variables.</p>
 <ol class="arabic simple" start="4">
-<li><p>Drop the first row since its the variable name</p></li>
+<li><p><strong>Removing Redundant Rows:</strong> If you did not use <code class="docutils literal notranslate"><span class="pre">varn(1)</span></code>, the first row might still contain your variable names, not data. Remove it with:</p></li>
 </ol>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">drop in</span> <span class="m">1</span><span class="o">/</span><span class="m">1</span>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">drop in</span> <span class="m">1</span>
 </pre></div>
 </div>
 <ol class="arabic simple" start="5">
-<li><p>Now do some basic descriptive stats</p></li>
+<li><p><strong>Conduct Basic Descriptive Statistics:</strong></p></li>
 </ol>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">tab</span> v1
-<span class="k">tab</span> v2
-<span class="k">tab</span> v3
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">codebook</span>
 </pre></div>
 </div>
+<p>This command provides a summary of each variable, including the number of missing values and unique categories.</p>
+</section>
+<section id="refining-your-dataset">
+<h2>Refining Your Dataset<a class="headerlink" href="#refining-your-dataset" title="Permalink to this heading">#</a></h2>
 <ol class="arabic simple" start="6">
-<li><p>Something weird going on, but we can address it with a vew lines of code</p></li>
+<li><p><strong>Renaming Variables for Clarity:</strong> Some variables may have names that are too long or not intuitive. Rename them to make your dataset easier to navigate.</p></li>
+</ol>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">rename</span> (howwillyouusestatafrom0326202405 whatoperatingsystemwillyouuseloc doyouhaveanyexperienceusingstata) (location os skill)
+</pre></div>
+</div>
+<p>This more efficient syntax renames multiple variables in a single command, saving time and effort.</p>
+<ol class="arabic simple" start="7">
+<li><p><strong>Addressing Anomalies with Encoding:</strong></p></li>
 </ol>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">desc</span>
-<span class="n">encode</span> <span class="n">v1</span><span class="p">,</span> <span class="n">g</span><span class="p">(</span><span class="n">local</span><span class="p">)</span>
-<span class="n">encode</span> <span class="n">v3</span><span class="p">,</span> <span class="n">g</span><span class="p">(</span><span class="n">skill</span><span class="p">)</span>
-<span class="n">encode</span> <span class="n">v2</span><span class="p">,</span> <span class="n">g</span><span class="p">(</span><span class="n">os</span><span class="p">)</span>
+<span class="n">encode</span> <span class="n">location</span><span class="p">,</span> <span class="n">generate</span><span class="p">(</span><span class="n">local_remote</span><span class="p">)</span>
+<span class="n">encode</span> <span class="n">os</span><span class="p">,</span> <span class="n">generate</span><span class="p">(</span><span class="n">mac_windows</span><span class="p">)</span>
+<span class="n">encode</span> <span class="n">skill</span><span class="p">,</span> <span class="n">generate</span><span class="p">(</span><span class="n">experience</span><span class="p">)</span>
 </pre></div>
 </div>
-<ol class="arabic simple" start="7">
-<li><p>Let’s see what <code class="docutils literal notranslate"><span class="pre">encode</span></code> achieved</p></li>
-</ol>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">describe</span>
-</pre></div>
-</div>
+<p>Encoding converts text data into numeric data, facilitating statistical analysis. It also helps in simplifying the categories within variables.</p>
 <ol class="arabic simple" start="8">
-<li><p>Back to data-cleaning</p></li>
+<li><p><strong>Data Cleaning Continued:</strong></p></li>
 </ol>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">tab</span> os
-<span class="k">tab</span> os, nolab
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">tabulate local</span>
+<span class="k">tabulate local</span>, nolabel
 </pre></div>
 </div>
-<ol class="arabic simple" start="9">
-<li><p>Let’s clean up the skill variable</p></li>
-</ol>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">tab</span> skill
-<span class="k">tab</span> skill, nolab
-</pre></div>
-</div>
+<p>These commands help in understanding the distribution of responses, both with and without labels.</p>
+</section>
+<section id="visualizing-and-understanding-your-data">
+<h2>Visualizing and Understanding Your Data<a class="headerlink" href="#visualizing-and-understanding-your-data" title="Permalink to this heading">#</a></h2>
+<p>After cleaning, it’s crucial to visualize your data to uncover any patterns or insights. Use Stata’s graphing capabilities to explore your data further.</p>
+</section>
+<section id="leveraging-gpt-4-for-analysis">
+<h2>Leveraging GPT-4 for Analysis<a class="headerlink" href="#leveraging-gpt-4-for-analysis" title="Permalink to this heading">#</a></h2>
 <details>
    <summary><b>GPT-4 Assisted Analysis</b></summary>
+<p>Embedding insightful videos or tutorials can complement your understanding of data analysis techniques. Here, we’ve included some valuable resources to deepen your knowledge.</p>
    <iframe width="560" height="315" src="https://www.youtube.com/embed/-cH9b5HzF4Y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
    <iframe width="560" height="315" src="https://www.youtube.com/embed/SKYbqprIy0U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </details>
+<hr class="docutils" />
+<p>This guide aims to provide a structured approach to data analysis with Stata, making each step clear and actionable. Encourage your students to experiment with these commands and options to gain a deeper understanding of Stata’s capabilities.</p>
+</section>
+</section>
+
     <script type="text/x-thebe-config">
     {
         requestKernel: true,
@@ -479,9 +515,13 @@ document.write(`
     <i class="fa-solid fa-list"></i> Contents
   </div>
   <nav class="bd-toc-nav page-toc">
-    <ul class="simple visible nav section-nav flex-column">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preparing-your-dataset">Preparing Your Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inspecting-and-cleaning-your-data">Inspecting and Cleaning Your Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#refining-your-dataset">Refining Your Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizing-and-understanding-your-data">Visualizing and Understanding Your Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#leveraging-gpt-4-for-analysis">Leveraging GPT-4 for Analysis</a></li>
 </ul>
-
   </nav></div>
 
 </div></div>
