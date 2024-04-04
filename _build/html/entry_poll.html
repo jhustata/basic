@@ -361,6 +361,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inspecting-and-cleaning-your-data">Inspecting and Cleaning Your Data</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#refining-your-dataset">Refining Your Dataset</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizing-and-understanding-your-data">Visualizing and Understanding Your Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#leveraging-gpt-4-for-analysis">Leveraging GPT-4 for Analysis</a></li>
 </ul>
             </nav>
@@ -453,6 +454,20 @@ document.write(`
 <section id="visualizing-and-understanding-your-data">
 <h2>Visualizing and Understanding Your Data<a class="headerlink" href="#visualizing-and-understanding-your-data" title="Permalink to this heading">#</a></h2>
 <p>After cleaning, it’s crucial to visualize your data to uncover any patterns or insights. Use Stata’s graphing capabilities to explore your data further.</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">histogram local</span>
+<span class="k">histogram mac</span>
+<span class="k">histogram</span> experi
+</pre></div>
+</div>
+<p>Let’s rotate the graphs so that they lay horizontally:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">histogram local</span>, horizontal
+<span class="k">histogram mac</span>, horizontal
+<span class="k">histogram</span> experi, horizontal
+</pre></div>
+</div>
+</section>
+<section id="id1">
+<h2><a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
 </section>
 <section id="leveraging-gpt-4-for-analysis">
 <h2>Leveraging GPT-4 for Analysis<a class="headerlink" href="#leveraging-gpt-4-for-analysis" title="Permalink to this heading">#</a></h2>
@@ -518,6 +533,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inspecting-and-cleaning-your-data">Inspecting and Cleaning Your Data</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#refining-your-dataset">Refining Your Dataset</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizing-and-understanding-your-data">Visualizing and Understanding Your Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#leveraging-gpt-4-for-analysis">Leveraging GPT-4 for Analysis</a></li>
 </ul>
   </nav></div>
