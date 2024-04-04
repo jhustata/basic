@@ -101,11 +101,8 @@ histogram experi, horizontal
 <details>
    <summary><b>GPT-4 Assisted Analysis</b></summary>
 
-Embedding insightful videos or tutorials can complement your understanding of data analysis techniques. Here, we've included some valuable resources to deepen your knowledge.
+GPT-4 produced this analysis in less than a minute. It's virtually impossible for you to replicate that speed and accuracy, as we've just experienced 
 
-   <iframe width="560" height="315" src="https://www.youtube.com/embed/-cH9b5HzF4Y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-   <iframe width="560" height="315" src="https://www.youtube.com/embed/SKYbqprIy0U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+   <iframe width="560" height="315" src="https://www.youtube.com/embed/pi6aJnoT8dM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 </details>
-
