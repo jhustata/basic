@@ -61,8 +61,6 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'chapter2';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -383,17 +381,11 @@ document.write(`
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-using-and-viewing-the-dataset">Step 5: Using and Viewing the Dataset</a></li>
 </ul>
 </li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#docx">2.034 docx</a><ul class="nav section-nav flex-column">
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#putdocx">Putdocx</a></li>
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#dyndoc">dyndoc</a></li>
-</ul>
-</li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#author-md-mph">Author, MD MPH</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#html">2.035 html</a><ul class="nav section-nav flex-column">
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-embed-stata-results-in-html">How to embed Stata results in .html</a></li>
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Author, MD MPH</a></li>
-</ul>
-</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#docx">2.034 docx</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#embedding-stata-results-into-docx-documents"><strong>1. Embedding Stata Results into <code class="docutils literal notranslate"><span class="pre">.docx</span></code> Documents</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#html">2.035 html</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#embedding-stata-results-into-html-documents"><strong>2. Embedding Stata Results into <code class="docutils literal notranslate"><span class="pre">.html</span></code> Documents</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion-for-students"><strong>Conclusion for Students:</strong></a></li>
 </ul>
 </li>
 </ul>
@@ -409,8 +401,30 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#string">2.2 String</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#numeric">2.3 Numeric</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#return-values">2.4 Return values</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#macros">2.5 Macros</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#programs">2.6 Programs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#macros">2.5 Macros</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-macros-in-stata-a-guide-for-new-graduate-students">Understanding Macros in Stata: A Guide for New Graduate Students</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-macros">Introduction to Macros</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-macros">Types of Macros</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#when-to-use-macros">When to Use Macros</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#best-practices">Best Practices</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#programs">2.6 Programs</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-stata-programs-creating-your-first-custom-program">Introduction to Stata Programs: Creating Your First Custom Program</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-a-stata-program">What is a Stata Program?</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-simple-stata-program">Creating a Simple Stata Program</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#complete-program-code">Complete Program Code</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#running-your-program">Running Your Program</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#why-use-custom-programs">Why Use Custom Programs?</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Best Practices</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Conclusion</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab">2.7 Lab</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#homework">2.8 Homework</a></li>
 </ul>
@@ -819,227 +833,75 @@ p = <span class="m">0.02</span>
 </section>
 <section id="docx">
 <h4>2.034 docx<a class="headerlink" href="#docx" title="Permalink to this heading">#</a></h4>
-<p>We may embed Stata results in a .docx file in two very distinct ways:</p>
-<ul class="simple">
-<li><p>putdocx</p></li>
-<li><p>dyndoc</p></li>
-</ul>
-<section id="putdocx">
-<h5>Putdocx<a class="headerlink" href="#putdocx" title="Permalink to this heading">#</a></h5>
-<ul class="simple">
-<li><p>putdocx begin (Tell Stata you want to create a Word doc)</p></li>
-<li><p>putdocx text etc. (Define the contents of the Word doc you will create)</p></li>
-<li><p>putdocx save (Actually create the Word doc and write it to disk)</p></li>
-</ul>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>putdocx<span class="k"> clear</span>
-putdocx begin
-putdocx paragraph
-putdocx text (<span class="s">&quot;How to embed Stata results in .docx&quot;</span>)
-putdocx paragraph
-putdocx text (<span class="s">&quot;Author, MD MPH&quot;</span>)
-putdocx paragraph
-putdocx text (<span class="s">&quot;Background. A user downloads and installs a system of program files, mostly ado-files, which form the foundation of most of the commands used in Stata Programming. Using those commands and additional syntax written out sequentially in a do-file, the user creates well-formed instruction to Stata called a do-file script. Once the user runs this script, results are generated and displayed in the results window, in a graph, or in a format (.xlsx, .log, .dta, .docx, .md, LaTeX, .html, etc). The .docx file format is of specific interest to us right now. To illustrate how this may be achieved in Stata, we hereby introduce the putdocx command.&quot;</span>)
-putdocx paragraph
-putdocx text (<span class="s">&quot;Methods. We created a do-file and populated it with this abstract using plain text. Results that might be numeric, string, alphanumeric, or formatted as macros are manually embeded in the text. We then saved this document using the file extension .do; however, any text file extension will work (.txt, .md, .do, etc). In the key analysis, Y = b0 + b1X, where Y is life expectancy at birth in years, the outcome or dependent variable; X is the country, the predictor or independent variable being tested.&quot;</span>)
-putdocx paragraph
-putdocx text (<span class="s">&quot;Results. We identified the newly created .html file in our folder and opened it to compare its format to this markdown file. And we saw all that we had made, and behold, it was very good. Ghastly macros in the original markdown language now appeared as neatly formatted results. There were 68 observations and 6 observations in the analyzed dataset. Average life expectancy of all countries, b0, was 72 years. Difference in life expectancy among adjacent countries, b1, showed no trend or pattern and was 0.002 year, essentially zero, and p=0.95&quot;</span>)
-putdocx paragraph
-putdocx text (<span class="s">&quot;Conclusion. In walking you through syntax, do-file creation, queued commands, generated results, through to embedding neatly formatted output in .html, we believe you now have a solid sense of all that Stata has to offer you. These ideas can be generalized to embedding results in .xlsx, .log, .dta, .docx, etc.&quot;</span>)
-putdocx<span class="k"> save</span> myfirst<span class="m">.</span>docx,<span class="k"> replace</span>
-</pre></div>
-</div>
-<p>Author, MD MPH</p>
-<p>Background. A user downloads and installs a system of program files, mostly ado-files, which form the foundation of most of the commands used in Stata Programming. Using those commands and additional syntax written out sequentially in a do-file, the user creates well-formed instruction to Stata called a do- file script. Once the user runs this script, results are generated and displayed in the results window, in a graph, or in a format (.xlsx, .log, .dta, .docx, .md, LaTeX, .html, etc). The .docx file format is of specific interest to us right now. To illustrate how this may be achieved in Stata, we hereby introduce the putdocx command.</p>
-<p>Methods. We created a do-file and populated it with this abstract using plain text. Results that might be numeric, string, alphanumeric, or formatted as macros are manually embeded in the text. We then saved this document using the file extension .do; however, any text file extension will work (.txt, .md, .do, etc). In the key analysis, Y = b0 + b1X, where Y is life expectancy at birth in years, the outcome or dependent variable; X is the country, the predictor or independent variable being tested.</p>
-<p>Results. We identified the newly created .html file in our folder and opened it to compare its format to this markdown file. And we saw all that we had made, and behold, it was very good. Ghastly macros in the original markdown language now appeared as neatly formatted results. There were 68 observations and 6 observations in the analyzed dataset. Average life expectancy of all countries, b0, was 72 years. Difference in life expectancy among adjacent countries, b1, showed no trend or pattern and was 0.002 year, essentially zero, and p=0.95</p>
-<p>Conclusion. In walking you through syntax, do-file creation, queued commands, generated results, through to embedding neatly formatted output in .html, we believe you now have a solid sense of all that Stata has to offer you. These ideas can be generalized to embedding results in .xlsx, .log, .dta, .docx, etc.</p>
 </section>
-<section id="dyndoc">
-<h5>dyndoc<a class="headerlink" href="#dyndoc" title="Permalink to this heading">#</a></h5>
-<ul class="simple">
-<li><p>Identical to the .html approach discussed in the next section</p></li>
-<li><p>But has some caveats that we will discuss</p></li>
-<li><p>Word documents are not able to render LaTeX format</p></li>
-</ul>
-</section>
-</section>
-<section id="author-md-mph">
-<h4>Author, MD MPH<a class="headerlink" href="#author-md-mph" title="Permalink to this heading">#</a></h4>
-<p><strong>Background:</strong>
-A <u>user</u> downloads and installs a <u>system</u> of program files, mostly ado-files, which form the foundation of most of the commands
-used in Stata Programming. Using those commands and additional syntax written out sequentially in a do-file, the user creates
-well-formed instruction to Stata called a do-file script. Once the user runs this script, results are generated and displayed
-in the results window, in a graph, or in a format (<code class="docutils literal notranslate"><span class="pre">.xlsx</span></code>, <code class="docutils literal notranslate"><span class="pre">.log</span></code>, <code class="docutils literal notranslate"><span class="pre">.dta</span></code>, <code class="docutils literal notranslate"><span class="pre">.docx</span></code>, <code class="docutils literal notranslate"><span class="pre">.md</span></code>, <code class="docutils literal notranslate"><span class="pre">LaTeX</span></code>, <code class="docutils literal notranslate"><span class="pre">.html</span></code>, etc). The <code class="docutils literal notranslate"><span class="pre">.docx</span></code> file format is of specific
-interest since its the one of the most widely used word processors. To illustrate how this may be achieved in Stata, we hereby introduce the <code class="docutils literal notranslate"><span class="pre">dyndoc</span></code>
-command.</p>
-<p><strong>Methods:</strong>
-We created a <a class="reference external" href="https://raw.githubusercontent.com/jhustata/livre/main/filename.do">do-file</a> and populated it with this abstract using <a class="reference external" href="https://en.wikipedia.org/wiki/Markdown">markdown</a> language. Anything
-in this document that is not ordinary text including <code class="docutils literal notranslate"><span class="pre">&lt;&lt;dd_version:</span> <span class="pre">2&gt;&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;&lt;dd_do:nooutput&gt;&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;&lt;/dd_do&gt;&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;&lt;dd_display:</span> <span class="pre">c(N)&gt;&gt;</span></code> is a
-<a class="reference external" href="https://en.wikipedia.org/wiki/Markup_language#:~:text=A%20markup%20language%20is%20a,content%20to%20facilitate%20automated%20processing.">markup</a>.
-Results that might be numeric, string, alphanumeric, or formatted as macros are embeded at these markedup points. We then saved this
-document using the file extension .do; however, any text file extension will work (.txt, .md, .do, etc). To the <code class="docutils literal notranslate"><span class="pre">pwd</span></code> where we saved
-this text file, we added a cascading style sheet <a class="reference external" href="https://raw.githubusercontent.com/jhustata/livre/main/stmarkdown.css">stmarkdown.css</a> and <a class="reference external" href="https://raw.githubusercontent.com/jhustata/livre/main/header.txt">header.txt</a> to enhance the aesthetic of our .html file. Finally, we typed the
-following command into the Stata command window: <code class="docutils literal notranslate"><span class="pre">dyndoc</span> <span class="pre">filename.do,</span> <span class="pre">saving(filename.docx)</span> <span class="pre">replace</span></code>. In the key analysis, <span class="math notranslate nohighlight">\(Y  = \beta_0   +  \beta_1 X\)</span>, where <span class="math notranslate nohighlight">\(Y\)</span> is life expectancy at birth in years, the outcome or dependent variable; <span class="math notranslate nohighlight">\(X\)</span> is the country, the predictor or independent variable being tested.</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>.<span class="k"> webuse</span> lifeexp,<span class="k"> clear</span> 
-(Life expectancy, <span class="m">1998</span>)
-
-.<span class="k"> encode</span> country,<span class="k"> gen</span>(Country)
-
-.<span class="k"> quietly sum</span> lexp
-
-.<span class="k"> qui local</span> lexp_mean:<span class="k"> di</span> <span class="nx">%3.0f</span> <span class="nf">r</span>(mean) 
-
-.<span class="k"> quietly sum</span> Country
-
-.<span class="k"> qui local</span> Country_mean:<span class="k"> di</span> <span class="nf">r</span>(mean)  
-
-.<span class="k"> twoway scatter</span> lexp Country, <span class="cs">///</span>
-<span class="o">&gt;</span>    xscale(off) <span class="cs">///</span>
-<span class="o">&gt;</span>    yline(<span class="nv">`lexp_mean&#39;</span>, <span class="cs">///</span>
-<span class="o">&gt;</span>       lc(red) <span class="cs">///</span>
-<span class="o">&gt;</span>       lp(dash) <span class="cs">///</span>
-<span class="o">&gt;</span>    ) <span class="cs">///</span>
-<span class="o">&gt;</span>    text(<span class="nv">`lexp_mean&#39;</span> <span class="nv">`Country_mean&#39;</span> <span class="s">&quot;Mean life expectancy among countries&quot;</span>)
-
-.<span class="k"> graph</span> export lexp_bycountry<span class="m">.</span>png,<span class="k"> replace</span> 
-<span class="k">file</span> <span class="o">/</span>Users<span class="o">/</span>d<span class="o">/</span>Desktop<span class="o">/</span>lexp_bycountry<span class="m">.</span>png saved<span class="k"> as</span> PNG<span class="k"> format</span>
-
-. 
-<span class="k">end</span> of<span class="k"> do</span><span class="o">-</span>file
-
-. 
+<section id="embedding-stata-results-into-docx-documents">
+<h4><strong>1. Embedding Stata Results into <code class="docutils literal notranslate"><span class="pre">.docx</span></code> Documents</strong><a class="headerlink" href="#embedding-stata-results-into-docx-documents" title="Permalink to this heading">#</a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">putdocx</span></code> command in Stata allows you to create Word documents directly from your Stata results. This method is straightforward and can be incredibly useful for incorporating statistical results into your reports or assignments.</p>
+<p><strong>Steps to Create a Word Document:</strong></p>
+<ol class="arabic">
+<li><p><strong>Begin Your Document</strong></p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>putdocx begin
 </pre></div>
 </div>
-<p><img alt="" src="_images/lexp_bycountry.png" /></p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>.<span class="k"> qui</span> {
-
-.
+<p><em>Starts a new Word document.</em></p>
+</li>
+<li><p><strong>Add Text</strong></p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>putdocx text (<span class="s">&quot;This is how you embed Stata results into a .docx file.&quot;</span>)
 </pre></div>
 </div>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>.<span class="k"> display</span> <span class="nf">c</span>(N) 
-<span class="m">68</span>
-
-.<span class="k"> display</span> <span class="nf">c</span>(k)  
-<span class="m">6</span>
-
-.<span class="k"> list in</span> <span class="m">1</span><span class="o">/</span><span class="m">5</span>  
-
-						
-    region	            country	    popgro<span class="o">~</span>h	 lexp	    gnppc  safewa<span class="o">~</span>r	
-						
-<span class="m">1</span>.  Europe <span class="o">&amp;</span> C. Asia	Albania	       <span class="m">1.2</span>	        <span class="m">72</span>	    <span class="m">810</span>	    <span class="m">76</span>	
-<span class="m">2</span>.  Europe <span class="o">&amp;</span> C. Asia	Armenia	       <span class="m">1.1</span>	        <span class="m">74</span>	    <span class="m">460</span>	    .	
-<span class="m">3</span>.  Europe <span class="o">&amp;</span> C. Asia	Austria	       .<span class="m">4</span>	        <span class="m">79</span>	    <span class="m">26830</span>   .	
-<span class="m">4</span>.  Europe <span class="o">&amp;</span> C. Asia	Azerbaijan    <span class="m">1.4</span>	        <span class="m">71</span>	    <span class="m">480</span>	    .	
-<span class="m">5</span>.  Europe <span class="o">&amp;</span> C. Asia	Belarus	       .<span class="m">3</span>	        <span class="m">68</span>	    <span class="m">2180</span>    .	
-						
-
-. 
-<span class="k">end</span> of<span class="k"> do</span><span class="o">-</span>file
-
-. 
+<p><em>Inserts a sentence or any text into your document.</em></p>
+</li>
+<li><p><strong>Save Your Document</strong></p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>putdocx<span class="k"> save</span> myDocument<span class="m">.</span>docx,<span class="k"> replace</span>
 </pre></div>
 </div>
-<p><strong>Results:</strong>
-We identified the newly created .html file in our folder and opened it to compare its format to this markdown file. And we saw all that
-we had made, and behold, it was very good. Ghastly macros in the original markdown language now appeared as neatly formatted
-results. There were 68 observations and 6 observations in the analyzed dataset. Average life expectancy of all countries, <span class="math notranslate nohighlight">\(\beta_0\)</span>, was 72 years. Difference in life expectancy among <u>adjacent</u> countries, <span class="math notranslate nohighlight">\(\beta_1\)</span>, showed no trend or pattern and was 0.002 year, essentially <span class="math notranslate nohighlight">\(zero\)</span>, and <span class="math notranslate nohighlight">\(p = .95\)</span></p>
-<p><strong>Conclusions:</strong>
-In walking you through syntax, do-file creation, queued commands, generated results, through to embedding neatly formatted output in
-.html, we believe you now have a solid sense of all that Stata has to offer you. These ideas can be generalized to embedding results
-in .xlsx, .log, .dta, .docx, etc.</p>
+<p><em>Saves your Word document with the name “myDocument.docx”.</em></p>
+</li>
+</ol>
+<p><strong>Example Use Case:</strong></p>
+<p>Imagine you conducted an analysis and found the average age in your dataset to be 30 years. You can quickly add this result to a Word document as part of your report:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>putdocx begin
+putdocx text (<span class="s">&quot;The average age in our dataset is 30 years.&quot;</span>)
+putdocx<span class="k"> save</span> analysisReport<span class="m">.</span>docx,<span class="k"> replace</span>
+</pre></div>
+</div>
 </section>
 <section id="html">
 <h4>2.035 html<a class="headerlink" href="#html" title="Permalink to this heading">#</a></h4>
-<section id="how-to-embed-stata-results-in-html">
-<h5>How to embed Stata results in .html<a class="headerlink" href="#how-to-embed-stata-results-in-html" title="Permalink to this heading">#</a></h5>
 </section>
-<section id="id1">
-<h5>Author, MD MPH<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h5>
-<p><strong>Background:</strong>
-A <u>user</u> downloads and installs a <u>system</u> of program files, mostly ado-files, which form the foundation of most of the commands
-used in Stata Programming. Using those commands and additional syntax written out sequentially in a do-file, the user creates
-well-formed instruction to Stata called a do-file script. Once the user runs this script, results are generated and displayed
-in the results window, in a graph, or in a format (<code class="docutils literal notranslate"><span class="pre">.xlsx</span></code>, <code class="docutils literal notranslate"><span class="pre">.log</span></code>, <code class="docutils literal notranslate"><span class="pre">.dta</span></code>, <code class="docutils literal notranslate"><span class="pre">.docx</span></code>, <code class="docutils literal notranslate"><span class="pre">.md</span></code>, <code class="docutils literal notranslate"><span class="pre">LaTeX</span></code>, <code class="docutils literal notranslate"><span class="pre">.html</span></code>, etc). The <code class="docutils literal notranslate"><span class="pre">.html</span></code> file format is of specific
-interest since its the pathway to self-publication. To illustrate how this may be achieved in Stata, we hereby introduce the <code class="docutils literal notranslate"><span class="pre">dyndoc</span></code>
-command.</p>
-<p><strong>Methods:</strong>
-We created a <a class="reference external" href="https://raw.githubusercontent.com/jhustata/livre/main/filename.do">do-file</a> and populated it with this abstract using <a class="reference external" href="https://en.wikipedia.org/wiki/Markdown">markdown</a> language. Anything
-in this document that is not ordinary text including <code class="docutils literal notranslate"><span class="pre">&lt;&lt;dd_version:</span> <span class="pre">2&gt;&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;&lt;dd_do:nooutput&gt;&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;&lt;/dd_do&gt;&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;&lt;dd_display:</span> <span class="pre">c(N)&gt;&gt;</span></code> is a
-<a class="reference external" href="https://en.wikipedia.org/wiki/Markup_language#:~:text=A%20markup%20language%20is%20a,content%20to%20facilitate%20automated%20processing.">markup</a>.
-Results that might be numeric, string, alphanumeric, or formatted as macros are embeded at these markedup points. We then saved this
-document using the file extension .do; however, any text file extension will work (.txt, .md, .do, etc). To the <code class="docutils literal notranslate"><span class="pre">pwd</span></code> where we saved
-this text file, we added a cascading style sheet <a class="reference external" href="https://raw.githubusercontent.com/jhustata/livre/main/stmarkdown.css">stmarkdown.css</a> and <a class="reference external" href="https://raw.githubusercontent.com/jhustata/livre/main/header.txt">header.txt</a> to enhance the aesthetic of our .html file. Finally, we typed the
-following command into the Stata command window: <code class="docutils literal notranslate"><span class="pre">dyndoc</span> <span class="pre">filename.do,</span> <span class="pre">saving(filename.html)</span> <span class="pre">replace</span></code>. In the key analysis, <span class="math notranslate nohighlight">\(Y  = \beta_0   +  \beta_1 X\)</span>, where <span class="math notranslate nohighlight">\(Y\)</span> is life expectancy at birth in years, the outcome or dependent variable; <span class="math notranslate nohighlight">\(X\)</span> is the country, the predictor or independent variable being tested.</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>.<span class="k"> webuse</span> lifeexp,<span class="k"> clear</span> 
-(Life expectancy, <span class="m">1998</span>)
-
-.<span class="k"> encode</span> country,<span class="k"> gen</span>(Country)
-
-.<span class="k"> quietly sum</span> lexp
-
-.<span class="k"> qui local</span> lexp_mean:<span class="k"> di</span> <span class="nx">%3.0f</span> <span class="nf">r</span>(mean) 
-
-.<span class="k"> quietly sum</span> Country
-
-.<span class="k"> qui local</span> Country_mean:<span class="k"> di</span> <span class="nf">r</span>(mean)  
-
-.<span class="k"> twoway scatter</span> lexp Country, <span class="cs">///</span>
-<span class="o">&gt;</span>    xscale(off) <span class="cs">///</span>
-<span class="o">&gt;</span>    yline(<span class="nv">`lexp_mean&#39;</span>, <span class="cs">///</span>
-<span class="o">&gt;</span>       lc(red) <span class="cs">///</span>
-<span class="o">&gt;</span>       lp(dash) <span class="cs">///</span>
-<span class="o">&gt;</span>    ) <span class="cs">///</span>
-<span class="o">&gt;</span>    text(<span class="nv">`lexp_mean&#39;</span> <span class="nv">`Country_mean&#39;</span> <span class="s">&quot;Mean life expectancy among countries&quot;</span>)
-
-.<span class="k"> graph</span> export lexp_bycountry<span class="m">.</span>png,<span class="k"> replace</span> 
-<span class="k">file</span> <span class="o">/</span>Users<span class="o">/</span>d<span class="o">/</span>Desktop<span class="o">/</span>lexp_bycountry<span class="m">.</span>png saved<span class="k"> as</span> PNG<span class="k"> format</span>
-
-. 
-<span class="k">end</span> of<span class="k"> do</span><span class="o">-</span>file
-
-. 
+<section id="embedding-stata-results-into-html-documents">
+<h4><strong>2. Embedding Stata Results into <code class="docutils literal notranslate"><span class="pre">.html</span></code> Documents</strong><a class="headerlink" href="#embedding-stata-results-into-html-documents" title="Permalink to this heading">#</a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">dyndoc</span></code> command converts a Stata <code class="docutils literal notranslate"><span class="pre">.do</span></code> file written in markdown language to an <code class="docutils literal notranslate"><span class="pre">.html</span></code> file. This is useful for creating web pages or reports that can be easily shared online.</p>
+<p><strong>Basic Steps:</strong></p>
+<ol class="arabic">
+<li><p><strong>Write Your <code class="docutils literal notranslate"><span class="pre">.do</span></code> File in Markdown</strong></p>
+<p>Create a <code class="docutils literal notranslate"><span class="pre">.do</span></code> file with your Stata code and use markdown for any text explanations or headings.</p>
+</li>
+<li><p><strong>Use <code class="docutils literal notranslate"><span class="pre">dyndoc</span></code> to Convert</strong></p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>dyndoc yourFile<span class="m">.</span>do, saving(yourFile<span class="m">.</span>html)<span class="k"> replace</span>
 </pre></div>
 </div>
-<p><img alt="" src="_images/lexp_bycountry.png" /></p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>.<span class="k"> qui</span> {
+<p><em>Converts your <code class="docutils literal notranslate"><span class="pre">.do</span></code> file to an <code class="docutils literal notranslate"><span class="pre">.html</span></code> document named “yourFile.html”.</em></p>
+</li>
+</ol>
+<p><strong>Simple Example:</strong></p>
+<p>If you want to share the results of your average age analysis in an HTML format, your <code class="docutils literal notranslate"><span class="pre">.do</span></code> file might look something like this:</p>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span><span class="gh"># Analysis Results</span>
 
-.
+The average age in our dataset is 30 years.
 </pre></div>
 </div>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>.<span class="k"> display</span> <span class="nf">c</span>(N) 
-<span class="m">68</span>
-
-.<span class="k"> display</span> <span class="nf">c</span>(k)  
-<span class="m">6</span>
-
-.<span class="k"> list in</span> <span class="m">1</span><span class="o">/</span><span class="m">5</span>  
-
-						
-    region	            country	    popgro<span class="o">~</span>h	 lexp	    gnppc  safewa<span class="o">~</span>r	
-						
-<span class="m">1</span>.  Europe <span class="o">&amp;</span> C. Asia	Albania	       <span class="m">1.2</span>	        <span class="m">72</span>	    <span class="m">810</span>	    <span class="m">76</span>	
-<span class="m">2</span>.  Europe <span class="o">&amp;</span> C. Asia	Armenia	       <span class="m">1.1</span>	        <span class="m">74</span>	    <span class="m">460</span>	    .	
-<span class="m">3</span>.  Europe <span class="o">&amp;</span> C. Asia	Austria	       .<span class="m">4</span>	        <span class="m">79</span>	    <span class="m">26830</span>   .	
-<span class="m">4</span>.  Europe <span class="o">&amp;</span> C. Asia	Azerbaijan    <span class="m">1.4</span>	        <span class="m">71</span>	    <span class="m">480</span>	    .	
-<span class="m">5</span>.  Europe <span class="o">&amp;</span> C. Asia	Belarus	       .<span class="m">3</span>	        <span class="m">68</span>	    <span class="m">2180</span>    .	
-						
-
-. 
-<span class="k">end</span> of<span class="k"> do</span><span class="o">-</span>file
-
-. 
+<p>And you’d convert it using:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>dyndoc analysisResults<span class="m">.</span>do, saving(analysisResults<span class="m">.</span>html)<span class="k"> replace</span>
 </pre></div>
 </div>
-<p><strong>Results:</strong>
-We identified the newly created .html file in our folder and opened it to compare its format to this markdown file. And we saw all that
-we had made, and behold, it was very good. Ghastly macros in the original markdown language now appeared as neatly formatted
-results. There were 68 observations and 6 observations in the analyzed dataset. Average life expectancy of all countries, <span class="math notranslate nohighlight">\(\beta_0\)</span>, was 72 years. Difference in life expectancy among <u>adjacent</u> countries, <span class="math notranslate nohighlight">\(\beta_1\)</span>, showed no trend or pattern and was 0.002 year, essentially <span class="math notranslate nohighlight">\(zero\)</span>, and <span class="math notranslate nohighlight">\(p = .95\)</span></p>
-<p><strong>Conclusions:</strong>
-In walking you through syntax, do-file creation, queued commands, generated results, through to embedding neatly formatted output in
-.html, we believe you now have a solid sense of all that Stata has to offer you. These ideas can be generalized to embedding results
-in .xlsx, .log, .dta, .docx, etc.</p>
 </section>
+<section id="conclusion-for-students">
+<h4><strong>Conclusion for Students:</strong><a class="headerlink" href="#conclusion-for-students" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>For <code class="docutils literal notranslate"><span class="pre">.docx</span></code>:</strong> Use <code class="docutils literal notranslate"><span class="pre">putdocx</span></code> commands to directly create and edit Word documents from Stata. Ideal for reports and assignments.</p></li>
+<li><p><strong>For <code class="docutils literal notranslate"><span class="pre">.html</span></code>:</strong> Write your analysis and results in markdown within a <code class="docutils literal notranslate"><span class="pre">.do</span></code> file, and use <code class="docutils literal notranslate"><span class="pre">dyndoc</span></code> to convert it to HTML. Great for sharing results online or via email.</p></li>
+</ul>
 </section>
 </section>
 </section>
@@ -1094,18 +956,172 @@ transplant<span class="o">~</span>e  don_cod       race          bmi           p
 </section>
 <section id="string">
 <h2>2.2 String<a class="headerlink" href="#string" title="Permalink to this heading">#</a></h2>
+<p>Case study: Entry Poll Results</p>
 </section>
 <section id="numeric">
 <h2>2.3 Numeric<a class="headerlink" href="#numeric" title="Permalink to this heading">#</a></h2>
+<p>Case study: <a class="reference external" href="https://jhustata.github.io/basic/_downloads/34a8255f06036b44354b3c36c5583d7e/transplants.dta">transplants.dta</a></p>
 </section>
 <section id="return-values">
 <h2>2.4 Return values<a class="headerlink" href="#return-values" title="Permalink to this heading">#</a></h2>
+<p>Case study:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">creturn</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">list</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ereturn</span> <span class="pre">list</span></code></p></li>
+</ul>
 </section>
 <section id="macros">
 <h2>2.5 Macros<a class="headerlink" href="#macros" title="Permalink to this heading">#</a></h2>
+<section id="understanding-macros-in-stata-a-guide-for-new-graduate-students">
+<h3>Understanding Macros in Stata: A Guide for New Graduate Students<a class="headerlink" href="#understanding-macros-in-stata-a-guide-for-new-graduate-students" title="Permalink to this heading">#</a></h3>
+<section id="introduction-to-macros">
+<h4>Introduction to Macros<a class="headerlink" href="#introduction-to-macros" title="Permalink to this heading">#</a></h4>
+<p>In Stata, <strong>macros</strong> are a powerful feature that allows you to store both string and numeric values under simple names. This makes it easier to reference complex information throughout your code. Think of macros as shorthand or a nickname for data you frequently use.</p>
+</section>
+<section id="types-of-macros">
+<h4>Types of Macros<a class="headerlink" href="#types-of-macros" title="Permalink to this heading">#</a></h4>
+<p>Macros in Stata can be broadly categorized into two types: <strong>System</strong> and <strong>User-defined</strong>.</p>
+<ol class="arabic">
+<li><p><strong>System Macros</strong></p>
+<ul class="simple">
+<li><p>These are predefined by Stata and automatically store specific information from your analysis, making it easily accessible for later use.</p></li>
+<li><p>To view what’s currently stored by Stata, use the following commands:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">creturn</span> <span class="pre">list</span></code> displays system constants, like the current version of Stata.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">list</span></code> shows results from general commands.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ereturn</span> <span class="pre">list</span></code> is used for displaying results from estimation commands (regressions, for example).</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>User-defined Macros</strong></p>
+<ul>
+<li><p>As the name suggests, these are defined by the user (that’s you!) to store values for future reference. There are two kinds:</p>
+<ul>
+<li><p><strong>Global Macros</strong>: These are accessible from anywhere in your current Stata session. They’re perfect for values you need to use repeatedly across different parts of your analysis.</p>
+<ul class="simple">
+<li><p>Example: Setting a global macro for your working directory can streamline file paths.</p></li>
+</ul>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">global</span> workdir <span class="s">&quot;</span><span class="nv">`c(pwd)&#39;</span><span class="s">/&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Local Macros</strong>: These are temporary and only accessible within the block of code or program where they were defined. Use them to store interim results or values that are only relevant in a specific context.</p>
+<ul class="simple">
+<li><p>Example: Storing the mean of a variable for quick reference in your code.</p></li>
+</ul>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">local mean</span>:<span class="k"> di</span> <span class="nx">%3.1f</span> <span class="nf">r</span>(mean)
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="when-to-use-macros">
+<h4>When to Use Macros<a class="headerlink" href="#when-to-use-macros" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Repetitive Values</strong>: Use macros for values or paths you find yourself typing out repeatedly. This can save time and reduce errors.</p></li>
+<li><p><strong>Dynamic References</strong>: When working with datasets that undergo multiple transformations, macros can help keep track of changing values without manually updating them each time.</p></li>
+<li><p><strong>Code Clarity and Maintenance</strong>: Macros make your code easier to read and maintain. Instead of hardcoding values that might change, use a macro. If the value needs to be updated, you only have to change the macro definition.</p></li>
+</ul>
+</section>
+<section id="best-practices">
+<h4>Best Practices<a class="headerlink" href="#best-practices" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Naming</strong>: Choose clear and descriptive names for your macros. Remember, what makes sense to you now should ideally be understandable to someone else (or even you) when looking at the code months later.</p></li>
+<li><p><strong>Scope Appropriately</strong>: Use global macros sparingly and only for values that truly need to be global. When in doubt, default to local macros to prevent unexpected results.</p></li>
+<li><p><strong>Documentation</strong>: Especially for global macros, document their purpose and usage at the point of definition. This is helpful in collaborative projects or any future review of your code.</p></li>
+</ul>
+</section>
+</section>
+<section id="conclusion">
+<h3>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">#</a></h3>
+<p>Macros are a fundamental part of efficient and effective Stata programming. By incorporating them into your workflow, you’ll streamline your code, reduce the potential for errors, and make your entire analysis more manageable. As you become more comfortable with Stata, you’ll find even more creative and powerful ways to use macros in your projects.</p>
+</section>
 </section>
 <section id="programs">
 <h2>2.6 Programs<a class="headerlink" href="#programs" title="Permalink to this heading">#</a></h2>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">   program</span> define myfirstprogram
+<span class="k">      di</span> <span class="s">&quot;Hello, Class!&quot;</span>
+<span class="k">   end</span>
+</pre></div>
+</div>
+<section id="introduction-to-stata-programs-creating-your-first-custom-program">
+<h3>Introduction to Stata Programs: Creating Your First Custom Program<a class="headerlink" href="#introduction-to-stata-programs-creating-your-first-custom-program" title="Permalink to this heading">#</a></h3>
+<section id="what-is-a-stata-program">
+<h4>What is a Stata Program?<a class="headerlink" href="#what-is-a-stata-program" title="Permalink to this heading">#</a></h4>
+<p>A <strong>Stata program</strong> is essentially a user-defined command that allows you to encapsulate a sequence of Stata commands into a single, reusable command. This can greatly streamline your workflow, especially when you need to perform repetitive tasks or analyses.</p>
+</section>
+<section id="creating-a-simple-stata-program">
+<h4>Creating a Simple Stata Program<a class="headerlink" href="#creating-a-simple-stata-program" title="Permalink to this heading">#</a></h4>
+<p>Let’s walk through creating your very first Stata program, <code class="docutils literal notranslate"><span class="pre">myfirstprogram</span></code>. This basic program will display a greeting message to the class.</p>
+<ol class="arabic">
+<li><p><strong>Program Definition</strong></p>
+<p>Begin by telling Stata that you’re defining a new program using the <code class="docutils literal notranslate"><span class="pre">program</span> <span class="pre">define</span></code> command. This is followed by the name of your program. Here, our program is named <code class="docutils literal notranslate"><span class="pre">myfirstprogram</span></code>.</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">program</span> define myfirstprogram
+</pre></div>
+</div>
+</li>
+<li><p><strong>Writing the Program’s Commands</strong></p>
+<p>Inside the program, you can include any Stata commands you wish to execute when the program is called. In this case, we’ll use the <code class="docutils literal notranslate"><span class="pre">di</span></code> (display) command to show a simple greeting message.</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">di</span> <span class="s">&quot;Hello, Class!&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Ending the Program Definition</strong></p>
+<p>Conclude the definition of your program with the <code class="docutils literal notranslate"><span class="pre">end</span></code> command. This lets Stata know that you’ve finished writing your program.</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">end</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+<section id="complete-program-code">
+<h4>Complete Program Code<a class="headerlink" href="#complete-program-code" title="Permalink to this heading">#</a></h4>
+<p>Putting it all together, the complete code for <code class="docutils literal notranslate"><span class="pre">myfirstprogram</span></code> looks like this:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">program</span> define myfirstprogram
+<span class="k">   di</span> <span class="s">&quot;Hello, Class!&quot;</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</section>
+<section id="running-your-program">
+<h4>Running Your Program<a class="headerlink" href="#running-your-program" title="Permalink to this heading">#</a></h4>
+<p>Once defined, you can run your program by simply typing its name into the Stata command window:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>myfirstprogram
+</pre></div>
+</div>
+<p>Upon execution, you’ll see the message:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Hello, Class!
+</pre></div>
+</div>
+<p>displayed in the Stata Results window.</p>
+</section>
+<section id="why-use-custom-programs">
+<h4>Why Use Custom Programs?<a class="headerlink" href="#why-use-custom-programs" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Efficiency</strong>: Save time by combining frequently used command sequences into a single command.</p></li>
+<li><p><strong>Reusability</strong>: Share your custom programs with classmates or colleagues to promote consistent methodologies.</p></li>
+<li><p><strong>Organization</strong>: Keep your Stata do-files cleaner and more organized by encapsulating complex procedures within programs.</p></li>
+</ul>
+</section>
+<section id="id1">
+<h4>Best Practices<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Naming</strong>: Choose clear, descriptive names for your programs to easily remember their purpose.</p></li>
+<li><p><strong>Modularity</strong>: Break down complex tasks into smaller, manageable programs when possible. This enhances readability and debuggability.</p></li>
+<li><p><strong>Comments</strong>: Use comments within your programs to explain the purpose of each section or command. This is invaluable for future reference and for others using your programs.</p></li>
+</ul>
+</section>
+</section>
+<section id="id2">
+<h3>Conclusion<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
+<p>Creating custom programs in Stata can significantly enhance your data analysis efficiency and effectiveness. Starting with simple programs like <code class="docutils literal notranslate"><span class="pre">myfirstprogram</span></code>, you can gradually build up to more complex and powerful tools tailored to your specific needs.</p>
+</section>
 </section>
 <section id="lab">
 <h2>2.7 Lab<a class="headerlink" href="#lab" title="Permalink to this heading">#</a></h2>
@@ -1217,17 +1233,11 @@ transplant<span class="o">~</span>e  don_cod       race          bmi           p
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-using-and-viewing-the-dataset">Step 5: Using and Viewing the Dataset</a></li>
 </ul>
 </li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#docx">2.034 docx</a><ul class="nav section-nav flex-column">
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#putdocx">Putdocx</a></li>
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#dyndoc">dyndoc</a></li>
-</ul>
-</li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#author-md-mph">Author, MD MPH</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#html">2.035 html</a><ul class="nav section-nav flex-column">
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-embed-stata-results-in-html">How to embed Stata results in .html</a></li>
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Author, MD MPH</a></li>
-</ul>
-</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#docx">2.034 docx</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#embedding-stata-results-into-docx-documents"><strong>1. Embedding Stata Results into <code class="docutils literal notranslate"><span class="pre">.docx</span></code> Documents</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#html">2.035 html</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#embedding-stata-results-into-html-documents"><strong>2. Embedding Stata Results into <code class="docutils literal notranslate"><span class="pre">.html</span></code> Documents</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion-for-students"><strong>Conclusion for Students:</strong></a></li>
 </ul>
 </li>
 </ul>
@@ -1243,8 +1253,30 @@ transplant<span class="o">~</span>e  don_cod       race          bmi           p
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#string">2.2 String</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#numeric">2.3 Numeric</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#return-values">2.4 Return values</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#macros">2.5 Macros</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#programs">2.6 Programs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#macros">2.5 Macros</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-macros-in-stata-a-guide-for-new-graduate-students">Understanding Macros in Stata: A Guide for New Graduate Students</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-macros">Introduction to Macros</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-macros">Types of Macros</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#when-to-use-macros">When to Use Macros</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#best-practices">Best Practices</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#programs">2.6 Programs</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-stata-programs-creating-your-first-custom-program">Introduction to Stata Programs: Creating Your First Custom Program</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-a-stata-program">What is a Stata Program?</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-simple-stata-program">Creating a Simple Stata Program</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#complete-program-code">Complete Program Code</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#running-your-program">Running Your Program</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#why-use-custom-programs">Why Use Custom Programs?</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Best Practices</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Conclusion</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab">2.7 Lab</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#homework">2.8 Homework</a></li>
 </ul>
