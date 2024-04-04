@@ -474,7 +474,7 @@ document.write(`
 <ul>
 <li><p>Global</p>
 <ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">global</span> <span class="pre">workdir</span> <span class="pre">&quot;</span></code>c(pwd)’/”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">global</span> <span class="pre">workdir</span> <span class="pre">c(pwd)</span></code></p></li>
 </ul>
 </li>
 <li><p>Local</p>
@@ -956,11 +956,19 @@ transplant<span class="o">~</span>e  don_cod       race          bmi           p
 </section>
 <section id="string">
 <h2>2.2 String<a class="headerlink" href="#string" title="Permalink to this heading">#</a></h2>
-<p>Case study: Entry Poll Results</p>
+<p>Case study: <a class="reference internal" href="entry_poll.html"><span class="doc std std-doc">Entry Poll</span></a> Results</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">delimited</span> <span class="pre">entry_poll.csv,</span> <span class="pre">bindquote(strict)</span> <span class="pre">varn(1)</span> <span class="pre">clear</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">describe</span></code></p></li>
+</ul>
 </section>
 <section id="numeric">
 <h2>2.3 Numeric<a class="headerlink" href="#numeric" title="Permalink to this heading">#</a></h2>
 <p>Case study: <a class="reference external" href="https://jhustata.github.io/basic/_downloads/34a8255f06036b44354b3c36c5583d7e/transplants.dta">transplants.dta</a></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">use</span> <span class="pre">transplants</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">desribe</span></code></p></li>
+</ul>
 </section>
 <section id="return-values">
 <h2>2.4 Return values<a class="headerlink" href="#return-values" title="Permalink to this heading">#</a></h2>
@@ -970,6 +978,29 @@ transplant<span class="o">~</span>e  don_cod       race          bmi           p
 <li><p><code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">list</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ereturn</span> <span class="pre">list</span></code></p></li>
 </ul>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> transplants
+<span class="k">regress</span> gender age
+<span class="k">creturn list</span>
+<span class="k">ereturn list</span>
+<span class="k">return list</span>
+<span class="k">tab</span> gender abo, chi
+<span class="k">return list</span>
+</pre></div>
+</div>
+<ol class="arabic">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">use</span> <span class="pre">transplants</span></code></strong>: This command loads the dataset named “transplants” into Stata’s memory. It’s the starting point for any data analysis. Using real-world datasets can make the analysis more engaging and informative, and “transplants” sounds like it could offer some intriguing insights into medical data.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">regress</span> <span class="pre">gender</span> <span class="pre">age</span></code></strong>: Here, you’re running a linear regression with “gender” as the dependent variable and “age” as the independent variable. This choice is interesting but a bit unconventional. Typically, gender (a categorical variable) would be used as an independent variable rather than a dependent one. However, exploring data in unconventional ways can sometimes yield unique insights, so I’m curious about the hypothesis or reasoning behind this choice.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">creturn</span> <span class="pre">list</span></code></strong>, <strong><code class="docutils literal notranslate"><span class="pre">ereturn</span> <span class="pre">list</span></code></strong>, and <strong><code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">list</span></code></strong>: These commands display the contents of Stata’s return memory after a command is executed. Stata uses different types of return memories for different commands:</p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">creturn</span> <span class="pre">list</span></code></strong> shows scalar values like the number of observations or the R-squared value, which are returned by commands that concern the characteristics of the current dataset or model.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">ereturn</span> <span class="pre">list</span></code></strong> is used after estimation commands (like <code class="docutils literal notranslate"><span class="pre">regress</span></code>) to show estimation results such as coefficients and statistics.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">list</span></code></strong> displays results from commands that do not fit into the estimation category, like tabulations or general statistics.</p></li>
+</ul>
+<p>It’s a good practice to use these commands to check and verify the output of your analysis, ensuring you understand the results and the model’s behavior. However, for someone starting, this might feel like information overload. Remember, the value lies in understanding what each piece of output signifies about your data and model.</p>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">tab</span> <span class="pre">gender</span> <span class="pre">abo,</span> <span class="pre">chi</span></code></strong>: This tabulation with a Chi-squared test (indicated by <code class="docutils literal notranslate"><span class="pre">chi</span></code>, and already covered in [detail](<a class="reference external" href="https://jhustata.github.io/basic/chapter2.html#introduction-to-the-quietly-command">https://jhustata.github.io/basic/chapter2.html#introduction-to-the-quietly-command</a> when discussing .log output)) examines the relationship between gender and blood type (assumed from “abo”). It’s a neat way to explore categorical data. This command makes sense as it explores the association between two categorical variables, potentially offering insights into patterns or disparities in the dataset.</p></li>
+<li><p>Finally, <strong><code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">list</span></code></strong> again, after the <code class="docutils literal notranslate"><span class="pre">tab</span></code> command, will likely show different information relevant to the tabulation rather than the regression analysis. It’s crucial to understand how the output context shifts based on the last command run.</p></li>
+</ol>
 </section>
 <section id="macros">
 <h2>2.5 Macros<a class="headerlink" href="#macros" title="Permalink to this heading">#</a></h2>
