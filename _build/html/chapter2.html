@@ -434,18 +434,54 @@ document.write(`
 <li><p>Performing basic queries</p></li>
 <li><p>Outputing some of your findings into .xlsx, <code class="docutils literal notranslate"><span class="pre">.log</span></code>, etc.</p>
 <ul class="simple">
-<li><p>We’ll do more of this <a class="reference internal" href="table1_fena.html"><span class="doc std std-doc">later</span></a>
-Today we’ll build on these ideas:</p></li>
+<li><p>We’ll do more of this <a class="reference internal" href="table1_fena.html"><span class="doc std std-doc">later</span></a></p></li>
 </ul>
 </li>
-<li><p>String values as output</p></li>
+</ol>
+<p>Today we’ll build on these ideas:</p>
+<ol class="arabic simple">
+<li><p>String values as output</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://jhustata.github.io/basic/chapter1.html#entry-poll">survey</a></p></li>
+</ul>
+</li>
 <li><p>Numeric values embedded within a string</p>
 <ul class="simple">
-<li><p>Using <code class="docutils literal notranslate"><span class="pre">macros</span></code></p></li>
+<li><p>Using <code class="docutils literal notranslate"><span class="pre">macros</span></code></p>
+<ul>
+<li><p>System</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">creturn</span> <span class="pre">list</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">list</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ereturn</span> <span class="pre">list</span></code></p></li>
+</ul>
+</li>
+<li><p>User-defined</p>
+<ul>
+<li><p>Global</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">global</span> <span class="pre">workdir</span> <span class="pre">&quot;</span></code>c(pwd)’/”</p></li>
+</ul>
+</li>
+<li><p>Local</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">local</span> <span class="pre">mean:</span> <span class="pre">di</span> <span class="pre">%3.1f</span> <span class="pre">r(mean)</span></code></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li><p>Examples beyond .xlsx and .dta</p></li>
+<li><p><a class="reference external" href="https://jhustata.github.io/basic/chapter1.html#syntax">Programs</a></p></li>
 </ol>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">   program</span> define myfirstprogram
+<span class="k">      di</span> <span class="s">&quot;Hello, Class!&quot;</span>
+<span class="k">   end</span>
+</pre></div>
+</div>
 <div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -677,6 +713,12 @@ Pearson <span class="nf">chi2</span>(<span class="m">8</span>) =  <span class="m
 <h5>Combining Everything<a class="headerlink" href="#combining-everything" title="Permalink to this heading">#</a></h5>
 <p>Finally, we combine all the parts into a cohesive whole, demonstrating how to format p-values based on their value, all within a ‘quietly’ block.</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> { <span class="c1">//asks Stata to work &quot;quietly&quot;, until the corresponding brace is closed at the end</span>
+
+<span class="k">    capture log close</span>
+<span class="k">    log</span> using chi2<span class="m">.</span>log,<span class="k"> replace</span> <span class="c1">//creates a .log file</span>
+<span class="k">    use</span> transplants,<span class="k"> clear</span> <span class="c1">//imports the datafile</span>
+<span class="k">    tab</span> dx gender, row  chi2 <span class="c1">//performs a chi-square test</span>
+
 <span class="k">    if</span> <span class="nf">r</span>(p) <span class="o">&lt;</span> <span class="m">0.01</span> {
 <span class="k">       local</span> p:<span class="k"> di</span> <span class="s">&quot;p &lt; 0.01&quot;</span>
     }
@@ -687,6 +729,7 @@ Pearson <span class="nf">chi2</span>(<span class="m">8</span>) =  <span class="m
 <span class="k">       local</span> p:<span class="k"> di</span> <span class="nx">%2.1f</span> <span class="nf">r</span>(p)
     }
 <span class="k">    noi di</span> <span class="s">&quot;p = </span><span class="nv">`p&#39;</span><span class="s">&quot;</span>
+<span class="k">	log close</span> <span class="c1">//closes the .log file</span>
 } <span class="c1">//after this brace Stata may return to its default: &quot;noisely&quot; produce output as it runs the program</span>
 </pre></div>
 </div>
