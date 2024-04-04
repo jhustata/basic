@@ -16,12 +16,6 @@ qui {
 					local var : di stritrim(subinstr("`var_helper'", "`by'", "", .))
 				}
 				noi var_type, var(`var') catt(`catt')
-				if (strupper("${terminator}") == "EXIT") {
-					exit
-				}				
-				if (strupper("${terminator}") != "EXIT") {
-					noi missing_detect, v(${terminator})
-				}
 				
 				// double verify the variable types 
 				// ask for user input
@@ -71,7 +65,7 @@ qui {
 				noi di as error "Generating Table1"
 				noi table1_creation `if', bin(${bin}) cat(${cat}) con(${con}) title(`title') excel(`excel') by(`by') `missingness'
 				noi di ""
-				noi di as error "Table 1 saved as `excel' to the following directory:"
+				noi di as error "Table 1 saved as `title' to the following directory:"
 				noi di in g "`c(pwd)'"
 			}
 			
@@ -124,10 +118,9 @@ qui {
 			foreach i in `vlist' {
 				
 				levelsof `i', local(l1) s("!*!")
-				
-				local l2 : di subinstr(`"`l1'"', "!*!", "", .)
-				local ln1 = strlen(`"`l1'"')
-				local ln2 = strlen(`"`l2'"')
+				local l2 : di subinstr("`l1'", "!*!", "", .)
+				local ln1 = strlen("`l1'")
+				local ln2 = strlen("`l2'")
 				local ln_diff = (`ln1' - `ln2') / 3
 
 				if (`ln_diff' == 1) {
@@ -270,7 +263,7 @@ qui {
 				local col1: di "_col(40)"
 				local col2: di "_col(50)"
 				local cfac = 20
-				local csep = 60
+				local csep = 40
 			}
 			
 			// run byvar checker
@@ -321,15 +314,6 @@ qui {
 				local by_l : value label `by'
 				// print out by line
 				local cheader = 0
-				// detect byvar type
-				local bstringvar = 1
-				local b_if : di ("`" + "by" + "'" + " == " + `"""' +"`" + "k" + "'" + `"""') 
-				qui capture confirm string var `by'
-				if _rc {
-					local bstringvar = 0
-					local b_if : di ("`" + "by" + "'" + " == " + "`" + "k" + "'")
-				}
-				
 				if ("`by'" != "byvar_helper") {
 					local erc = `erc' + 1
 					foreach i in `b_vals' {
@@ -346,12 +330,7 @@ qui {
 						else if ("`by_l'" != "") {
 							local val_lab : label `by_l' `i'
 						}
-						if (`bstringvar' == 1) {
-							count if `by' == "`i'"
-						}
-						else {
-							count if `by' == `i'
-						}
+						count if `by' == `i'
 						local total = r(N)
 						noi di `col_s'  "`val_lab'" " " "(n=`total')", _continue
 						${ind}
@@ -363,12 +342,7 @@ qui {
 				local cheader = 0
 				// get some constant for byvar
 				foreach i in `b_vals' {
-					if (`bstringvar' == 1) {
-						count if `by' == "`i'"
-					}
-					else {
-						count if `by' == `i'
-					}
+					count if `by'  == `i'
 					local cnt`i' = r(N)
 				}
 			}
@@ -380,14 +354,6 @@ qui {
 					
 					// print out the variable
 					// first detect if variable label exist
-					
-					// detect if this var is string or not
-					local stringvar = 1
-					qui capture confirm string var `var'
-					if _rc {
-						local stringvar = 0
-					}
-					
 					local var_l : variable label `var'
 					if ("`var_l'" == "") {
 						local var_lab : di "`var'"
@@ -427,12 +393,7 @@ qui {
 						putexcel ${ul_cell} = "    `val_lab'"
 						// count and percentage
 						foreach k in `b_vals' {
-							if `stringvar' == 1 {
-								count if `var' == "`j'" & `b_if'
-							}
-							else {
-								count if `var' == `j' & `b_if'
-							}
+							count if `var' == `j' & `by' == `k'
 							local cnt = r(N)
 							local per = `cnt' / `cnt`k'' * 100
 							// assemble count and per
@@ -472,7 +433,7 @@ qui {
 						// loop through byvar is enough
 						foreach k in `b_vals' {
 							local cheader = `cheader' + 1
-							sum `var' if `b_if', detail
+							sum `var' if `by' == `k', detail
 							local med = r(p50)
 							local lq = r(p25)
 							local hq = r(p75)
