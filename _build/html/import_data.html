@@ -357,14 +357,29 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Importing Datasets in Stata</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-csv-files">1. Importing CSV Files</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-excel-files">2. Importing Excel Files</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-stata-datasets">3. Importing Stata Datasets</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-text-files-fixed-width">4. Importing Text Files (Fixed Width)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#converting-other-formats-to-csv-or-stata-format">5. Converting Other Formats to CSV or Stata Format</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-spss-files">3. Importing SPSS Files</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-sas-files">4. Importing SAS Files</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-dbase-files">5. Importing dBase Files</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-text-data-in-fixed-format">6. Importing Text Data in Fixed Format</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-text-data-in-fixed-format-with-a-dictionary">7. Importing Text Data in Fixed Format with a Dictionary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-unformatted-text-data">8. Importing Unformatted Text Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-sas-xport-files">9. Importing SAS XPORT Files</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-data-from-jdbc-data-sources">10. Importing Data from JDBC Data Sources</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-data-from-odbc-data-sources">11. Importing Data from ODBC Data Sources</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-data-from-fred">12. Importing Data from FRED</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tips-for-importing-data">Tips for Importing Data</a></li>
 </ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Importing Datasets in Stata</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Introduction</a></li>
+</ul>
+</li>
+</ul>
+
             </nav>
         </div>
     </div>
@@ -379,17 +394,16 @@ document.write(`
 <h1>Importing Datasets in Stata<a class="headerlink" href="#importing-datasets-in-stata" title="Permalink to this heading">#</a></h1>
 <section id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h2>
-<p>Stata can handle a wide range of data formats, including its own <code class="docutils literal notranslate"><span class="pre">.dta</span></code> format, as well as <code class="docutils literal notranslate"><span class="pre">.csv</span></code>, <code class="docutils literal notranslate"><span class="pre">.xls/xlsx</span></code> (Excel), and more. Mastering the import commands is essential for data manipulation and analysis. Use of Stata’s graphical interface at <code class="docutils literal notranslate"><span class="pre">Menu</span> <span class="pre">&gt;</span> <span class="pre">File</span> <span class="pre">&gt;</span> <span class="pre">Import</span> <span class="pre">&gt;</span> <span class="pre">Text</span> <span class="pre">data</span> <span class="pre">(delimited,</span> <span class="pre">*.csv)</span></code> to import local files will be accompanied with output in Stata’s results window with the syntax for importing that specific format. You can then archive that among your .do files on GitHub for future reference</p>
+<p>Stata supports numerous data formats including <code class="docutils literal notranslate"><span class="pre">.dta</span></code>, <code class="docutils literal notranslate"><span class="pre">.csv</span></code>, <code class="docutils literal notranslate"><span class="pre">.xls/.xlsx</span></code> (Excel), <code class="docutils literal notranslate"><span class="pre">.sav</span></code> (SPSS), <code class="docutils literal notranslate"><span class="pre">.sas7bdat</span></code> (SAS), <code class="docutils literal notranslate"><span class="pre">.dbf</span></code> (dBase), and more. The graphical interface may be used to import data at <code class="docutils literal notranslate"><span class="pre">Menu</span> <span class="pre">&gt;</span> <span class="pre">File</span> <span class="pre">&gt;</span> <span class="pre">Import</span> <span class="pre">&gt;</span> <span class="pre">Text</span> <span class="pre">data</span> <span class="pre">(delimited,</span> <span class="pre">*.csv)</span></code>, but only for local files. It’s advised that you archive the commands Stata outputs onto the results window for your future <code class="docutils literal notranslate"><span class="pre">.do</span></code> files. Your next project may include remote data, for which only a ready <code class="docutils literal notranslate"><span class="pre">.do</span></code> file script will work.</p>
 </section>
 <section id="importing-csv-files">
 <h2>1. Importing CSV Files<a class="headerlink" href="#importing-csv-files" title="Permalink to this heading">#</a></h2>
 <ul>
 <li><p><strong>Syntax</strong>: <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">delimited</span></code></p></li>
-<li><p><strong>Example</strong>: If you have a file named <code class="docutils literal notranslate"><span class="pre">data.csv</span></code>, you can import it into Stata using the following command:</p>
+<li><p><strong>Example</strong>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">delimited</span> <span class="n">data</span><span class="o">.</span><span class="n">csv</span><span class="p">,</span> <span class="n">clear</span>
 </pre></div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">clear</span></code> option tells Stata to remove any data currently in memory before importing the new dataset.</p>
 </li>
 </ul>
 </section>
@@ -397,49 +411,151 @@ document.write(`
 <h2>2. Importing Excel Files<a class="headerlink" href="#importing-excel-files" title="Permalink to this heading">#</a></h2>
 <ul>
 <li><p><strong>Syntax</strong>: <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">excel</span></code></p></li>
-<li><p><strong>Example</strong>: To import an Excel file named <code class="docutils literal notranslate"><span class="pre">data.xlsx</span></code>, use:</p>
+<li><p><strong>Example</strong>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">excel</span> <span class="n">using</span> <span class="n">data</span><span class="o">.</span><span class="n">xlsx</span><span class="p">,</span> <span class="n">firstrow</span> <span class="n">clear</span>
 </pre></div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">firstrow</span></code> option specifies that the first row of the Excel sheet contains variable names. The <code class="docutils literal notranslate"><span class="pre">clear</span></code> option clears the existing data in memory.</p>
 </li>
 </ul>
 </section>
-<section id="importing-stata-datasets">
-<h2>3. Importing Stata Datasets<a class="headerlink" href="#importing-stata-datasets" title="Permalink to this heading">#</a></h2>
+<section id="importing-spss-files">
+<h2>3. Importing SPSS Files<a class="headerlink" href="#importing-spss-files" title="Permalink to this heading">#</a></h2>
 <ul>
-<li><p><strong>Syntax</strong>: <code class="docutils literal notranslate"><span class="pre">use</span></code></p></li>
-<li><p><strong>Example</strong>: For a Stata-format dataset named <code class="docutils literal notranslate"><span class="pre">data.dta</span></code>, simply use:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">use</span> <span class="n">data</span><span class="o">.</span><span class="n">dta</span><span class="p">,</span> <span class="n">clear</span>
+<li><p><strong>Syntax</strong>: <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">spss</span></code></p></li>
+<li><p><strong>Example</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spss</span> <span class="n">using</span> <span class="n">data</span><span class="o">.</span><span class="n">sav</span><span class="p">,</span> <span class="n">clear</span>
 </pre></div>
 </div>
-<p>This command opens a Stata dataset, assuming it’s in the current directory. The <code class="docutils literal notranslate"><span class="pre">clear</span></code> option is used to clear any data in memory.</p>
 </li>
 </ul>
 </section>
-<section id="importing-text-files-fixed-width">
-<h2>4. Importing Text Files (Fixed Width)<a class="headerlink" href="#importing-text-files-fixed-width" title="Permalink to this heading">#</a></h2>
+<section id="importing-sas-files">
+<h2>4. Importing SAS Files<a class="headerlink" href="#importing-sas-files" title="Permalink to this heading">#</a></h2>
+<ul>
+<li><p><strong>Syntax</strong>: <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">sas</span></code></p></li>
+<li><p><strong>Example</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sas</span> <span class="n">using</span> <span class="n">data</span><span class="o">.</span><span class="n">sas7bdat</span><span class="p">,</span> <span class="n">clear</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="importing-dbase-files">
+<h2>5. Importing dBase Files<a class="headerlink" href="#importing-dbase-files" title="Permalink to this heading">#</a></h2>
+<ul>
+<li><p><strong>Syntax</strong>: <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">dbase</span></code></p></li>
+<li><p><strong>Example</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">dbase</span> <span class="n">using</span> <span class="n">data</span><span class="o">.</span><span class="n">dbf</span><span class="p">,</span> <span class="n">clear</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="importing-text-data-in-fixed-format">
+<h2>6. Importing Text Data in Fixed Format<a class="headerlink" href="#importing-text-data-in-fixed-format" title="Permalink to this heading">#</a></h2>
 <ul>
 <li><p><strong>Syntax</strong>: <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">fixed</span></code></p></li>
-<li><p><strong>Example</strong>: To import a fixed-width text file named <code class="docutils literal notranslate"><span class="pre">data.txt</span></code>:</p>
+<li><p><strong>Example</strong>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">fixed</span> <span class="n">using</span> <span class="n">data</span><span class="o">.</span><span class="n">txt</span><span class="p">,</span> <span class="n">clear</span>
 </pre></div>
 </div>
-<p>You may need to specify the widths and names of the columns depending on the structure of your text file.</p>
 </li>
 </ul>
 </section>
-<section id="converting-other-formats-to-csv-or-stata-format">
-<h2>5. Converting Other Formats to CSV or Stata Format<a class="headerlink" href="#converting-other-formats-to-csv-or-stata-format" title="Permalink to this heading">#</a></h2>
-<p>For data in formats not directly supported by Stata (e.g., JSON, XML), consider using other software tools or programming languages (like Python or R) to convert the data into a format Stata can import, such as CSV.</p>
+<section id="importing-text-data-in-fixed-format-with-a-dictionary">
+<h2>7. Importing Text Data in Fixed Format with a Dictionary<a class="headerlink" href="#importing-text-data-in-fixed-format-with-a-dictionary" title="Permalink to this heading">#</a></h2>
+<ul>
+<li><p><strong>Syntax</strong>: <code class="docutils literal notranslate"><span class="pre">infix</span> <span class="pre">using</span></code></p></li>
+<li><p><strong>Example</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">infix</span> <span class="n">using</span> <span class="n">dictionary</span><span class="o">.</span><span class="n">dct</span>
+</pre></div>
+</div>
+<p>A dictionary file (<code class="docutils literal notranslate"><span class="pre">dictionary.dct</span></code>) specifies the format of your fixed-width file.</p>
+</li>
+</ul>
+</section>
+<section id="importing-unformatted-text-data">
+<h2>8. Importing Unformatted Text Data<a class="headerlink" href="#importing-unformatted-text-data" title="Permalink to this heading">#</a></h2>
+<ul>
+<li><p><strong>Syntax</strong>: <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">delimited</span></code></p></li>
+<li><p><strong>Example</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">delimited</span> <span class="n">data</span><span class="o">.</span><span class="n">txt</span><span class="p">,</span> <span class="n">clear</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="importing-sas-xport-files">
+<h2>9. Importing SAS XPORT Files<a class="headerlink" href="#importing-sas-xport-files" title="Permalink to this heading">#</a></h2>
+<ul>
+<li><p><strong>Syntax</strong>: <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">xport</span></code></p></li>
+<li><p><strong>Example</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">delimited</span> <span class="n">data</span><span class="o">.</span><span class="n">xpt</span><span class="p">,</span> <span class="n">clear</span>
+</pre></div>
+</div>
+<p>For <code class="docutils literal notranslate"><span class="pre">.v8xpt</span></code> and <code class="docutils literal notranslate"><span class="pre">.xpt</span></code> files, the command remains the same.</p>
+</li>
+</ul>
+<p>Visit the <a class="reference external" href="https://wwwn.cdc.gov/nchs/nhanes/search/datapage.aspx?Component=Demographics&amp;CycleBeginYear=1999">CDC.gov</a> website to practice importing a .XPT file:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://wwwn.cdc.gov/Nchs/Nhanes/1999-2000/DEMO.XPT">DEMO</a> Data from the 2009 survey</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">timeout</span> <span class="pre">1000</span></code> if you have poor internet connectivity</p></li>
+</ul>
+</section>
+<section id="importing-data-from-jdbc-data-sources">
+<h2>10. Importing Data from JDBC Data Sources<a class="headerlink" href="#importing-data-from-jdbc-data-sources" title="Permalink to this heading">#</a></h2>
+<ul>
+<li><p><strong>Syntax</strong>: <code class="docutils literal notranslate"><span class="pre">jdbc</span></code></p></li>
+<li><p><strong>Example</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">jdbc</span> <span class="n">query</span> <span class="s2">&quot;SELECT * FROM database.table&quot;</span> <span class="p">,</span> <span class="n">dsn</span><span class="p">(</span><span class="s2">&quot;jdbc:datasourceURL&quot;</span><span class="p">)</span> <span class="n">javaoptions</span><span class="p">(</span><span class="s2">&quot;option1&quot;</span> <span class="s2">&quot;option2&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Requires setting up a JDBC connection and may involve additional options for Java.</p>
+</li>
+</ul>
+</section>
+<section id="importing-data-from-odbc-data-sources">
+<h2>11. Importing Data from ODBC Data Sources<a class="headerlink" href="#importing-data-from-odbc-data-sources" title="Permalink to this heading">#</a></h2>
+<ul>
+<li><p><strong>Syntax</strong>: <code class="docutils literal notranslate"><span class="pre">odbc</span> <span class="pre">load</span></code></p></li>
+<li><p><strong>Example</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">odbc</span> <span class="n">load</span><span class="p">,</span> <span class="n">dsn</span><span class="p">(</span><span class="s2">&quot;DSNname&quot;</span><span class="p">)</span> <span class="n">table</span><span class="p">(</span><span class="s2">&quot;tablename&quot;</span><span class="p">)</span> <span class="n">clear</span>
+</pre></div>
+</div>
+<p>Utilizes an ODBC connection, where <code class="docutils literal notranslate"><span class="pre">DSNname</span></code> is the Data Source Name.</p>
+</li>
+</ul>
+</section>
+<section id="importing-data-from-fred">
+<h2>12. Importing Data from FRED<a class="headerlink" href="#importing-data-from-fred" title="Permalink to this heading">#</a></h2>
+<ul>
+<li><p><strong>Syntax</strong>: <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">fred</span></code></p></li>
+<li><p><strong>Example</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">fred</span> <span class="n">seriesID</span><span class="p">,</span> <span class="n">clear</span>
+</pre></div>
+</div>
+<p>Directly imports economic data from the Federal Reserve Economic Data (FRED).</p>
+</li>
+</ul>
 </section>
 <section id="tips-for-importing-data">
 <h2>Tips for Importing Data<a class="headerlink" href="#tips-for-importing-data" title="Permalink to this heading">#</a></h2>
 <ol class="arabic simple">
-<li><p><strong>Always backup your raw data</strong> before starting your analysis.</p></li>
-<li><p><strong>Inspect your data</strong> after importing. Use commands like <code class="docutils literal notranslate"><span class="pre">describe</span></code>, <code class="docutils literal notranslate"><span class="pre">list</span></code>, and <code class="docutils literal notranslate"><span class="pre">summarize</span></code> to check the variables and the data.</p></li>
-<li><p><strong>Check for import errors</strong>. If there are issues, Stata will usually provide error messages to help diagnose the problem.</p></li>
+<li><p><strong>Backup your raw data</strong> before starting any analysis.</p></li>
+<li><p><strong>Inspect your data post-import</strong> using <code class="docutils literal notranslate"><span class="pre">describe</span></code>, <code class="docutils literal notranslate"><span class="pre">list</span></code>, and <code class="docutils literal notranslate"><span class="pre">summarize</span></code>.</p></li>
+<li><p><strong>Be alert for import errors</strong>; Stata provides helpful error messages to guide troubleshooting.</p></li>
 </ol>
+<hr class="docutils" />
+<p>This guide, now complete with your essential note, should serve as a thorough resource for your students as they navigate the diverse functionalities of Stata for importing data.</p>
+<p>Let’s update and expand the notes to include the new data formats you’ve mentioned. This expanded guide will ensure your graduate students are well-equipped to handle a broader range of datasets in Stata.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>Importing Datasets in Stata<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h1>
+<section id="id2">
+<h2>Introduction<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
+<p>Stata supports numerous data formats including <code class="docutils literal notranslate"><span class="pre">.dta</span></code>, <code class="docutils literal notranslate"><span class="pre">.csv</span></code>, <code class="docutils literal notranslate"><span class="pre">.xls/.xlsx</span></code> (Excel), <code class="docutils literal notranslate"><span class="pre">.sav</span></code> (SPSS), <code class="docutils literal notranslate"><span class="pre">.sas7bdat</span></code> (SAS), <code class="docutils literal notranslate"><span class="pre">.dbf</span></code> (dBase), and more. Utilizing Stata’s graphical interface or command line for importing data not only facilitates diverse data analysis projects but also helps in archiving reproducible steps in <code class="docutils literal notranslate"><span class="pre">.do</span></code> files.</p>
 </section>
 </section>
 
@@ -492,14 +608,29 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Importing Datasets in Stata</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-csv-files">1. Importing CSV Files</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-excel-files">2. Importing Excel Files</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-stata-datasets">3. Importing Stata Datasets</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-text-files-fixed-width">4. Importing Text Files (Fixed Width)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#converting-other-formats-to-csv-or-stata-format">5. Converting Other Formats to CSV or Stata Format</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-spss-files">3. Importing SPSS Files</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-sas-files">4. Importing SAS Files</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-dbase-files">5. Importing dBase Files</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-text-data-in-fixed-format">6. Importing Text Data in Fixed Format</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-text-data-in-fixed-format-with-a-dictionary">7. Importing Text Data in Fixed Format with a Dictionary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-unformatted-text-data">8. Importing Unformatted Text Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-sas-xport-files">9. Importing SAS XPORT Files</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-data-from-jdbc-data-sources">10. Importing Data from JDBC Data Sources</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-data-from-odbc-data-sources">11. Importing Data from ODBC Data Sources</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-data-from-fred">12. Importing Data from FRED</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tips-for-importing-data">Tips for Importing Data</a></li>
 </ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Importing Datasets in Stata</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Introduction</a></li>
+</ul>
+</li>
+</ul>
+
   </nav></div>
 
 </div></div>
