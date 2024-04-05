@@ -46,7 +46,7 @@ Regarding academic integrity, we encourage the use of small code snippets from b
 tokenize `c(ALPHA)'  // Adapted from https://www.statalist.org/forums/forum/general-stata-discussion/general/1380433-creating-a-counter-with-alphabets
 ```
 
-Leveraging AI, including ChatGPT, as a co-pilot, guide, or assistant, is <u>strongly encouraged</u> both during and after this course. **Learn more**.
+Leveraging AI, including ChatGPT, as a co-pilot, guide, or assistant, is <u>strongly encouraged</u> both during and after this course. [Learn more](https://jhustata.github.io/basic/entry_poll.html#leveraging-gpt-4-for-analysis).
 
 ## Table of Contents
 
