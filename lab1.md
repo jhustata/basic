@@ -1,9 +1,9 @@
-﻿# lab1
+﻿# lab1 & lab2 
 
 data: [transplants.dta](https://jhustata.github.io/basic/_downloads/34a8255f06036b44354b3c36c5583d7e/transplants.dta)
 
 
-Please use this lab as an opportunity to review the course material and prepare yourself for the homework questions. An answer key will be on Friday April 5, 2024.
+Please use this lab as an opportunity to review the course material and prepare yourself for the homework questions. An answer key will be provided on Friday April 5, 2024.
 
 1. Start Stata and open your do-file editor. 
 
