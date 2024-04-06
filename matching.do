@@ -12,7 +12,8 @@ qui{
 	   global table1: di "https://raw.githubusercontent.com/jhustata/basic/main/table1_fena.ado"
 	   global match: di "https://raw.githubusercontent.com/jhustata/basic/main/irmatch.ado"
 	   global tx: di "https://jhustata.github.io/basic/_downloads/34a8255f06036b44354b3c36c5583d7e/transplants.dta"
-	   global path: di "/users/d/desktop"
+	   noi di "What is your working directory?" _request(path) 
+	   global path: di "$path"
 	}
 	if 2 { //Data
 		cd $path
