@@ -1,8 +1,8 @@
-﻿# Lab 1 Solution
+﻿# Lab 1 & 2 Solution
 
 data: [transplants.dta](https://jhustata.github.io/basic/_downloads/34a8255f06036b44354b3c36c5583d7e/transplants.dta)
 
-Please use this lab as an opportunity to review the course material and prepare yourself for the homework 1 & 2 questions. An answer key will be on Friday April 5, 2024. Question 14 will prepare you for homework 1.
+Please use this lab as an opportunity to review the course material and prepare yourself for the homework 1 & 2 questions. An answer key will be on Friday April 5, 2024. Question 14 will prepare you for homework 1. The other solutions introduce conditional statements and macros, which are a key part of homework 2.
 
 1. Start Stata and open your do-file editor. [lab1sol.do](https://raw.githubusercontent.com/jhustata/basic/main/lab1solution.do)
 
