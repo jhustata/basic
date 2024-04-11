@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>3.4 Lab &#8212; Stata Programming</title>
+    <title>3.4 Lab (solution) &#8212; Stata Programming</title>
   
   
   
@@ -61,7 +61,7 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'lab3';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'lab3sol';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -235,7 +235,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Flab3.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Flab3sol.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -265,7 +265,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="_sources/lab3.md" target="_blank"
+      <li><a href="_sources/lab3sol.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -345,7 +345,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>3.4 Lab</h1>
+    <h1>3.4 Lab (solution)</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -359,11 +359,18 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section id="lab">
-<h1>3.4 Lab<a class="headerlink" href="#lab" title="Permalink to this heading">#</a></h1>
+  <section id="lab-solution">
+<h1>3.4 Lab (solution)<a class="headerlink" href="#lab-solution" title="Permalink to this heading">#</a></h1>
 <p>Use the <code class="docutils literal notranslate"><span class="pre">transplants.dta</span></code> dataset with these practice questions:</p>
 <ol class="arabic">
-<li><p>Calculate the standard deviation of age among patients with blood type O (<code class="docutils literal notranslate"><span class="pre">abo==4</span></code>). Print the following sentence: <code class="docutils literal notranslate"><span class="pre">The</span> <span class="pre">SD</span> <span class="pre">of</span> <span class="pre">age</span> <span class="pre">among</span> <span class="pre">patients</span> <span class="pre">with</span> <span class="pre">blood</span> <span class="pre">type</span> <span class="pre">O</span> <span class="pre">is</span> <span class="pre">XX.X</span></code>. Replace <code class="docutils literal notranslate"><span class="pre">XX</span></code> with correct values. Round to tenths (e.g. 8.2).</p></li>
+<li><p>Calculate the standard deviation of age among patients with blood type O (<code class="docutils literal notranslate"><span class="pre">abo==4</span></code>). Print the following sentence: <code class="docutils literal notranslate"><span class="pre">The</span> <span class="pre">SD</span> <span class="pre">of</span> <span class="pre">age</span> <span class="pre">among</span> <span class="pre">patients</span> <span class="pre">with</span> <span class="pre">blood</span> <span class="pre">type</span> <span class="pre">O</span> <span class="pre">is</span> <span class="pre">XX.X</span></code>. Replace <code class="docutils literal notranslate"><span class="pre">XX</span></code> with correct values. Round to tenths (e.g. 8.2).</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">sum</span> age<span class="k"> if</span> abo<span class="o">==</span><span class="m">4</span>
+<span class="k">local</span> abo4:<span class="k"> di</span> <span class="nx">%2.1f</span> <span class="nf">r</span>(sd)
+
+<span class="k">di</span> <span class="s">&quot;The SD of age among patients with blood type O is </span><span class="nv">`abo4&#39;</span><span class="s">.&quot;</span>
+</pre></div>
+</div>
+</li>
 <li><p>Regress BMI on age and sex (using <code class="docutils literal notranslate"><span class="pre">regress</span> <span class="pre">bmi</span> <span class="pre">age</span> <span class="pre">gender</span></code>) without displaying the regression output. Print the following sentence: <code class="docutils literal notranslate"><span class="pre">Per</span> <span class="pre">1-year</span> <span class="pre">increase</span> <span class="pre">in</span> <span class="pre">age,</span> <span class="pre">BMI</span> <span class="pre">increases</span> <span class="pre">by</span> <span class="pre">X.XX</span></code>. Replace <code class="docutils literal notranslate"><span class="pre">XX</span></code> with the regression coefficient of age. Round to hundredths (e.g. 0.74).</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">quietly regress</span> bmi age gender
 <span class="k">local</span> age_b:<span class="k"> di</span> <span class="nx">%3.1f</span> _b[age]
