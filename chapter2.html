@@ -748,8 +748,11 @@ Pearson <span class="nf">chi2</span>(<span class="m">8</span>) =  <span class="m
 </pre></div>
 </div>
 <ul class="simple">
-<li><p>This final block puts everything together, showing how to use <code class="docutils literal notranslate"><span class="pre">qui</span></code> to suppress unnecessary output while precisely formatting p-values according to their significance level. The <code class="docutils literal notranslate"><span class="pre">noi</span> <span class="pre">di</span> <span class="pre">&quot;p</span> <span class="pre">=</span> </code>p’`” line then displays the formatted p-value, completing the explanation of how to communicate statistical results clearly and effectively.</p></li>
+<li><p>This final block puts everything together, showing how to use <code class="docutils literal notranslate"><span class="pre">qui</span></code> to suppress unnecessary output while precisely formatting p-values according to their significance level. The following line then displays the formatted p-value, completing the explanation of how to communicate statistical results clearly and effectively:</p></li>
 </ul>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">noi di</span> <span class="s">&quot;p = </span><span class="nv">`p&#39;</span><span class="s">&quot;</span>
+</pre></div>
+</div>
 </section>
 <section id="recap-of-the-chi-square-test">
 <h5>Recap of the chi-square test<a class="headerlink" href="#recap-of-the-chi-square-test" title="Permalink to this heading">#</a></h5>
@@ -846,10 +849,11 @@ p = <span class="m">0.02</span>
 <p><em>Starts a new Word document.</em></p>
 </li>
 <li><p><strong>Add Text</strong></p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>putdocx text (<span class="s">&quot;This is how you embed Stata results into a .docx file.&quot;</span>)
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>putdocx paragraph 
+putdocx text (<span class="s">&quot;This is how you embed Stata results into a .docx file.&quot;</span>)
 </pre></div>
 </div>
-<p><em>Inserts a sentence or any text into your document.</em></p>
+<p><em>Inserts a sentence or any text into your document. Let Stata know that this is a new paragraph</em></p>
 </li>
 <li><p><strong>Save Your Document</strong></p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>putdocx<span class="k"> save</span> myDocument<span class="m">.</span>docx,<span class="k"> replace</span>
@@ -861,6 +865,7 @@ p = <span class="m">0.02</span>
 <p><strong>Example Use Case:</strong></p>
 <p>Imagine you conducted an analysis and found the average age in your dataset to be 30 years. You can quickly add this result to a Word document as part of your report:</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>putdocx begin
+putdocx paragraph
 putdocx text (<span class="s">&quot;The average age in our dataset is 30 years.&quot;</span>)
 putdocx<span class="k"> save</span> analysisReport<span class="m">.</span>docx,<span class="k"> replace</span>
 </pre></div>
