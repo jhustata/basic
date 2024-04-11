@@ -379,6 +379,11 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#miscellany">3.3 Miscellany</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab">3.4 Lab</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#homework">3.5 Homework</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -455,7 +460,7 @@ document.write(`
 <li><p>Embed the macros into text, graph, or file (.xlsx, .log, .dta, .docx, .html)</p></li>
 <li><p>Achieve these aims in a workflow that is automated, collaborative, open, reproducible, legible, user-friendly, and therefore <strong>rigorous</strong></p></li>
 </ol>
-<p>Today we are going to focus on commands and syntax that exponentially increase our efficiency in coding, a key step towards automation. One way to achieve this is by learning about loops. The other is by writing flexible programs that are driven by user-defined inputs. We’ll also include miscellaneous code-snippets that you’ll incorporate into your loops and programs</p>
+<p>Today we are going to focus on commands and syntax that exponentially increase our efficiency in coding, a key step towards automation. One way to achieve this is by learning about loops. The other is by writing flexible programs that are driven by user-defined inputs. We’ll also include miscellaneous code-snippets that you’ll incorporate into your loops and programs. Please look out for the <code class="docutils literal notranslate"><span class="pre">macros</span></code> that emerge when you define a loop (e.g. <code class="docutils literal notranslate"><span class="pre">i</span></code>) or program (e.g. <code class="docutils literal notranslate"><span class="pre">varname</span></code>)</p>
 <section id="loops">
 <h2>3.1 Loops<a class="headerlink" href="#loops" title="Permalink to this heading">#</a></h2>
 <section id="forvalues">
@@ -1079,6 +1084,100 @@ asset <span class="nf">r</span>(p) <span class="o">&lt;</span> <span class="m">0
 </pre></div>
 </div>
 </section>
+<section id="lab">
+<h2>3.4 Lab<a class="headerlink" href="#lab" title="Permalink to this heading">#</a></h2>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">transplants.dta</span></code> dataset with these practice questions:</p>
+<ol class="arabic simple">
+<li><p>Calculate the standard deviation of age among patients with blood type O (<code class="docutils literal notranslate"><span class="pre">abo==4</span></code>). Print the following sentence: <code class="docutils literal notranslate"><span class="pre">The</span> <span class="pre">SD</span> <span class="pre">of</span> <span class="pre">age</span> <span class="pre">among</span> <span class="pre">patients</span> <span class="pre">with</span> <span class="pre">blood</span> <span class="pre">type</span> <span class="pre">O</span> <span class="pre">is</span> <span class="pre">XX.X</span></code>. Replace <code class="docutils literal notranslate"><span class="pre">XX</span></code> with correct values. Round to tenths (e.g. 8.2)<a class="reference internal" href="lab3sol.html"><span class="doc std std-doc">.</span></a></p></li>
+<li><p>Regress BMI on age and sex (using <code class="docutils literal notranslate"><span class="pre">regress</span> <span class="pre">bmi</span> <span class="pre">age</span> <span class="pre">gender</span></code>) without displaying the regression output. Print the following sentence: <code class="docutils literal notranslate"><span class="pre">Per</span> <span class="pre">1-year</span> <span class="pre">increase</span> <span class="pre">in</span> <span class="pre">age,</span> <span class="pre">BMI</span> <span class="pre">increases</span> <span class="pre">by</span> <span class="pre">X.XX</span></code>. Replace <code class="docutils literal notranslate"><span class="pre">XX</span></code> with the regression coefficient of age. Round to hundredths (e.g. 0.74).</p></li>
+<li><p>Now we will do the same thing, but using a program. Define a program named <code class="docutils literal notranslate"><span class="pre">bmi_age</span></code>. This program will regress BMI on age and sex without displaying the regression output, and print: <code class="docutils literal notranslate"><span class="pre">Per</span> <span class="pre">1-year</span> <span class="pre">increase</span> <span class="pre">in</span> <span class="pre">age,</span> <span class="pre">BMI</span> <span class="pre">increases</span> <span class="pre">by</span> <span class="pre">X.XX</span></code>. Replace <code class="docutils literal notranslate"><span class="pre">XX</span></code> with the regression coefficient of <code class="docutils literal notranslate"><span class="pre">age</span></code>. Round to hundredths (e.g. 0.74).</p></li>
+<li><p>Let’s consider how you may allow the user of <code class="docutils literal notranslate"><span class="pre">bmi_age</span></code> to utilize this program on a dataset with any variable name</p></li>
+</ol>
+</section>
+<section id="homework">
+<h2>3.5 Homework<a class="headerlink" href="#homework" title="Permalink to this heading">#</a></h2>
+<section id="overview">
+<h3>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h3>
+<p>Write a <code class="docutils literal notranslate"><span class="pre">.do</span> <span class="pre">file</span></code> which imports data from <a class="reference external" href="https://jhustata.github.io/book/_downloads/884b9e06eb29f89b1b87da4eab39775d/hw1.txt">hw1.txt</a> and performs the tasks described below. Name it <code class="docutils literal notranslate"><span class="pre">hw3.lastname.firstname.do</span></code> and it should create a log file called <code class="docutils literal notranslate"><span class="pre">hw1.lastname.firstname.log</span></code>. Please avoid some of the common mistakes we observed in your HW1. While you didn’t drop points for those mistakes as beginners, you’ll drop some points in HW3 if you repeat these mistakes. Make sure your log file displays only the output of interest. But do not submit your log files as part of the assignment.</p>
+<p>Evaluation will be based on the log file produced when we run your script on our machines.</p>
+<p>Codebook</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Variable</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Values</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>transplants.dta</p></td>
+<td><p></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">fake_id</span></code></p></td>
+<td><p>Patient ID</p></td>
+<td><p>Numeric</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">bmi</span></code></p></td>
+<td><p>Body mass index (kg/m2)</p></td>
+<td><p>Numeric</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">dx</span></code></p></td>
+<td><p>Primary diagnosis</p></td>
+<td><p>String (see dataset)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">init_age</span></code></p></td>
+<td><p>Age</p></td>
+<td><p>Numeric</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">prev</span></code></p></td>
+<td><p>History of previous transplant</p></td>
+<td><p>0=No / 1=Yes</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">peak_pra</span></code></p></td>
+<td><p>Peak PRA</p></td>
+<td><p>Numeric</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">female</span></code></p></td>
+<td><p>Sex</p></td>
+<td><p>0=No / 1=Yes</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">received_kt</span></code></p></td>
+<td><p>Patient eventually received a kidney transplant?</p></td>
+<td><p>0=No / 1=Yes</p></td>
+</tr>
+</tbody>
+</table>
+<p>This dataset contains simulated data on registrants for the deceased donor kidney waitlist.</p>
+<p><strong>Question 1.</strong> Create a new numeric variable named <code class="docutils literal notranslate"><span class="pre">htn</span></code>, which takes a value of 1 if the variable <code class="docutils literal notranslate"><span class="pre">dx</span></code> has a value of <code class="docutils literal notranslate"><span class="pre">4=Hypertensive</span></code>, and <code class="docutils literal notranslate"><span class="pre">0</span></code> otherwise. This variable should have value labels, <code class="docutils literal notranslate"><span class="pre">Yes</span></code> for 1 and <code class="docutils literal notranslate"><span class="pre">No</span></code> for 0. (Hint: what is the data type of this new variable? Is it a numeric or a string?) Run <code class="docutils literal notranslate"><span class="pre">tab</span> <span class="pre">htn</span></code> in your assignment do-file so that it would print the following result.</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>        htn |       Freq.       Percent       Cum.
+<span class="o">------------+-------------------------------------</span>
+         No |       XXXX        XXXX          XXXX
+        Yes |       XXXX        XXXX          XXXX
+<span class="o">------------+-------------------------------------</span>
+      Total |       XXXX        XXXX
+</pre></div>
+</div>
+<p><strong>Question 2</strong>. Create your first automated Table 1! Write a program called <code class="docutils literal notranslate"><span class="pre">question2</span></code> that prints the following table (including <code class="docutils literal notranslate"><span class="pre">Question</span> <span class="pre">2</span></code> in the header). The <code class="docutils literal notranslate"><span class="pre">XX</span></code> values should be replaced with correct values found in the dataset, and should be rounded to the nearest whole number for age and to <u>one decimal place</u> to the right of the decimal point for other variables. Make sure the summary statistics are vertically aligned and justified along the left margin. Run your program and display the table on your results window, in your <code class="docutils literal notranslate"><span class="pre">.log</span></code> file, and in a <code class="docutils literal notranslate"><span class="pre">question2.xlsx</span></code>. (The key challenge: reporting continuous and binary variables. Next week we’ll include categorical variables)</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>Question <span class="m">2</span>                Males (N=XX)        Females (N=XX)
+Age,<span class="k"> median</span> (IQR)         XX (XX<span class="o">-</span>XX)          XX (XX<span class="o">-</span>XX)
+Previous transplant, %    XX<span class="m">.</span>X%               XX<span class="m">.</span>X%
+</pre></div>
+</div>
+<details>
+   <Summary>Common Mistakes from HW1</Summary>
+<ol class="arabic simple">
+<li><p>Your first line of code should create a <code class="docutils literal notranslate"><span class="pre">.log</span></code> file &amp; your last line should close it</p></li>
+<li><p>Do not use <code class="docutils literal notranslate"><span class="pre">exit</span></code> at end of the <code class="docutils literal notranslate"><span class="pre">.do</span></code> files you submit since it closes Stata on our machines</p></li>
+<li><p>May not be necessary to use <code class="docutils literal notranslate"><span class="pre">clear</span> <span class="pre">all</span></code> when <code class="docutils literal notranslate"><span class="pre">clear</span></code> suffices</p></li>
+<li><p>When you load a dataset, always include the option <code class="docutils literal notranslate"><span class="pre">clear</span></code> in case there is another dataset in memory</p></li>
+<li><p><strong>Always</strong> run your .do files more than once before submission to uncover subtle omissions like <code class="docutils literal notranslate"><span class="pre">capture</span> <span class="pre">log</span> <span class="pre">close</span></code>, <code class="docutils literal notranslate"><span class="pre">clear</span></code>, <code class="docutils literal notranslate"><span class="pre">capture</span> <span class="pre">log</span> <span class="pre">close</span></code>, <code class="docutils literal notranslate"><span class="pre">log</span> <span class="pre">close</span></code>, etc</p></li>
+<li><p>Never use absolute file paths to call files on your machine; these paths don’t exist on our machines. Assume we are working in the directory with the necessary file</p></li>
+<li><p>For the same reason, do not use the <code class="docutils literal notranslate"><span class="pre">cd</span></code> command in your .do files</p></li>
+<li><p>In grading HW3 and beyond, you’ll drop some points if you neglect these tips</p></li>
+<li><p>Please <strong>do not</strong> submit <code class="docutils literal notranslate"><span class="pre">.log</span></code>, <code class="docutils literal notranslate"><span class="pre">.pdf</span></code>, <code class="docutils literal notranslate"><span class="pre">.docx</span></code>, or any other files formats. We are only interested in your <code class="docutils literal notranslate"><span class="pre">.do</span></code> files</p></li>
+</ol>
+</details></section>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1166,6 +1265,11 @@ asset <span class="nf">r</span>(p) <span class="o">&lt;</span> <span class="m">0
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#miscellany">3.3 Miscellany</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab">3.4 Lab</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#homework">3.5 Homework</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
