@@ -386,6 +386,8 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#obdc">OBDC</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#txt"><code class="docutils literal notranslate"><span class="pre">.txt</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#v8xpt-xpt"><code class="docutils literal notranslate"><span class="pre">.v8xpt</span></code>, <code class="docutils literal notranslate"><span class="pre">.xpt</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fred">FRED</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dbf"><code class="docutils literal notranslate"><span class="pre">.dbf</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#commands-that-run-without-additional-syntax">3.3.1 Commands that run without additional syntax</a></li>
@@ -601,9 +603,6 @@ document.write(`
 <section id="miscellany">
 <h2>3.3 Miscellany<a class="headerlink" href="#miscellany" title="Permalink to this heading">#</a></h2>
 <p>In this section, we continue what was began in <code class="docutils literal notranslate"><span class="pre">lab</span> <span class="pre">1</span> <span class="pre">&amp;</span> <span class="pre">2</span></code>: expanding our Stata vocubulary. As we master Program syntax, we’ll need to write programs that give the end-user power, efficiency, and flexibility. And there is no end to this journey. Keep learning something new, and please do share anything interesting you learn with peers and colleagues. We’ll update this section each week so remain vigillant!</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> transplants,<span class="k"> clear</span>
-</pre></div>
-</div>
 <section id="data-formats-and-corresponding-commands">
 <h3>3.3.0 Data formats and corresponding commands<a class="headerlink" href="#data-formats-and-corresponding-commands" title="Permalink to this heading">#</a></h3>
 <p>You might find comfort in the familiar <code class="docutils literal notranslate"><span class="pre">.dta</span></code> format presented to you during your Epidemiology and Biostatistics classes. However, when you collaborate with other researchers within or outside your institution, there is no guarantee that <code class="docutils literal notranslate"><span class="pre">.dta</span></code> will be the format of datasets available to you. So use this as a resource to quickly reference the syntax you may need. The choices here are based on <code class="docutils literal notranslate"><span class="pre">stata</span> <span class="pre">&gt;</span> <span class="pre">menu</span> <span class="pre">&gt;</span> <span class="pre">import</span></code>. Here’s a <a class="reference external" href="https://jhustata.github.io/basic/import_data.html">resource</a> you may use. Otherwise, this section will be updated each week to offer more examples for your practice.</p>
@@ -628,7 +627,7 @@ document.write(`
 </section>
 <section id="csv">
 <h4><code class="docutils literal notranslate"><span class="pre">.csv</span></code><a class="headerlink" href="#csv" title="Permalink to this heading">#</a></h4>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>import delimited https:<span class="o">//</span>raw<span class="m">.</span>githubusercontent<span class="m">.</span>com<span class="o">/</span>jhustata<span class="o">/</span>basic<span class="o">/</span>main<span class="o">/</span>entry_poll<span class="m">.</span>csv, bindquote(strict) varn(<span class="m">1</span>)<span class="k"> clear</span> 
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>import delimited <span class="s">&quot;https://raw.githubusercontent.com/jhustata/basic/main/entry_poll.csv&quot;</span>, bindquote(strict) varn(<span class="m">1</span>)<span class="k"> clear</span> 
 
 <span class="c1">//learn more about the options</span>
 <span class="k">help</span> import delimited
@@ -637,18 +636,26 @@ document.write(`
 </section>
 <section id="sav">
 <h4><code class="docutils literal notranslate"><span class="pre">.sav</span></code><a class="headerlink" href="#sav" title="Permalink to this heading">#</a></h4>
+<p>Coming soon</p>
 </section>
 <section id="sas7bdat">
 <h4><code class="docutils literal notranslate"><span class="pre">.sas7bdat</span></code><a class="headerlink" href="#sas7bdat" title="Permalink to this heading">#</a></h4>
+<p>Coming soon</p>
 </section>
 <section id="jdbc">
 <h4>JDBC<a class="headerlink" href="#jdbc" title="Permalink to this heading">#</a></h4>
+<p>Coming soon</p>
 </section>
 <section id="obdc">
 <h4>OBDC<a class="headerlink" href="#obdc" title="Permalink to this heading">#</a></h4>
+<p>Coming soon</p>
 </section>
 <section id="txt">
 <h4><code class="docutils literal notranslate"><span class="pre">.txt</span></code><a class="headerlink" href="#txt" title="Permalink to this heading">#</a></h4>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>import delimited <span class="s">&quot;https://jhustata.github.io/book/_downloads/884b9e06eb29f89b1b87da4eab39775d/hw1.txt&quot;</span>,<span class="k"> clear</span>
+</pre></div>
+</div>
+<p>You used this for your <a class="reference external" href="https://jhustata.github.io/basic/chapter1.html#homework">HW1</a></p>
 </section>
 <section id="v8xpt-xpt">
 <h4><code class="docutils literal notranslate"><span class="pre">.v8xpt</span></code>, <code class="docutils literal notranslate"><span class="pre">.xpt</span></code><a class="headerlink" href="#v8xpt-xpt" title="Permalink to this heading">#</a></h4>
@@ -656,15 +663,23 @@ document.write(`
 </pre></div>
 </div>
 <p>Codebook available <a class="reference external" href="https://wwwn.cdc.gov/Nchs/Nhanes/1999-2000/DEMO.htm">here</a></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
-<span class="c1">#### FRED</span>
-<span class="c1">#### `.dbf`</span>
-</pre></div>
-</div>
+</section>
+<section id="fred">
+<h4>FRED<a class="headerlink" href="#fred" title="Permalink to this heading">#</a></h4>
+<p>Coming soon</p>
+</section>
+<section id="dbf">
+<h4><code class="docutils literal notranslate"><span class="pre">.dbf</span></code><a class="headerlink" href="#dbf" title="Permalink to this heading">#</a></h4>
+<p>Coming soon</p>
 </section>
 </section>
 <section id="commands-that-run-without-additional-syntax">
 <h3>3.3.1 Commands that run without additional syntax<a class="headerlink" href="#commands-that-run-without-additional-syntax" title="Permalink to this heading">#</a></h3>
+<p>We’ll use this familiar <code class="docutils literal notranslate"><span class="pre">.dta</span></code> dataset for most of the examples in this section</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> transplants,<span class="k"> clear</span>
+</pre></div>
+</div>
+<p>Learn a little more about your dataset:</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">describe</span>
 <span class="k">summarize</span>
 <span class="k">exit</span> <span class="c1">//don&#39;t include in your homeworks!!</span>
@@ -1272,6 +1287,8 @@ Previous transplant, %    XX<span class="m">.</span>X%               XX<span cla
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#obdc">OBDC</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#txt"><code class="docutils literal notranslate"><span class="pre">.txt</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#v8xpt-xpt"><code class="docutils literal notranslate"><span class="pre">.v8xpt</span></code>, <code class="docutils literal notranslate"><span class="pre">.xpt</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fred">FRED</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dbf"><code class="docutils literal notranslate"><span class="pre">.dbf</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#commands-that-run-without-additional-syntax">3.3.1 Commands that run without additional syntax</a></li>
