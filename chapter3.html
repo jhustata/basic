@@ -1173,6 +1173,11 @@ Age,<span class="k"> median</span> (IQR)         XX (XX<span class="o">-</span>X
 Previous transplant, %    XX<span class="m">.</span>X               XX<span class="m">.</span>X
 </pre></div>
 </div>
+<p>To align output on your Stata results window, and thus in your <code class="docutils literal notranslate"><span class="pre">.log</span></code> file, you may use the column <code class="docutils literal notranslate"><span class="pre">_col()</span></code> syntax. Use the example below as a guide</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">local</span> study_arms:<span class="k"> di</span> _col(<span class="m">30</span>) <span class="s">&quot;Trial&quot;</span> _col(<span class="m">60</span>) <span class="s">&quot;Control&quot;</span>
+<span class="k">di</span> <span class="s">&quot;</span><span class="nv">`study_arms&#39;</span><span class="s">&quot;</span>
+</pre></div>
+</div>
 </section>
 <section id="common-mistakes-from-hw1">
 <h3>Common Mistakes from HW1<a class="headerlink" href="#common-mistakes-from-hw1" title="Permalink to this heading">#</a></h3>
@@ -1183,7 +1188,7 @@ Previous transplant, %    XX<span class="m">.</span>X               XX<span clas
 <li><p>Do not use <code class="docutils literal notranslate"><span class="pre">exit</span></code> at end of the <code class="docutils literal notranslate"><span class="pre">.do</span></code> files you submit since it closes Stata on our machines</p></li>
 <li><p>May not be necessary to use <code class="docutils literal notranslate"><span class="pre">clear</span> <span class="pre">all</span></code> when <code class="docutils literal notranslate"><span class="pre">clear</span></code> suffices</p></li>
 <li><p>When you load a dataset, always include the option <code class="docutils literal notranslate"><span class="pre">clear</span></code> in case there is another dataset in memory</p></li>
-<li><p><strong>Always</strong> run your .do files more than once before submission to uncover subtle omissions like <code class="docutils literal notranslate"><span class="pre">capture</span> <span class="pre">log</span> <span class="pre">close</span></code>, <code class="docutils literal notranslate"><span class="pre">clear</span></code>, <code class="docutils literal notranslate"><span class="pre">capture</span> <span class="pre">log</span> <span class="pre">close</span></code>, <code class="docutils literal notranslate"><span class="pre">log</span> <span class="pre">close</span></code>, etc</p></li>
+<li><p><strong>Always</strong> run your .do files more than once before submission to uncover subtle omissions like <code class="docutils literal notranslate"><span class="pre">capture</span> <span class="pre">log</span> <span class="pre">close</span></code>, <code class="docutils literal notranslate"><span class="pre">clear</span></code>, <code class="docutils literal notranslate"><span class="pre">log</span> <span class="pre">close</span></code>, etc</p></li>
 <li><p>Never use absolute file paths to call files on your machine; these paths don’t exist on our machines. Assume we are working in the directory with the necessary file</p></li>
 <li><p>For the same reason, do not use the <code class="docutils literal notranslate"><span class="pre">cd</span></code> command in your .do files</p></li>
 <li><p>In grading HW3 and beyond, you’ll drop some points if you neglect these tips</p></li>
