@@ -518,11 +518,12 @@ document.write(`
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <ul class="simple">
-<li><p>Updated 7:00PM on 04/11/2024</p></li>
-<li><p>We apologize for any confusion regarding lab/office hours. For this course these two are moreorless synonymous.</p></li>
-<li><p>That said, we’ve edited the lab/office hours so that the weekly schedule is absolutely clear</p></li>
-<li><p>Session 3 video is available <a class="reference external" href="https://jhjhm.zoom.us/rec/share/VgXtxlUPPSd3hYoSrVeLsI0HPEP55iMZuQDmw_-s8k183m0_JO_pcCb3awkf1yyg.4AVwxaBulr4l2gBd?startTime=1712863901000">here</a> and passcode is at <code class="docutils literal notranslate"><span class="pre">CoursePlus</span> <span class="pre">&gt;</span> <span class="pre">Online</span> <span class="pre">Library</span> <span class="pre">&gt;</span> <span class="pre">Session</span> <span class="pre">3</span></code></p></li>
+<li><p>To align output on your Stata results window in HW3, and thus in your <code class="docutils literal notranslate"><span class="pre">.log</span></code> file, you may use the column <code class="docutils literal notranslate"><span class="pre">_col()</span></code> syntax. Use the example below as a guide. Your colleagues already solved this issue in <a class="reference external" href="https://github.com/jhufena/discussions/discussions/35">GitHub Discussions</a></p></li>
 </ul>
+</div>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">local</span> study_arms:<span class="k"> di</span> _col(<span class="m">30</span>) <span class="s">&quot;Trial&quot;</span> _col(<span class="m">60</span>) <span class="s">&quot;Control&quot;</span>
+<span class="k">di</span> <span class="s">&quot;</span><span class="nv">`study_arms&#39;</span><span class="s">&quot;</span>
+</pre></div>
 </div>
 </section>
 <section id="acknowledgements">
