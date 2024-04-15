@@ -36,3 +36,54 @@ Use the `transplants.dta` dataset with these practice questions:
    ```
 
 4. Let's consider how you may allow the user of `bmi_age` to utilize this program on a dataset with any variable name
+
+```stata
+  capture program drop regress_linear
+   program define regress_linear
+     syntax varlist 
+       quietly regress `varlist'
+	   local outcome: di word("`varlist'", 1)
+	   local coef: di word("`varlist'", 2)
+       local coef_b: di %3.1f _b[`coef']
+       
+       di "Per 1-year increase in `coef', `outcome' increases by `coef_b'."
+       
+   end
+   ```
+   
+   Now the end-user has flexibility and can chose the variables in the regression:
+
+  ```stata 
+   use transplants, clear
+   regress_linear bmi age
+   regress_linear bmi prev_ki
+   ```
+
+5. How may the output be improved?
+
+```stata
+   capture program drop regress_linear
+   program define regress_linear
+     syntax varlist 
+       quietly regress `varlist'
+	   local outcome: di word("`varlist'", 1)
+	   local coef: di word("`varlist'", 2)
+       local coef_b: di %3.1f _b[`coef']
+	   local coef: variable label `coef'
+	   local outcome: variable label `outcome'
+       
+       di "Per 1-year increase in `coef', `outcome' increases by `coef_b'."
+       
+   end
+   
+   
+   use transplants, clear
+   regress_linear bmi age
+```
+
+6. For publication-quality output we may need to relabel the variables and redo question 5:
+
+```stata
+label variable age "Age (at Transplant)"
+label variable bmi "Body-mass index"
+```
