@@ -47,7 +47,7 @@ qui {
 
    // code
    import delimited $dataset, clear
-   noisily di "Question 1: There are `c(N)` records in the dataset"
+   noisily di "Question 1: There are `c(N)' records in the dataset"
 
    log close
 }
