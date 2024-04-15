@@ -394,6 +394,54 @@ document.write(`
 </li>
 <li><p>Let’s consider how you may allow the user of <code class="docutils literal notranslate"><span class="pre">bmi_age</span></code> to utilize this program on a dataset with any variable name</p></li>
 </ol>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">  capture program drop</span> regress_linear
+<span class="k">   program</span> define regress_linear
+<span class="k">     syntax varlist</span> 
+<span class="k">       quietly regress</span> <span class="nv">`varlist&#39;</span>
+<span class="k">	   local</span> outcome:<span class="k"> di</span> <span class="nf">word</span>(<span class="s">&quot;</span><span class="nv">`varlist&#39;</span><span class="s">&quot;</span>, <span class="m">1</span>)
+<span class="k">	   local</span> coef:<span class="k"> di</span> <span class="nf">word</span>(<span class="s">&quot;</span><span class="nv">`varlist&#39;</span><span class="s">&quot;</span>, <span class="m">2</span>)
+<span class="k">       local</span> coef_b:<span class="k"> di</span> <span class="nx">%3.1f</span> _b[<span class="nv">`coef&#39;</span>]
+<span class="k">       </span>
+<span class="k">       di</span> <span class="s">&quot;Per 1-year increase in </span><span class="nv">`coef&#39;</span><span class="s">, </span><span class="nv">`outcome&#39;</span><span class="s"> increases by </span><span class="nv">`coef_b&#39;</span><span class="s">.&quot;</span>
+<span class="k">       </span>
+<span class="k">   end</span>
+</pre></div>
+</div>
+<p>Now the end-user has flexibility and can chose the variables in the regression:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k"> use</span> transplants,<span class="k"> clear</span>
+ regress_linear bmi age
+ regress_linear bmi prev_ki
+</pre></div>
+</div>
+<ol class="arabic simple" start="5">
+<li><p>How may the output be improved?</p></li>
+</ol>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">   capture program drop</span> regress_linear
+<span class="k">   program</span> define regress_linear
+<span class="k">     syntax varlist</span> 
+<span class="k">       quietly regress</span> <span class="nv">`varlist&#39;</span>
+<span class="k">	   local</span> outcome:<span class="k"> di</span> <span class="nf">word</span>(<span class="s">&quot;</span><span class="nv">`varlist&#39;</span><span class="s">&quot;</span>, <span class="m">1</span>)
+<span class="k">	   local</span> coef:<span class="k"> di</span> <span class="nf">word</span>(<span class="s">&quot;</span><span class="nv">`varlist&#39;</span><span class="s">&quot;</span>, <span class="m">2</span>)
+<span class="k">       local</span> coef_b:<span class="k"> di</span> <span class="nx">%3.1f</span> _b[<span class="nv">`coef&#39;</span>]
+<span class="k">	   local</span> coef: variable<span class="k"> label</span> <span class="nv">`coef&#39;</span>
+<span class="k">	   local</span> outcome: variable<span class="k"> label</span> <span class="nv">`outcome&#39;</span>
+<span class="k">       </span>
+<span class="k">       di</span> <span class="s">&quot;Per 1-year increase in </span><span class="nv">`coef&#39;</span><span class="s">, </span><span class="nv">`outcome&#39;</span><span class="s"> increases by </span><span class="nv">`coef_b&#39;</span><span class="s">.&quot;</span>
+<span class="k">       </span>
+<span class="k">   end</span>
+<span class="k">   </span>
+<span class="k">   </span>
+<span class="k">   use</span> transplants,<span class="k"> clear</span>
+   regress_linear bmi age
+</pre></div>
+</div>
+<ol class="arabic simple" start="6">
+<li><p>For publication-quality output we may need to relabel the variables and redo question 5:</p></li>
+</ol>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">label</span> variable age <span class="s">&quot;Age (at Transplant)&quot;</span>
+<span class="k">label</span> variable bmi <span class="s">&quot;Body-mass index&quot;</span>
+</pre></div>
+</div>
 </section>
 
     <script type="text/x-thebe-config">
