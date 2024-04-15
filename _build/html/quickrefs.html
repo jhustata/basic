@@ -365,6 +365,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#homework-assignments">Homework Assignments</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#datasets-and-supplementary-materials">Datasets and Supplementary Materials</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-resources-and-evaluation">Additional Resources and Evaluation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weekly-insights-updates-announcements-and-solutions">Weekly Insights: Updates, Announcements, and Solutions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#acknowledgements">Acknowledgements</a></li>
 </ul>
             </nav>
@@ -515,14 +516,18 @@ document.write(`
 <li><p><strong>Course Evaluation</strong>: Your honest <a class="reference external" href="https://courseevalsystem.publichealth.jhu.edu/User">feedback</a> is not just appreciated; it’s a cornerstone of how this course evolves. Please don’t miss out on the chance to shape future iterations in week 8.</p></li>
 <li><p><strong>Stata-focused Discussion Community on GitHub</strong>: An opportunity to engage with a <a class="reference external" href="https://github.com/jhufena/discussions/discussions">broader Hopkins community</a> interested in Stata programming. Requires a GitHub account and a willingness to learn and share.</p></li>
 </ul>
+</section>
+<section id="weekly-insights-updates-announcements-and-solutions">
+<h2>Weekly Insights: Updates, Announcements, and Solutions<a class="headerlink" href="#weekly-insights-updates-announcements-and-solutions" title="Permalink to this heading">#</a></h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <ul class="simple">
-<li><p>Updated 10:52PM on 04/16/2024</p></li>
-<li><p>To align output on your Stata results window in <a class="reference internal" href="hw3.html"><span class="doc std std-doc">HW3</span></a>, and thus in your <code class="docutils literal notranslate"><span class="pre">.log</span></code> file, you may use the column <code class="docutils literal notranslate"><span class="pre">_col()</span></code> syntax. Use the example below as a guide. Your colleagues already solved this issue in <a class="reference external" href="https://github.com/jhufena/discussions/discussions/35">GitHub Discussions</a></p></li>
-<li><p><a class="reference internal" href="hw1sol.html"><span class="doc std std-doc">HW1</span></a> &amp; <a class="reference internal" href="hw2sol.html"><span class="doc std std-doc">HW2</span></a> solutions are available for your review</p></li>
+<li><p><strong>Updated as of 04/16/2024 at 10:52PM</strong>.</p></li>
+<li><p>For tips on aligning output in your Stata results window for <strong>Homework 3</strong>, see the column <code class="docutils literal notranslate"><span class="pre">_col()</span></code> syntax below. This approach has been effectively utilized by your peers, as discussed in our <a class="reference external" href="https://github.com/jhufena/discussions/discussions/35">GitHub Community</a>.</p></li>
+<li><p>Solutions for <strong><a class="reference internal" href="hw1sol.html"><span class="doc std std-doc">Homework 1</span></a></strong> and <strong><a class="reference internal" href="hw2sol.html"><span class="doc std std-doc">Homework 2</span></a></strong> are now available. Review them to enhance your understanding and preparation for upcoming assignments.</p></li>
 </ul>
 </div>
+<p>Just as we’ve seen with macro modifiers such as <code class="docutils literal notranslate"><span class="pre">local</span> <span class="pre">mean:</span> <span class="pre">di</span> <span class="pre">%3.1f</span> <span class="pre">r(mean)</span></code>, so may you go with the modifier <code class="docutils literal notranslate"><span class="pre">_col()</span></code> in your extended macro:</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">local</span> study_arms:<span class="k"> di</span> _col(<span class="m">30</span>) <span class="s">&quot;Trial&quot;</span> _col(<span class="m">60</span>) <span class="s">&quot;Control&quot;</span>
 <span class="k">di</span> <span class="s">&quot;</span><span class="nv">`study_arms&#39;</span><span class="s">&quot;</span>
 </pre></div>
@@ -603,6 +608,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#homework-assignments">Homework Assignments</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#datasets-and-supplementary-materials">Datasets and Supplementary Materials</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-resources-and-evaluation">Additional Resources and Evaluation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weekly-insights-updates-announcements-and-solutions">Weekly Insights: Updates, Announcements, and Solutions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#acknowledgements">Acknowledgements</a></li>
 </ul>
   </nav></div>
