@@ -393,10 +393,10 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#commands-that-run-without-additional-syntax">3.3.1 Commands that run without additional syntax</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#anatomy-of-a-command-with-syntax">3.3.2 Anatomy of a command with syntax</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#taking-on-one-or-more-options">3.3.3 Taking on one or more options</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#some-command-options-take-arguments-describing-the-options">3.3.4 Some command options take <em>arguments</em> describing the options</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#involving-file-name-usually-preceeded-by-using-or-delimited">3.3.5 Involving file name, usually preceeded by <em>using</em> or <em>delimited</em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#some-command-options-take-arguments-describing-the-options">3.3.4 Some command options take arguments describing the options</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#involving-file-name-usually-preceeded-by-using-or-delimited">3.3.5 Involving file name, usually preceeded by <code class="docutils literal notranslate"><span class="pre">using</span></code> or <code class="docutils literal notranslate"><span class="pre">delimited</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#manipulating-data-with-conditional-statements">3.3.6 Manipulating data with conditional statements</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#log-command">3.3.7 Log command</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-log-command">3.3.7 The <code class="docutils literal notranslate"><span class="pre">log</span></code> command</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stuff-that-belongs-in-every-do-file">3.3.7 Stuff that belongs in every <code class="docutils literal notranslate"><span class="pre">.do</span></code> file</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#use-github-to-manage-versions-of-your-do-and-ado-files">3.3.8 Use GitHub to manage versions of your <code class="docutils literal notranslate"><span class="pre">.do</span></code> and <code class="docutils literal notranslate"><span class="pre">ado.</span></code> files</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-a-file-into-memory">3.3.9 Loading a file into memory</a></li>
@@ -703,14 +703,14 @@ document.write(`
 </div>
 </section>
 <section id="some-command-options-take-arguments-describing-the-options">
-<h3>3.3.4 Some command options take <em>arguments</em> describing the options<a class="headerlink" href="#some-command-options-take-arguments-describing-the-options" title="Permalink to this heading">#</a></h3>
+<h3>3.3.4 Some command options take arguments describing the options<a class="headerlink" href="#some-command-options-take-arguments-describing-the-options" title="Permalink to this heading">#</a></h3>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">tab</span> rec_education, <span class="k"> sum</span>(age)
 <span class="k">regress</span> wait_yrs age, level(<span class="m">90</span>)
 </pre></div>
 </div>
 </section>
 <section id="involving-file-name-usually-preceeded-by-using-or-delimited">
-<h3>3.3.5 Involving file name, usually preceeded by <em>using</em> or <em>delimited</em><a class="headerlink" href="#involving-file-name-usually-preceeded-by-using-or-delimited" title="Permalink to this heading">#</a></h3>
+<h3>3.3.5 Involving file name, usually preceeded by <code class="docutils literal notranslate"><span class="pre">using</span></code> or <code class="docutils literal notranslate"><span class="pre">delimited</span></code><a class="headerlink" href="#involving-file-name-usually-preceeded-by-using-or-delimited" title="Permalink to this heading">#</a></h3>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">append</span> using transplants<span class="m">.</span>dta
 <span class="k">insheet</span> using transplants<span class="m">.</span>txt
 </pre></div>
@@ -723,8 +723,8 @@ document.write(`
 </pre></div>
 </div>
 </section>
-<section id="log-command">
-<h3>3.3.7 Log command<a class="headerlink" href="#log-command" title="Permalink to this heading">#</a></h3>
+<section id="the-log-command">
+<h3>3.3.7 The <code class="docutils literal notranslate"><span class="pre">log</span></code> command<a class="headerlink" href="#the-log-command" title="Permalink to this heading">#</a></h3>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">log</span> using filename<span class="m">.</span>log,<span class="k"> replace</span> 
 <span class="k">use</span> transplants,<span class="k"> clear</span>
 <span class="k">log close</span>
@@ -1099,7 +1099,7 @@ document.write(`
 <p>Use the <code class="docutils literal notranslate"><span class="pre">transplants.dta</span></code> dataset with these practice questions:</p>
 <ol class="arabic simple">
 <li><p>Calculate the standard deviation of age among patients with blood type O (<code class="docutils literal notranslate"><span class="pre">abo==4</span></code>). Print the following sentence: <code class="docutils literal notranslate"><span class="pre">The</span> <span class="pre">SD</span> <span class="pre">of</span> <span class="pre">age</span> <span class="pre">among</span> <span class="pre">patients</span> <span class="pre">with</span> <span class="pre">blood</span> <span class="pre">type</span> <span class="pre">O</span> <span class="pre">is</span> <span class="pre">XX.X</span></code>. Replace <code class="docutils literal notranslate"><span class="pre">XX</span></code> with correct values. Round to tenths (e.g. 8.2)<a class="reference internal" href="lab3sol.html"><span class="doc std std-doc">.</span></a></p></li>
-<li><p>Regress BMI on age and sex (using <code class="docutils literal notranslate"><span class="pre">regress</span> <span class="pre">bmi</span> <span class="pre">age</span> <span class="pre">gender</span></code>) without displaying the regression output. Print the following sentence: <code class="docutils literal notranslate"><span class="pre">Per</span> <span class="pre">1-year</span> <span class="pre">increase</span> <span class="pre">in</span> <span class="pre">age,</span> <span class="pre">BMI</span> <span class="pre">increases</span> <span class="pre">by</span> <span class="pre">X.XX</span></code>. Replace <code class="docutils literal notranslate"><span class="pre">XX</span></code> with the regression coefficient of age. Round to hundredths (e.g. 0.74). Review week 3 Miscellany: <a class="reference external" href="https://jhustata.github.io/basic/chapter3.html#more-on-return-values">3.3.22 More on return values</a> on how to extract <code class="docutils literal notranslate"><span class="pre">r()</span></code> class return values following a regression.</p></li>
+<li><p>Regress BMI on age and sex (using <code class="docutils literal notranslate"><span class="pre">regress</span> <span class="pre">bmi</span> <span class="pre">age</span> <span class="pre">gender</span></code>) without displaying the regression output. Print the following sentence: <code class="docutils literal notranslate"><span class="pre">Per</span> <span class="pre">1-year</span> <span class="pre">increase</span> <span class="pre">in</span> <span class="pre">age,</span> <span class="pre">BMI</span> <span class="pre">increases</span> <span class="pre">by</span> <span class="pre">X.XX</span></code>. Replace <code class="docutils literal notranslate"><span class="pre">XX</span></code> with the regression coefficient of age. Round to hundredths (e.g. 0.74). Review week 3.3 Miscellany: <a class="reference external" href="https://jhustata.github.io/basic/chapter3.html#more-on-return-values">3.3.22 More on return values</a> on how to extract <code class="docutils literal notranslate"><span class="pre">r()</span></code> class return values following a regression.</p></li>
 <li><p>Now we will do the same thing, but using a program. Define a program named <code class="docutils literal notranslate"><span class="pre">bmi_age</span></code>. This program will regress BMI on age and sex without displaying the regression output, and print: <code class="docutils literal notranslate"><span class="pre">Per</span> <span class="pre">1-year</span> <span class="pre">increase</span> <span class="pre">in</span> <span class="pre">age,</span> <span class="pre">BMI</span> <span class="pre">increases</span> <span class="pre">by</span> <span class="pre">X.XX</span></code>. Replace <code class="docutils literal notranslate"><span class="pre">XX</span></code> with the regression coefficient of <code class="docutils literal notranslate"><span class="pre">age</span></code>. Round to hundredths (e.g. 0.74).</p></li>
 <li><p>Let’s consider how you may allow the user of <code class="docutils literal notranslate"><span class="pre">bmi_age</span></code> to utilize this program on a dataset with any variable name</p></li>
 </ol>
@@ -1299,10 +1299,10 @@ Previous transplant, %    XX<span class="m">.</span>X               XX<span clas
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#commands-that-run-without-additional-syntax">3.3.1 Commands that run without additional syntax</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#anatomy-of-a-command-with-syntax">3.3.2 Anatomy of a command with syntax</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#taking-on-one-or-more-options">3.3.3 Taking on one or more options</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#some-command-options-take-arguments-describing-the-options">3.3.4 Some command options take <em>arguments</em> describing the options</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#involving-file-name-usually-preceeded-by-using-or-delimited">3.3.5 Involving file name, usually preceeded by <em>using</em> or <em>delimited</em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#some-command-options-take-arguments-describing-the-options">3.3.4 Some command options take arguments describing the options</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#involving-file-name-usually-preceeded-by-using-or-delimited">3.3.5 Involving file name, usually preceeded by <code class="docutils literal notranslate"><span class="pre">using</span></code> or <code class="docutils literal notranslate"><span class="pre">delimited</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#manipulating-data-with-conditional-statements">3.3.6 Manipulating data with conditional statements</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#log-command">3.3.7 Log command</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-log-command">3.3.7 The <code class="docutils literal notranslate"><span class="pre">log</span></code> command</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stuff-that-belongs-in-every-do-file">3.3.7 Stuff that belongs in every <code class="docutils literal notranslate"><span class="pre">.do</span></code> file</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#use-github-to-manage-versions-of-your-do-and-ado-files">3.3.8 Use GitHub to manage versions of your <code class="docutils literal notranslate"><span class="pre">.do</span></code> and <code class="docutils literal notranslate"><span class="pre">ado.</span></code> files</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-a-file-into-memory">3.3.9 Loading a file into memory</a></li>
