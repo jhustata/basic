@@ -414,90 +414,86 @@ document.write(`
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="hw-3-solution">
 <h1>HW 3 Solution<a class="headerlink" href="#hw-3-solution" title="Permalink to this heading">#</a></h1>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="nv">```stata</span>
-<span class="nv">quietly {</span>
-<span class="nv">	cls</span>
-<span class="nv">	if 0 { //background, purpose</span>
-<span class="nv">		1. HW3 solution</span>
-<span class="nv">		2. Just for TAs</span>
-<span class="nv">	}</span>
-<span class="nv">	if 1 { //methods, log, settings</span>
-<span class="nv">		capture log close </span>
-<span class="nv">		log using &quot;hw1.lastname.firstname.log&quot;, replace </span>
-<span class="nv">		global data https://jhustata.github.io/book/_downloads/884b9e06eb29f89b1b87da4eab39775d/hw1.txt</span>
-<span class="nv">	}</span>
-<span class="nv">	if 2 { //data</span>
-<span class="nv">		import delimited </span><span class="vg">$data</span><span class="nv">, clear </span>
-<span class="nv">	}</span>
-<span class="nv">	if 3 { //results, analysis</span>
-<span class="nv">		//Q1</span>
-<span class="nv">		g htn=dx==&quot;4=Hypertensive&quot;</span>
-<span class="nv">		replace htn=0 if missing(htn)</span>
-<span class="nv">		</span>
-<span class="nv">		//label values</span>
-<span class="nv">		label define htn_lab 0 &quot;No&quot; 1 &quot;Yes&quot;</span>
-<span class="nv">		label values htn htn_lab </span>
-<span class="nv">		noi tab htn </span>
-<span class="nv">		</span>
-<span class="nv">		//Q2</span>
-<span class="nv">		//capture program drop q2</span>
-<span class="nv">		//program define q2</span>
-<span class="nv">		   //our goals; this step is not needed</span>
-<span class="nv">		   local row1=1</span>
-<span class="nv">		   local row2=2</span>
-<span class="nv">		   local row3=3</span>
-<span class="nv">		   </span>
-<span class="nv">		   //labels</span>
-<span class="nv">		   label variable init_age &quot;Age, median (IQR)&quot;</span>
-<span class="nv">		   label variable prev &quot;Previous transplant, %&quot;</span>
-<span class="nv">		   //Males</span>
-<span class="nv">		   sum init_age if female==0, detail</span>
-<span class="nv">		   //row 1</span>
-<span class="nv">		   local males_n=r(N)</span>
-<span class="nv">		   </span>
-<span class="nv">		   //row2</span>
-<span class="nv">		   local males_age_p50: di %2.0f r(p50)</span>
-<span class="nv">		   local males_age_p25: di %2.0f r(p25)</span>
-<span class="nv">		   local males_age_p75: di %2.0f r(p75)</span>
-<span class="nv">		  </span>
-<span class="nv">		   </span>
-<span class="nv">		   local agelab: variable label init_age</span>
-<span class="nv">		   local prevlab: variable label prev </span>
-<span class="nv">		   </span>
-<span class="nv">		   //row3</span>
-<span class="nv">		    local males_prev: di %2.1f r(mean)</span>
-<span class="nv">	</span>
-<span class="nv">		   //Females</span>
-<span class="nv">		   sum init_age if female==1, detail</span>
-<span class="nv">		   //row 1</span>
-<span class="nv">		   local females_n=r(N)</span>
-<span class="nv">		   </span>
-<span class="nv">		   //row2</span>
-<span class="nv">		   local females_age_p50: di %2.0f r(p50)</span>
-<span class="nv">		   local females_age_p25: di %2.0f r(p25)</span>
-<span class="nv">		   local females_age_p75: di %2.0f r(p75)</span>
-<span class="nv">		   </span>
-<span class="nv">		   //row3</span>
-<span class="nv">		    local females_prev: di %2.1f r(mean)</span>
-<span class="nv">	</span>
-<span class="nv">		   </span>
-<span class="nv">		   //assign correct values</span>
-<span class="nv">		   local row1: di &quot;Question 2&quot; _col(30) &quot;Males (N=`males_n&#39;)&quot; _col(60) &quot;Females (N=`females_n&#39;)&quot;</span>
-<span class="nv">		   local row2: di &quot;`agelab&#39;&quot; _col(30) &quot;`males_age_p50&#39; (`males_age_p25&#39; - `males_age_p75&#39;)&quot; ///</span>
-<span class="nv">		      _col(60) &quot;`females_age_p50&#39; (`females_age_p25&#39; - `females_age_p75&#39;)&quot;</span>
-<span class="nv">		   local row3: di &quot;`prevlab&#39;&quot; _col(30) `males_prev&#39; _col(60) `females_prev&#39;</span>
-<span class="nv">		   forvalues i=1/3 {</span>
-<span class="nv">		      //given our goals above:</span>
-<span class="nv">			  noi di &quot;`row`i&#39;&#39;&quot;	</span>
-<span class="nv">		   }</span>
-<span class="nv">		//end </span>
-<span class="nv">		//q2</span>
-<span class="nv">	}</span>
-<span class="nv">	log close </span>
-<span class="nv">}</span>
-</pre></div>
-</div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">quietly</span> {
+	cls
+<span class="k">	if</span> <span class="m">0</span> { <span class="c1">//background, purpose</span>
+		<span class="m">1</span>. HW3 solution
+		<span class="m">2</span>. Just<span class="k"> for</span> TAs
+	}
+<span class="k">	if</span> <span class="m">1</span> { <span class="c1">//methods, log, settings</span>
+<span class="k">		capture log close</span> 
+<span class="k">		log</span> using <span class="s">&quot;hw1.lastname.firstname.log&quot;</span>,<span class="k"> replace</span> 
+<span class="k">		global</span> data https:<span class="o">//</span>jhustata<span class="m">.</span>github<span class="m">.</span>io<span class="o">/</span>book<span class="o">/</span>_downloads<span class="o">/</span>884b9e06eb29f89b1b87da4eab39775d<span class="o">/</span>hw1<span class="m">.</span>txt
+	}
+<span class="k">	if</span> <span class="m">2</span> { <span class="c1">//data</span>
+		import delimited <span class="vg">$data</span>,<span class="k"> clear</span> 
+	}
+<span class="k">	if</span> <span class="m">3</span> { <span class="c1">//results, analysis</span>
+		<span class="c1">//Q1</span>
+<span class="k">		g</span> htn=dx<span class="o">==</span><span class="s">&quot;4=Hypertensive&quot;</span>
+<span class="k">		replace</span> htn=<span class="m">0</span><span class="k"> if</span> <span class="nf">missing</span>(htn)
+		
+		<span class="c1">//label values</span>
+<span class="k">		label</span> define htn_lab <span class="m">0</span> <span class="s">&quot;No&quot;</span> <span class="m">1</span> <span class="s">&quot;Yes&quot;</span>
+<span class="k">		label</span> values htn htn_lab 
+<span class="k">		noi tab</span> htn 
+		
+		<span class="c1">//Q2</span>
+		<span class="c1">//capture program drop q2</span>
+		<span class="c1">//program define q2</span>
+		   <span class="c1">//our goals; this step is not needed</span>
+<span class="k">		   local</span> row1=<span class="m">1</span>
+<span class="k">		   local</span> row2=<span class="m">2</span>
+<span class="k">		   local</span> row3=<span class="m">3</span>
+		   
+		   <span class="c1">//labels</span>
+<span class="k">		   label</span> variable init_age <span class="s">&quot;Age, median (IQR)&quot;</span>
+<span class="k">		   label</span> variable prev <span class="s">&quot;Previous transplant, %&quot;</span>
+		   <span class="c1">//Males</span>
+<span class="k">		   sum</span> init_age<span class="k"> if</span> female<span class="o">==</span><span class="m">0</span>, detail
+		   <span class="c1">//row 1</span>
+<span class="k">		   local</span> males_n=<span class="nf">r</span>(N)
+		   
+		   <span class="c1">//row2</span>
+<span class="k">		   local</span> males_age_p50:<span class="k"> di</span> <span class="nx">%2.0f</span> <span class="nf">r</span>(p50)
+<span class="k">		   local</span> males_age_p25:<span class="k"> di</span> <span class="nx">%2.0f</span> <span class="nf">r</span>(p25)
+<span class="k">		   local</span> males_age_p75:<span class="k"> di</span> <span class="nx">%2.0f</span> <span class="nf">r</span>(p75)
+<span class="k">		  </span>
+<span class="k">		   </span>
+<span class="k">		   local</span> agelab: variable<span class="k"> label</span> init_age
+<span class="k">		   local</span> prevlab: variable<span class="k"> label</span> prev 
+		   
+		   <span class="c1">//row3</span>
+<span class="k">		    local</span> males_prev:<span class="k"> di</span> <span class="nx">%2.1f</span> <span class="nf">r</span>(mean)
+	
+		   <span class="c1">//Females</span>
+<span class="k">		   sum</span> init_age<span class="k"> if</span> female<span class="o">==</span><span class="m">1</span>, detail
+		   <span class="c1">//row 1</span>
+<span class="k">		   local</span> females_n=<span class="nf">r</span>(N)
+		   
+		   <span class="c1">//row2</span>
+<span class="k">		   local</span> females_age_p50:<span class="k"> di</span> <span class="nx">%2.0f</span> <span class="nf">r</span>(p50)
+<span class="k">		   local</span> females_age_p25:<span class="k"> di</span> <span class="nx">%2.0f</span> <span class="nf">r</span>(p25)
+<span class="k">		   local</span> females_age_p75:<span class="k"> di</span> <span class="nx">%2.0f</span> <span class="nf">r</span>(p75)
+		   
+		   <span class="c1">//row3</span>
+<span class="k">		    local</span> females_prev:<span class="k"> di</span> <span class="nx">%2.1f</span> <span class="nf">r</span>(mean)
+	
+		   
+		   <span class="c1">//assign correct values</span>
+<span class="k">		   local</span> row1:<span class="k"> di</span> <span class="s">&quot;Question 2&quot;</span> _col(<span class="m">30</span>) <span class="s">&quot;Males (N=</span><span class="nv">`males_n&#39;</span><span class="s">)&quot;</span> _col(<span class="m">60</span>) <span class="s">&quot;Females (N=</span><span class="nv">`females_n&#39;</span><span class="s">)&quot;</span>
+<span class="k">		   local</span> row2:<span class="k"> di</span> <span class="s">&quot;</span><span class="nv">`agelab&#39;</span><span class="s">&quot;</span> _col(<span class="m">30</span>) <span class="s">&quot;</span><span class="nv">`males_age_p50&#39;</span><span class="s"> (</span><span class="nv">`males_age_p25&#39;</span><span class="s"> - </span><span class="nv">`males_age_p75&#39;</span><span class="s">)&quot;</span> <span class="cs">///</span>
+		      _col(<span class="m">60</span>) <span class="s">&quot;</span><span class="nv">`females_age_p50&#39;</span><span class="s"> (</span><span class="nv">`females_age_p25&#39;</span><span class="s"> - </span><span class="nv">`females_age_p75&#39;</span><span class="s">)&quot;</span>
+<span class="k">		   local</span> row3:<span class="k"> di</span> <span class="s">&quot;</span><span class="nv">`prevlab&#39;</span><span class="s">&quot;</span> _col(<span class="m">30</span>) <span class="nv">`males_prev&#39;</span> _col(<span class="m">60</span>) <span class="nv">`females_prev&#39;</span>
+<span class="k">		   forvalues</span> i=<span class="m">1</span><span class="o">/</span><span class="m">3</span> {
+		      <span class="c1">//given our goals above:</span>
+<span class="k">			  noi di</span> <span class="s">&quot;</span><span class="nv">`row`i&#39;&#39;</span><span class="s">&quot;</span>	
+		   }
+		<span class="c1">//end </span>
+		<span class="c1">//q2</span>
+	}
+<span class="k">	log close</span> 
+}
 </pre></div>
 </div>
 </section>
