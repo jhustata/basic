@@ -415,6 +415,18 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#line-continuation">3.3.23 Line continuation</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#labels">3.3.24 Labels</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tagging">3.3.25 Tagging</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#drop-keep">3.3.26 Drop, Keep</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">3.3.27 Drop, keep</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#replace">3.3.28 Replace</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rename">3.3.29 Rename</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sort-gsort">3.3.30 Sort, <code class="docutils literal notranslate"><span class="pre">gsort</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recode">3.3.31 Recode</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#display">3.3.32 Display</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#capture">3.3.33 Capture</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#assert">3.3.34 Assert</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scalars-macros-matrices">3.3.35 Scalars, macros, matrices</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">3.3.36 Scalars, macros, matrices</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#r-class-commands">3.3.37 R-class commands</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab">3.4 Lab</a></li>
@@ -867,77 +879,13 @@ document.write(`
 <span class="k">g</span> new_id=_n
 <span class="k">gen</span> total_records=_N
 <span class="k">g</span> percentile=<span class="m">100</span><span class="o">*</span>_n<span class="o">/</span>_N
-
-<span class="c1">//drop/keep</span>
-<span class="k">keep</span> age gender bmi fake_id ra<span class="o">*</span>
-<span class="k">drop</span> end_date
-
-<span class="c1">//remember: to load the original dataset again</span>
-<span class="k">use</span> transplants,<span class="k"> clear</span>
-<span class="k">keep in</span> <span class="m">1</span><span class="o">/</span><span class="m">100</span>
-<span class="k">drop if</span> wait_yrs<span class="o">&lt;</span><span class="m">1</span>
-<span class="k">keep if</span> prev_ki<span class="o">==</span><span class="m">1</span>
-<span class="k">drop if</span> age<span class="o">&lt;</span><span class="m">18</span> <span class="o">&amp;</span> abo<span class="o">==</span><span class="m">2</span>
-
-<span class="c1">//load data again</span>
-<span class="k">use</span> transplants,<span class="k"> clear</span>
-<span class="k">replace</span> prev=<span class="m">0</span>
-<span class="k">replace</span> wait_yrs=<span class="m">5</span><span class="k"> if</span> wait_yrs<span class="o">&gt;</span><span class="m">5</span>
-<span class="k">replace</span> gender=gender<span class="m">+1</span>
-<span class="k">replace</span> bmi=.<span class="k"> if</span> <span class="o">!</span><span class="nf">inrange</span>(bmi,<span class="m">17</span>,<span class="m">50</span>)
-
-<span class="c1">//rename</span>
-<span class="k">rename</span> age age_at_transplant
-<span class="k">rename</span> gender female
-
-<span class="k">use</span> transplants,<span class="k"> clear</span>
-<span class="k">rename</span> (age gender)(age_at_transplant female)
-
-<span class="c1">//sort, gsort</span>
-<span class="k">list in</span> <span class="m">1</span><span class="o">/</span><span class="m">10</span> 
-<span class="k">sort</span> age
-<span class="k">list in</span> <span class="m">1</span><span class="o">/</span><span class="m">10</span>
-<span class="k">sort</span> age dx
-<span class="k">list in</span> <span class="m">1</span><span class="o">/</span><span class="m">10</span>
-<span class="k">gsort</span> <span class="o">-</span>age dx <span class="o">-</span>race 
-<span class="k">list in</span> <span class="m">1</span><span class="o">/</span><span class="m">10</span>
-
-<span class="c1">//recode</span>
-<span class="k">recode</span> rec_education (<span class="m">3</span> <span class="m">4</span> <span class="m">5</span> =<span class="m">9</span>)
-<span class="k">recode</span> dx (<span class="m">1</span>=<span class="m">1</span>)(<span class="m">2</span>=<span class="m">2</span>)(<span class="o">*</span>=<span class="m">9</span>)
-<span class="k">recode</span> gender (<span class="m">0</span>=<span class="m">1</span>)(<span class="m">1</span>=<span class="m">0</span>),gen(male)
-
-<span class="c1">//display</span>
-<span class="k">sum</span> wait_yrs
-<span class="k">di</span> <span class="s">&quot;variable&quot;</span> _col(<span class="m">20</span>) <span class="s">&quot;mean&quot;</span>
-<span class="k">di</span> <span class="s">&quot;wait time&quot;</span> _col(<span class="m">20</span>) <span class="nf">r</span>(mean)
-
-<span class="c1">//capture</span>
-<span class="k">capture sum</span> nonexistent_variable
-<span class="k">capture di</span> <span class="m">4+3</span>
-<span class="k">capture di</span> <span class="m">4</span><span class="o">+</span>
-
-<span class="c1">//assert </span>
-<span class="k">assert</span> age<span class="o">&lt;</span><span class="m">100</span>
-<span class="k">assert</span> end_date<span class="o">&gt;=</span>transplant_date
-<span class="k">assert</span> <span class="nf">inlist</span>(gender,<span class="m">0</span>,<span class="m">1</span>)
-<span class="k">assert</span> <span class="m">2</span><span class="o">&lt;</span><span class="m">1</span>
-<span class="k">assert</span> <span class="m">0</span>
-<span class="k">assert</span> <span class="nf">c</span>(edition_real)<span class="o">==</span><span class="s">&quot;BE&quot;</span>
-<span class="k">assert</span> <span class="nf">c</span>(edition_real)<span class="o">==</span><span class="s">&quot;MP&quot;</span>
-
-<span class="c1">//recode+label, with unique line continuation with &quot;delimit&quot;</span>
-#delimit ;
-<span class="k">recode</span> race 
-    (<span class="m">1</span>=<span class="m">0</span> <span class="s">&quot;Cauc&quot;</span>)
-    (<span class="m">2</span>=<span class="m">1</span> <span class="s">&quot;AA)</span>
-    (<span class="m">4</span>=<span class="m">2</span> <span class="s">&quot;Hisp/Latino&quot;</span>)
-    (<span class="m">5</span><span class="o">/</span><span class="m">9</span>=<span class="m">3</span> <span class="s">&quot;Other&quot;</span>),
-<span class="k">        gen</span>(race_cat)
-;
-#delimit cr
-
-<span class="c1">//preserve &amp; restore</span>
+</pre></div>
+</div>
+</section>
+<section id="preserve-restore">
+<h3>3.3.20 Preserve, restore<a class="headerlink" href="#preserve-restore" title="Permalink to this heading">#</a></h3>
+<p>This has briefly been covered in the preceeding section. But lets revisit it:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//preserve &amp; restore</span>
 <span class="k">sum</span> age
 
 <span class="c1">//indentation!</span>
@@ -947,13 +895,9 @@ document.write(`
 <span class="k">restore</span> 
 
 <span class="k">sum</span> age
-</pre></div>
-</div>
-</section>
-<section id="preserve-restore">
-<h3>3.3.20 Preserve, restore<a class="headerlink" href="#preserve-restore" title="Permalink to this heading">#</a></h3>
-<p>This has briefly been covered in the preceeding section. But lets revisit it:</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> transplants,<span class="k"> clear</span>
+
+<span class="c1">//</span>
+
 <span class="k">di</span> <span class="nf">c</span>(N)
 
 <span class="k">di</span> <span class="nf">c</span>(k)
@@ -1058,6 +1002,17 @@ document.write(`
     (<span class="m">4</span> <span class="m">5</span> <span class="m">6</span> <span class="m">7</span> <span class="m">9</span>)
 ;
 #delimit cr
+
+<span class="c1">//recode+label, with unique line continuation with &quot;delimit&quot;</span>
+#delimit ;
+<span class="k">recode</span> race 
+    (<span class="m">1</span>=<span class="m">0</span> <span class="s">&quot;Cauc&quot;</span>)
+    (<span class="m">2</span>=<span class="m">1</span> <span class="s">&quot;AA)</span>
+    (<span class="m">4</span>=<span class="m">2</span> <span class="s">&quot;Hisp/Latino&quot;</span>)
+    (<span class="m">5</span><span class="o">/</span><span class="m">9</span>=<span class="m">3</span> <span class="s">&quot;Other&quot;</span>),
+<span class="k">        gen</span>(race_cat)
+;
+#delimit cr
 </pre></div>
 </div>
 </section>
@@ -1092,6 +1047,162 @@ document.write(`
 <span class="k">list</span> abo gender spread<span class="k"> if</span> grouptag
 </pre></div>
 </div>
+</section>
+<section id="drop-keep">
+<h3>3.3.26 Drop, Keep<a class="headerlink" href="#drop-keep" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//drop/keep</span>
+<span class="k">keep</span> age gender bmi fake_id ra<span class="o">*</span>
+<span class="k">drop</span> end_date
+</pre></div>
+</div>
+</section>
+<section id="id1">
+<h3>3.3.27 Drop, keep<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//drop/keep</span>
+<span class="k">keep</span> age gender bmi fake_id ra<span class="o">*</span>
+<span class="k">drop</span> end_date
+
+<span class="c1">//remember: to load the original dataset again</span>
+<span class="k">use</span> transplants,<span class="k"> clear</span>
+<span class="k">keep in</span> <span class="m">1</span><span class="o">/</span><span class="m">100</span>
+<span class="k">drop if</span> wait_yrs<span class="o">&lt;</span><span class="m">1</span>
+<span class="k">keep if</span> prev_ki<span class="o">==</span><span class="m">1</span>
+<span class="k">drop if</span> age<span class="o">&lt;</span><span class="m">18</span> <span class="o">&amp;</span> abo<span class="o">==</span><span class="m">2</span>
+</pre></div>
+</div>
+</section>
+<section id="replace">
+<h3>3.3.28 Replace<a class="headerlink" href="#replace" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//load data again</span>
+<span class="k">use</span> transplants,<span class="k"> clear</span>
+<span class="k">replace</span> prev=<span class="m">0</span>
+<span class="k">replace</span> wait_yrs=<span class="m">5</span><span class="k"> if</span> wait_yrs<span class="o">&gt;</span><span class="m">5</span>
+<span class="k">replace</span> gender=gender<span class="m">+1</span>
+<span class="k">replace</span> bmi=.<span class="k"> if</span> <span class="o">!</span><span class="nf">inrange</span>(bmi,<span class="m">17</span>,<span class="m">50</span>)
+</pre></div>
+</div>
+</section>
+<section id="rename">
+<h3>3.3.29 Rename<a class="headerlink" href="#rename" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//rename</span>
+<span class="k">rename</span> age age_at_transplant
+<span class="k">rename</span> gender female
+
+<span class="k">use</span> transplants,<span class="k"> clear</span>
+<span class="k">rename</span> (age gender)(age_at_transplant female)
+</pre></div>
+</div>
+</section>
+<section id="sort-gsort">
+<h3>3.3.30 Sort, <code class="docutils literal notranslate"><span class="pre">gsort</span></code><a class="headerlink" href="#sort-gsort" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//sort, gsort</span>
+<span class="k">list in</span> <span class="m">1</span><span class="o">/</span><span class="m">10</span> 
+<span class="k">sort</span> age
+<span class="k">list in</span> <span class="m">1</span><span class="o">/</span><span class="m">10</span>
+<span class="k">sort</span> age dx
+<span class="k">list in</span> <span class="m">1</span><span class="o">/</span><span class="m">10</span>
+<span class="k">gsort</span> <span class="o">-</span>age dx <span class="o">-</span>race 
+<span class="k">list in</span> <span class="m">1</span><span class="o">/</span><span class="m">10</span>
+</pre></div>
+</div>
+</section>
+<section id="recode">
+<h3>3.3.31 Recode<a class="headerlink" href="#recode" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//recode</span>
+<span class="k">recode</span> rec_education (<span class="m">3</span> <span class="m">4</span> <span class="m">5</span> =<span class="m">9</span>)
+<span class="k">recode</span> dx (<span class="m">1</span>=<span class="m">1</span>)(<span class="m">2</span>=<span class="m">2</span>)(<span class="o">*</span>=<span class="m">9</span>)
+<span class="k">recode</span> gender (<span class="m">0</span>=<span class="m">1</span>)(<span class="m">1</span>=<span class="m">0</span>),gen(male)
+
+<span class="c1">// recode + label, simultaneously!</span>
+
+<span class="k">recode</span> race <span class="cs">///</span>
+    (<span class="m">1</span>=<span class="m">0</span> <span class="s">&quot;Cauc&quot;</span>) <span class="cs">///</span>
+    (<span class="m">2</span>=<span class="m">1</span> <span class="s">&quot;AA) ///</span>
+    (<span class="m">4</span>=<span class="m">2</span> <span class="s">&quot;Hisp/Latino&quot;</span>) <span class="cs">///</span>
+    (<span class="m">5</span><span class="o">/</span><span class="m">9</span>=<span class="m">3</span> <span class="s">&quot;Other&quot;</span>), <span class="cs">///</span>
+<span class="k">        gen</span>(race_cat)
+</pre></div>
+</div>
+</section>
+<section id="display">
+<h3>3.3.32 Display<a class="headerlink" href="#display" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//display</span>
+<span class="k">sum</span> wait_yrs
+<span class="k">di</span> <span class="s">&quot;variable&quot;</span> _col(<span class="m">20</span>) <span class="s">&quot;mean&quot;</span>
+<span class="k">di</span> <span class="s">&quot;wait time&quot;</span> _col(<span class="m">20</span>) <span class="nf">r</span>(mean)
+</pre></div>
+</div>
+</section>
+<section id="capture">
+<h3>3.3.33 Capture<a class="headerlink" href="#capture" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">capture sum</span> nonexistent_variable
+<span class="k">capture di</span> <span class="m">4+3</span>
+<span class="k">capture di</span> <span class="m">4</span><span class="o">+</span>
+</pre></div>
+</div>
+</section>
+<section id="assert">
+<h3>3.3.34 Assert<a class="headerlink" href="#assert" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//assert </span>
+<span class="k">assert</span> age<span class="o">&lt;</span><span class="m">100</span>
+<span class="k">assert</span> end_date<span class="o">&gt;=</span>transplant_date
+<span class="k">assert</span> <span class="nf">inlist</span>(gender,<span class="m">0</span>,<span class="m">1</span>)
+<span class="k">assert</span> <span class="m">2</span><span class="o">&lt;</span><span class="m">1</span>
+<span class="k">assert</span> <span class="m">0</span>
+<span class="k">assert</span> <span class="nf">c</span>(edition_real)<span class="o">==</span><span class="s">&quot;BE&quot;</span>
+<span class="k">assert</span> <span class="nf">c</span>(edition_real)<span class="o">==</span><span class="s">&quot;MP&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="scalars-macros-matrices">
+<h3>3.3.35 Scalars, macros, matrices<a class="headerlink" href="#scalars-macros-matrices" title="Permalink to this heading">#</a></h3>
+<p>Saved results can be either of the following:</p>
+<ul class="simple">
+<li><p>Scalars (numbers)</p></li>
+<li><p>Macros (numbers, string, or both)</p></li>
+<li><p>Matrices (lists or tables of numbers)</p></li>
+</ul>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">sum</span> bmi, detail
+<span class="k">disp</span> <span class="s">&quot;median: &quot;</span> _col(<span class="m">12</span>) <span class="nf">r</span>(p50)
+<span class="k">disp</span> <span class="s">&quot;IQR: &quot;</span> _col(<span class="m">12</span>) <span class="nf">r</span>(p25) <span class="s">&quot;-&quot;</span> <span class="nf">r</span>(p75)<span class="k"> disp</span> <span class="s">&quot;kurtosis: &quot;</span> _col(<span class="m">12</span>) <span class="nf">r</span>(kurtosis)
+</pre></div>
+</div>
+<p>A command that saves results in <code class="docutils literal notranslate"><span class="pre">r()</span></code> is said to be an “r-class command”</p>
+</section>
+<section id="id2">
+<h3>3.3.36 Scalars, macros, matrices<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
+<p>Saved results can be either of the following:</p>
+<ul class="simple">
+<li><p>Scalars (numbers)</p></li>
+<li><p>Macros (numbers, string, or both)</p></li>
+<li><p>Matrices (lists or tables of numbers)</p></li>
+</ul>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">sum</span> bmi, detail
+<span class="k">disp</span> <span class="s">&quot;median: &quot;</span> _col(<span class="m">12</span>) <span class="nf">r</span>(p50)
+<span class="k">disp</span> <span class="s">&quot;IQR: &quot;</span> _col(<span class="m">12</span>) <span class="nf">r</span>(p25) <span class="s">&quot;-&quot;</span> <span class="nf">r</span>(p75)<span class="k"> disp</span> <span class="s">&quot;kurtosis: &quot;</span> _col(<span class="m">12</span>) <span class="nf">r</span>(kurtosis)
+</pre></div>
+</div>
+<p>A command that saves results in <code class="docutils literal notranslate"><span class="pre">r()</span></code> is said to be an “r-class command”</p>
+</section>
+<section id="r-class-commands">
+<h3>3.3.37 R-class commands<a class="headerlink" href="#r-class-commands" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">summarize</span>
+<span class="k">tabulate</span>
+<span class="k">describe</span>
+<span class="k">codebook</span>
+<span class="k">count</span>
+<span class="k">duplicates</span>
+<span class="k">compare</span>
+<span class="k">correlate</span>
+<span class="k">lincom</span>
+<span class="k">test</span>
+<span class="k">roctab</span>
+<span class="k">sample</span> 
+<span class="k">centile</span>
+<span class="c1">//etc</span>
+</pre></div>
+</div>
+<p>Type <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">list</span></code> after running one of these commands and see what you get</p>
 </section>
 </section>
 <section id="lab">
@@ -1321,6 +1432,18 @@ Previous transplant, %    XX<span class="m">.</span>X               XX<span clas
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#line-continuation">3.3.23 Line continuation</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#labels">3.3.24 Labels</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tagging">3.3.25 Tagging</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#drop-keep">3.3.26 Drop, Keep</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">3.3.27 Drop, keep</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#replace">3.3.28 Replace</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rename">3.3.29 Rename</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sort-gsort">3.3.30 Sort, <code class="docutils literal notranslate"><span class="pre">gsort</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recode">3.3.31 Recode</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#display">3.3.32 Display</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#capture">3.3.33 Capture</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#assert">3.3.34 Assert</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scalars-macros-matrices">3.3.35 Scalars, macros, matrices</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">3.3.36 Scalars, macros, matrices</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#r-class-commands">3.3.37 R-class commands</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab">3.4 Lab</a></li>
