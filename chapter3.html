@@ -426,7 +426,11 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#assert">3.3.34 Assert</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scalars-macros-matrices">3.3.35 Scalars, macros, matrices</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">3.3.36 Scalars, macros, matrices</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#r-class-commands">3.3.37 R-class commands</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#r-class-commands">3.3.37 R-class commands</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#examples-from-the-r-class">Examples from the R-class</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ereturn-list">3.3.38 <code class="docutils literal notranslate"><span class="pre">ereturn</span> <span class="pre">list</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab">3.4 Lab</a></li>
@@ -1203,6 +1207,67 @@ document.write(`
 </pre></div>
 </div>
 <p>Type <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">list</span></code> after running one of these commands and see what you get</p>
+<section id="examples-from-the-r-class">
+<h4>Examples from the R-class<a class="headerlink" href="#examples-from-the-r-class" title="Permalink to this heading">#</a></h4>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">count if</span> age <span class="o">&lt;</span> <span class="m">45</span>
+<span class="k">disp</span> <span class="nf">r</span>(N) <span class="s">&quot; young patients&quot;</span>
+<span class="k">tab</span> race abo, chi2
+<span class="k">disp</span> <span class="s">&quot;p-value: &quot;</span> <span class="nf">r</span>(p)
+
+<span class="c1">//</span>
+<span class="k">sum</span> age
+<span class="k">assert</span> <span class="nf">inrange</span>(<span class="nf">r</span>(mean), <span class="m">45</span>, <span class="m">55</span>)
+<span class="k">tab</span> race abo, chi2
+<span class="k">assert</span> <span class="nf">r</span>(p) <span class="o">&lt;</span> <span class="m">0.05</span>
+
+<span class="c1">//</span>
+<span class="k">sum</span> bmi
+<span class="k">disp</span> <span class="s">&quot;Mean BMI: &quot;</span> <span class="nf">r</span>(mean)
+
+<span class="c1">//</span>
+<span class="k">sum</span> bmi
+<span class="k">disp</span> <span class="s">&quot;Mean BMI: &quot;</span> <span class="nx">%4.1f</span> <span class="nf">r</span>(mean)
+
+<span class="c1">//</span>
+<span class="k">sum</span> bmi
+<span class="k">disp</span> <span class="s">&quot;Mean BMI: &quot;</span> <span class="nx">%4.0f</span> <span class="nf">r</span>(mean)
+</pre></div>
+</div>
+<p>There are dozens of different %format codes. For now, know that the format code for floating-point numbers looks like this: <code class="docutils literal notranslate"><span class="pre">%4.2f</span></code></p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">%</span></code> character means “formatting code”</p></li>
+<li><p>total width (oftenignored)</p></li>
+<li><p>decimal point</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">#</span></code> of digits to right of decimal point (mustbe &lt; total width)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">f</span></code> character means “floatingpoint”(decimal <code class="docutils literal notranslate"><span class="pre">#</span></code>)</p></li>
+</ol>
+</section>
+</section>
+<section id="ereturn-list">
+<h3>3.3.38 <code class="docutils literal notranslate"><span class="pre">ereturn</span> <span class="pre">list</span></code><a class="headerlink" href="#ereturn-list" title="Permalink to this heading">#</a></h3>
+<p>Some commands (mostly regression commands) are e-class. (The “e” stands for “estimation”).</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">regress</span> bmi gender age 
+<span class="k">ereturn list</span>
+
+<span class="c1">//log likelihood </span>
+<span class="k">disp e</span>(ll) <span class="o">-</span><span class="m">17256.867</span>
+</pre></div>
+</div>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//_b coefficient matrix</span>
+<span class="k">regress</span> bmi gender age
+<span class="k">disp</span> _b[gender]
+
+<span class="k">disp</span> <span class="s">&quot;estimated BMI: &quot;</span> <span class="nx">%3.2f</span> <span class="cs">/// </span>
+   _b[_cons] <span class="s">&quot; + &quot;</span> <span class="nx">%3.2f</span> _b[age] <span class="cs">/// </span>
+      <span class="s">&quot;*age (+ &quot;</span> _b[gender] <span class="cs">///</span>
+   <span class="s">&quot; if male)&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//_se coefficient matrix</span>
+<span class="k">disp</span> _se[gender]
+<span class="k">disp</span> _se[age]
+</pre></div>
+</div>
 </section>
 </section>
 <section id="lab">
@@ -1443,7 +1508,11 @@ Previous transplant, %    XX<span class="m">.</span>X               XX<span clas
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#assert">3.3.34 Assert</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scalars-macros-matrices">3.3.35 Scalars, macros, matrices</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">3.3.36 Scalars, macros, matrices</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#r-class-commands">3.3.37 R-class commands</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#r-class-commands">3.3.37 R-class commands</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#examples-from-the-r-class">Examples from the R-class</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ereturn-list">3.3.38 <code class="docutils literal notranslate"><span class="pre">ereturn</span> <span class="pre">list</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab">3.4 Lab</a></li>
