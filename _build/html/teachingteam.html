@@ -334,7 +334,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -350,6 +352,16 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Resource for the Teaching Team</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#hw-3-solution">HW 3 Solution</a></li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -364,18 +376,18 @@ document.write(`
 <ol class="arabic simple">
 <li><p>Lab solutions</p>
 <ul class="simple">
-<li><p>Lab 1</p></li>
-<li><p>Lab 2</p></li>
-<li><p>Lab 3</p></li>
+<li><p><a class="reference internal" href="lab1sol.html"><span class="doc std std-doc">Lab 1</span></a></p></li>
+<li><p><a class="reference internal" href="lab1sol.html"><span class="doc std std-doc">Lab 2</span></a></p></li>
+<li><p><a class="reference internal" href="lab3sol.html"><span class="doc std std-doc">Lab 3</span></a></p></li>
 <li><p>Lab 4</p></li>
 <li><p>Lab 5</p></li>
 </ul>
 </li>
 <li><p>HW solutions</p>
 <ul class="simple">
-<li><p>HW 1</p></li>
-<li><p>HW 2</p></li>
-<li><p>HW 3</p></li>
+<li><p><a class="reference internal" href="hw1sol.html"><span class="doc std std-doc">HW 1</span></a></p></li>
+<li><p><a class="reference internal" href="hw2sol.html"><span class="doc std std-doc">HW 2</span></a></p></li>
+<li><p><a class="reference internal" href="hw3sol.html"><span class="doc std std-doc">HW 3</span></a></p></li>
 <li><p>HW 4</p></li>
 <li><p>HW 5</p></li>
 <li><p>HW 6</p></li>
@@ -389,7 +401,7 @@ document.write(`
 <li><p>Click <a class="reference internal" href="tastudentmatch.html"><span class="doc std std-doc">here</span></a></p></li>
 <li><p>These are students you’ll grade for HW 3</p>
 <ul>
-<li><p>You’ll do the grading</p></li>
+<li><p>You’ll do the grading (simple rubric will be ready by Thursday)</p></li>
 <li><p>Including giving students feedback in .do file</p></li>
 <li><p>Send notifications via GradeBook</p></li>
 </ul>
@@ -399,6 +411,95 @@ document.write(`
 </li>
 <li><p>Rubrics for grading</p></li>
 </ol>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="hw-3-solution">
+<h1>HW 3 Solution<a class="headerlink" href="#hw-3-solution" title="Permalink to this heading">#</a></h1>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="nv">```stata</span>
+<span class="nv">quietly {</span>
+<span class="nv">	cls</span>
+<span class="nv">	if 0 { //background, purpose</span>
+<span class="nv">		1. HW3 solution</span>
+<span class="nv">		2. Just for TAs</span>
+<span class="nv">	}</span>
+<span class="nv">	if 1 { //methods, log, settings</span>
+<span class="nv">		capture log close </span>
+<span class="nv">		log using &quot;hw1.lastname.firstname.log&quot;, replace </span>
+<span class="nv">		global data https://jhustata.github.io/book/_downloads/884b9e06eb29f89b1b87da4eab39775d/hw1.txt</span>
+<span class="nv">	}</span>
+<span class="nv">	if 2 { //data</span>
+<span class="nv">		import delimited </span><span class="vg">$data</span><span class="nv">, clear </span>
+<span class="nv">	}</span>
+<span class="nv">	if 3 { //results, analysis</span>
+<span class="nv">		//Q1</span>
+<span class="nv">		g htn=dx==&quot;4=Hypertensive&quot;</span>
+<span class="nv">		replace htn=0 if missing(htn)</span>
+<span class="nv">		</span>
+<span class="nv">		//label values</span>
+<span class="nv">		label define htn_lab 0 &quot;No&quot; 1 &quot;Yes&quot;</span>
+<span class="nv">		label values htn htn_lab </span>
+<span class="nv">		noi tab htn </span>
+<span class="nv">		</span>
+<span class="nv">		//Q2</span>
+<span class="nv">		//capture program drop q2</span>
+<span class="nv">		//program define q2</span>
+<span class="nv">		   //our goals; this step is not needed</span>
+<span class="nv">		   local row1=1</span>
+<span class="nv">		   local row2=2</span>
+<span class="nv">		   local row3=3</span>
+<span class="nv">		   </span>
+<span class="nv">		   //labels</span>
+<span class="nv">		   label variable init_age &quot;Age, median (IQR)&quot;</span>
+<span class="nv">		   label variable prev &quot;Previous transplant, %&quot;</span>
+<span class="nv">		   //Males</span>
+<span class="nv">		   sum init_age if female==0, detail</span>
+<span class="nv">		   //row 1</span>
+<span class="nv">		   local males_n=r(N)</span>
+<span class="nv">		   </span>
+<span class="nv">		   //row2</span>
+<span class="nv">		   local males_age_p50: di %2.0f r(p50)</span>
+<span class="nv">		   local males_age_p25: di %2.0f r(p25)</span>
+<span class="nv">		   local males_age_p75: di %2.0f r(p75)</span>
+<span class="nv">		  </span>
+<span class="nv">		   </span>
+<span class="nv">		   local agelab: variable label init_age</span>
+<span class="nv">		   local prevlab: variable label prev </span>
+<span class="nv">		   </span>
+<span class="nv">		   //row3</span>
+<span class="nv">		    local males_prev: di %2.1f r(mean)</span>
+<span class="nv">	</span>
+<span class="nv">		   //Females</span>
+<span class="nv">		   sum init_age if female==1, detail</span>
+<span class="nv">		   //row 1</span>
+<span class="nv">		   local females_n=r(N)</span>
+<span class="nv">		   </span>
+<span class="nv">		   //row2</span>
+<span class="nv">		   local females_age_p50: di %2.0f r(p50)</span>
+<span class="nv">		   local females_age_p25: di %2.0f r(p25)</span>
+<span class="nv">		   local females_age_p75: di %2.0f r(p75)</span>
+<span class="nv">		   </span>
+<span class="nv">		   //row3</span>
+<span class="nv">		    local females_prev: di %2.1f r(mean)</span>
+<span class="nv">	</span>
+<span class="nv">		   </span>
+<span class="nv">		   //assign correct values</span>
+<span class="nv">		   local row1: di &quot;Question 2&quot; _col(30) &quot;Males (N=`males_n&#39;)&quot; _col(60) &quot;Females (N=`females_n&#39;)&quot;</span>
+<span class="nv">		   local row2: di &quot;`agelab&#39;&quot; _col(30) &quot;`males_age_p50&#39; (`males_age_p25&#39; - `males_age_p75&#39;)&quot; ///</span>
+<span class="nv">		      _col(60) &quot;`females_age_p50&#39; (`females_age_p25&#39; - `females_age_p75&#39;)&quot;</span>
+<span class="nv">		   local row3: di &quot;`prevlab&#39;&quot; _col(30) `males_prev&#39; _col(60) `females_prev&#39;</span>
+<span class="nv">		   forvalues i=1/3 {</span>
+<span class="nv">		      //given our goals above:</span>
+<span class="nv">			  noi di &quot;`row`i&#39;&#39;&quot;	</span>
+<span class="nv">		   }</span>
+<span class="nv">		//end </span>
+<span class="nv">		//q2</span>
+<span class="nv">	}</span>
+<span class="nv">	log close </span>
+<span class="nv">}</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
 </section>
 
     <script type="text/x-thebe-config">
@@ -441,6 +542,22 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Resource for the Teaching Team</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#hw-3-solution">HW 3 Solution</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
               
             
           </div>

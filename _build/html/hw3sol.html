@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>3.4 Lab &#8212; Stata Programming</title>
+    <title>hw3 solution &#8212; Stata Programming</title>
   
   
   
@@ -345,7 +345,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>3.4 Lab</h1>
+    <h1>hw3 solution</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -359,34 +359,90 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section id="lab">
-<h1>3.4 Lab<a class="headerlink" href="#lab" title="Permalink to this heading">#</a></h1>
-<p>Use the <code class="docutils literal notranslate"><span class="pre">transplants.dta</span></code> dataset with these practice questions:</p>
-<ol class="arabic">
-<li><p>Calculate the standard deviation of age among patients with blood type O (<code class="docutils literal notranslate"><span class="pre">abo==4</span></code>). Print the following sentence: <code class="docutils literal notranslate"><span class="pre">The</span> <span class="pre">SD</span> <span class="pre">of</span> <span class="pre">age</span> <span class="pre">among</span> <span class="pre">patients</span> <span class="pre">with</span> <span class="pre">blood</span> <span class="pre">type</span> <span class="pre">O</span> <span class="pre">is</span> <span class="pre">XX.X</span></code>. Replace <code class="docutils literal notranslate"><span class="pre">XX</span></code> with correct values. Round to tenths (e.g. 8.2).</p></li>
-<li><p>Regress BMI on age and sex (using <code class="docutils literal notranslate"><span class="pre">regress</span> <span class="pre">bmi</span> <span class="pre">age</span> <span class="pre">gender</span></code>) without displaying the regression output. Print the following sentence: <code class="docutils literal notranslate"><span class="pre">Per</span> <span class="pre">1-year</span> <span class="pre">increase</span> <span class="pre">in</span> <span class="pre">age,</span> <span class="pre">BMI</span> <span class="pre">increases</span> <span class="pre">by</span> <span class="pre">X.XX</span></code>. Replace <code class="docutils literal notranslate"><span class="pre">XX</span></code> with the regression coefficient of age. Round to hundredths (e.g. 0.74).</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">quietly regress</span> bmi age gender
-<span class="k">local</span> age_b:<span class="k"> di</span> <span class="nx">%3.1f</span> _b[age]
-
-<span class="k">di</span> <span class="s">&quot;Per 1-year increase in age, BMI increases by </span><span class="nv">`age_b&#39;</span><span class="s">.&quot;</span>
+  <section class="tex2jax_ignore mathjax_ignore" id="hw3-solution">
+<h1>hw3 solution<a class="headerlink" href="#hw3-solution" title="Permalink to this heading">#</a></h1>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">quietly</span> {
+	cls
+<span class="k">	if</span> <span class="m">0</span> { <span class="c1">//background, purpose</span>
+		<span class="m">1</span>. HW3 solution
+		<span class="m">2</span>. Just<span class="k"> for</span> TAs
+	}
+<span class="k">	if</span> <span class="m">1</span> { <span class="c1">//methods, log, settings</span>
+<span class="k">		capture log close</span> 
+<span class="k">		log</span> using <span class="s">&quot;hw1.lastname.firstname.log&quot;</span>,<span class="k"> replace</span> 
+<span class="k">		global</span> data https:<span class="o">//</span>jhustata<span class="m">.</span>github<span class="m">.</span>io<span class="o">/</span>book<span class="o">/</span>_downloads<span class="o">/</span>884b9e06eb29f89b1b87da4eab39775d<span class="o">/</span>hw1<span class="m">.</span>txt
+	}
+<span class="k">	if</span> <span class="m">2</span> { <span class="c1">//data</span>
+		import delimited <span class="vg">$data</span>,<span class="k"> clear</span> 
+	}
+<span class="k">	if</span> <span class="m">3</span> { <span class="c1">//results, analysis</span>
+		<span class="c1">//Q1</span>
+<span class="k">		g</span> htn=dx<span class="o">==</span><span class="s">&quot;4=Hypertensive&quot;</span>
+<span class="k">		replace</span> htn=<span class="m">0</span><span class="k"> if</span> <span class="nf">missing</span>(htn)
+		
+		<span class="c1">//label values</span>
+<span class="k">		label</span> define htn_lab <span class="m">0</span> <span class="s">&quot;No&quot;</span> <span class="m">1</span> <span class="s">&quot;Yes&quot;</span>
+<span class="k">		label</span> values htn htn_lab 
+<span class="k">		noi tab</span> htn 
+		
+		<span class="c1">//Q2</span>
+		<span class="c1">//capture program drop q2</span>
+		<span class="c1">//program define q2</span>
+		   <span class="c1">//our goals; this step is not needed</span>
+<span class="k">		   local</span> row1=<span class="m">1</span>
+<span class="k">		   local</span> row2=<span class="m">2</span>
+<span class="k">		   local</span> row3=<span class="m">3</span>
+		   
+		   <span class="c1">//labels</span>
+<span class="k">		   label</span> variable init_age <span class="s">&quot;Age, median (IQR)&quot;</span>
+<span class="k">		   label</span> variable prev <span class="s">&quot;Previous transplant, %&quot;</span>
+		   <span class="c1">//Males</span>
+<span class="k">		   sum</span> init_age<span class="k"> if</span> female<span class="o">==</span><span class="m">0</span>, detail
+		   <span class="c1">//row 1</span>
+<span class="k">		   local</span> males_n=<span class="nf">r</span>(N)
+		   
+		   <span class="c1">//row2</span>
+<span class="k">		   local</span> males_age_p50:<span class="k"> di</span> <span class="nx">%2.0f</span> <span class="nf">r</span>(p50)
+<span class="k">		   local</span> males_age_p25:<span class="k"> di</span> <span class="nx">%2.0f</span> <span class="nf">r</span>(p25)
+<span class="k">		   local</span> males_age_p75:<span class="k"> di</span> <span class="nx">%2.0f</span> <span class="nf">r</span>(p75)
+<span class="k">		  </span>
+<span class="k">		   </span>
+<span class="k">		   local</span> agelab: variable<span class="k"> label</span> init_age
+<span class="k">		   local</span> prevlab: variable<span class="k"> label</span> prev 
+		   
+		   <span class="c1">//row3</span>
+<span class="k">		    local</span> males_prev:<span class="k"> di</span> <span class="nx">%2.1f</span> <span class="nf">r</span>(mean)
+	
+		   <span class="c1">//Females</span>
+<span class="k">		   sum</span> init_age<span class="k"> if</span> female<span class="o">==</span><span class="m">1</span>, detail
+		   <span class="c1">//row 1</span>
+<span class="k">		   local</span> females_n=<span class="nf">r</span>(N)
+		   
+		   <span class="c1">//row2</span>
+<span class="k">		   local</span> females_age_p50:<span class="k"> di</span> <span class="nx">%2.0f</span> <span class="nf">r</span>(p50)
+<span class="k">		   local</span> females_age_p25:<span class="k"> di</span> <span class="nx">%2.0f</span> <span class="nf">r</span>(p25)
+<span class="k">		   local</span> females_age_p75:<span class="k"> di</span> <span class="nx">%2.0f</span> <span class="nf">r</span>(p75)
+		   
+		   <span class="c1">//row3</span>
+<span class="k">		    local</span> females_prev:<span class="k"> di</span> <span class="nx">%2.1f</span> <span class="nf">r</span>(mean)
+	
+		   
+		   <span class="c1">//assign correct values</span>
+<span class="k">		   local</span> row1:<span class="k"> di</span> <span class="s">&quot;Question 2&quot;</span> _col(<span class="m">30</span>) <span class="s">&quot;Males (N=</span><span class="nv">`males_n&#39;</span><span class="s">)&quot;</span> _col(<span class="m">60</span>) <span class="s">&quot;Females (N=</span><span class="nv">`females_n&#39;</span><span class="s">)&quot;</span>
+<span class="k">		   local</span> row2:<span class="k"> di</span> <span class="s">&quot;</span><span class="nv">`agelab&#39;</span><span class="s">&quot;</span> _col(<span class="m">30</span>) <span class="s">&quot;</span><span class="nv">`males_age_p50&#39;</span><span class="s"> (</span><span class="nv">`males_age_p25&#39;</span><span class="s"> - </span><span class="nv">`males_age_p75&#39;</span><span class="s">)&quot;</span> <span class="cs">///</span>
+		      _col(<span class="m">60</span>) <span class="s">&quot;</span><span class="nv">`females_age_p50&#39;</span><span class="s"> (</span><span class="nv">`females_age_p25&#39;</span><span class="s"> - </span><span class="nv">`females_age_p75&#39;</span><span class="s">)&quot;</span>
+<span class="k">		   local</span> row3:<span class="k"> di</span> <span class="s">&quot;</span><span class="nv">`prevlab&#39;</span><span class="s">&quot;</span> _col(<span class="m">30</span>) <span class="nv">`males_prev&#39;</span> _col(<span class="m">60</span>) <span class="nv">`females_prev&#39;</span>
+<span class="k">		   forvalues</span> i=<span class="m">1</span><span class="o">/</span><span class="m">3</span> {
+		      <span class="c1">//given our goals above:</span>
+<span class="k">			  noi di</span> <span class="s">&quot;</span><span class="nv">`row`i&#39;&#39;</span><span class="s">&quot;</span>	
+		   }
+		<span class="c1">//end </span>
+		<span class="c1">//q2</span>
+	}
+<span class="k">	log close</span> 
+}
 </pre></div>
 </div>
-</li>
-<li><p>Now we will do the same thing, but using a program. Define a program named <code class="docutils literal notranslate"><span class="pre">bmi_age</span></code>. This program will regress BMI on age and sex without displaying the regression output, and print: <code class="docutils literal notranslate"><span class="pre">Per</span> <span class="pre">1-year</span> <span class="pre">increase</span> <span class="pre">in</span> <span class="pre">age,</span> <span class="pre">BMI</span> <span class="pre">increases</span> <span class="pre">by</span> <span class="pre">X.XX</span></code>. Replace <code class="docutils literal notranslate"><span class="pre">XX</span></code> with the regression coefficient of <code class="docutils literal notranslate"><span class="pre">age</span></code>. Round to hundredths (e.g. 0.74).</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">capture program drop</span> bmi_age
-<span class="k">program</span> define bmi_age
-
-<span class="k">    quietly regress</span> bmi age gender
-<span class="k">    local</span> age_b:<span class="k"> di</span> <span class="nx">%3.1f</span> _b[age]
-<span class="k">    </span>
-<span class="k">    di</span> <span class="s">&quot;Per 1-year increase in age, BMI increases by </span><span class="nv">`age_b&#39;</span><span class="s">.&quot;</span>
-<span class="k">    </span>
-<span class="k">end</span>
-</pre></div>
-</div>
-</li>
-<li><p>Let’s consider how you may allow the user of <code class="docutils literal notranslate"><span class="pre">bmi_age</span></code> to utilize this program on a dataset with any variable name</p></li>
-</ol>
 </section>
 
     <script type="text/x-thebe-config">
