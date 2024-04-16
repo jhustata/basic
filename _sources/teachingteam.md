@@ -29,8 +29,6 @@
 # HW 3 Solution
 
 ```stata
-
-```stata
 quietly {
 	cls
 	if 0 { //background, purpose
@@ -112,5 +110,4 @@ quietly {
 	log close 
 }
 ```
-
-```
+ 
