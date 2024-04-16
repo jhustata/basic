@@ -57,9 +57,13 @@ quietly {
 		//capture program drop q2
 		//program define q2
 		   //our goals; this step is not needed
+		   //.log output
 		   local row1=1
 		   local row2=2
 		   local row3=3
+		   
+		   //.xlsx output
+		   putexcel set question2, replace 
 		   
 		   //labels
 		   label variable init_age "Age, median (IQR)"
@@ -95,17 +99,34 @@ quietly {
 		    local females_prev: di %2.1f r(mean)
 	
 		   
-		   //assign correct values
+		   //align output for .log file 
 		   local row1: di "Question 2" _col(30) "Males (N=`males_n')" _col(60) "Females (N=`females_n')"
 		   local row2: di "`agelab'" _col(30) "`males_age_p50' (`males_age_p25' - `males_age_p75')" ///
 		      _col(60) "`females_age_p50' (`females_age_p25' - `females_age_p75')"
 		   local row3: di "`prevlab'" _col(30) `males_prev' _col(60) `females_prev'
+		   local excel_row=1
 		   forvalues i=1/3 {
-		      //given our goals above:
+		      //.log file
 			  noi di "`row`i''"	
-		   }
+	       }
+		   		  
+			  //.xlsx file
+			  //row1
+			  putexcel A1 = "Questoin 2"
+			  putexcel B1 = "Males (N=`males_n')"
+			  putexcel C1 = "Females (N=`females_n')"
+			  
+			  //row2
+			  putexcel A2 = "`agelab'"
+			  putexcel B2 = "`males_age_p50' (`males_age_p25' - `males_age_p75')"
+			  putexcel C2 = "`females_age_p50' (`females_age_p25' - `females_age_p75')"
+			  
+			 //row3
+			  putexcel A3 = "`prevlab'"
+			  putexcel B3 = "`males_prev'"
+			  putexcel C3 = "`females_prev'"
+		  
 		//end 
-		//q2
 	}
 	log close 
 }
