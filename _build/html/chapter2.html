@@ -1,0 +1,1371 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>2. Return values, macros, programs &#8212; Stata Programming</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapter2';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="3. Loops, Program Syntax, and Miscellany" href="chapter3.html" />
+    <link rel="prev" title="1. Philosophy, overview, commands, syntax" href="chapter1.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="https://brand.jhu.edu/assets/uploads/sites/5/2014/06/university_logo_small_vertical_blue.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="https://brand.jhu.edu/assets/uploads/sites/5/2014/06/university_logo_small_vertical_blue.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Preface
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="chapter1.html">1. Philosophy, overview, commands, syntax</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">2. Return values, macros, programs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter3.html">3. Loops, Program Syntax, and Miscellany</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter4.html">4. Advanced file management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter5.html">5. Graphs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter6.html">6. Review of Weeks 1-5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter7.html">7. Survival Analysis: Non-parametric, Semi-parametric, Parametric</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter8.html">8. Multilevel, Hierarchical Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickrefs.html">Quick References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fchapter2.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/chapter2.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>2. Return values, macros, programs</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#last-week">2.0 Last week</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#results-output">2.01 Results/output</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#display-files">2.02 Display/files</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#examples">2.03 Examples</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#xlsx">2.031 xlsx</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#log">2.032 log</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-the-quietly-command">Introduction to the “quietly” Command</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#handling-p-values-less-than-0-01">Handling p-values Less Than 0.01</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#formatting-p-values-between-0-01-and-0-05">Formatting p-values Between 0.01 and 0.05</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#formatting-p-values-greater-than-0-05">Formatting p-values Greater Than 0.05</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#combining-everything">Combining Everything</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#recap-of-the-chi-square-test">Recap of the chi-square test</a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dta">2.033 dta</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-clearing-the-workspace">Step 1: Clearing the Workspace</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-setting-up-a-new-posted-file">Step 2: Setting Up a New Posted File</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-populating-the-dataset">Step 3: Populating the Dataset</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-finalizing-the-dataset">Step 4: Finalizing the Dataset</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-using-and-viewing-the-dataset">Step 5: Using and Viewing the Dataset</a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#docx">2.034 docx</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#embedding-stata-results-into-docx-documents"><strong>1. Embedding Stata Results into <code class="docutils literal notranslate"><span class="pre">.docx</span></code> Documents</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#html">2.035 html</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#embedding-stata-results-into-html-documents"><strong>2. Embedding Stata Results into <code class="docutils literal notranslate"><span class="pre">.html</span></code> Documents</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion-for-students"><strong>Conclusion for Students:</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variables">2.1 Variables</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-a-dataset">Loading a Dataset</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#listing-variables">Listing Variables</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-help">Getting Help</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-variables-by-type">Filtering Variables by Type</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#string">2.2 String</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#numeric">2.3 Numeric</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#return-values">2.4 Return values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#macros">2.5 Macros</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-macros-in-stata-a-guide-for-new-graduate-students">Understanding Macros in Stata: A Guide for New Graduate Students</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-macros">Introduction to Macros</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-macros">Types of Macros</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#when-to-use-macros">When to Use Macros</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#best-practices">Best Practices</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#programs">2.6 Programs</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-stata-programs-creating-your-first-custom-program">Introduction to Stata Programs: Creating Your First Custom Program</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-a-stata-program">What is a Stata Program?</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-simple-stata-program">Creating a Simple Stata Program</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#complete-program-code">Complete Program Code</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#running-your-program">Running Your Program</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#why-use-custom-programs">Why Use Custom Programs?</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Best Practices</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Conclusion</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab">2.7 Lab</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#homework">2.8 Homework</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="return-values-macros-programs">
+<h1>2. Return values, macros, programs<a class="headerlink" href="#return-values-macros-programs" title="Permalink to this heading">#</a></h1>
+<section id="last-week">
+<h2>2.0 Last week<a class="headerlink" href="#last-week" title="Permalink to this heading">#</a></h2>
+<p>Let’s briefly recap what we covered last week (<a class="reference external" href="https://jhustata.github.io/basic/chapter1.html#entry-poll">survey</a>, <a class="reference external" href="https://jhustata.github.io/basic/chapter1.html#overview">overview</a>) and what you’ve practiced this week in <a class="reference internal" href="lab1.html"><span class="doc std std-doc">lab</span></a>:</p>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="import_data.html"><span class="doc std std-doc">Importing data</span></a></p></li>
+<li><p>Performing basic queries</p></li>
+<li><p>Outputing some of your findings into .xlsx, <code class="docutils literal notranslate"><span class="pre">.log</span></code>, etc.</p>
+<ul class="simple">
+<li><p>We’ll do more of this <a class="reference internal" href="table1_fena.html"><span class="doc std std-doc">later</span></a></p></li>
+</ul>
+</li>
+</ol>
+<p>Today we’ll build on these ideas:</p>
+<ol class="arabic simple">
+<li><p>String values as output</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://jhustata.github.io/basic/chapter1.html#entry-poll">survey</a></p></li>
+</ul>
+</li>
+<li><p>Numeric values embedded within a string</p>
+<ul class="simple">
+<li><p>Using <code class="docutils literal notranslate"><span class="pre">macros</span></code></p>
+<ul>
+<li><p>System</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">creturn</span> <span class="pre">list</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">list</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ereturn</span> <span class="pre">list</span></code></p></li>
+</ul>
+</li>
+<li><p>User-defined</p>
+<ul>
+<li><p>Global</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">global</span> <span class="pre">workdir</span> <span class="pre">c(pwd)</span></code></p></li>
+</ul>
+</li>
+<li><p>Local</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">local</span> <span class="pre">mean:</span> <span class="pre">di</span> <span class="pre">%3.1f</span> <span class="pre">r(mean)</span></code></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Examples beyond .xlsx and .dta</p></li>
+<li><p><a class="reference external" href="https://jhustata.github.io/basic/chapter1.html#syntax">Programs</a></p></li>
+</ol>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">   program</span> define myfirstprogram
+<span class="k">      di</span> <span class="s">&quot;Hello, Class!&quot;</span>
+<span class="k">   end</span>
+</pre></div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="c1">#import numpy as np</span>
+<span class="c1">#import sklearn as skl</span>
+<span class="c1"># </span>
+
+<span class="c1">#plt.figure(figsize=[2, 2])</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">()</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;user&quot;</span><span class="p">,</span>  <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="mi">550</span><span class="p">,</span><span class="mi">500</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;system&quot;</span><span class="p">,</span>  <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">550</span><span class="p">,</span><span class="mi">500</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;program&quot;</span><span class="p">,</span>  <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">2000</span><span class="p">,</span> <span class="mi">960</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;syntax&quot;</span><span class="p">,</span>  <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="mi">950</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;ado&quot;</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">3000</span><span class="p">,</span> <span class="mi">550</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;do&quot;</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3000</span><span class="p">,</span> <span class="mi">550</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;command&quot;</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">1900</span><span class="p">,</span> <span class="mi">150</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;queue&quot;</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1900</span><span class="p">,</span> <span class="mi">150</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;results&quot;</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;dta&quot;</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">475</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">1900</span><span class="p">,</span> <span class="o">-</span><span class="mi">475</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;excel&quot;</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">4000</span><span class="p">,</span> <span class="o">-</span><span class="mi">475</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;word&quot;</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1900</span><span class="p">,</span> <span class="o">-</span><span class="mi">475</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;html&quot;</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="mi">4000</span><span class="p">,</span> <span class="o">-</span><span class="mi">475</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;publish&quot;</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">950</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([</span> <span class="p">(</span><span class="s2">&quot;program&quot;</span><span class="p">,</span><span class="s2">&quot;ado&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;syntax&quot;</span><span class="p">,</span> <span class="s2">&quot;do&quot;</span><span class="p">)])</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s2">&quot;ado&quot;</span><span class="p">,</span> <span class="s2">&quot;command&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;do&quot;</span><span class="p">,</span> <span class="s2">&quot;queue&quot;</span><span class="p">)</span> <span class="p">])</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s2">&quot;command&quot;</span><span class="p">,</span> <span class="s2">&quot;results&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;queue&quot;</span><span class="p">,</span> <span class="s2">&quot;results&quot;</span><span class="p">),(</span><span class="s2">&quot;results&quot;</span><span class="p">,</span><span class="s2">&quot;excel&quot;</span><span class="p">),(</span><span class="s2">&quot;results&quot;</span><span class="p">,</span><span class="s2">&quot;word&quot;</span><span class="p">),(</span><span class="s2">&quot;results&quot;</span><span class="p">,</span><span class="s2">&quot;html&quot;</span><span class="p">)])</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s2">&quot;results&quot;</span><span class="p">,</span><span class="s2">&quot;dta&quot;</span><span class="p">),(</span><span class="s2">&quot;results&quot;</span><span class="p">,</span><span class="s2">&quot;log&quot;</span><span class="p">)])</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s2">&quot;dta&quot;</span><span class="p">,</span><span class="s2">&quot;publish&quot;</span><span class="p">),(</span><span class="s2">&quot;log&quot;</span><span class="p">,</span><span class="s2">&quot;publish&quot;</span><span class="p">),(</span><span class="s2">&quot;excel&quot;</span><span class="p">,</span><span class="s2">&quot;publish&quot;</span><span class="p">),(</span><span class="s2">&quot;word&quot;</span><span class="p">,</span><span class="s2">&quot;publish&quot;</span><span class="p">),(</span><span class="s2">&quot;html&quot;</span><span class="p">,</span><span class="s2">&quot;publish&quot;</span><span class="p">)])</span>
+<span class="n">nx</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> 
+        <span class="n">nx</span><span class="o">.</span><span class="n">get_node_attributes</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="s1">&#39;pos&#39;</span><span class="p">),</span> 
+        <span class="n">with_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
+        <span class="n">font_weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span> 
+        <span class="n">node_size</span> <span class="o">=</span> <span class="mi">4500</span><span class="p">,</span>
+        <span class="n">node_color</span> <span class="o">=</span> <span class="s2">&quot;lightblue&quot;</span><span class="p">,</span>
+        <span class="n">linewidths</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">collections</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_edgecolor</span><span class="p">(</span><span class="s2">&quot;#000000&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="o">-</span><span class="mi">5000</span><span class="p">,</span> <span class="mi">5000</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="o">-</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/68b0bc74161d7710f53566e5ee9be406db910130ddbc8f918781f1977ed8e80e.png" src="_images/68b0bc74161d7710f53566e5ee9be406db910130ddbc8f918781f1977ed8e80e.png" />
+</div>
+</div>
+<section id="results-output">
+<h3>2.01 Results/output<a class="headerlink" href="#results-output" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>A sequence or queue of instructions <code class="docutils literal notranslate"><span class="pre">commands</span> <span class="pre">+</span> <span class="pre">syntax</span> <span class="pre">=</span> <span class="pre">code</span></code> given to Stata via a do-file will generate results</p></li>
+<li><p><u>Never</u> include results in your do-file when you share your work in this class and with future collaborators</p></li>
+<li><p>Due diligence in the <code class="docutils literal notranslate"><span class="pre">open-science</span></code> enterprise demands that others <code class="docutils literal notranslate"><span class="pre">reproduce</span></code> your results and findings</p></li>
+<li><p>Your duty is to share <u>only</u> the <code class="docutils literal notranslate"><span class="pre">input</span></code>, and ours is to reproduce your <code class="docutils literal notranslate"><span class="pre">output</span></code> so as to fullfil our shared Credo</p></li>
+<li><p>Please share your do-files and any third-party ado-files, if at all your script or do-file relies on third-party programs</p></li>
+</ul>
+</section>
+<section id="display-files">
+<h3>2.02 Display/files<a class="headerlink" href="#display-files" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Stata’s <a class="reference external" href="https://jhustata.github.io/basic/chapter1.html#interface">Results Window</a></p>
+<ul>
+<li><p>Only useful to the user</p></li>
+<li><p>Not a mode of publication</p></li>
+</ul>
+</li>
+<li><p>.xlsx</p></li>
+<li><p>.log</p></li>
+<li><p>.dta</p></li>
+<li><p>.docx</p></li>
+<li><p><a class="reference external" href="https://jhustata.github.io/livre/dyndoc.html">.html</a></p></li>
+</ul>
+</section>
+<section id="examples">
+<h3>2.03 Examples<a class="headerlink" href="#examples" title="Permalink to this heading">#</a></h3>
+<section id="xlsx">
+<h4>2.031 xlsx<a class="headerlink" href="#xlsx" title="Permalink to this heading">#</a></h4>
+<p>Import a datafile</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> transplants,<span class="k"> clear</span> 
+</pre></div>
+</div>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">putexcel</span></code> command to create an Excel spreadsheet and name it “table1.xlsx”</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>putexcel<span class="k"> set</span> table1,<span class="k"> replace</span>
+</pre></div>
+</div>
+<p>Populate the first row and first column with the text “Table 1. Demographic and clinical characteristics of kidney transplant recipients”</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>putexcel A1=<span class="s">&quot;Table 1. Demographic and clinical characteristics of kidney transplant recipients&quot;</span>
+</pre></div>
+</div>
+<p>Now populate the second row and first column with the total number of observations in the <code class="docutils literal notranslate"><span class="pre">transplants.dta</span></code> dataset</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>putexcel B1=<span class="s">&quot;N=</span><span class="nv">`c(N)&#39;</span><span class="s">&quot;</span>
+</pre></div>
+</div>
+<p>Please engage with our new <a class="reference external" href="https://github.com/jhufena/discussions/discussions">Stata-focused community</a>, share what you know about the <code class="docutils literal notranslate"><span class="pre">putexcel</span></code> command, ask questions about this command, and contribute solutions to posted problems.</p>
+<p>Copy and paste the code snippet under the title “Sharing Code” into your <code class="docutils literal notranslate"><span class="pre">.do</span></code> file and run the script. Are you able to find your output?</p>
+<p>If you get an error, it’s likely that you did not edit the file path in the code. Always remember to adapt borrrowed code to your needs!</p>
+</section>
+<section id="log">
+<h4>2.032 log<a class="headerlink" href="#log" title="Permalink to this heading">#</a></h4>
+<p>Let’s input some Stata code into your .do file. The <a class="reference external" href="https://jhustata.github.io/basic/_downloads/34a8255f06036b44354b3c36c5583d7e/transplants.dta">transplants.dta</a> datafile is here for your convenience. You may download it to use it locally or use the URL to import the data directly from the remote location.</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">capture log close</span>
+<span class="k">log</span> using chi2<span class="m">.</span>log,<span class="k"> replace</span> <span class="c1">//creates a .log file</span>
+<span class="k">use</span> transplants,<span class="k"> clear</span> <span class="c1">//imports the datafile</span>
+<span class="k">tab</span> dx gender, row  chi2 <span class="c1">//performs a chi-square test</span>
+<span class="k">log close</span> <span class="c1">//closes the .log file</span>
+</pre></div>
+</div>
+<p>Now lets find the content of the .log file created. When analyzing data in Stata, one often encounters the need to review or share results in a format that is both informative and easily interpretable. An essential step in this process involves examining the output stored in log-files. These files capture the essence of your analytical work, including statistical tests and their results. A common feature of interest in these results is the p-value, a metric that helps us understand the significance of our findings.</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>.<span class="k"> tab</span> dx gender, row  chi2
+
+<span class="o">+----------------+</span>
+Key            
+<span class="o">------------------</span>
+frequency    
+row percentage 
+<span class="o">+----------------+</span>
+
+Primary            gender
+Diagnosis      |    <span class="m">0</span>    |    <span class="m">1</span>	    | Total
+<span class="o">---------------+---------+----------+------</span>			
+<span class="m">1</span>=Glomerular   |  <span class="m">237</span>    |    <span class="m">187</span>   |	 <span class="m">424</span> 
+               |  <span class="m">55.90</span>  |   <span class="m">44.10</span>  | <span class="m">100.00</span> 
+<span class="o">---------------+---------+----------+------</span>			
+<span class="m">2</span>=Diabetes     | <span class="m">60</span>      |  <span class="m">37</span>	    | <span class="m">97</span> 
+               | <span class="m">61.86</span>   |  <span class="m">38.14</span>   | <span class="m">100.00</span> 
+<span class="o">---------------+---------+----------+------</span>			
+<span class="m">3</span>=PKD          | <span class="m">81</span>      |  <span class="m">66</span>	    | <span class="m">147</span> 
+               | <span class="m">55.10</span>   |  <span class="m">44.90</span>   | <span class="m">100.00</span> 
+<span class="o">---------------+---------+----------+------</span>			
+<span class="m">4</span>=Hypertensive | <span class="m">316</span>     |  <span class="m">176</span>	    | <span class="m">492</span> 
+               | <span class="m">64.23</span>   |  <span class="m">35.77</span>   | <span class="m">100.00</span> 
+<span class="o">---------------+---------+----------+------</span>		
+<span class="m">5</span>=Renovascular | <span class="m">24</span>      |  <span class="m">15</span>	    | <span class="m">39</span> 
+               | <span class="m">61.54</span>   |  <span class="m">38.46</span>   | <span class="m">100.00</span> 
+<span class="o">---------------+---------+----------+------</span>			
+<span class="m">6</span>=Congenital   | <span class="m">46</span>      |  <span class="m">22</span>	    | <span class="m">68</span> 
+               | <span class="m">67.65</span>   |  <span class="m">32.35</span>   | <span class="m">100.00</span> 
+<span class="o">---------------+---------+----------+------</span>				
+<span class="m">7</span>=Tubulo       | <span class="m">32</span>      |  <span class="m">35</span>	    | <span class="m">67</span> 
+               | <span class="m">47.76</span>   |  <span class="m">52.24</span>   | <span class="m">100.00</span> 
+<span class="o">---------------+---------+----------+------</span>			
+<span class="m">8</span>=Neoplasm     | <span class="m">8</span>       |  <span class="m">5</span>	    | <span class="m">13</span> 
+               | <span class="m">61.54</span>   |  <span class="m">38.46</span>   | <span class="m">100.00</span> 
+<span class="o">---------------+---------+----------+------</span>			
+<span class="m">9</span>=Other        | <span class="m">421</span>     |  <span class="m">232</span>	    | <span class="m">653</span> 
+               | <span class="m">64.47</span>   |  <span class="m">35.53</span>   | <span class="m">100.00</span> 
+<span class="o">---------------+---------+----------+------</span>			
+Total          | <span class="m">1</span>,<span class="m">225</span>   |  <span class="m">775</span>     | <span class="m">2</span>,<span class="m">000</span> 
+               | <span class="m">61.25</span>   |  <span class="m">38.75</span>   | <span class="m">100.00</span> 
+
+Pearson <span class="nf">chi2</span>(<span class="m">8</span>) =  <span class="m">18.4805</span>	Pr	= <span class="m">0.018</span>
+
+. 
+</pre></div>
+</div>
+<p>To start, let’s consider the <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">list</span></code> command:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">return list</span>
+</pre></div>
+</div>
+<p>This command is your gateway to reviewing the most recent test results stored by Stata. It lists out all the statistics calculated by the last command, including the number of observations (<code class="docutils literal notranslate"><span class="pre">r(N)</span></code>), test statistics like chi-squared values (<code class="docutils literal notranslate"><span class="pre">r(chi2)</span></code>), and crucially, the p-value (<code class="docutils literal notranslate"><span class="pre">r(p)</span></code>).</p>
+<p>However, simply listing out the p-value isn’t always enough, especially when preparing your findings for a broader audience, such as in peer-reviewed publications. The reporting of p-values follows specific conventions to enhance clarity and understanding. Let’s explore how to apply these conventions using a conditional formatting approach:</p>
+<section id="introduction-to-the-quietly-command">
+<h5>Introduction to the “quietly” Command<a class="headerlink" href="#introduction-to-the-quietly-command" title="Permalink to this heading">#</a></h5>
+<p>The first block introduces the concept of running commands ‘quietly’ in Stata, which suppresses the output in the Results window.</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> {
+    <span class="c1">// Your Stata commands here</span>
+} 
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">qui</span> <span class="pre">{</span></code>: This command is short for ‘quietly’. It tells Stata to execute the commands within the braces without displaying the usual output in the Results window. It’s helpful for keeping your results clean or when you’re only interested in the final outcome rather than seeing every step.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">}</span></code>: This closing brace marks the end of the ‘quietly’ section. After this point, Stata will return to its default behavior, which is to display output for each command.</p></li>
+</ul>
+</section>
+<section id="handling-p-values-less-than-0-01">
+<h5>Handling p-values Less Than 0.01<a class="headerlink" href="#handling-p-values-less-than-0-01" title="Permalink to this heading">#</a></h5>
+<p>The second block explains how to handle cases where p-values are less than 0.01.</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> {
+<span class="k">    if</span> <span class="nf">r</span>(p) <span class="o">&lt;</span> <span class="m">0.01</span> {
+<span class="k">        local</span> p:<span class="k"> di</span> <span class="s">&quot;p &lt; 0.01&quot;</span>
+    }
+}
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">r(p)</span> <span class="pre">&lt;</span> <span class="pre">0.01</span> <span class="pre">{</span></code>: This line checks if the p-value (<code class="docutils literal notranslate"><span class="pre">r(p)</span></code>) from the last statistical test is less than 0.01. If true, the commands inside the braces will execute.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">local</span> <span class="pre">p:</span> <span class="pre">di</span> <span class="pre">&quot;p</span> <span class="pre">&lt;</span> <span class="pre">0.01&quot;</span></code>: Here, if the condition is met, we assign a formatted string “p &lt; 0.01” to a local macro named <code class="docutils literal notranslate"><span class="pre">p</span></code>. This is a concise way to communicate that the test results are highly significant.</p></li>
+</ul>
+</section>
+<section id="formatting-p-values-between-0-01-and-0-05">
+<h5>Formatting p-values Between 0.01 and 0.05<a class="headerlink" href="#formatting-p-values-between-0-01-and-0-05" title="Permalink to this heading">#</a></h5>
+<p>The third block focuses on p-values that fall between 0.01 and 0.05, using precision formatting.</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> {
+<span class="k">    else if</span> <span class="nf">inrange</span>(<span class="nf">r</span>(p),<span class="m">0.01</span>,<span class="m">0.05</span>) {
+<span class="k">        local</span> p:<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(p)
+    }
+}
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">else</span> <span class="pre">if</span> <span class="pre">inrange(r(p),0.01,0.05)</span> <span class="pre">{</span></code>: This line checks if the p-value is within the specified range. The <code class="docutils literal notranslate"><span class="pre">inrange()</span></code> function is versatile, allowing for clear boundary definitions.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">local</span> <span class="pre">p:</span> <span class="pre">di</span> <span class="pre">%3.2f</span> <span class="pre">r(p)</span></code>: For p-values in this range, we format the number to have two decimal places (e.g., 0.03), ensuring clarity and precision in our reporting.</p></li>
+</ul>
+</section>
+<section id="formatting-p-values-greater-than-0-05">
+<h5>Formatting p-values Greater Than 0.05<a class="headerlink" href="#formatting-p-values-greater-than-0-05" title="Permalink to this heading">#</a></h5>
+<p>The fourth block deals with formatting p-values greater than 0.05.</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> {
+<span class="k">    else</span> {
+<span class="k">        local</span> p:<span class="k"> di</span> <span class="nx">%2.1f</span> <span class="nf">r</span>(p)
+    }
+}
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">else</span> <span class="pre">{</span></code>: This part catches any cases not previously covered, essentially p-values greater than 0.05.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">local</span> <span class="pre">p:</span> <span class="pre">di</span> <span class="pre">%2.1f</span> <span class="pre">r(p)</span></code>: Here, we format the p-value to have one decimal place, indicating a less strict interpretation of statistical significance.</p></li>
+</ul>
+</section>
+<section id="combining-everything">
+<h5>Combining Everything<a class="headerlink" href="#combining-everything" title="Permalink to this heading">#</a></h5>
+<p>Finally, we combine all the parts into a cohesive whole, demonstrating how to format p-values based on their value, all within a ‘quietly’ block.</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> { <span class="c1">//asks Stata to work &quot;quietly&quot;, until the corresponding brace is closed at the end</span>
+
+<span class="k">    capture log close</span>
+<span class="k">    log</span> using chi2<span class="m">.</span>log,<span class="k"> replace</span> <span class="c1">//creates a .log file</span>
+<span class="k">    use</span> transplants,<span class="k"> clear</span> <span class="c1">//imports the datafile</span>
+<span class="k">    tab</span> dx gender, row  chi2 <span class="c1">//performs a chi-square test</span>
+
+<span class="k">    if</span> <span class="nf">r</span>(p) <span class="o">&lt;</span> <span class="m">0.01</span> {
+<span class="k">       local</span> p:<span class="k"> di</span> <span class="s">&quot;p &lt; 0.01&quot;</span>
+    }
+<span class="k">    else if</span> <span class="nf">inrange</span>(<span class="nf">r</span>(p),<span class="m">0.01</span>,<span class="m">0.05</span>) {
+<span class="k">       local</span> p:<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(p)
+    }
+<span class="k">    else</span> {
+<span class="k">       local</span> p:<span class="k"> di</span> <span class="nx">%2.1f</span> <span class="nf">r</span>(p)
+    }
+<span class="k">    noi di</span> <span class="s">&quot;p = </span><span class="nv">`p&#39;</span><span class="s">&quot;</span>
+<span class="k">	log close</span> <span class="c1">//closes the .log file</span>
+} <span class="c1">//after this brace Stata may return to its default: &quot;noisely&quot; produce output as it runs the program</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>This final block puts everything together, showing how to use <code class="docutils literal notranslate"><span class="pre">qui</span></code> to suppress unnecessary output while precisely formatting p-values according to their significance level. The following line then displays the formatted p-value, completing the explanation of how to communicate statistical results clearly and effectively:</p></li>
+</ul>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">noi di</span> <span class="s">&quot;p = </span><span class="nv">`p&#39;</span><span class="s">&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="recap-of-the-chi-square-test">
+<h5>Recap of the chi-square test<a class="headerlink" href="#recap-of-the-chi-square-test" title="Permalink to this heading">#</a></h5>
+<p>In this script, we start by checking if the p-value is less than 0.01. If so, we report it as “p &lt; 0.01” to indicate a very high level of statistical significance. This convention signals to the reader that the result is significant beyond the conventional thresholds.</p>
+<p>If the p-value falls between 0.01 and 0.05, we report it in a standard numeric format (e.g., 0.03), maintaining two decimal places for precision. This range indicates statistical significance at the conventional 5% level, which is widely accepted in many research disciplines.</p>
+<p>For p-values greater than 0.05, we format them with one decimal place, acknowledging that while the result may not meet the conventional threshold for statistical significance, it is still worth reporting for a comprehensive understanding of the analysis.</p>
+<p>This approach to formatting and reporting p-values is not just about following academic conventions; it’s about making your results clear and interpretable for your audience, facilitating better understanding and discussion of your research findings.</p>
+<p>In practice, here’s how the output might look after applying our formatting script:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>.<span class="k"> return list</span> 
+
+scalars:
+<span class="nf">r</span>(N) =  <span class="m">2000</span>
+<span class="nf">r</span>(r) =  <span class="m">9</span>
+<span class="nf">r</span>(c) =  <span class="m">2</span>
+<span class="nf">r</span>(chi2) =  <span class="m">18.48047641017726</span>
+<span class="nf">r</span>(p) =  .<span class="m">0178990677414798</span>
+
+.<span class="k"> qui</span> {
+p = <span class="m">0.02</span>
+</pre></div>
+</div>
+<p>Notice how the p-value is processed and reported as “0.02” to fit the specified format for p-values between 0.01 and 0.05. This precision in reporting underscores the importance of statistical details in the broader narrative of your research findings.</p>
+<p><a class="reference external" href="https://raw.githubusercontent.com/jhustata/livre/main/chi2.log">chi2.log</a></p>
+</section>
+</section>
+<section id="dta">
+<h4>2.033 dta<a class="headerlink" href="#dta" title="Permalink to this heading">#</a></h4>
+<section id="step-1-clearing-the-workspace">
+<h5>Step 1: Clearing the Workspace<a class="headerlink" href="#step-1-clearing-the-workspace" title="Permalink to this heading">#</a></h5>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>cls
+<span class="k">clear</span> 
+<span class="k">postutil clear</span> 
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cls</span></code>: Clears the Stata command window, providing a clean slate for your next commands. It’s a good practice to start with this to avoid confusion from previous outputs.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">clear</span></code>: Removes all data from memory. This ensures that the workspace is clean before starting new data manipulations.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">postutil</span> <span class="pre">clear</span></code>: Clears any existing posted datasets from memory. This is particularly useful when you’re about to create new posted datasets, ensuring no conflicts or errors arise from previous sessions.</p></li>
+</ul>
+</section>
+<section id="step-2-setting-up-a-new-posted-file">
+<h5>Step 2: Setting Up a New Posted File<a class="headerlink" href="#step-2-setting-up-a-new-posted-file" title="Permalink to this heading">#</a></h5>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">postfile</span> pp str80 a <span class="nf">float</span>(b c) using output<span class="m">.</span>dta,<span class="k"> replace</span> 
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">postfile</span> <span class="pre">pp</span> <span class="pre">str80</span> <span class="pre">a</span> <span class="pre">float(b</span> <span class="pre">c)</span> <span class="pre">using</span> <span class="pre">output.dta,</span> <span class="pre">replace</span></code>: This line initiates the creation of a new dataset (<code class="docutils literal notranslate"><span class="pre">output.dta</span></code>) with specific variables <code class="docutils literal notranslate"><span class="pre">a</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code>, and <code class="docutils literal notranslate"><span class="pre">c</span></code>. Here, <code class="docutils literal notranslate"><span class="pre">pp</span></code> is the name given to this posting session, <code class="docutils literal notranslate"><span class="pre">str80</span> <span class="pre">a</span></code> defines <code class="docutils literal notranslate"><span class="pre">a</span></code> as a string variable with a maximum length of 80 characters, and <code class="docutils literal notranslate"><span class="pre">float(b</span> <span class="pre">c)</span></code> defines <code class="docutils literal notranslate"><span class="pre">b</span></code> and <code class="docutils literal notranslate"><span class="pre">c</span></code> as floating-point numbers. The <code class="docutils literal notranslate"><span class="pre">replace</span></code> option allows overwriting any existing file with the same name, ensuring that your new data is saved without issues.</p></li>
+</ul>
+</section>
+<section id="step-3-populating-the-dataset">
+<h5>Step 3: Populating the Dataset<a class="headerlink" href="#step-3-populating-the-dataset" title="Permalink to this heading">#</a></h5>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">post</span> pp (<span class="s">&quot;1&quot;</span>) (<span class="m">24.4</span>) (<span class="m">123</span>)
+<span class="k">post</span> pp (<span class="s">&quot;2&quot;</span>) (<span class="m">31.5</span>) (<span class="m">164</span>)
+<span class="k">post</span> pp (<span class="s">&quot;3&quot;</span>) (<span class="m">29.0</span>) (<span class="m">118</span>)
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>These lines use the <code class="docutils literal notranslate"><span class="pre">post</span></code> command to add records to the dataset you’ve started. Each <code class="docutils literal notranslate"><span class="pre">post</span></code> command adds a new row with the specified values for <code class="docutils literal notranslate"><span class="pre">a</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code>, and <code class="docutils literal notranslate"><span class="pre">c</span></code>. For example, <code class="docutils literal notranslate"><span class="pre">post</span> <span class="pre">pp</span> <span class="pre">(&quot;1&quot;)</span> <span class="pre">(24.4)</span> <span class="pre">(123)</span></code> adds a row with <code class="docutils literal notranslate"><span class="pre">a</span></code> as “1”, <code class="docutils literal notranslate"><span class="pre">b</span></code> as 24.4, and <code class="docutils literal notranslate"><span class="pre">c</span></code> as 123.</p></li>
+</ul>
+</section>
+<section id="step-4-finalizing-the-dataset">
+<h5>Step 4: Finalizing the Dataset<a class="headerlink" href="#step-4-finalizing-the-dataset" title="Permalink to this heading">#</a></h5>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">postclose</span> pp
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">postclose</span> <span class="pre">pp</span></code>: This command closes the posting session named <code class="docutils literal notranslate"><span class="pre">pp</span></code>, finalizing the dataset. After this, no more data can be added to <code class="docutils literal notranslate"><span class="pre">output.dta</span></code> under this posting session.</p></li>
+</ul>
+</section>
+<section id="step-5-using-and-viewing-the-dataset">
+<h5>Step 5: Using and Viewing the Dataset<a class="headerlink" href="#step-5-using-and-viewing-the-dataset" title="Permalink to this heading">#</a></h5>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> output,<span class="k"> clear</span> 
+<span class="k">list</span> 
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">use</span> <span class="pre">output,</span> <span class="pre">clear</span></code>: Loads the newly created <code class="docutils literal notranslate"><span class="pre">output.dta</span></code> into memory, clearing any other data that was previously loaded. This makes <code class="docutils literal notranslate"><span class="pre">output.dta</span></code> the active dataset for analysis.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">list</span></code>: Displays the contents of the active dataset in the Results window. This provides a quick way to review the data you’ve just posted, ensuring it looks as expected.</p></li>
+</ul>
+</section>
+</section>
+<section id="docx">
+<h4>2.034 docx<a class="headerlink" href="#docx" title="Permalink to this heading">#</a></h4>
+</section>
+<section id="embedding-stata-results-into-docx-documents">
+<h4><strong>1. Embedding Stata Results into <code class="docutils literal notranslate"><span class="pre">.docx</span></code> Documents</strong><a class="headerlink" href="#embedding-stata-results-into-docx-documents" title="Permalink to this heading">#</a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">putdocx</span></code> command in Stata allows you to create Word documents directly from your Stata results. This method is straightforward and can be incredibly useful for incorporating statistical results into your reports or assignments.</p>
+<p><strong>Steps to Create a Word Document:</strong></p>
+<ol class="arabic">
+<li><p><strong>Begin Your Document</strong></p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>putdocx begin
+</pre></div>
+</div>
+<p><em>Starts a new Word document.</em></p>
+</li>
+<li><p><strong>Add Text</strong></p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>putdocx paragraph 
+putdocx text (<span class="s">&quot;This is how you embed Stata results into a .docx file.&quot;</span>)
+</pre></div>
+</div>
+<p><em>Inserts a sentence or any text into your document. Let Stata know that this is a new paragraph</em></p>
+</li>
+<li><p><strong>Save Your Document</strong></p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>putdocx<span class="k"> save</span> myDocument<span class="m">.</span>docx,<span class="k"> replace</span>
+</pre></div>
+</div>
+<p><em>Saves your Word document with the name “myDocument.docx”.</em></p>
+</li>
+</ol>
+<p><strong>Example Use Case:</strong></p>
+<p>Imagine you conducted an analysis and found the average age in your dataset to be 30 years. You can quickly add this result to a Word document as part of your report:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>putdocx begin
+putdocx paragraph
+putdocx text (<span class="s">&quot;The average age in our dataset is 30 years.&quot;</span>)
+putdocx<span class="k"> save</span> analysisReport<span class="m">.</span>docx,<span class="k"> replace</span>
+</pre></div>
+</div>
+</section>
+<section id="html">
+<h4>2.035 html<a class="headerlink" href="#html" title="Permalink to this heading">#</a></h4>
+</section>
+<section id="embedding-stata-results-into-html-documents">
+<h4><strong>2. Embedding Stata Results into <code class="docutils literal notranslate"><span class="pre">.html</span></code> Documents</strong><a class="headerlink" href="#embedding-stata-results-into-html-documents" title="Permalink to this heading">#</a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">dyndoc</span></code> command converts a Stata <code class="docutils literal notranslate"><span class="pre">.do</span></code> file written in markdown language to an <code class="docutils literal notranslate"><span class="pre">.html</span></code> file. This is useful for creating web pages or reports that can be easily shared online.</p>
+<p><strong>Basic Steps:</strong></p>
+<ol class="arabic">
+<li><p><strong>Write Your <code class="docutils literal notranslate"><span class="pre">.do</span></code> File in Markdown</strong></p>
+<p>Create a <code class="docutils literal notranslate"><span class="pre">.do</span></code> file with your Stata code and use markdown for any text explanations or headings.</p>
+</li>
+<li><p><strong>Use <code class="docutils literal notranslate"><span class="pre">dyndoc</span></code> to Convert</strong></p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>dyndoc yourFile<span class="m">.</span>do, saving(yourFile<span class="m">.</span>html)<span class="k"> replace</span>
+</pre></div>
+</div>
+<p><em>Converts your <code class="docutils literal notranslate"><span class="pre">.do</span></code> file to an <code class="docutils literal notranslate"><span class="pre">.html</span></code> document named “yourFile.html”.</em></p>
+</li>
+</ol>
+<p><strong>Simple Example:</strong></p>
+<p>If you want to share the results of your average age analysis in an HTML format, your <code class="docutils literal notranslate"><span class="pre">.do</span></code> file might look something like this:</p>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span><span class="gh"># Analysis Results</span>
+
+The average age in our dataset is 30 years.
+</pre></div>
+</div>
+<p>And you’d convert it using:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>dyndoc analysisResults<span class="m">.</span>do, saving(analysisResults<span class="m">.</span>html)<span class="k"> replace</span>
+</pre></div>
+</div>
+</section>
+<section id="conclusion-for-students">
+<h4><strong>Conclusion for Students:</strong><a class="headerlink" href="#conclusion-for-students" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>For <code class="docutils literal notranslate"><span class="pre">.docx</span></code>:</strong> Use <code class="docutils literal notranslate"><span class="pre">putdocx</span></code> commands to directly create and edit Word documents from Stata. Ideal for reports and assignments.</p></li>
+<li><p><strong>For <code class="docutils literal notranslate"><span class="pre">.html</span></code>:</strong> Write your analysis and results in markdown within a <code class="docutils literal notranslate"><span class="pre">.do</span></code> file, and use <code class="docutils literal notranslate"><span class="pre">dyndoc</span></code> to convert it to HTML. Great for sharing results online or via email.</p></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="variables">
+<h2>2.1 Variables<a class="headerlink" href="#variables" title="Permalink to this heading">#</a></h2>
+<section id="loading-a-dataset">
+<h3>Loading a Dataset<a class="headerlink" href="#loading-a-dataset" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> https:<span class="o">//</span>jhustata<span class="m">.</span>github<span class="m">.</span>io<span class="o">/</span>basic<span class="o">/</span>_downloads<span class="o">/</span>34a8255f06036b44354b3c36c5583d7e<span class="o">/</span>transplants<span class="m">.</span>dta,<span class="k"> clear</span>
+</pre></div>
+</div>
+<p><strong>Note for Students:</strong> This command is your starting point. It loads a dataset from a specified URL into Stata, clearing anything that was in memory before. Always ensure you’re working with the correct dataset by loading it appropriately. This particular dataset, <code class="docutils literal notranslate"><span class="pre">transplants.dta</span></code>, is likely related to medical transplant records, given its name.</p>
+</section>
+<section id="listing-variables">
+<h3>Listing Variables<a class="headerlink" href="#listing-variables" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">ds</span>
+</pre></div>
+</div>
+<p><strong>Note for Students:</strong> The <code class="docutils literal notranslate"><span class="pre">ds</span></code> command is a quick way to list all variables in your dataset. It’s a good practice to familiarize yourself with the variables available to you before starting any analysis. Knowing what data you have is the first step in understanding what questions you can answer.</p>
+<p><strong>Example Output from <code class="docutils literal notranslate"><span class="pre">ds</span></code> Command:</strong></p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>.<span class="k"> ds</span>
+fake_id       don_hgt_cm    don_ecd       rec_hgt_cm    prev_ki       end_date      wait_yrs      rec_hcv_an<span class="o">~</span>y  rec_educat<span class="o">~</span>n
+ctr_id        don_wgt_kg    dx            rec_wgt_kg    age           died          abo           rec_work      extended_dgn
+transplant<span class="o">~</span>e  don_cod       race          bmi           peak_pra      tx_failed     gender        pretx_cmv
+</pre></div>
+</div>
+<p><strong>Note for Students:</strong> This output lists the variables in your dataset. From <code class="docutils literal notranslate"><span class="pre">fake_id</span></code> to <code class="docutils literal notranslate"><span class="pre">pretx_cmv</span></code>, each variable represents a different attribute related to the transplants. For example, <code class="docutils literal notranslate"><span class="pre">don_hgt_cm</span></code> might stand for donor height in centimeters, and <code class="docutils literal notranslate"><span class="pre">rec_wgt_kg</span></code> could be the recipient’s weight in kilograms. Understanding each variable’s meaning is essential for any analysis.</p>
+</section>
+<section id="getting-help">
+<h3>Getting Help<a class="headerlink" href="#getting-help" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">help ds</span>
+</pre></div>
+</div>
+<p><strong>Note for Students:</strong> Whenever you’re unsure about a command or need to know more about its options and syntax, use <code class="docutils literal notranslate"><span class="pre">help</span> <span class="pre">&lt;command&gt;</span></code>. It’s a lifesaver and a fast way to access documentation directly within Stata.</p>
+</section>
+<section id="filtering-variables-by-type">
+<h3>Filtering Variables by Type<a class="headerlink" href="#filtering-variables-by-type" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">ds</span>, has(type)
+</pre></div>
+</div>
+<p><strong>Note for Students:</strong> This command uses the <code class="docutils literal notranslate"><span class="pre">has</span></code> option with the <code class="docutils literal notranslate"><span class="pre">ds</span></code> command to filter variables by a specific attribute, in this case, <code class="docutils literal notranslate"><span class="pre">type</span></code>. However, this example is incomplete because it doesn’t specify what type to filter by. In practice, you would use something like <code class="docutils literal notranslate"><span class="pre">ds,</span> <span class="pre">has(type</span> <span class="pre">numeric)</span></code> to list only numeric variables. It’s a powerful feature for when you need to narrow down your list of variables to those that meet specific criteria, such as numeric, string, or date variables.</p>
+</section>
+<section id="summary">
+<h3>Summary<a class="headerlink" href="#summary" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Start with data</strong>: Loading your data correctly is step one. Ensure the dataset you’re using is the one you intend to analyze.</p></li>
+<li><p><strong>Know your tools</strong>: Use commands like <code class="docutils literal notranslate"><span class="pre">ds</span></code> to understand what variables you have at your disposal. This knowledge is crucial for planning your analysis.</p></li>
+<li><p><strong>Learn continuously</strong>: Use the <code class="docutils literal notranslate"><span class="pre">help</span></code> feature liberally to deepen your understanding of Stata’s commands and their options.</p></li>
+<li><p><strong>Be selective</strong>: Learn to use commands in ways that filter and narrow down to the information you need, making your analysis more efficient and your code cleaner.</p></li>
+</ul>
+<p>I encourage you to experiment with these commands and options to get comfortable working with data in Stata. Practical exercises that require you to load, inspect, and manipulate datasets will reinforce these concepts and improve your proficiency in Stata programming. The labs focus on such activity.</p>
+</section>
+</section>
+<section id="string">
+<h2>2.2 String<a class="headerlink" href="#string" title="Permalink to this heading">#</a></h2>
+<p>Case study: <a class="reference internal" href="entry_poll.html"><span class="doc std std-doc">Entry Poll</span></a> Results</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">delimited</span> <span class="pre">entry_poll.csv,</span> <span class="pre">bindquote(strict)</span> <span class="pre">varn(1)</span> <span class="pre">clear</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">describe</span></code></p></li>
+</ul>
+</section>
+<section id="numeric">
+<h2>2.3 Numeric<a class="headerlink" href="#numeric" title="Permalink to this heading">#</a></h2>
+<p>Case study: <a class="reference external" href="https://jhustata.github.io/basic/_downloads/34a8255f06036b44354b3c36c5583d7e/transplants.dta">transplants.dta</a></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">use</span> <span class="pre">transplants</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">desribe</span></code></p></li>
+</ul>
+</section>
+<section id="return-values">
+<h2>2.4 Return values<a class="headerlink" href="#return-values" title="Permalink to this heading">#</a></h2>
+<p>Case study:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">creturn</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">list</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ereturn</span> <span class="pre">list</span></code></p></li>
+</ul>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> transplants
+<span class="k">regress</span> gender age
+<span class="k">creturn list</span>
+<span class="k">ereturn list</span>
+<span class="k">return list</span>
+<span class="k">tab</span> gender abo, chi
+<span class="k">return list</span>
+</pre></div>
+</div>
+<ol class="arabic">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">use</span> <span class="pre">transplants</span></code></strong>: This command loads the dataset named “transplants” into Stata’s memory. It’s the starting point for any data analysis. Using real-world datasets can make the analysis more engaging and informative, and “transplants” sounds like it could offer some intriguing insights into medical data.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">regress</span> <span class="pre">gender</span> <span class="pre">age</span></code></strong>: Here, you’re running a linear regression with “gender” as the dependent variable and “age” as the independent variable. This choice is interesting but a bit unconventional. Typically, gender (a categorical variable) would be used as an independent variable rather than a dependent one. However, exploring data in unconventional ways can sometimes yield unique insights, so I’m curious about the hypothesis or reasoning behind this choice.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">creturn</span> <span class="pre">list</span></code></strong>, <strong><code class="docutils literal notranslate"><span class="pre">ereturn</span> <span class="pre">list</span></code></strong>, and <strong><code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">list</span></code></strong>: These commands display the contents of Stata’s return memory after a command is executed. Stata uses different types of return memories for different commands:</p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">creturn</span> <span class="pre">list</span></code></strong> shows scalar values like the number of observations or the R-squared value, which are returned by commands that concern the characteristics of the current dataset or model.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">ereturn</span> <span class="pre">list</span></code></strong> is used after estimation commands (like <code class="docutils literal notranslate"><span class="pre">regress</span></code>) to show estimation results such as coefficients and statistics.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">list</span></code></strong> displays results from commands that do not fit into the estimation category, like tabulations or general statistics.</p></li>
+</ul>
+<p>It’s a good practice to use these commands to check and verify the output of your analysis, ensuring you understand the results and the model’s behavior. However, for someone starting, this might feel like information overload. Remember, the value lies in understanding what each piece of output signifies about your data and model.</p>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">tab</span> <span class="pre">gender</span> <span class="pre">abo,</span> <span class="pre">chi</span></code></strong>: This tabulation with a Chi-squared test (indicated by <code class="docutils literal notranslate"><span class="pre">chi</span></code>, and already covered in <a class="reference external" href="https://jhustata.github.io/basic/chapter2.html#introduction-to-the-quietly-command">detail</a> when discussing .log output examines the relationship between gender and blood type (assumed from “abo”). It’s a neat way to explore categorical data. This command makes sense as it explores the association between two categorical variables, potentially offering insights into patterns or disparities in the dataset.</p></li>
+<li><p>Finally, <strong><code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">list</span></code></strong> again, after the <code class="docutils literal notranslate"><span class="pre">tab</span></code> command, will likely show different information relevant to the tabulation rather than the regression analysis. It’s crucial to understand how the output context shifts based on the last command run.</p></li>
+</ol>
+</section>
+<section id="macros">
+<h2>2.5 Macros<a class="headerlink" href="#macros" title="Permalink to this heading">#</a></h2>
+<section id="understanding-macros-in-stata-a-guide-for-new-graduate-students">
+<h3>Understanding Macros in Stata: A Guide for New Graduate Students<a class="headerlink" href="#understanding-macros-in-stata-a-guide-for-new-graduate-students" title="Permalink to this heading">#</a></h3>
+<section id="introduction-to-macros">
+<h4>Introduction to Macros<a class="headerlink" href="#introduction-to-macros" title="Permalink to this heading">#</a></h4>
+<p>In Stata, <strong>macros</strong> are a powerful feature that allows you to store both string and numeric values under simple names. This makes it easier to reference complex information throughout your code. Think of macros as shorthand or a nickname for data you frequently use.</p>
+</section>
+<section id="types-of-macros">
+<h4>Types of Macros<a class="headerlink" href="#types-of-macros" title="Permalink to this heading">#</a></h4>
+<p>Macros in Stata can be broadly categorized into two types: <strong>System</strong> and <strong>User-defined</strong>.</p>
+<ol class="arabic">
+<li><p><strong>System Macros</strong></p>
+<ul class="simple">
+<li><p>These are predefined by Stata and automatically store specific information from your analysis, making it easily accessible for later use.</p></li>
+<li><p>To view what’s currently stored by Stata, use the following commands:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">creturn</span> <span class="pre">list</span></code> displays system constants, like the current version of Stata.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">list</span></code> shows results from general commands.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ereturn</span> <span class="pre">list</span></code> is used for displaying results from estimation commands (regressions, for example).</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>User-defined Macros</strong></p>
+<ul>
+<li><p>As the name suggests, these are defined by the user (that’s you!) to store values for future reference. There are two kinds:</p>
+<ul>
+<li><p><strong>Global Macros</strong>: These are accessible from anywhere in your current Stata session. They’re perfect for values you need to use repeatedly across different parts of your analysis.</p>
+<ul class="simple">
+<li><p>Example: Setting a global macro for your working directory can streamline file paths.</p></li>
+</ul>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">global</span> workdir <span class="s">&quot;</span><span class="nv">`c(pwd)&#39;</span><span class="s">/&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Local Macros</strong>: These are temporary and only accessible within the block of code or program where they were defined. Use them to store interim results or values that are only relevant in a specific context.</p>
+<ul class="simple">
+<li><p>Example: Storing the mean of a variable for quick reference in your code.</p></li>
+</ul>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">local mean</span>:<span class="k"> di</span> <span class="nx">%3.1f</span> <span class="nf">r</span>(mean)
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="when-to-use-macros">
+<h4>When to Use Macros<a class="headerlink" href="#when-to-use-macros" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Repetitive Values</strong>: Use macros for values or paths you find yourself typing out repeatedly. This can save time and reduce errors.</p></li>
+<li><p><strong>Dynamic References</strong>: When working with datasets that undergo multiple transformations, macros can help keep track of changing values without manually updating them each time.</p></li>
+<li><p><strong>Code Clarity and Maintenance</strong>: Macros make your code easier to read and maintain. Instead of hardcoding values that might change, use a macro. If the value needs to be updated, you only have to change the macro definition.</p></li>
+</ul>
+</section>
+<section id="best-practices">
+<h4>Best Practices<a class="headerlink" href="#best-practices" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Naming</strong>: Choose clear and descriptive names for your macros. Remember, what makes sense to you now should ideally be understandable to someone else (or even you) when looking at the code months later.</p></li>
+<li><p><strong>Scope Appropriately</strong>: Use global macros sparingly and only for values that truly need to be global. When in doubt, default to local macros to prevent unexpected results.</p></li>
+<li><p><strong>Documentation</strong>: Especially for global macros, document their purpose and usage at the point of definition. This is helpful in collaborative projects or any future review of your code.</p></li>
+</ul>
+</section>
+</section>
+<section id="conclusion">
+<h3>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">#</a></h3>
+<p>Macros are a fundamental part of efficient and effective Stata programming. By incorporating them into your workflow, you’ll streamline your code, reduce the potential for errors, and make your entire analysis more manageable. As you become more comfortable with Stata, you’ll find even more creative and powerful ways to use macros in your projects.</p>
+</section>
+</section>
+<section id="programs">
+<h2>2.6 Programs<a class="headerlink" href="#programs" title="Permalink to this heading">#</a></h2>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">   program</span> define myfirstprogram
+<span class="k">      di</span> <span class="s">&quot;Hello, Class!&quot;</span>
+<span class="k">   end</span>
+</pre></div>
+</div>
+<section id="introduction-to-stata-programs-creating-your-first-custom-program">
+<h3>Introduction to Stata Programs: Creating Your First Custom Program<a class="headerlink" href="#introduction-to-stata-programs-creating-your-first-custom-program" title="Permalink to this heading">#</a></h3>
+<section id="what-is-a-stata-program">
+<h4>What is a Stata Program?<a class="headerlink" href="#what-is-a-stata-program" title="Permalink to this heading">#</a></h4>
+<p>A <strong>Stata program</strong> is essentially a user-defined command that allows you to encapsulate a sequence of Stata commands into a single, reusable command. This can greatly streamline your workflow, especially when you need to perform repetitive tasks or analyses.</p>
+</section>
+<section id="creating-a-simple-stata-program">
+<h4>Creating a Simple Stata Program<a class="headerlink" href="#creating-a-simple-stata-program" title="Permalink to this heading">#</a></h4>
+<p>Let’s walk through creating your very first Stata program, <code class="docutils literal notranslate"><span class="pre">myfirstprogram</span></code>. This basic program will display a greeting message to the class.</p>
+<ol class="arabic">
+<li><p><strong>Program Definition</strong></p>
+<p>Begin by telling Stata that you’re defining a new program using the <code class="docutils literal notranslate"><span class="pre">program</span> <span class="pre">define</span></code> command. This is followed by the name of your program. Here, our program is named <code class="docutils literal notranslate"><span class="pre">myfirstprogram</span></code>.</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">program</span> define myfirstprogram
+</pre></div>
+</div>
+</li>
+<li><p><strong>Writing the Program’s Commands</strong></p>
+<p>Inside the program, you can include any Stata commands you wish to execute when the program is called. In this case, we’ll use the <code class="docutils literal notranslate"><span class="pre">di</span></code> (display) command to show a simple greeting message.</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">di</span> <span class="s">&quot;Hello, Class!&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Ending the Program Definition</strong></p>
+<p>Conclude the definition of your program with the <code class="docutils literal notranslate"><span class="pre">end</span></code> command. This lets Stata know that you’ve finished writing your program.</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">end</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+<section id="complete-program-code">
+<h4>Complete Program Code<a class="headerlink" href="#complete-program-code" title="Permalink to this heading">#</a></h4>
+<p>Putting it all together, the complete code for <code class="docutils literal notranslate"><span class="pre">myfirstprogram</span></code> looks like this:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">program</span> define myfirstprogram
+<span class="k">   di</span> <span class="s">&quot;Hello, Class!&quot;</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</section>
+<section id="running-your-program">
+<h4>Running Your Program<a class="headerlink" href="#running-your-program" title="Permalink to this heading">#</a></h4>
+<p>Once defined, you can run your program by simply typing its name into the Stata command window:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>myfirstprogram
+</pre></div>
+</div>
+<p>Upon execution, you’ll see the message:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Hello, Class!
+</pre></div>
+</div>
+<p>displayed in the Stata Results window.</p>
+</section>
+<section id="why-use-custom-programs">
+<h4>Why Use Custom Programs?<a class="headerlink" href="#why-use-custom-programs" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Efficiency</strong>: Save time by combining frequently used command sequences into a single command.</p></li>
+<li><p><strong>Reusability</strong>: Share your custom programs with classmates or colleagues to promote consistent methodologies.</p></li>
+<li><p><strong>Organization</strong>: Keep your Stata do-files cleaner and more organized by encapsulating complex procedures within programs.</p></li>
+</ul>
+</section>
+<section id="id1">
+<h4>Best Practices<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Naming</strong>: Choose clear, descriptive names for your programs to easily remember their purpose.</p></li>
+<li><p><strong>Modularity</strong>: Break down complex tasks into smaller, manageable programs when possible. This enhances readability and debuggability.</p></li>
+<li><p><strong>Comments</strong>: Use comments within your programs to explain the purpose of each section or command. This is invaluable for future reference and for others using your programs.</p></li>
+</ul>
+</section>
+</section>
+<section id="id2">
+<h3>Conclusion<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
+<p>Creating custom programs in Stata can significantly enhance your data analysis efficiency and effectiveness. Starting with simple programs like <code class="docutils literal notranslate"><span class="pre">myfirstprogram</span></code>, you can gradually build up to more complex and powerful tools tailored to your specific needs.</p>
+</section>
+</section>
+<section id="lab">
+<h2>2.7 Lab<a class="headerlink" href="#lab" title="Permalink to this heading">#</a></h2>
+<p>We’ll revise the questions you discussed in <a class="reference internal" href="lab1.html"><span class="doc std std-doc">lab 1</span></a>, and incorporate our new knowledge about macros and conditional statements</p>
+</section>
+<section id="homework">
+<h2>2.8 Homework<a class="headerlink" href="#homework" title="Permalink to this heading">#</a></h2>
+<p>Your week 2 homework is nearly as simple as that from week 1:</p>
+<ol class="arabic simple">
+<li><p>Write a .do file which imports data from <a class="reference external" href="https://jhustata.github.io/book/_downloads/884b9e06eb29f89b1b87da4eab39775d/hw1.txt">hw1.txt</a></p></li>
+<li><p>Name it <code class="docutils literal notranslate"><span class="pre">hw2.lastname.firstname.do</span></code></p></li>
+<li><p>It should create a .log file called <code class="docutils literal notranslate"><span class="pre">hw2.lastname.firstname.log</span></code></p></li>
+<li><p>Make sure your log file displays only the output of interest</p></li>
+<li><p>But do not submit your log file as part of the assignment</p></li>
+<li><p>Evaluation will be based on the .log file produced when we run your script on our machines</p></li>
+</ol>
+<p>Questions</p>
+<p><strong>Question 1</strong>. Print the following sentence: <code class="docutils literal notranslate"><span class="pre">Question</span> <span class="pre">1:</span> <span class="pre">The</span> <span class="pre">median</span> <span class="pre">[IQR]</span> <span class="pre">age</span> <span class="pre">is</span> <span class="pre">XX</span> <span class="pre">[XX-XX]</span> <span class="pre">among</span> <span class="pre">males</span> <span class="pre">and</span> <span class="pre">XX</span> <span class="pre">[XX-XX]</span> <span class="pre">among</span> <span class="pre">females.</span></code> IQR stands for interquartile range. The <code class="docutils literal notranslate"><span class="pre">XX</span></code> values should be replaced with correct values, rounded to the nearest whole number (for example, <code class="docutils literal notranslate"><span class="pre">47</span></code>). Ignore missing values; that is, calculate median [IQR] only using the non-missing values.</p>
+<p><strong>Question 2</strong>. Print the following sentence: <code class="docutils literal notranslate"><span class="pre">Question</span> <span class="pre">2:</span> <span class="pre">XX.X%</span> <span class="pre">among</span> <span class="pre">males</span> <span class="pre">and</span> <span class="pre">XX.X%</span> <span class="pre">among</span> <span class="pre">females</span> <span class="pre">have</span> <span class="pre">history</span> <span class="pre">of</span> <span class="pre">previous</span> <span class="pre">transplant.</span></code> The <code class="docutils literal notranslate"><span class="pre">XX.X%</span></code> values should be replaced with correct percentage values, with <u>one decimal value</u> to the right of the decimal place (for example, <code class="docutils literal notranslate"><span class="pre">10.5%</span></code>).</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="chapter1.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">1. Philosophy, overview, commands, syntax</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="chapter3.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">3. Loops, Program Syntax, and Miscellany</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#last-week">2.0 Last week</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#results-output">2.01 Results/output</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#display-files">2.02 Display/files</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#examples">2.03 Examples</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#xlsx">2.031 xlsx</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#log">2.032 log</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-the-quietly-command">Introduction to the “quietly” Command</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#handling-p-values-less-than-0-01">Handling p-values Less Than 0.01</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#formatting-p-values-between-0-01-and-0-05">Formatting p-values Between 0.01 and 0.05</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#formatting-p-values-greater-than-0-05">Formatting p-values Greater Than 0.05</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#combining-everything">Combining Everything</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#recap-of-the-chi-square-test">Recap of the chi-square test</a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dta">2.033 dta</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-clearing-the-workspace">Step 1: Clearing the Workspace</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-setting-up-a-new-posted-file">Step 2: Setting Up a New Posted File</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-populating-the-dataset">Step 3: Populating the Dataset</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-finalizing-the-dataset">Step 4: Finalizing the Dataset</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-using-and-viewing-the-dataset">Step 5: Using and Viewing the Dataset</a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#docx">2.034 docx</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#embedding-stata-results-into-docx-documents"><strong>1. Embedding Stata Results into <code class="docutils literal notranslate"><span class="pre">.docx</span></code> Documents</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#html">2.035 html</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#embedding-stata-results-into-html-documents"><strong>2. Embedding Stata Results into <code class="docutils literal notranslate"><span class="pre">.html</span></code> Documents</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion-for-students"><strong>Conclusion for Students:</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variables">2.1 Variables</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-a-dataset">Loading a Dataset</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#listing-variables">Listing Variables</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-help">Getting Help</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-variables-by-type">Filtering Variables by Type</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#string">2.2 String</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#numeric">2.3 Numeric</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#return-values">2.4 Return values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#macros">2.5 Macros</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-macros-in-stata-a-guide-for-new-graduate-students">Understanding Macros in Stata: A Guide for New Graduate Students</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-macros">Introduction to Macros</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-macros">Types of Macros</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#when-to-use-macros">When to Use Macros</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#best-practices">Best Practices</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#programs">2.6 Programs</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-stata-programs-creating-your-first-custom-program">Introduction to Stata Programs: Creating Your First Custom Program</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-a-stata-program">What is a Stata Program?</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-simple-stata-program">Creating a Simple Stata Program</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#complete-program-code">Complete Program Code</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#running-your-program">Running Your Program</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#why-use-custom-programs">Why Use Custom Programs?</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Best Practices</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Conclusion</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab">2.7 Lab</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#homework">2.8 Homework</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Abimereki Muzaale
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
