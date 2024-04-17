@@ -91,32 +91,27 @@ quietly {
 		2. Just for TAs
 	}
 	if 1 { //methods, log, settings
-		capture log close 
-		log using "hw1.lastname.firstname.log", replace 
-		global data https://jhustata.github.io/book/_downloads/884b9e06eb29f89b1b87da4eab39775d/hw1.txt
+        cls
+        clear 
+        set more off
+		set timeout1 1000 //in week 1 the Hopkins internet speeds were slow and for some Stata "time-out" before importing the dataset
+        capture log close 
+        log using "hw3.lastname.firstname.log", replace 
+        global data "https://jhustata.github.io/book/_downloads/884b9e06eb29f89b1b87da4eab39775d/hw1.txt"
+        import delimited $data, clear // Refresh data in memory, as is the case in lecture1.do and others supplements
 	}
-	if 2 { //data
-		import delimited $data, clear 
-	}
-	if 3 { //results, analysis
-		//Q1
-		g htn=dx=="4=Hypertensive"
-		replace htn=0 if missing(htn)
-		
-		//label values
-		label define htn_lab 0 "No" 1 "Yes"
-		label values htn htn_lab 
-		noi tab htn 
-		
-		//Q2
+    if 2 { //results, Q1
+        gen htn = dx == "4=Hypertensive"
+        replace htn = 0 if missing(htn)
+        
+        // Label values for hypertension
+        label define htn_lab 0 "No" 1 "Yes"
+        label values htn htn_lab 
+        noi tab htn 
+    }
+	if 3 { //results, Q2
 		//capture program drop q2
 		//program define q2
-		   //our goals; this step is not needed
-		   //.log output
-		   local row1=1
-		   local row2=2
-		   local row3=3
-		   
 		   //.xlsx output
 		   putexcel set question2, replace 
 		   
@@ -181,6 +176,10 @@ quietly {
 		//end 
 	}
 	log close 
+    
+	// Restore initial settings
+    set more on
+	set timeout1 30
 }
 ```
  
