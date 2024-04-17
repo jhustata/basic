@@ -365,7 +365,11 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#homework-assignments">Homework Assignments</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#datasets-and-supplementary-materials">Datasets and Supplementary Materials</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-resources-and-evaluation">Additional Resources and Evaluation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weekly-insights-updates-announcements-and-solutions">Weekly Insights: Updates, Announcements, and Solutions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weekly-insights-updates-announcements-and-solutions">Weekly Insights: Updates, Announcements, and Solutions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#total-points-100-no-student-will-lose-more-than-20-points-some-students-may-score-as-many-as-105-points">Total Points: 100 (no student will lose more than 20 points; some students may score as many as 105 points)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-considerations">Additional Considerations:</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#acknowledgements">Acknowledgements</a></li>
 </ul>
             </nav>
@@ -522,9 +526,10 @@ document.write(`
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <ul class="simple">
-<li><p><strong>Updated as of 04/16/2024 at 10:52PM</strong>.</p></li>
+<li><p><strong>Updated as of 04/17/2024 at 9:30AM</strong>.</p></li>
 <li><p>For tips on aligning output in your Stata results window for <strong>Homework 3</strong>, see the column <code class="docutils literal notranslate"><span class="pre">_col()</span></code> syntax below. This approach has been effectively utilized by your peers, as discussed in our <a class="reference external" href="https://github.com/jhufena/discussions/discussions/35">GitHub Community</a>.</p></li>
 <li><p>Solutions for <strong><a class="reference internal" href="hw1sol.html"><span class="doc std std-doc">Homework 1</span></a></strong> and <strong><a class="reference internal" href="hw2sol.html"><span class="doc std std-doc">Homework 2</span></a></strong> are now available. Review them to enhance your understanding and preparation for upcoming assignments.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">New!!!</span></code>: A grading rubric for HW3 is included below to reassure you that you needn’t worry too much, just submit your <code class="docutils literal notranslate"><span class="pre">.do</span></code> file when it is due :)</p></li>
 </ul>
 </div>
 <p>Just as we’ve seen with macro modifiers such as <code class="docutils literal notranslate"><span class="pre">local</span> <span class="pre">mean:</span> <span class="pre">di</span> <span class="pre">%3.1f</span> <span class="pre">r(mean)</span></code>, so may you go with the modifier <code class="docutils literal notranslate"><span class="pre">_col()</span></code> in your extended macro:</p>
@@ -532,6 +537,50 @@ document.write(`
 <span class="k">di</span> <span class="s">&quot;</span><span class="nv">`study_arms&#39;</span><span class="s">&quot;</span>
 </pre></div>
 </div>
+<section id="total-points-100-no-student-will-lose-more-than-20-points-some-students-may-score-as-many-as-105-points">
+<h3>Total Points: 100 (no student will lose more than 20 points; some students may score as many as 105 points)<a class="headerlink" href="#total-points-100-no-student-will-lose-more-than-20-points-some-students-may-score-as-many-as-105-points" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Code Structure and Documentation</strong></p>
+<ul class="simple">
+<li><p><strong>Clarity (up to -1 point)</strong>: Deduct if code is disorganized or hard to follow. (<code class="docutils literal notranslate"><span class="pre">deduct</span> <span class="pre">only</span> <span class="pre">once,</span> <span class="pre">even</span> <span class="pre">if</span> <span class="pre">several</span> <span class="pre">blocks</span> <span class="pre">of</span> <span class="pre">code</span> <span class="pre">are</span> <span class="pre">disorganized;</span> <span class="pre">use</span> <span class="pre">same</span> <span class="pre">approach</span> <span class="pre">for</span> <span class="pre">other</span> <span class="pre">issues</span></code>)</p></li>
+<li><p><strong>Comments (up to -2 points)</strong>: Deduct for inadequate comments explaining code blocks, methods, or variables.</p></li>
+<li><p><strong>Readability (up to -1 point)</strong>: Deduct for poor use of spacing, indentation, or naming conventions.</p></li>
+</ul>
+</li>
+<li><p><strong>Execution and Functionality</strong></p>
+<ul class="simple">
+<li><p><strong>Correctness (up to -3 points)</strong>: Deduct if the script has errors or does not produce the expected output.</p></li>
+<li><p><strong>Efficiency (up to -2 points)</strong>: Deduct if code is inefficient with unnecessary repetitions or calculations.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">Based</span> <span class="pre">on</span> <span class="pre">this</span> <span class="pre">point,</span> <span class="pre">even</span> <span class="pre">the</span> <span class="pre">solution</span> <span class="pre">we</span> <span class="pre">may</span> <span class="pre">share</span> <span class="pre">with</span> <span class="pre">you</span> <span class="pre">isn't</span> <span class="pre">perfect;</span> <span class="pre">there's</span> <span class="pre">about</span> <span class="pre">-1</span> <span class="pre">points</span> <span class="pre">for</span> <span class="pre">repetition</span> <span class="pre">in</span> <span class="pre">creating</span> <span class="pre">the</span> <span class="pre">.xlsx</span> <span class="pre">file;</span> <span class="pre">a</span> <span class="pre">loop</span> <span class="pre">should</span> <span class="pre">make</span> <span class="pre">this</span> <span class="pre">more</span> <span class="pre">efficient</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">No</span> <span class="pre">body</span> <span class="pre">is</span> <span class="pre">perfect!!</span></code></p></li>
+</ul>
+</li>
+<li><p><strong>Completeness (up to -1 point)</strong>: Deduct if any part of the script is missing or non-functional.</p></li>
+</ul>
+</li>
+<li><p><strong>Data Handling and Analysis</strong></p>
+<ul class="simple">
+<li><p><strong>Data Import (up to -1 point)</strong>: Deduct if data is incorrectly imported or cleaned.</p></li>
+<li><p><strong>Variable Creation (up to -2 points)</strong>: Deduct if variable creation or transformation is incorrect.</p></li>
+<li><p><strong>Descriptive Statistics (up to -2 points)</strong>: Deduct if there are errors in the computation or display of statistics.</p></li>
+</ul>
+</li>
+<li><p><strong>Results and Output Quality</strong></p>
+<ul class="simple">
+<li><p><strong>Table Outputs (up to -2 points)</strong>: Deduct if outputs in both <code class="docutils literal notranslate"><span class="pre">.log</span></code> and <code class="docutils literal notranslate"><span class="pre">.xlsx</span></code> formats are incorrect or unclear.</p></li>
+<li><p><strong>Labeling and Presentation (up to -2 points)</strong>: Deduct if variables and results are improperly labeled or presented.</p></li>
+<li><p><strong>Interpretation (up to -1 point)</strong>: Deduct if the results are not briefly explained or interpreted correctly.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="additional-considerations">
+<h3>Additional Considerations:<a class="headerlink" href="#additional-considerations" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Innovation (Bonus up to +5 points)</strong>: Award for creative approaches that enhance the analysis or presentation. Perhaps five innovations earn five points. Three earn three, etc.</p></li>
+</ul>
+</section>
 </section>
 <section id="acknowledgements">
 <h2>Acknowledgements<a class="headerlink" href="#acknowledgements" title="Permalink to this heading">#</a></h2>
@@ -608,7 +657,11 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#homework-assignments">Homework Assignments</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#datasets-and-supplementary-materials">Datasets and Supplementary Materials</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-resources-and-evaluation">Additional Resources and Evaluation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weekly-insights-updates-announcements-and-solutions">Weekly Insights: Updates, Announcements, and Solutions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weekly-insights-updates-announcements-and-solutions">Weekly Insights: Updates, Announcements, and Solutions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#total-points-100-no-student-will-lose-more-than-20-points-some-students-may-score-as-many-as-105-points">Total Points: 100 (no student will lose more than 20 points; some students may score as many as 105 points)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-considerations">Additional Considerations:</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#acknowledgements">Acknowledgements</a></li>
 </ul>
   </nav></div>
