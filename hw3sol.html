@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>hw3 solution &#8212; Stata Programming</title>
+    <title>HW3 solution &#8212; Stata Programming</title>
   
   
   
@@ -347,7 +347,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>hw3 solution</h1>
+    <h1>HW3 solution</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -370,13 +370,12 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="hw3-solution">
-<h1>hw3 solution<a class="headerlink" href="#hw3-solution" title="Permalink to this heading">#</a></h1>
+<h1>HW3 solution<a class="headerlink" href="#hw3-solution" title="Permalink to this heading">#</a></h1>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">quietly</span> { 
 	cls
 <span class="k">	if</span> <span class="m">0</span> { <span class="c1">//background, purpose. </span>
 		<span class="m">1</span>. HW3 solution
 		<span class="m">2</span>. Just<span class="k"> for</span> TAs
-		<span class="m">3</span>. Students will<span class="k"> view</span> it<span class="k"> on</span> Friday
 	}
 <span class="k">	if</span> <span class="m">1</span> { <span class="c1">//methods, log, settings  </span>
         cls         
@@ -411,12 +410,13 @@ document.write(`
 <span class="k">		   local</span> agelab: variable<span class="k"> label</span> init_age
 <span class="k">		   local</span> prevlab: variable<span class="k"> label</span> prev 
 <span class="k">			  </span>
+<span class="k">		   local</span> start_row = <span class="m">1</span> <span class="c1">//tracking .xlsx output</span>
 <span class="k">		   forvalues</span> i = <span class="m">0</span><span class="o">/</span><span class="m">1</span> {
 		   	   
 			   <span class="c1">//+5 points: for innovative use of loops to avoid repetition</span>
 			   <span class="c1">//0=Males, 1=Females </span>
 		       <span class="c1">//row 1</span>
-<span class="k">			   count if</span> female<span class="o">==</span><span class="nv">`i&#39;</span> <span class="c1">//careful, missing variables!!</span>
+<span class="k">			   count if</span> female<span class="o">==</span><span class="nv">`i&#39;</span>  
 <span class="k">		       local</span> female<span class="nv">`i&#39;</span>_n=<span class="nf">r</span>(N)
 		   
 		       <span class="c1">//row2</span>
@@ -426,8 +426,26 @@ document.write(`
 <span class="k">		       local</span> female<span class="nv">`i&#39;</span>_age_p75:<span class="k"> di</span> <span class="nx">%2.0f</span> <span class="nf">r</span>(p75)
 
 		       <span class="c1">//row3</span>
-<span class="k">		       sum</span> prev<span class="k"> if</span> female<span class="o">==</span><span class="nv">`i&#39;</span> <span class="c1">//debugged</span>
+<span class="k">		       sum</span> prev<span class="k"> if</span> female<span class="o">==</span><span class="nv">`i&#39;</span> <span class="c1">//Maya debugged this!!</span>
 <span class="k">		       local</span> female<span class="nv">`i&#39;</span>_prev:<span class="k"> di</span> <span class="nx">%2.1f</span> <span class="nf">r</span>(mean)<span class="o">*</span><span class="m">100</span>
+			   
+			             <span class="c1">// Output for males and females, assuming they start from row 1</span>
+                putexcel A<span class="nv">`start_row&#39;</span> = <span class="s">&quot;Question 2&quot;</span> <span class="cs">///</span>
+                   B<span class="nv">`start_row&#39;</span> = <span class="s">&quot;Males (N=</span><span class="nv">`female0_n&#39;</span><span class="s">)&quot;</span> <span class="cs">///</span>
+                   C<span class="nv">`start_row&#39;</span> = <span class="s">&quot;Females (N=</span><span class="nv">`female1_n&#39;</span><span class="s">)&quot;</span>
+
+<span class="k">                local</span> age_label = <span class="s">&quot;Age, median (IQR)&quot;</span>
+<span class="k">                local</span> age_row = <span class="nv">`start_row&#39;</span> <span class="o">+</span> <span class="m">1</span> <span class="c1">// This will be row 2</span>
+                putexcel A<span class="nv">`age_row&#39;</span> = <span class="s">&quot;</span><span class="nv">`age_label&#39;</span><span class="s">&quot;</span> <span class="cs">///</span>
+                   B<span class="nv">`age_row&#39;</span> = <span class="s">&quot;</span><span class="nv">`female0_age_p50&#39;</span><span class="s"> (</span><span class="nv">`female0_age_p25&#39;</span><span class="s"> - </span><span class="nv">`female0_age_p75&#39;</span><span class="s">)&quot;</span> <span class="cs">///</span>
+                   C<span class="nv">`age_row&#39;</span> = <span class="s">&quot;</span><span class="nv">`female1_age_p50&#39;</span><span class="s"> (</span><span class="nv">`female1_age_p25&#39;</span><span class="s"> - </span><span class="nv">`female1_age_p75&#39;</span><span class="s">)&quot;</span>
+
+<span class="k">                local</span> prev_label = <span class="s">&quot;Previous transplant, %&quot;</span>
+<span class="k">                local</span> prev_row = <span class="nv">`age_row&#39;</span> <span class="o">+</span> <span class="m">1</span> <span class="c1">// This will be row 3</span>
+                putexcel A<span class="nv">`prev_row&#39;</span> = <span class="s">&quot;</span><span class="nv">`prev_label&#39;</span><span class="s">&quot;</span> <span class="cs">///</span>
+                   B<span class="nv">`prev_row&#39;</span> = <span class="s">&quot;</span><span class="nv">`female0_prev&#39;</span><span class="s">&quot;</span> <span class="cs">///</span>
+                   C<span class="nv">`prev_row&#39;</span> = <span class="s">&quot;</span><span class="nv">`female1_prev&#39;</span><span class="s">&quot;</span> 
+			 
 		   }   
 		   
 		   
@@ -443,30 +461,16 @@ document.write(`
 			  _col(<span class="m">60</span>) <span class="s">&quot;</span><span class="nv">`female1_prev&#39;</span><span class="s">&quot;</span>
 <span class="k">		   local</span> excel_row=<span class="m">1</span>
 <span class="k">		   </span>
+
+<span class="k">		   </span>
+<span class="k">		   </span>
 <span class="k">		   forvalues</span> i=<span class="m">1</span><span class="o">/</span><span class="m">3</span> {
 		      
 			  <span class="c1">//.log file</span>
 <span class="k">			  noi di</span> <span class="s">&quot;</span><span class="nv">`row`i&#39;&#39;</span><span class="s">&quot;</span>	
 			  
 	       }
-		   	  <span class="c1">//-1 for unecessary repetitions; will get a more ideal solution later  </span>
-			  <span class="c1">//.xlsx file</span>
-			  <span class="c1">//row1</span>
-			  putexcel A1 = <span class="s">&quot;Question 2&quot;</span>
-			  putexcel B1 = <span class="s">&quot;Males (N=</span><span class="nv">`female0_n&#39;</span><span class="s">)&quot;</span>
-			  putexcel C1 = <span class="s">&quot;Females (N=</span><span class="nv">`female1_n&#39;</span><span class="s">)&quot;</span>
-			  
-			  <span class="c1">//row2</span>
-			  putexcel A2 = <span class="s">&quot;</span><span class="nv">`agelab&#39;</span><span class="s">&quot;</span>
-			  putexcel B2 = <span class="s">&quot;</span><span class="nv">`female0_age_p50&#39;</span><span class="s"> (</span><span class="nv">`female0_age_p25&#39;</span><span class="s"> - </span><span class="nv">`female0_age_p75&#39;</span><span class="s">)&quot;</span>
-			  putexcel C2 = <span class="s">&quot;</span><span class="nv">`female1_age_p50&#39;</span><span class="s"> (</span><span class="nv">`female1_age_p25&#39;</span><span class="s"> - </span><span class="nv">`female1_age_p75&#39;</span><span class="s">)&quot;</span>
-			  
-			 <span class="c1">//row3</span>
-			  putexcel A3 = <span class="s">&quot;</span><span class="nv">`prevlab&#39;</span><span class="s">&quot;</span>
-			  putexcel B3 = <span class="s">&quot;</span><span class="nv">`female0_prev&#39;</span><span class="s">&quot;</span>
-			  putexcel C3 = <span class="s">&quot;</span><span class="nv">`female1_prev&#39;</span><span class="s">&quot;</span>
-		  
-		<span class="c1">//end </span>
+ 
 	}
 <span class="k">	log close</span> 
     
