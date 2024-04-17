@@ -39,7 +39,7 @@ The following grading rubric is designed to assess students on HW3. TAs are enco
 
 **Note**: If you disagree with any aspect of this rubric, let me know ASAP. Your critique will be regarded in a timely fashion!
 
-#### Total Points: 100 (no student will lose more than 20 points; some students can score 110 points)
+#### Total Points: 100 (no student will lose more than 20 points; some students may score as many as 105 points)
 
 1. **Code Structure and Documentation**
    - **Clarity (up to -1 point)**: Deduct if code is disorganized or hard to follow. (`deduct only once, even if several blocks of code are disorganized; use same approach for other issues`)
@@ -63,8 +63,7 @@ The following grading rubric is designed to assess students on HW3. TAs are enco
    - **Interpretation (up to -1 point)**: Deduct if the results are not briefly explained or interpreted correctly.
 
 #### Additional Considerations:
-- **Innovation (Bonus up to +5 points)**: Award for creative approaches that enhance the analysis or presentation. Perhaps five innovations earn five points. Three earn three, etc
-- **Accuracy (Bonus up to +5 points)**: Award for output that meets the ideal expectation; you can apply -1, for instance, if they didn't run their code "quietly" but yielded accurated output.
+- **Innovation (Bonus up to +5 points)**: Award for creative approaches that enhance the analysis or presentation. Perhaps five innovations earn five points. Three earn three, etc.
 
 ### Final Note
 Please ensure to email any doubts regarding grading to me and write the final score at the top of the script as shown in the rubric example.
