@@ -502,19 +502,19 @@ document.write(`
 <h3>HW 3 Solution, <code class="docutils literal notranslate"><span class="pre">debugged</span></code><a class="headerlink" href="#hw-3-solution-debugged" title="Permalink to this heading">#</a></h3>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">quietly</span> { 
 	cls
-<span class="k">	if</span> <span class="m">0</span> { <span class="c1">//background, purpose</span>
+<span class="k">	if</span> <span class="m">0</span> { <span class="c1">//background, purpose. </span>
 		<span class="m">1</span>. HW3 solution
 		<span class="m">2</span>. Just<span class="k"> for</span> TAs
 	}
-<span class="k">	if</span> <span class="m">1</span> { <span class="c1">//methods, log, settings</span>
-        cls
-<span class="k">        clear</span> 
-<span class="k">        set more</span> off
-<span class="k">		set</span> timeout1 <span class="m">1000</span> <span class="c1">//in week 1 the Hopkins internet speeds were slow and for some Stata &quot;time-out&quot; before importing the dataset</span>
-<span class="k">        capture log close</span> 
-<span class="k">        log</span> using <span class="s">&quot;hw3.lastname.firstname.log&quot;</span>,<span class="k"> replace</span> 
-<span class="k">        global</span> data <span class="s">&quot;https://jhustata.github.io/book/_downloads/884b9e06eb29f89b1b87da4eab39775d/hw1.txt&quot;</span>
-        import delimited <span class="vg">$data</span>,<span class="k"> clear</span> <span class="c1">// Refresh data in memory, as is the case in lecture1.do and others supplements</span>
+<span class="k">	if</span> <span class="m">1</span> { <span class="c1">//methods, log, settings  </span>
+        cls         
+<span class="k">        clear</span>      
+<span class="k">        set more</span> off     
+<span class="k">		set</span> timeout1 <span class="m">1000</span> <span class="c1">//in week 1 the Hopkins internet speeds were slow and for some Stata &quot;time-out&quot; before importing the dataset     </span>
+<span class="k">        capture log close</span>        
+<span class="k">        log</span> using <span class="s">&quot;hw3.lastname.firstname.log&quot;</span>,<span class="k"> replace</span>      
+<span class="k">        global</span> data <span class="s">&quot;https://jhustata.github.io/book/_downloads/884b9e06eb29f89b1b87da4eab39775d/hw1.txt&quot;</span>      
+        import delimited <span class="vg">$data</span>,<span class="k"> clear</span> <span class="c1">// Refresh data in memory, as is the case in lecture1.do and others supplements        </span>
 	}
 <span class="k">    if</span> <span class="m">2</span> { <span class="c1">//results, Q1</span>
 <span class="k">        gen</span> htn = dx <span class="o">==</span> <span class="s">&quot;4=Hypertensive&quot;</span>
@@ -543,12 +543,12 @@ document.write(`
 		   	   
 			   <span class="c1">//+5 points: for innovative use of loops to avoid repetition</span>
 			   <span class="c1">//0=Males, 1=Females </span>
-<span class="k">		       sum</span> init_age<span class="k"> if</span> female<span class="o">==</span><span class="nv">`i&#39;</span>, detail
-		   
 		       <span class="c1">//row 1</span>
+<span class="k">			   count if</span> female<span class="o">==</span><span class="nv">`i&#39;</span> <span class="c1">//careful, missing variables!!</span>
 <span class="k">		       local</span> female<span class="nv">`i&#39;</span>_n=<span class="nf">r</span>(N)
 		   
 		       <span class="c1">//row2</span>
+<span class="k">			   sum</span> init_age<span class="k"> if</span> female<span class="o">==</span><span class="nv">`i&#39;</span>, detail
 <span class="k">		       local</span> female<span class="nv">`i&#39;</span>_age_p50:<span class="k"> di</span> <span class="nx">%2.0f</span> <span class="nf">r</span>(p50)
 <span class="k">		       local</span> female<span class="nv">`i&#39;</span>_age_p25:<span class="k"> di</span> <span class="nx">%2.0f</span> <span class="nf">r</span>(p25)
 <span class="k">		       local</span> female<span class="nv">`i&#39;</span>_age_p75:<span class="k"> di</span> <span class="nx">%2.0f</span> <span class="nf">r</span>(p75)
@@ -560,7 +560,7 @@ document.write(`
 		   
 		   
 		   <span class="c1">//align output for .log file </span>
-<span class="k">		   local</span> row1:<span class="k"> di</span> <span class="s">&quot;Question 2&quot;</span> _col(<span class="m">30</span>) <span class="s">&quot;Males (N=</span><span class="nv">`female0_n&#39;</span><span class="s">)&quot;</span> _col(<span class="m">60</span>) <span class="s">&quot;Females (N=</span><span class="nv">`females1_n&#39;</span><span class="s">)&quot;</span>
+<span class="k">		   local</span> row1:<span class="k"> di</span> <span class="s">&quot;Question 2&quot;</span> _col(<span class="m">30</span>) <span class="s">&quot;Males (N=</span><span class="nv">`female0_n&#39;</span><span class="s">)&quot;</span> _col(<span class="m">60</span>) <span class="s">&quot;Females (N=</span><span class="nv">`female1_n&#39;</span><span class="s">)&quot;</span>
 <span class="k">		   local</span> row2:<span class="k"> di</span> <span class="s">&quot;</span><span class="nv">`agelab&#39;</span><span class="s">&quot;</span>   _col(<span class="m">30</span>) <span class="s">&quot;</span><span class="nv">`female0_age_p50&#39;</span><span class="s"> (</span><span class="nv">`female0_age_p25&#39;</span><span class="s"> - </span><span class="nv">`female0_age_p75&#39;</span><span class="s">)&quot;</span> <span class="cs">///</span>
 		                               _col(<span class="m">60</span>) <span class="s">&quot;</span><span class="nv">`female1_age_p50&#39;</span><span class="s"> (</span><span class="nv">`female1_age_p25&#39;</span><span class="s"> - </span><span class="nv">`female1_age_p75&#39;</span><span class="s">)&quot;</span>
 <span class="k">		   local</span> row3:<span class="k"> di</span> <span class="s">&quot;</span><span class="nv">`prevlab&#39;</span><span class="s">&quot;</span>  _col(<span class="m">30</span>) <span class="s">&quot;</span><span class="nv">`female0_prev&#39;</span><span class="s">&quot;</span> _col(<span class="m">60</span>) <span class="s">&quot;</span><span class="nv">`female1_prev&#39;</span><span class="s">&quot;</span>
