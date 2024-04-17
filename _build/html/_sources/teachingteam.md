@@ -26,7 +26,7 @@
    - We'll update it for subsequent homeworks
 6. Rubrics for grading
 
-# HW 3 Solution
+# HW 3 Solution, `debugged`
 
 ```stata
 quietly {
@@ -68,63 +68,59 @@ quietly {
 		   //labels
 		   label variable init_age "Age, median (IQR)"
 		   label variable prev "Previous transplant, %"
-		   //Males
-		   sum init_age if female==0, detail
-		   //row 1
-		   local males_n=r(N)
 		   
-		   //row2
-		   local males_age_p50: di %2.0f r(p50)
-		   local males_age_p25: di %2.0f r(p25)
-		   local males_age_p75: di %2.0f r(p75)
-		  
-		   
+		   //label macros 
 		   local agelab: variable label init_age
 		   local prevlab: variable label prev 
+			  
+		   forvalues i = 0/1 {
+		   	   
+			   //0=Males, 1=Females 
+		       sum init_age if female==`i', detail
 		   
-		   //row3
-		    local males_prev: di %2.1f r(mean)
-	
-		   //Females
-		   sum init_age if female==1, detail
-		   //row 1
-		   local females_n=r(N)
+		       //row 1
+		       local female`i'_n=r(N)
 		   
-		   //row2
-		   local females_age_p50: di %2.0f r(p50)
-		   local females_age_p25: di %2.0f r(p25)
-		   local females_age_p75: di %2.0f r(p75)
+		       //row2
+		       local female`i'_age_p50: di %2.0f r(p50)
+		       local female`i'_age_p25: di %2.0f r(p25)
+		       local female`i'_age_p75: di %2.0f r(p75)
+
+		       //row3
+		       sum prev if female==`i' //debugged
+		       local female`i'_prev: di %2.1f r(mean)*100
+		   }   
 		   
-		   //row3
-		    local females_prev: di %2.1f r(mean)
-	
 		   
 		   //align output for .log file 
-		   local row1: di "Question 2" _col(30) "Males (N=`males_n')" _col(60) "Females (N=`females_n')"
-		   local row2: di "`agelab'" _col(30) "`males_age_p50' (`males_age_p25' - `males_age_p75')" ///
-		      _col(60) "`females_age_p50' (`females_age_p25' - `females_age_p75')"
-		   local row3: di "`prevlab'" _col(30) `males_prev' _col(60) `females_prev'
+		   local row1: di "Question 2" _col(30) "Males (N=`female0_n')" _col(60) "Females (N=`females1_n')"
+		   local row2: di "`agelab'"   _col(30) "`female0_age_p50' (`female0_age_p25' - `female0_age_p75')" ///
+		                               _col(60) "`female1_age_p50' (`female1_age_p25' - `female1_age_p75')"
+		   local row3: di "`prevlab'"  _col(30) "`female0_prev'" _col(60) "`female1_prev'"
 		   local excel_row=1
+		   
 		   forvalues i=1/3 {
-		      //.log file
+		      
+			  //.log file
 			  noi di "`row`i''"	
+			  
 	       }
 		   		  
 			  //.xlsx file
 			  //row1
-			  putexcel A1 = "Questoin 2"
-			  putexcel B1 = "Males (N=`males_n')"
-			  putexcel C1 = "Females (N=`females_n')"
+			  putexcel A1 = "Question 2"
+			  putexcel B1 = "Males (N=`female0_n')"
+			  putexcel C1 = "Females (N=`female1_n')"
 			  
 			  //row2
 			  putexcel A2 = "`agelab'"
-			  putexcel B2 = "`males_age_p50' (`males_age_p25' - `males_age_p75')"
-			  putexcel C2 = "`females_age_p50' (`females_age_p25' - `females_age_p75')"
+			  putexcel B2 = "`female0_age_p50' (`female0_age_p25' - `female0_age_p75')"
+			  putexcel C2 = "`female1_age_p50' (`female1_age_p25' - `female1_age_p75')"
 			  
 			 //row3
 			  putexcel A3 = "`prevlab'"
-			  putexcel B3 = "`males_prev'"
-			  putexcel C3 = "`females_prev'"
+			  putexcel B3 = "`female0_prev'"
+			  putexcel C3 = "`female1_prev'"
 		  
 		//end 
 	}

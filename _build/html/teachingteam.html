@@ -358,7 +358,7 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Resource for the Teaching Team</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#hw-3-solution">HW 3 Solution</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#hw-3-solution-debugged">HW 3 Solution, <code class="docutils literal notranslate"><span class="pre">debugged</span></code></a></li>
 </ul>
 
             </nav>
@@ -412,8 +412,8 @@ document.write(`
 <li><p>Rubrics for grading</p></li>
 </ol>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="hw-3-solution">
-<h1>HW 3 Solution<a class="headerlink" href="#hw-3-solution" title="Permalink to this heading">#</a></h1>
+<section class="tex2jax_ignore mathjax_ignore" id="hw-3-solution-debugged">
+<h1>HW 3 Solution, <code class="docutils literal notranslate"><span class="pre">debugged</span></code><a class="headerlink" href="#hw-3-solution-debugged" title="Permalink to this heading">#</a></h1>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">quietly</span> {
 	cls
 <span class="k">	if</span> <span class="m">0</span> { <span class="c1">//background, purpose</span>
@@ -453,63 +453,59 @@ document.write(`
 		   <span class="c1">//labels</span>
 <span class="k">		   label</span> variable init_age <span class="s">&quot;Age, median (IQR)&quot;</span>
 <span class="k">		   label</span> variable prev <span class="s">&quot;Previous transplant, %&quot;</span>
-		   <span class="c1">//Males</span>
-<span class="k">		   sum</span> init_age<span class="k"> if</span> female<span class="o">==</span><span class="m">0</span>, detail
-		   <span class="c1">//row 1</span>
-<span class="k">		   local</span> males_n=<span class="nf">r</span>(N)
 		   
-		   <span class="c1">//row2</span>
-<span class="k">		   local</span> males_age_p50:<span class="k"> di</span> <span class="nx">%2.0f</span> <span class="nf">r</span>(p50)
-<span class="k">		   local</span> males_age_p25:<span class="k"> di</span> <span class="nx">%2.0f</span> <span class="nf">r</span>(p25)
-<span class="k">		   local</span> males_age_p75:<span class="k"> di</span> <span class="nx">%2.0f</span> <span class="nf">r</span>(p75)
-<span class="k">		  </span>
-<span class="k">		   </span>
+		   <span class="c1">//label macros </span>
 <span class="k">		   local</span> agelab: variable<span class="k"> label</span> init_age
 <span class="k">		   local</span> prevlab: variable<span class="k"> label</span> prev 
+<span class="k">			  </span>
+<span class="k">		   forvalues</span> i = <span class="m">0</span><span class="o">/</span><span class="m">1</span> {
+		   	   
+			   <span class="c1">//0=Males, 1=Females </span>
+<span class="k">		       sum</span> init_age<span class="k"> if</span> female<span class="o">==</span><span class="nv">`i&#39;</span>, detail
 		   
-		   <span class="c1">//row3</span>
-<span class="k">		    local</span> males_prev:<span class="k"> di</span> <span class="nx">%2.1f</span> <span class="nf">r</span>(mean)
-	
-		   <span class="c1">//Females</span>
-<span class="k">		   sum</span> init_age<span class="k"> if</span> female<span class="o">==</span><span class="m">1</span>, detail
-		   <span class="c1">//row 1</span>
-<span class="k">		   local</span> females_n=<span class="nf">r</span>(N)
+		       <span class="c1">//row 1</span>
+<span class="k">		       local</span> female<span class="nv">`i&#39;</span>_n=<span class="nf">r</span>(N)
 		   
-		   <span class="c1">//row2</span>
-<span class="k">		   local</span> females_age_p50:<span class="k"> di</span> <span class="nx">%2.0f</span> <span class="nf">r</span>(p50)
-<span class="k">		   local</span> females_age_p25:<span class="k"> di</span> <span class="nx">%2.0f</span> <span class="nf">r</span>(p25)
-<span class="k">		   local</span> females_age_p75:<span class="k"> di</span> <span class="nx">%2.0f</span> <span class="nf">r</span>(p75)
+		       <span class="c1">//row2</span>
+<span class="k">		       local</span> female<span class="nv">`i&#39;</span>_age_p50:<span class="k"> di</span> <span class="nx">%2.0f</span> <span class="nf">r</span>(p50)
+<span class="k">		       local</span> female<span class="nv">`i&#39;</span>_age_p25:<span class="k"> di</span> <span class="nx">%2.0f</span> <span class="nf">r</span>(p25)
+<span class="k">		       local</span> female<span class="nv">`i&#39;</span>_age_p75:<span class="k"> di</span> <span class="nx">%2.0f</span> <span class="nf">r</span>(p75)
+
+		       <span class="c1">//row3</span>
+<span class="k">		       sum</span> prev<span class="k"> if</span> female<span class="o">==</span><span class="nv">`i&#39;</span> <span class="c1">//debugged</span>
+<span class="k">		       local</span> female<span class="nv">`i&#39;</span>_prev:<span class="k"> di</span> <span class="nx">%2.1f</span> <span class="nf">r</span>(mean)<span class="o">*</span><span class="m">100</span>
+		   }   
 		   
-		   <span class="c1">//row3</span>
-<span class="k">		    local</span> females_prev:<span class="k"> di</span> <span class="nx">%2.1f</span> <span class="nf">r</span>(mean)
-	
 		   
 		   <span class="c1">//align output for .log file </span>
-<span class="k">		   local</span> row1:<span class="k"> di</span> <span class="s">&quot;Question 2&quot;</span> _col(<span class="m">30</span>) <span class="s">&quot;Males (N=</span><span class="nv">`males_n&#39;</span><span class="s">)&quot;</span> _col(<span class="m">60</span>) <span class="s">&quot;Females (N=</span><span class="nv">`females_n&#39;</span><span class="s">)&quot;</span>
-<span class="k">		   local</span> row2:<span class="k"> di</span> <span class="s">&quot;</span><span class="nv">`agelab&#39;</span><span class="s">&quot;</span> _col(<span class="m">30</span>) <span class="s">&quot;</span><span class="nv">`males_age_p50&#39;</span><span class="s"> (</span><span class="nv">`males_age_p25&#39;</span><span class="s"> - </span><span class="nv">`males_age_p75&#39;</span><span class="s">)&quot;</span> <span class="cs">///</span>
-		      _col(<span class="m">60</span>) <span class="s">&quot;</span><span class="nv">`females_age_p50&#39;</span><span class="s"> (</span><span class="nv">`females_age_p25&#39;</span><span class="s"> - </span><span class="nv">`females_age_p75&#39;</span><span class="s">)&quot;</span>
-<span class="k">		   local</span> row3:<span class="k"> di</span> <span class="s">&quot;</span><span class="nv">`prevlab&#39;</span><span class="s">&quot;</span> _col(<span class="m">30</span>) <span class="nv">`males_prev&#39;</span> _col(<span class="m">60</span>) <span class="nv">`females_prev&#39;</span>
+<span class="k">		   local</span> row1:<span class="k"> di</span> <span class="s">&quot;Question 2&quot;</span> _col(<span class="m">30</span>) <span class="s">&quot;Males (N=</span><span class="nv">`female0_n&#39;</span><span class="s">)&quot;</span> _col(<span class="m">60</span>) <span class="s">&quot;Females (N=</span><span class="nv">`females1_n&#39;</span><span class="s">)&quot;</span>
+<span class="k">		   local</span> row2:<span class="k"> di</span> <span class="s">&quot;</span><span class="nv">`agelab&#39;</span><span class="s">&quot;</span>   _col(<span class="m">30</span>) <span class="s">&quot;</span><span class="nv">`female0_age_p50&#39;</span><span class="s"> (</span><span class="nv">`female0_age_p25&#39;</span><span class="s"> - </span><span class="nv">`female0_age_p75&#39;</span><span class="s">)&quot;</span> <span class="cs">///</span>
+		                               _col(<span class="m">60</span>) <span class="s">&quot;</span><span class="nv">`female1_age_p50&#39;</span><span class="s"> (</span><span class="nv">`female1_age_p25&#39;</span><span class="s"> - </span><span class="nv">`female1_age_p75&#39;</span><span class="s">)&quot;</span>
+<span class="k">		   local</span> row3:<span class="k"> di</span> <span class="s">&quot;</span><span class="nv">`prevlab&#39;</span><span class="s">&quot;</span>  _col(<span class="m">30</span>) <span class="s">&quot;</span><span class="nv">`female0_prev&#39;</span><span class="s">&quot;</span> _col(<span class="m">60</span>) <span class="s">&quot;</span><span class="nv">`female1_prev&#39;</span><span class="s">&quot;</span>
 <span class="k">		   local</span> excel_row=<span class="m">1</span>
+<span class="k">		   </span>
 <span class="k">		   forvalues</span> i=<span class="m">1</span><span class="o">/</span><span class="m">3</span> {
-		      <span class="c1">//.log file</span>
+		      
+			  <span class="c1">//.log file</span>
 <span class="k">			  noi di</span> <span class="s">&quot;</span><span class="nv">`row`i&#39;&#39;</span><span class="s">&quot;</span>	
+			  
 	       }
 		   		  
 			  <span class="c1">//.xlsx file</span>
 			  <span class="c1">//row1</span>
-			  putexcel A1 = <span class="s">&quot;Questoin 2&quot;</span>
-			  putexcel B1 = <span class="s">&quot;Males (N=</span><span class="nv">`males_n&#39;</span><span class="s">)&quot;</span>
-			  putexcel C1 = <span class="s">&quot;Females (N=</span><span class="nv">`females_n&#39;</span><span class="s">)&quot;</span>
+			  putexcel A1 = <span class="s">&quot;Question 2&quot;</span>
+			  putexcel B1 = <span class="s">&quot;Males (N=</span><span class="nv">`female0_n&#39;</span><span class="s">)&quot;</span>
+			  putexcel C1 = <span class="s">&quot;Females (N=</span><span class="nv">`female1_n&#39;</span><span class="s">)&quot;</span>
 			  
 			  <span class="c1">//row2</span>
 			  putexcel A2 = <span class="s">&quot;</span><span class="nv">`agelab&#39;</span><span class="s">&quot;</span>
-			  putexcel B2 = <span class="s">&quot;</span><span class="nv">`males_age_p50&#39;</span><span class="s"> (</span><span class="nv">`males_age_p25&#39;</span><span class="s"> - </span><span class="nv">`males_age_p75&#39;</span><span class="s">)&quot;</span>
-			  putexcel C2 = <span class="s">&quot;</span><span class="nv">`females_age_p50&#39;</span><span class="s"> (</span><span class="nv">`females_age_p25&#39;</span><span class="s"> - </span><span class="nv">`females_age_p75&#39;</span><span class="s">)&quot;</span>
+			  putexcel B2 = <span class="s">&quot;</span><span class="nv">`female0_age_p50&#39;</span><span class="s"> (</span><span class="nv">`female0_age_p25&#39;</span><span class="s"> - </span><span class="nv">`female0_age_p75&#39;</span><span class="s">)&quot;</span>
+			  putexcel C2 = <span class="s">&quot;</span><span class="nv">`female1_age_p50&#39;</span><span class="s"> (</span><span class="nv">`female1_age_p25&#39;</span><span class="s"> - </span><span class="nv">`female1_age_p75&#39;</span><span class="s">)&quot;</span>
 			  
 			 <span class="c1">//row3</span>
 			  putexcel A3 = <span class="s">&quot;</span><span class="nv">`prevlab&#39;</span><span class="s">&quot;</span>
-			  putexcel B3 = <span class="s">&quot;</span><span class="nv">`males_prev&#39;</span><span class="s">&quot;</span>
-			  putexcel C3 = <span class="s">&quot;</span><span class="nv">`females_prev&#39;</span><span class="s">&quot;</span>
+			  putexcel B3 = <span class="s">&quot;</span><span class="nv">`female0_prev&#39;</span><span class="s">&quot;</span>
+			  putexcel C3 = <span class="s">&quot;</span><span class="nv">`female1_prev&#39;</span><span class="s">&quot;</span>
 		  
 		<span class="c1">//end </span>
 	}
@@ -569,7 +565,7 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Resource for the Teaching Team</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#hw-3-solution">HW 3 Solution</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#hw-3-solution-debugged">HW 3 Solution, <code class="docutils literal notranslate"><span class="pre">debugged</span></code></a></li>
 </ul>
 
   </nav></div>
