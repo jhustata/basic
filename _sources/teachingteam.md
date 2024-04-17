@@ -90,15 +90,15 @@ quietly {
 		1. HW3 solution
 		2. Just for TAs
 	}
-	if 1 { //methods, log, settings  
-        cls         
-        clear      
-        set more off     
-		set timeout1 1000 //in week 1 the Hopkins internet speeds were slow and for some Stata "time-out" before importing the dataset     
-        capture log close        
-        log using "hw3.lastname.firstname.log", replace      
-        global data "https://jhustata.github.io/book/_downloads/884b9e06eb29f89b1b87da4eab39775d/hw1.txt"      
-        import delimited $data, clear // Refresh data in memory, as is the case in lecture1.do and others supplements        
+	if 1 { //methods, log, settings, data  
+        cls              
+        clear          
+        set more off          
+		  set timeout1 1000 //in week 1 the Hopkins internet speeds were slow and for some Stata "time-out" before importing the dataset         
+        capture log close           
+        log using "hw3.lastname.firstname.log", replace             
+        global path "https://jhustata.github.io/book/_downloads/884b9e06eb29f89b1b87da4eab39775d/" //URL or filepath            
+        import delimited "${path}hw1.txt", clear // Refresh data in memory, as is the case in lecture1.do and others supplements               
 	}
     if 2 { //results, Q1
         gen htn = dx == "4=Hypertensive"
