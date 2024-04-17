@@ -86,19 +86,19 @@ Please ensure to email any doubts regarding grading to me and write the final sc
 ```stata
 quietly { 
 	cls
-	if 0 { //background, purpose
+	if 0 { //background, purpose. 
 		1. HW3 solution
 		2. Just for TAs
 	}
-	if 1 { //methods, log, settings
-        cls
-        clear 
-        set more off
-		set timeout1 1000 //in week 1 the Hopkins internet speeds were slow and for some Stata "time-out" before importing the dataset
-        capture log close 
-        log using "hw3.lastname.firstname.log", replace 
-        global data "https://jhustata.github.io/book/_downloads/884b9e06eb29f89b1b87da4eab39775d/hw1.txt"
-        import delimited $data, clear // Refresh data in memory, as is the case in lecture1.do and others supplements
+	if 1 { //methods, log, settings  
+        cls         
+        clear      
+        set more off     
+		set timeout1 1000 //in week 1 the Hopkins internet speeds were slow and for some Stata "time-out" before importing the dataset     
+        capture log close        
+        log using "hw3.lastname.firstname.log", replace      
+        global data "https://jhustata.github.io/book/_downloads/884b9e06eb29f89b1b87da4eab39775d/hw1.txt"      
+        import delimited $data, clear // Refresh data in memory, as is the case in lecture1.do and others supplements        
 	}
     if 2 { //results, Q1
         gen htn = dx == "4=Hypertensive"
@@ -127,12 +127,12 @@ quietly {
 		   	   
 			   //+5 points: for innovative use of loops to avoid repetition
 			   //0=Males, 1=Females 
-		       sum init_age if female==`i', detail
-		   
 		       //row 1
+			   count if female==`i' //careful, missing variables!!
 		       local female`i'_n=r(N)
 		   
 		       //row2
+			   sum init_age if female==`i', detail
 		       local female`i'_age_p50: di %2.0f r(p50)
 		       local female`i'_age_p25: di %2.0f r(p25)
 		       local female`i'_age_p75: di %2.0f r(p75)
@@ -144,7 +144,7 @@ quietly {
 		   
 		   
 		   //align output for .log file 
-		   local row1: di "Question 2" _col(30) "Males (N=`female0_n')" _col(60) "Females (N=`females1_n')"
+		   local row1: di "Question 2" _col(30) "Males (N=`female0_n')" _col(60) "Females (N=`female1_n')"
 		   local row2: di "`agelab'"   _col(30) "`female0_age_p50' (`female0_age_p25' - `female0_age_p75')" ///
 		                               _col(60) "`female1_age_p50' (`female1_age_p25' - `female1_age_p75')"
 		   local row3: di "`prevlab'"  _col(30) "`female0_prev'" _col(60) "`female1_prev'"
