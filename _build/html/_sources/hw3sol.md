@@ -1,5 +1,4 @@
-﻿
-# hw3 solution
+﻿# HW3 solution
 
 ```stata
 quietly { 
@@ -7,7 +6,6 @@ quietly {
 	if 0 { //background, purpose. 
 		1. HW3 solution
 		2. Just for TAs
-		3. Students will view it on Friday
 	}
 	if 1 { //methods, log, settings  
         cls         
@@ -42,12 +40,13 @@ quietly {
 		   local agelab: variable label init_age
 		   local prevlab: variable label prev 
 			  
+		   local start_row = 1 //tracking .xlsx output
 		   forvalues i = 0/1 {
 		   	   
 			   //+5 points: for innovative use of loops to avoid repetition
 			   //0=Males, 1=Females 
 		       //row 1
-			   count if female==`i' //careful, missing variables!!
+			   count if female==`i'  
 		       local female`i'_n=r(N)
 		   
 		       //row2
@@ -57,8 +56,26 @@ quietly {
 		       local female`i'_age_p75: di %2.0f r(p75)
 
 		       //row3
-		       sum prev if female==`i' //debugged
+		       sum prev if female==`i' //Maya debugged this!!
 		       local female`i'_prev: di %2.1f r(mean)*100
+			   
+			             // Output for males and females, assuming they start from row 1
+                putexcel A`start_row' = "Question 2" ///
+                   B`start_row' = "Males (N=`female0_n')" ///
+                   C`start_row' = "Females (N=`female1_n')"
+
+                local age_label = "Age, median (IQR)"
+                local age_row = `start_row' + 1 // This will be row 2
+                putexcel A`age_row' = "`age_label'" ///
+                   B`age_row' = "`female0_age_p50' (`female0_age_p25' - `female0_age_p75')" ///
+                   C`age_row' = "`female1_age_p50' (`female1_age_p25' - `female1_age_p75')"
+
+                local prev_label = "Previous transplant, %"
+                local prev_row = `age_row' + 1 // This will be row 3
+                putexcel A`prev_row' = "`prev_label'" ///
+                   B`prev_row' = "`female0_prev'" ///
+                   C`prev_row' = "`female1_prev'" 
+			 
 		   }   
 		   
 		   
@@ -74,30 +91,16 @@ quietly {
 			  _col(60) "`female1_prev'"
 		   local excel_row=1
 		   
+
+		   
+		   
 		   forvalues i=1/3 {
 		      
 			  //.log file
 			  noi di "`row`i''"	
 			  
 	       }
-		   	  //-1 for unecessary repetitions; will get a more ideal solution later  
-			  //.xlsx file
-			  //row1
-			  putexcel A1 = "Question 2"
-			  putexcel B1 = "Males (N=`female0_n')"
-			  putexcel C1 = "Females (N=`female1_n')"
-			  
-			  //row2
-			  putexcel A2 = "`agelab'"
-			  putexcel B2 = "`female0_age_p50' (`female0_age_p25' - `female0_age_p75')"
-			  putexcel C2 = "`female1_age_p50' (`female1_age_p25' - `female1_age_p75')"
-			  
-			 //row3
-			  putexcel A3 = "`prevlab'"
-			  putexcel B3 = "`female0_prev'"
-			  putexcel C3 = "`female1_prev'"
-		  
-		//end 
+ 
 	}
 	log close 
     
