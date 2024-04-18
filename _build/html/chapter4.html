@@ -755,14 +755,24 @@ opt_demo, myoption
 </div>
 <p>Let’s look at another example:</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">program</span> define table1_o
-<span class="k">    syntax varlist</span> [if] , [round] <span class="c1">//set display format</span>
-<span class="k">    if</span> <span class="s">&quot;</span><span class="nv">`round&#39;</span><span class="s">&quot;</span> <span class="o">!=</span> <span class="s">&quot;&quot;</span> { 
-<span class="k">        local</span> D <span class="nx">%1.0f</span>  
-    } 
-<span class="k">    else</span> {
-<span class="k">        local</span> D <span class="nx">%3.2f</span>
+<span class="k">    syntax varlist</span> [if] , [round]
+
+    <span class="c1">//set display format</span>
+    <span class="c1">//if they specified &quot;round&quot;, then macro round will equal the word &quot;round&quot;</span>
+    <span class="c1">//otherwise, it&#39;s blank (equals &quot;&quot;)</span>
+<span class="k">    if</span> <span class="s">&quot;</span><span class="nv">`round&#39;</span><span class="s">&quot;</span> <span class="o">!=</span> <span class="s">&quot;&quot;</span> {  
+<span class="k">        local</span> D <span class="nx">%1.0f</span>  <span class="c1">//macro D will contain the display format</span>
     }
-<span class="k">    disp</span> <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">,&quot;</span> <span class="nv">`D&#39;</span> <span class="nf">r</span>(mean) <span class="c1">//etc. </span>
+<span class="k">    else</span> {
+<span class="k">        local</span> D <span class="nx">%3.2f</span>  <span class="c1">//set macro D to %3.2f</span>
+    }
+
+<span class="k">    disp</span> <span class="s">&quot;Variable&quot;</span> _col(<span class="m">12</span>) <span class="s">&quot;mean(SD)&quot;</span> _col(<span class="m">25</span>) <span class="s">&quot;range&quot;</span>
+<span class="k">    foreach</span> v of<span class="k"> varlist</span> <span class="nv">`varlist&#39;</span> {
+<span class="k">        quietly sum</span> <span class="nv">`v&#39;</span> <span class="nv">`if&#39;</span>
+<span class="k">        disp</span> <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">&quot;</span> _col(<span class="m">12</span>) <span class="nv">`D&#39;</span> <span class="nf">r</span>(mean) <span class="s">&quot;(&quot;</span> <span class="nv">`D&#39;</span> <span class="nf">r</span>(sd) <span class="s">&quot;)&quot;</span> _col(<span class="m">25</span>) <span class="cs">///</span>
+            <span class="nv">`D&#39;</span> <span class="nf">r</span>(min) <span class="s">&quot;-&quot;</span> <span class="nv">`D&#39;</span> <span class="nf">r</span>(max)  <span class="c1">//notice we use macro D for format</span>
+    }
 <span class="k">end</span>
 </pre></div>
 </div>
