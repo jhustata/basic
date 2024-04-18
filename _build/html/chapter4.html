@@ -529,6 +529,22 @@ cls
 }
 </pre></div>
 </div>
+<Details>
+   <Summary></Summary>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">foreach</span> v of<span class="k"> varlist</span> gender age {
+     <span class="c1">//[calculate beta, etc into macros] </span>
+<span class="k">     local</span> vlab: variable<span class="k"> label</span> <span class="nv">`v&#39;</span>
+<span class="k">     lincom</span> <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">&quot;</span> <span class="c1">//estimate r() values one variable at a time</span>
+<span class="k">     local</span> res:<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(estimate)
+<span class="k">     local</span> left:<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(lb)
+<span class="k">     local</span> right:<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(ub)
+<span class="k">     local</span> pvals:<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(p)
+<span class="k">     post</span> pp (<span class="s">&quot;</span><span class="nv">`vlab&#39;</span><span class="s">&quot;</span>) (<span class="nv">`res&#39;</span>) (<span class="nv">`left&#39;</span>) <span class="cs">///</span>
+         (<span class="nv">`right&#39;</span>) (<span class="nv">`pvals&#39;</span>)
+}
+</pre></div>
+</div>
+</Details>
 <ul class="simple">
 <li><p>Iterate over variables in a <code class="docutils literal notranslate"><span class="pre">foreach</span></code> loop</p></li>
 <li><p>Calculate beta, 95%CI, pvalue</p></li>
@@ -545,11 +561,14 @@ cls
 </pre></div>
 </div>
 <p>We can combine this with <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">excel</span></code> to write out our own tables in Excel:</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> betas,<span class="k"> clear</span> export excel <span class="cs">///</span>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> betas,<span class="k"> clear</span> 
+export excel <span class="cs">///</span>
     coef result CIleft CIright <span class="cs">/// </span>
     using betas_table<span class="m">.</span>xlsx,<span class="k"> replace</span>
-
-<span class="k">gen ci</span> = <span class="s">&quot;(&quot;</span> <span class="o">+</span> <span class="nf">string</span>(CIleft, <span class="s">&quot;%3.2f&quot;</span>) <span class="o">+</span> <span class="s">&quot;, &quot;</span> <span class="o">+</span> <span class="cs">/// </span>
+</pre></div>
+</div>
+<p>We can export the results in a publication-friendly format:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">gen ci</span> = <span class="s">&quot;(&quot;</span> <span class="o">+</span> <span class="nf">string</span>(CIleft, <span class="s">&quot;%3.2f&quot;</span>) <span class="o">+</span> <span class="s">&quot;, &quot;</span> <span class="o">+</span> <span class="cs">/// </span>
     <span class="nf">string</span>(CIright, <span class="s">&quot;%3.2f&quot;</span>) <span class="o">+</span> <span class="s">&quot;)&quot;</span>
 
 export excel coef result<span class="k"> ci</span> <span class="cs">///   </span>
@@ -558,12 +577,12 @@ export excel coef result<span class="k"> ci</span> <span class="cs">///   </span
 </pre></div>
 </div>
 <p>Let’s improve our output:</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">label var</span> coef <span class="s">&quot;Variable&quot;</span> 
-<span class="k">label var</span> result <span class="s">&quot;Coefficient&quot;</span> 
-<span class="k">label var ci</span> <span class="s">&quot;95% CI&quot;</span>
-export excel coef result<span class="k"> ci</span> <span class="cs">///</span>
-    using betas_table3<span class="m">.</span>xlsx, <span class="cs">/// </span>
-<span class="k">    replace</span> firstrow(varlabels)
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">label var</span> coef <span class="s">&quot;Variable&quot;</span> <span class="nv">`</span>
+<span class="nv">label var result &quot;Coefficient&quot; </span>
+<span class="nv">label var ci &quot;95% CI&quot;</span>
+<span class="nv">export excel coef result ci ///</span>
+<span class="nv">    using betas_table3.xlsx, /// </span>
+<span class="nv">    replace firstrow(varlabels)</span>
 </pre></div>
 </div>
 </section>
