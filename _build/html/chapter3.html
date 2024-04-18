@@ -64,7 +64,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'chapter3';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="4. Advanced file management" href="chapter4.html" />
+    <link rel="next" title="4. Basic file management" href="chapter4.html" />
     <link rel="prev" title="2. Return values, macros, programs" href="chapter2.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -160,7 +160,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="chapter1.html">1. Philosophy, overview, commands, syntax</a></li>
 <li class="toctree-l1"><a class="reference internal" href="chapter2.html">2. Return values, macros, programs</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">3. Loops, Program Syntax, and Miscellany</a></li>
-<li class="toctree-l1"><a class="reference internal" href="chapter4.html">4. Advanced file management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter4.html">4. Basic file management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="chapter5.html">5. Graphs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="chapter6.html">6. Review of Weeks 1-5</a></li>
 <li class="toctree-l1"><a class="reference internal" href="chapter7.html">7. Survival Analysis: Non-parametric, Semi-parametric, Parametric</a></li>
@@ -431,6 +431,10 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ereturn-list">3.3.38 <code class="docutils literal notranslate"><span class="pre">ereturn</span> <span class="pre">list</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#indentation">3.3.39 Indentation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#script-breakdown-and-annotation">Script Breakdown and Annotation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notes-on-indentation">Notes on Indentation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#general-annotation-tips-for-students">General Annotation Tips for Students</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab">3.4 Lab</a></li>
@@ -1269,6 +1273,69 @@ document.write(`
 </pre></div>
 </div>
 </section>
+<section id="indentation">
+<h3>3.3.39 Indentation<a class="headerlink" href="#indentation" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> {
+cls
+<span class="k">capture program drop</span> myprogram 
+<span class="k">program</span> define myprogram
+<span class="k">forvalues</span> i = <span class="m">1</span><span class="o">/</span><span class="m">10</span> {
+<span class="k">if</span> <span class="nv">`i&#39;</span> <span class="o">&lt;</span> <span class="m">5</span> {
+<span class="k">display</span> <span class="s">&quot;</span><span class="nv">`i&#39;</span><span class="s"> is less than five&quot;</span>
+}
+<span class="k">else</span> {
+<span class="k">display</span> <span class="s">&quot;</span><span class="nv">`i&#39;</span><span class="s"> is at least five&quot;</span>
+}
+}
+<span class="k">end</span>
+}
+</pre></div>
+</div>
+</section>
+<section id="script-breakdown-and-annotation">
+<h3>Script Breakdown and Annotation<a class="headerlink" href="#script-breakdown-and-annotation" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="notes-on-indentation">
+<h3>Notes on Indentation<a class="headerlink" href="#notes-on-indentation" title="Permalink to this heading">#</a></h3>
+<p>Indentation is crucial in programming for several reasons:</p>
+<ul class="simple">
+<li><p><strong>Readability:</strong> Proper indentation makes it easier for someone (including future you) to read and understand the code. It visually separates code blocks that belong to different logical structures like loops, if-else conditions, etc.</p></li>
+<li><p><strong>Debugging:</strong> Indented code helps quickly identify structural errors such as missing loops or misaligned end statements.</p></li>
+<li><p><strong>Maintainability:</strong> Well-indented code is easier to modify or expand because the structure of the program is clear and logical.</p></li>
+</ul>
+<p>In the context of Stata:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Stata</span></code> does not require indentation for functionality (the program will run the same way whether it’s indented or not), but it’s considered best practice to use indentation to improve clarity. In contrast, <code class="docutils literal notranslate"><span class="pre">Python</span></code>, the most widely used language, will not run if you don’t indent your code.</p></li>
+</ul>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> {  <span class="c1">// Begin a block of commands to be executed quietly</span>
+    cls  <span class="c1">// Clear the Stata results window</span>
+
+<span class="k">    capture program drop</span> myprogram  <span class="c1">// Safely remove any existing program named &#39;myprogram&#39;</span>
+<span class="k">    </span>
+<span class="k">    program</span> define myprogram  <span class="c1">// Begin defining a new program called &#39;myprogram&#39;</span>
+<span class="k">        forvalues</span> i = <span class="m">1</span><span class="o">/</span><span class="m">10</span> {  <span class="c1">// Start a loop from 1 to 10, storing each value in &#39;i&#39;</span>
+<span class="k">            if</span> <span class="nv">`i&#39;</span> <span class="o">&lt;</span> <span class="m">5</span> {  <span class="c1">// Check if the current value of &#39;i&#39; is less than 5</span>
+<span class="k">                display</span> <span class="s">&quot;</span><span class="nv">`i&#39;</span><span class="s"> is less than five&quot;</span>  <span class="c1">// Display this message if the condition is true</span>
+            }
+<span class="k">            else</span> {  <span class="c1">// If the condition is not true (i.e., `i` is 5 or more)</span>
+<span class="k">                display</span> <span class="s">&quot;</span><span class="nv">`i&#39;</span><span class="s"> is at least five&quot;</span>  <span class="c1">// Display this message</span>
+            }
+        }  <span class="c1">// End of the loop</span>
+<span class="k">    end</span>  <span class="c1">// End the program definition</span>
+}  <span class="c1">// End of the quiet block</span>
+</pre></div>
+</div>
+</section>
+<section id="general-annotation-tips-for-students">
+<h3>General Annotation Tips for Students<a class="headerlink" href="#general-annotation-tips-for-students" title="Permalink to this heading">#</a></h3>
+<p>When annotating code:</p>
+<ul class="simple">
+<li><p><strong>Comment Generously:</strong> Explain what each major block of code is intended to do, especially if the logic might not be immediately clear.</p></li>
+<li><p><strong>Use Clear, Descriptive Names:</strong> While this script uses ‘i’ for a loop variable, which is quite common, always ensure that variable names elsewhere are descriptive.</p></li>
+<li><p><strong>Explain the Purpose:</strong> Especially explain why certain commands are used (like <code class="docutils literal notranslate"><span class="pre">capture</span></code> which is used here to avoid errors if the program does not exist when trying to drop it).</p></li>
+<li><p><strong>GPT-4 for indentation, annotation, debugging:</strong> You may copy and paste your code snippet into a generative AI interface and ask it to annotate your code. The above code block was both indented and annotated by <code class="docutils literal notranslate"><span class="pre">GPT-4</span></code>. <code class="docutils literal notranslate"><span class="pre">GitHub</span> <span class="pre">co-pilot</span></code> is also specifically develop to help with coding, but its a $15/month service and you may have to code in a GitHub compatible environment such as <code class="docutils literal notranslate"><span class="pre">Visual</span> <span class="pre">Studio</span> <span class="pre">Code</span></code>. Explore free GPTs including <code class="docutils literal notranslate"><span class="pre">GPT-3.5</span></code>, <code class="docutils literal notranslate"><span class="pre">Gemini</span></code>, and <code class="docutils literal notranslate"><span class="pre">Claude</span></code>.</p></li>
+</ul>
+</section>
 </section>
 <section id="lab">
 <h2>3.4 Lab<a class="headerlink" href="#lab" title="Permalink to this heading">#</a></h2>
@@ -1419,7 +1486,7 @@ Previous transplant, %    XX<span class="m">.</span>X               XX<span clas
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">4. Advanced file management</p>
+        <p class="prev-next-title">4. Basic file management</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1513,6 +1580,10 @@ Previous transplant, %    XX<span class="m">.</span>X               XX<span clas
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ereturn-list">3.3.38 <code class="docutils literal notranslate"><span class="pre">ereturn</span> <span class="pre">list</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#indentation">3.3.39 Indentation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#script-breakdown-and-annotation">Script Breakdown and Annotation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notes-on-indentation">Notes on Indentation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#general-annotation-tips-for-students">General Annotation Tips for Students</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab">3.4 Lab</a></li>
