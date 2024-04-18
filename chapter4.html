@@ -942,7 +942,7 @@ table1_nice age bmi wait_yrs<span class="k"> if</span> age<span class="o">&gt;</
 <li><p><code class="docutils literal notranslate"><span class="pre">postclose</span> <span class="pre">pp</span></code>. Close the postfile</p></li>
 </ul>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> transplants,<span class="k"> clear</span>
-model age wait_yrs gender rec_hcv,
+model age wait_yrs gender rec_hcv, <span class="cs">///</span>
     filename(model_bmi) yvar(bmi)
 </pre></div>
 </div>
