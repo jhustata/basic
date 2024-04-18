@@ -359,7 +359,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#postfile">4.1 Postfile</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-files">4.1 Creating files</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#postfile-to-post-regression-results"><code class="docutils literal notranslate"><span class="pre">postfile</span></code> to post regression results</a></li>
 </ul>
 </li>
@@ -370,7 +370,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#merging-protip">Merging protip</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#options">4.3 Options</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-options">4.3 Adding options</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#options-that-take-values">Options that take values</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#another-example">Another example</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#updating-our-table-1-program">Updating our table 1 program</a><ul class="nav section-nav flex-column">
@@ -381,6 +381,7 @@ document.write(`
 </li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#postfile-in-a-program">4.4 Postfile in a program</a></li>
 </ul>
             </nav>
         </div>
@@ -397,13 +398,14 @@ document.write(`
 <ul class="simple">
 <li><p>Basic file management</p>
 <ul>
-<li><p><strong>4.1</strong> Postfile</p></li>
-<li><p><strong>4.2</strong> Merging</p></li>
+<li><p><strong>4.1</strong> Creating files</p></li>
+<li><p><strong>4.2</strong> Merging files</p></li>
 </ul>
 </li>
 <li><p>Programming</p>
 <ul>
-<li><p><strong>4.3</strong> Options</p></li>
+<li><p><strong>4.3</strong> Adding options</p></li>
+<li><p><strong>4.4</strong> Postfile in a program</p></li>
 </ul>
 </li>
 <li><p><a class="reference external" href="https://raw.githubusercontent.com/jhustata/basic/main/lecture4.do">.do file</a> supplement</p></li>
@@ -457,8 +459,8 @@ document.write(`
 <img alt="_images/b16d38bfc29147af77884cb90b6a613f180ed6078883f981d642c2ac0775997f.png" src="_images/b16d38bfc29147af77884cb90b6a613f180ed6078883f981d642c2ac0775997f.png" />
 </div>
 </div>
-<section id="postfile">
-<h2>4.1 Postfile<a class="headerlink" href="#postfile" title="Permalink to this heading">#</a></h2>
+<section id="creating-files">
+<h2>4.1 Creating files<a class="headerlink" href="#creating-files" title="Permalink to this heading">#</a></h2>
 <p>During our second week had a cursory discussion about the basic files we may output our results into:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">.xlsx</span></code></p></li>
@@ -694,8 +696,8 @@ want to make sure nearly all of your records match use transplants, clear</p>
 <p>That’s enough in way of an introduction to the <code class="docutils literal notranslate"><span class="pre">merge</span></code> command. It will come in handy only in specific projects that have relevant variables in different datasets.</p>
 </section>
 </section>
-<section id="options">
-<h2>4.3 Options<a class="headerlink" href="#options" title="Permalink to this heading">#</a></h2>
+<section id="adding-options">
+<h2>4.3 Adding options<a class="headerlink" href="#adding-options" title="Permalink to this heading">#</a></h2>
 <p>Consider the <a class="reference external" href="https://jhustata.github.io/basic/chapter3.html#myfirst">programs</a> we’ve written over the last two weeks. We discussed:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">program</span> <span class="pre">define</span></code></p></li>
@@ -868,6 +870,37 @@ table1_nice age bmi wait_yrs<span class="k"> if</span> age<span class="o">&gt;</
 </section>
 </section>
 </section>
+<section id="postfile-in-a-program">
+<h2>4.4 Postfile in a program<a class="headerlink" href="#postfile-in-a-program" title="Permalink to this heading">#</a></h2>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">program</span> define model
+<span class="k">    syntax varlist</span>, yvar(varname) filename(string) 
+<span class="k">    regress</span> <span class="nv">`yvar&#39;</span> <span class="nv">`varlist&#39;</span>
+
+<span class="k">    postfile</span> pp str80 variable <span class="cs">/// </span>
+        double(result CIleft CIright pvalue) <span class="cs">/// </span>
+        using <span class="nv">`filename&#39;</span>,<span class="k"> replace</span>
+
+    <span class="c1">//calculate results / post to pp</span>
+<span class="k">    postclose</span> pp
+<span class="k">end</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">syntax</span> <span class="pre">varlist,</span> <span class="pre">yvar(varname)</span> <span class="pre">filename(string)</span></code>. The program requires a variable list of one or more independent (x) variables for a linear regression, a filename to write the data out to, and a dependent (y) variable</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">regress</span></code>. Run the linear regression</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">postfile</span></code>. Set up the postfile. Write it out to the file name specified by the user</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">foreach</span></code>. Write out the results to our postfile. This part of the code is the same as before we put it into a program</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">postclose</span> <span class="pre">pp</span></code>. Close the postfile</p></li>
+</ul>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> transplants,<span class="k"> clear</span>
+model age wait_yrs gender rec_hcv,
+    filename(model_bmi) yvar(bmi)
+</pre></div>
+</div>
+<p>We may no look at the <code class="docutils literal notranslate"><span class="pre">.dta</span></code> file we created:</p>
+<p>use model_bmi, clear
+list, clean noobs</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -937,7 +970,7 @@ table1_nice age bmi wait_yrs<span class="k"> if</span> age<span class="o">&gt;</
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#postfile">4.1 Postfile</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-files">4.1 Creating files</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#postfile-to-post-regression-results"><code class="docutils literal notranslate"><span class="pre">postfile</span></code> to post regression results</a></li>
 </ul>
 </li>
@@ -948,7 +981,7 @@ table1_nice age bmi wait_yrs<span class="k"> if</span> age<span class="o">&gt;</
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#merging-protip">Merging protip</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#options">4.3 Options</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-options">4.3 Adding options</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#options-that-take-values">Options that take values</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#another-example">Another example</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#updating-our-table-1-program">Updating our table 1 program</a><ul class="nav section-nav flex-column">
@@ -959,6 +992,7 @@ table1_nice age bmi wait_yrs<span class="k"> if</span> age<span class="o">&gt;</
 </li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#postfile-in-a-program">4.4 Postfile in a program</a></li>
 </ul>
   </nav></div>
 
