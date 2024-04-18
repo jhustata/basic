@@ -591,12 +591,12 @@ export excel coef result<span class="k"> ci</span> <span class="cs">///   </span
 </pre></div>
 </div>
 <p>Let’s improve our output:</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">label var</span> coef <span class="s">&quot;Variable&quot;</span> <span class="nv">`</span>
-<span class="nv">label var result &quot;Coefficient&quot; </span>
-<span class="nv">label var ci &quot;95% CI&quot;</span>
-<span class="nv">export excel coef result ci ///</span>
-<span class="nv">    using betas_table3.xlsx, /// </span>
-<span class="nv">    replace firstrow(varlabels)</span>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">label var</span> coef <span class="s">&quot;Variable&quot;</span> 
+<span class="k">label var</span> result <span class="s">&quot;Coefficient&quot;</span> 
+<span class="k">label var ci</span> <span class="s">&quot;95% CI&quot;</span>
+export excel coef result<span class="k"> ci</span> <span class="cs">///</span>
+    using betas_table3<span class="m">.</span>xlsx, <span class="cs">/// </span>
+<span class="k">    replace</span> firstrow(varlabels)
 </pre></div>
 </div>
 </section>
@@ -622,8 +622,9 @@ export excel coef result<span class="k"> ci</span> <span class="cs">///   </span
 </tbody>
 </table>
 <p>Suppose your analytic dataset is <a class="reference external" href="https://github.com/jhustata/basic/raw/main/transplants.dta">transplants.dta</a> and you wish to assess whether donor age is correlated with recipient age in deceased-donor transplants.</p>
-<p>Let’s first define our working directory using a macro</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">global</span> url <span class="s">&quot;https://github.com/jhustata/basic/raw/main/&quot;</span>
+<p>Let’s first define our working directory using a macro. (An alternative approach is to download the dataset onto your computer and work in a specific directory with no need for a URL or filepath)</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//global url &quot;https://github.com/jhustata/basic/raw/main/&quot;</span>
+<span class="k">global</span> url <span class="s">&quot;&quot;</span> <span class="c1">//if you are working locally with downloaded datasets</span>
 </pre></div>
 </div>
 <p>Now let’s import our analytic dataset</p>
@@ -639,9 +640,9 @@ export excel coef result<span class="k"> ci</span> <span class="cs">///   </span
 <p>Can we merge <code class="docutils literal notranslate"><span class="pre">transplants.dta</span></code> with <code class="docutils literal notranslate"><span class="pre">donors.dta</span></code> to solve this issue?</p>
 <section id="simple-merge-command">
 <h3>Simple merge command<a class="headerlink" href="#simple-merge-command" title="Permalink to this heading">#</a></h3>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> transplants,<span class="k"> clear</span> 
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="s">&quot;</span><span class="vg">${url}</span><span class="s">transplants&quot;</span>,<span class="k"> clear</span> 
 <span class="k">merge</span> <span class="m">1</span>:<span class="m">1</span> fake_id <span class="cs">///</span>
-    using donors_recipients
+    using <span class="s">&quot;</span><span class="vg">${url}</span><span class="s">donors_recipients&quot;</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -656,9 +657,9 @@ export excel coef result<span class="k"> ci</span> <span class="cs">///   </span
 <section id="fancier-merge-commands">
 <h3>Fancier merge commands<a class="headerlink" href="#fancier-merge-commands" title="Permalink to this heading">#</a></h3>
 <p>Let’s explore fancier syntax</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> transplants,<span class="k"> clear</span> 
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="s">&quot;</span><span class="vg">${url}</span><span class="s">transplants&quot;</span>,<span class="k"> clear</span> 
 <span class="k">merge</span> <span class="m">1</span>:<span class="m">1</span> fake_id <span class="cs">///</span>
-    using donors_recipients, <span class="cs">///</span>
+    using <span class="s">&quot;</span><span class="vg">${url}</span><span class="s">donors_recipients&quot;</span>, <span class="cs">///</span>
 <span class="k">    keep</span>(match)
 </pre></div>
 </div>
@@ -666,16 +667,16 @@ export excel coef result<span class="k"> ci</span> <span class="cs">///   </span
 <li><p>Only records that appear in both datasets will remain in memory</p></li>
 <li><p>Only records that appear in the master dataset only, or in both datasets, will remain in memory</p></li>
 </ul>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> transplants,<span class="k"> clear</span> 
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="s">&quot;</span><span class="vg">${url}</span><span class="s">transplants&quot;</span>,<span class="k"> clear</span> 
 <span class="k">merge</span> <span class="m">1</span>:<span class="m">1</span> fake_id <span class="cs">///</span>
-    using donors_recipients, <span class="cs">///</span>
+    using <span class="s">&quot;</span><span class="vg">${url}</span><span class="s">donors_recipients&quot;</span>, <span class="cs">///</span>
 <span class="k">    gen</span>(mergevar)
 </pre></div>
 </div>
 <ul class="simple">
 <li><p>Instead of creating a “system-defined” variable called <code class="docutils literal notranslate"><span class="pre">_merge</span></code>, lets have a “user-defined” one called <code class="docutils literal notranslate"><span class="pre">mergevar</span></code></p></li>
 </ul>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> transplants,<span class="k"> clear</span> 
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="s">&quot;</span><span class="vg">${url}</span><span class="s">transplants&quot;</span>,<span class="k"> clear</span>
 <span class="k">merge</span> <span class="m">1</span>:<span class="m">1</span> fake_id <span class="cs">///</span>
     using donors_recipients, <span class="cs">///</span>
     nogen 
@@ -688,7 +689,7 @@ export excel coef result<span class="k"> ci</span> <span class="cs">///   </span
 </section>
 <section id="two-merges-in-a-row">
 <h3>Two merges in a row<a class="headerlink" href="#two-merges-in-a-row" title="Permalink to this heading">#</a></h3>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> transplants,<span class="k"> clear</span> 
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="s">&quot;</span><span class="vg">${url}</span><span class="s">transplants&quot;</span>,<span class="k"> clear</span>
 <span class="k">merge</span> <span class="m">1</span>:<span class="m">1</span> fake_id <span class="cs">///</span>
     using donors_recipients, <span class="cs">///</span>
 <span class="k">    keep</span>(match) nogen 
@@ -709,8 +710,8 @@ export excel coef result<span class="k"> ci</span> <span class="cs">///   </span
 <h3>Merging protip<a class="headerlink" href="#merging-protip" title="Permalink to this heading">#</a></h3>
 <p>Using <code class="docutils literal notranslate"><span class="pre">merge,</span> <span class="pre">keep(match)</span></code> might drop more records than you expect. If you think all
 records will match, it’s a good idea to check this assumption</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> transplants,<span class="k"> clear merge</span> <span class="m">1</span>:<span class="m">1</span> fake_id <span class="cs">///</span>
-    using donors_recipients, <span class="cs">///</span>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="s">&quot;</span><span class="vg">${url}</span><span class="s">transplants&quot;</span>,<span class="k"> clear merge</span> <span class="m">1</span>:<span class="m">1</span> fake_id <span class="cs">///</span>
+    using <span class="s">&quot;{url}donors_recipients&quot;</span>, <span class="cs">///</span>
 <span class="k">    keep</span>(master match)
 <span class="k">assert</span> _merge<span class="o">==</span><span class="m">3</span>
 </pre></div>
@@ -718,7 +719,7 @@ records will match, it’s a good idea to check this assumption</p>
 <p>Maybe you don’t expect a perfect match, but you
 want to make sure nearly all of your records match use transplants, clear</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">merge</span> <span class="m">1</span>:<span class="m">1</span> fake_id <span class="cs">///</span>
-    using donors_recipients, <span class="cs">/// </span>
+    using <span class="s">&quot;</span><span class="vg">${url}</span><span class="s">donors_recipients&quot;</span>, <span class="cs">/// </span>
 <span class="k">    keep</span>(master match)
 <span class="k">quietly sum</span> _merge
 <span class="k">assert</span> <span class="nf">r</span>(mean) <span class="o">&gt;</span> <span class="m">2.98</span>
