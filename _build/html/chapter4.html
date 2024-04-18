@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>4. Basic file management &#8212; Stata Programming</title>
+    <title>4. Basic file management, Programming options &#8212; Stata Programming</title>
   
   
   
@@ -160,7 +160,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="chapter1.html">1. Philosophy, overview, commands, syntax</a></li>
 <li class="toctree-l1"><a class="reference internal" href="chapter2.html">2. Return values, macros, programs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="chapter3.html">3. Loops, Program Syntax, and Miscellany</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">4. Basic file management</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">4. Basic file management, Programming options</a></li>
 <li class="toctree-l1"><a class="reference internal" href="chapter5.html">5. Graphs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="chapter6.html">6. Review of Weeks 1-5</a></li>
 <li class="toctree-l1"><a class="reference internal" href="chapter7.html">7. Survival Analysis: Non-parametric, Semi-parametric, Parametric</a></li>
@@ -349,7 +349,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>4. Basic file management</h1>
+    <h1>4. Basic file management, Programming options</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -359,7 +359,11 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#merging-files">4.1 Merging files</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#postfile">4.1 Postfile</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#postfile-to-post-regression-results"><code class="docutils literal notranslate"><span class="pre">postfile</span></code> to post regression results</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#merging-files">4.2 Merging files</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-merge-command">Simple merge command</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fancier-merge-commands">Fancier merge commands</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#two-merges-in-a-row">Two merges in a row</a></li>
@@ -377,10 +381,171 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="basic-file-management">
-<h1>4. Basic file management<a class="headerlink" href="#basic-file-management" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="basic-file-management-programming-options">
+<h1>4. Basic file management, Programming options<a class="headerlink" href="#basic-file-management-programming-options" title="Permalink to this heading">#</a></h1>
+<p>Basic file management</p>
+<ul class="simple">
+<li><p>Postfile</p></li>
+<li><p>Merging</p></li>
+</ul>
+<p>Programming options</p>
+<ul class="simple">
+<li><p>Syntax</p></li>
+</ul>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">()</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="mi">550</span><span class="p">,</span> <span class="mi">500</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;system&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">550</span><span class="p">,</span> <span class="mi">500</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;program&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">2000</span><span class="p">,</span> <span class="mi">960</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;syntax&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="mi">950</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;ado&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">3000</span><span class="p">,</span> <span class="mi">550</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;do&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="mi">3000</span><span class="p">,</span> <span class="mi">550</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;command&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">1900</span><span class="p">,</span> <span class="mi">150</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;queue&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="mi">1900</span><span class="p">,</span> <span class="mi">150</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;results&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;dta&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">475</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">1900</span><span class="p">,</span> <span class="o">-</span><span class="mi">475</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;excel&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">4000</span><span class="p">,</span> <span class="o">-</span><span class="mi">475</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;word&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="mi">1900</span><span class="p">,</span> <span class="o">-</span><span class="mi">475</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;html&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="mi">4000</span><span class="p">,</span> <span class="o">-</span><span class="mi">475</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;publish&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">950</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s2">&quot;program&quot;</span><span class="p">,</span> <span class="s2">&quot;ado&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;syntax&quot;</span><span class="p">,</span> <span class="s2">&quot;do&quot;</span><span class="p">)])</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s2">&quot;ado&quot;</span><span class="p">,</span> <span class="s2">&quot;command&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;do&quot;</span><span class="p">,</span> <span class="s2">&quot;queue&quot;</span><span class="p">)])</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s2">&quot;command&quot;</span><span class="p">,</span> <span class="s2">&quot;results&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;queue&quot;</span><span class="p">,</span> <span class="s2">&quot;results&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;results&quot;</span><span class="p">,</span> <span class="s2">&quot;excel&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;results&quot;</span><span class="p">,</span> <span class="s2">&quot;word&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;results&quot;</span><span class="p">,</span> <span class="s2">&quot;html&quot;</span><span class="p">)])</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s2">&quot;results&quot;</span><span class="p">,</span> <span class="s2">&quot;dta&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;results&quot;</span><span class="p">,</span> <span class="s2">&quot;log&quot;</span><span class="p">)])</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s2">&quot;dta&quot;</span><span class="p">,</span> <span class="s2">&quot;publish&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">,</span> <span class="s2">&quot;publish&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;excel&quot;</span><span class="p">,</span> <span class="s2">&quot;publish&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;word&quot;</span><span class="p">,</span> <span class="s2">&quot;publish&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;html&quot;</span><span class="p">,</span> <span class="s2">&quot;publish&quot;</span><span class="p">)])</span>
+
+<span class="n">pos</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">get_node_attributes</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="s1">&#39;pos&#39;</span><span class="p">)</span>
+<span class="n">node_colors</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;lightblue&quot;</span> <span class="k">if</span> <span class="n">node</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;results&quot;</span><span class="p">,</span> <span class="s2">&quot;dta&quot;</span><span class="p">,</span> <span class="s2">&quot;publish&quot;</span><span class="p">]</span> <span class="k">else</span> <span class="s2">&quot;lightpink&quot;</span> <span class="k">if</span> <span class="n">node</span> <span class="o">==</span> <span class="s2">&quot;dta&quot;</span> <span class="k">else</span> <span class="s2">&quot;lavender&quot;</span> <span class="k">if</span> <span class="n">node</span> <span class="o">==</span> <span class="s2">&quot;results&quot;</span> <span class="k">else</span> <span class="s2">&quot;lightgreen&quot;</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">()]</span>
+
+<span class="n">nx</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">with_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">font_weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span> <span class="n">node_size</span><span class="o">=</span><span class="mi">4500</span><span class="p">,</span> <span class="n">node_color</span><span class="o">=</span><span class="n">node_colors</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">collections</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_edgecolor</span><span class="p">(</span><span class="s2">&quot;#000000&quot;</span><span class="p">)</span>  <span class="c1"># Set edge color to black for better contrast</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="o">-</span><span class="mi">5000</span><span class="p">,</span> <span class="mi">5000</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="o">-</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/b16d38bfc29147af77884cb90b6a613f180ed6078883f981d642c2ac0775997f.png" src="_images/b16d38bfc29147af77884cb90b6a613f180ed6078883f981d642c2ac0775997f.png" />
+</div>
+</div>
+<section id="postfile">
+<h2>4.1 Postfile<a class="headerlink" href="#postfile" title="Permalink to this heading">#</a></h2>
+<p>During our second week had a cursory discussion about the basic files we may output our results into:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">.xlsx</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.log</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.dta</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.docx</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.html</span></code></p></li>
+</ul>
+<p>In the <strong>Intermediate</strong> class we’ve focused mostly on <code class="docutils literal notranslate"><span class="pre">.html</span></code>, since we’re creating websites to host our content online. In this <strong>Basic</strong> class we’ve directed our energies at <code class="docutils literal notranslate"><span class="pre">.xlsx</span></code> and <code class="docutils literal notranslate"><span class="pre">.log</span></code>, as seen in HW3, which is due today. Its time to revist <code class="docutils literal notranslate"><span class="pre">.dta</span></code>, which perhaps we didn’t have time to develop in week two. Here’s a <a class="reference external" href="https://jhustata.github.io/basic/chapter2.html#dta">link</a> to the section of the week to session in which we covered it, with explanatory notes.</p>
+<Detail>
+   <Summary>`.do` file for your convenience</Summary>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">* Clear the previous data and results to ensure a clean workspace.</span>
+<span class="k">clear</span> all
+cls
+
+<span class="c1">* Set up a postfile to store data. This will create a dataset called output.dta.</span>
+<span class="c1">* Variables included are &#39;a&#39; (a string up to 80 characters), and &#39;b&#39; and &#39;c&#39; (both floats).</span>
+<span class="k">postfile</span> pp str80 a <span class="nf">float</span>(b c) using output<span class="m">.</span>dta,<span class="k"> replace</span>
+
+<span class="c1">* Post data into the postfile. Each &#39;post&#39; command adds one observation.</span>
+<span class="c1">* &#39;a&#39; is a categorical identifier, &#39;b&#39; and &#39;c&#39; are numeric measurements.</span>
+<span class="k">post</span> pp (<span class="s">&quot;1&quot;</span>) (<span class="m">24.4</span>) (<span class="m">123</span>)
+<span class="k">post</span> pp (<span class="s">&quot;2&quot;</span>) (<span class="m">31.5</span>) (<span class="m">164</span>)
+<span class="k">post</span> pp (<span class="s">&quot;3&quot;</span>) (<span class="m">29.0</span>) (<span class="m">118</span>)
+
+<span class="c1">* Close the postfile to save changes and allow further usage of the data.</span>
+<span class="k">postclose</span> pp
+
+<span class="c1">* Load the data from output.dta into memory for analysis.</span>
+<span class="k">use</span> output<span class="m">.</span>dta,<span class="k"> clear</span> 
+
+<span class="c1">* Display all data in the dataset to verify correct input.</span>
+<span class="k">list</span>
+
+<span class="c1">* Describe the data to get a summary of variables and data structure.</span>
+<span class="k">describe</span>
+</pre></div>
+</div>
+</Detail>
+<p>Now let’s apply this to a meaningful example</p>
+<section id="postfile-to-post-regression-results">
+<h3><code class="docutils literal notranslate"><span class="pre">postfile</span></code> to post regression results<a class="headerlink" href="#postfile-to-post-regression-results" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">postfile</span> pp str80 coef <span class="cs">///</span>
+   double(result CIleft CIright pvalue) <span class="cs">/// </span>
+   using betas<span class="m">.</span>dta,<span class="k"> replace</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Within the script, call our post “pp”</p></li>
+<li><p>It will have five variables: a string called coef and <a class="reference external" href="https://jhustata.github.io/basic/chapter1.html#variable-types">doubles</a>
+(floating-point decimals) called <code class="docutils literal notranslate"><span class="pre">result</span></code>, <code class="docutils literal notranslate"><span class="pre">CIleft</span></code>, etc</p></li>
+<li><p>The file name on disk will be <code class="docutils literal notranslate"><span class="pre">betas.dta</span></code></p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">betas.dta</span></code> exists, replace it</p></li>
+</ul>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">regress</span> bmi gender age
+<span class="k">foreach</span> v of<span class="k"> varlist</span> gender age {
+    <span class="c1">//[calculate beta, etc into macros] </span>
+<span class="k">    post</span> pp (<span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">&quot;</span>) (<span class="nv">`res&#39;</span>) (<span class="nv">`left&#39;</span>) <span class="cs">///</span>
+    (<span class="nv">`right&#39;</span>) (<span class="nv">`pvals&#39;</span>)
+}
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Iterate over variables in a <code class="docutils literal notranslate"><span class="pre">foreach</span></code> loop</p></li>
+<li><p>Calculate beta, 95%CI, pvalue</p></li>
+<li><p>Post them to our new dataset</p></li>
+</ul>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">post close</span> pp
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Save and close the file</p></li>
+</ul>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> betas,<span class="k"> clear</span>
+<span class="k">list</span>, clean noobs
+</pre></div>
+</div>
+<p>We can combine this with <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">excel</span></code> to write out our own tables in Excel:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> betas,<span class="k"> clear</span> export excel <span class="cs">///</span>
+    coef result CIleft CIright <span class="cs">/// </span>
+    using betas_table<span class="m">.</span>xlsx,<span class="k"> replace</span>
+
+<span class="k">gen ci</span> = <span class="s">&quot;(&quot;</span> <span class="o">+</span> <span class="nf">string</span>(CIleft, <span class="s">&quot;%3.2f&quot;</span>) <span class="o">+</span> <span class="s">&quot;, &quot;</span> <span class="o">+</span> <span class="cs">/// </span>
+    <span class="nf">string</span>(CIright, <span class="s">&quot;%3.2f&quot;</span>) <span class="o">+</span> <span class="s">&quot;)&quot;</span>
+
+export excel coef result<span class="k"> ci</span> <span class="cs">///   </span>
+    using betas_table2<span class="m">.</span>xlsx, <span class="cs">/// </span>
+<span class="k">   replace</span> firstrow(variables)
+</pre></div>
+</div>
+<p>Let’s improve our output:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">label var</span> coef <span class="s">&quot;Variable&quot;</span> 
+<span class="k">label var</span> result <span class="s">&quot;Coefficient&quot;</span> 
+<span class="k">label var ci</span> <span class="s">&quot;95% CI&quot;</span>
+export excel coef result<span class="k"> ci</span> <span class="cs">///</span>
+    using betas_table3<span class="m">.</span>xlsx, <span class="cs">/// </span>
+<span class="k">    replace</span> firstrow(varlabels)
+</pre></div>
+</div>
+</section>
+</section>
 <section id="merging-files">
-<h2>4.1 Merging files<a class="headerlink" href="#merging-files" title="Permalink to this heading">#</a></h2>
+<h2>4.2 Merging files<a class="headerlink" href="#merging-files" title="Permalink to this heading">#</a></h2>
 <table class="colwidths-auto table">
 <thead>
 <tr class="row-odd"><th class="head"><p>transplants.dta</p></th>
@@ -476,7 +641,7 @@ document.write(`
 </pre></div>
 </div>
 <ul class="simple">
-<li><p>Don’t load all variables from the new (using) dataset. Just load age_don</p></li>
+<li><p>Don’t load all variables from the new (<code class="docutils literal notranslate"><span class="pre">using</span></code>) dataset. Just load <code class="docutils literal notranslate"><span class="pre">age_don</span></code></p></li>
 </ul>
 <p>Now lets get back to our original problem: are donor and recipient age correlated?</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">corr</span> age<span class="o">*</span>
@@ -575,7 +740,11 @@ want to make sure nearly all of your records match use transplants, clear</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#merging-files">4.1 Merging files</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#postfile">4.1 Postfile</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#postfile-to-post-regression-results"><code class="docutils literal notranslate"><span class="pre">postfile</span></code> to post regression results</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#merging-files">4.2 Merging files</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-merge-command">Simple merge command</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fancier-merge-commands">Fancier merge commands</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#two-merges-in-a-row">Two merges in a row</a></li>
