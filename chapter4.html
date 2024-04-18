@@ -784,7 +784,8 @@ table1_o age bmi wait_yrs<span class="k"> if</span> age<span class="o">&gt;</spa
 <section id="options-that-take-values">
 <h3>Options that take values<a class="headerlink" href="#options-that-take-values" title="Permalink to this heading">#</a></h3>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">program</span> define minmax
-<span class="k">syntax</span> , [<span class="nf">min</span>(real <span class="m">0</span>) <span class="nf">max</span>(real <span class="m">99</span>)]<span class="k"> disp</span> <span class="s">&quot;Min: </span><span class="nv">`min&#39;</span><span class="s">&quot;</span> _col(<span class="m">9</span>) <span class="s">&quot;Max: </span><span class="nv">`max&#39;</span><span class="s">&quot;</span>
+<span class="k">    syntax</span> , [<span class="nf">min</span>(real <span class="m">0</span>) <span class="nf">max</span>(real <span class="m">99</span>)] 
+<span class="k">    disp</span> <span class="s">&quot;Min: </span><span class="nv">`min&#39;</span><span class="s">&quot;</span> _col(<span class="m">9</span>) <span class="s">&quot;Max: </span><span class="nv">`max&#39;</span><span class="s">&quot;</span>
 <span class="k">end</span>
 </pre></div>
 </div>
