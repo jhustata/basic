@@ -370,6 +370,17 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#merging-protip">Merging protip</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#options">4.3 Options</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#options-that-take-values">Options that take values</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#another-example">Another example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#updating-our-table-1-program">Updating our table 1 program</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#program-structure">Program Structure</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-usage">Example Usage</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -383,14 +394,19 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="basic-file-management-programming-options">
 <h1>4. Basic file management, Programming options<a class="headerlink" href="#basic-file-management-programming-options" title="Permalink to this heading">#</a></h1>
-<p>Basic file management</p>
 <ul class="simple">
-<li><p>Postfile</p></li>
-<li><p>Merging</p></li>
+<li><p>Basic file management</p>
+<ul>
+<li><p><strong>4.1</strong> Postfile</p></li>
+<li><p><strong>4.2</strong> Merging</p></li>
 </ul>
-<p>Programming options</p>
-<ul class="simple">
-<li><p>Syntax</p></li>
+</li>
+<li><p>Programming</p>
+<ul>
+<li><p><strong>4.3</strong> Options</p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="https://raw.githubusercontent.com/jhustata/basic/main/lecture4.do">.do file</a> supplement</p></li>
 </ul>
 <div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
@@ -452,37 +468,44 @@ document.write(`
 <li><p><code class="docutils literal notranslate"><span class="pre">.html</span></code></p></li>
 </ul>
 <p>In the <strong>Intermediate</strong> class we’ve focused mostly on <code class="docutils literal notranslate"><span class="pre">.html</span></code>, since we’re creating websites to host our content online. In this <strong>Basic</strong> class we’ve directed our energies at <code class="docutils literal notranslate"><span class="pre">.xlsx</span></code> and <code class="docutils literal notranslate"><span class="pre">.log</span></code>, as seen in HW3, which is due today. Its time to revist <code class="docutils literal notranslate"><span class="pre">.dta</span></code>, which perhaps we didn’t have time to develop in week two. Here’s a <a class="reference external" href="https://jhustata.github.io/basic/chapter2.html#dta">link</a> to the section of the week to session in which we covered it, with explanatory notes.</p>
-<Detail>
-   <Summary>`.do` file for your convenience</Summary>
+<Details>
+   <Summary>Review of Data Posting and Analysis in Stata</Summary>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">* Clear the previous data and results to ensure a clean workspace.</span>
 <span class="k">clear</span> all
 cls
 
-<span class="c1">* Set up a postfile to store data. This will create a dataset called output.dta.</span>
-<span class="c1">* Variables included are &#39;a&#39; (a string up to 80 characters), and &#39;b&#39; and &#39;c&#39; (both floats).</span>
+<span class="c1">* Set up a postfile to store data. This command creates a dataset called output.dta.</span>
+<span class="c1">* &#39;a&#39; is a string variable with a maximum length of 80 characters.</span>
+<span class="c1">* &#39;b&#39; and &#39;c&#39; are numeric variables stored as floats.</span>
 <span class="k">postfile</span> pp str80 a <span class="nf">float</span>(b c) using output<span class="m">.</span>dta,<span class="k"> replace</span>
 
-<span class="c1">* Post data into the postfile. Each &#39;post&#39; command adds one observation.</span>
-<span class="c1">* &#39;a&#39; is a categorical identifier, &#39;b&#39; and &#39;c&#39; are numeric measurements.</span>
+<span class="c1">* Post data into the postfile. Each &#39;post&#39; command adds one observation with three fields.</span>
+<span class="c1">* &#39;a&#39; is used as a categorical identifier.</span>
+<span class="c1">* &#39;b&#39; and &#39;c&#39; are quantitative measurements, likely representing some continuous data.</span>
 <span class="k">post</span> pp (<span class="s">&quot;1&quot;</span>) (<span class="m">24.4</span>) (<span class="m">123</span>)
 <span class="k">post</span> pp (<span class="s">&quot;2&quot;</span>) (<span class="m">31.5</span>) (<span class="m">164</span>)
 <span class="k">post</span> pp (<span class="s">&quot;3&quot;</span>) (<span class="m">29.0</span>) (<span class="m">118</span>)
 
-<span class="c1">* Close the postfile to save changes and allow further usage of the data.</span>
+<span class="c1">* Close the postfile to finalize changes and prepare the dataset for analysis.</span>
 <span class="k">postclose</span> pp
 
-<span class="c1">* Load the data from output.dta into memory for analysis.</span>
+<span class="c1">* Load the newly created dataset into memory for further operations.</span>
 <span class="k">use</span> output<span class="m">.</span>dta,<span class="k"> clear</span> 
 
-<span class="c1">* Display all data in the dataset to verify correct input.</span>
+<span class="c1">* List all observations to verify data integrity and correct input.</span>
 <span class="k">list</span>
 
-<span class="c1">* Describe the data to get a summary of variables and data structure.</span>
+<span class="c1">* Provide a descriptive summary of the dataset, including information on each variable.</span>
 <span class="k">describe</span>
 </pre></div>
 </div>
-</Detail>
-<p>Now let’s apply this to a meaningful example</p>
+</Details>
+<p>We are now in position to apply <code class="docutils literal notranslate"><span class="pre">postfile</span></code> this to a meaningful example using what we’ve learned so far:</p>
+<ul class="simple">
+<li><p>Variable-type specifiers</p></li>
+<li><p>A <code class="docutils literal notranslate"><span class="pre">foreach</span></code> loop</p></li>
+<li><p>Storage of <code class="docutils literal notranslate"><span class="pre">r()</span></code> values in <code class="docutils literal notranslate"><span class="pre">local</span></code> macros</p></li>
+</ul>
 <section id="postfile-to-post-regression-results">
 <h3><code class="docutils literal notranslate"><span class="pre">postfile</span></code> to post regression results<a class="headerlink" href="#postfile-to-post-regression-results" title="Permalink to this heading">#</a></h3>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">postfile</span> pp str80 coef <span class="cs">///</span>
@@ -671,6 +694,180 @@ want to make sure nearly all of your records match use transplants, clear</p>
 <p>That’s enough in way of an introduction to the <code class="docutils literal notranslate"><span class="pre">merge</span></code> command. It will come in handy only in specific projects that have relevant variables in different datasets.</p>
 </section>
 </section>
+<section id="options">
+<h2>4.3 Options<a class="headerlink" href="#options" title="Permalink to this heading">#</a></h2>
+<p>Consider the <a class="reference external" href="https://jhustata.github.io/basic/chapter3.html#myfirst">programs</a> we’ve written over the last two weeks. We discussed:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">program</span> <span class="pre">define</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">syntax</span> <span class="pre">varlist</span></code></p></li>
+</ul>
+<p>Now consider this program:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">program</span> define opt_demo<span class="k"> syntax</span>, [myoption]
+<span class="k">if</span> <span class="s">&quot;</span><span class="nv">`myoption&#39;</span><span class="s">&quot;</span> <span class="o">!=</span> <span class="s">&quot;&quot;</span> {
+<span class="k">disp</span> <span class="s">&quot;You picked the option /// </span><span class="nv">`myoption&#39;</span><span class="s">&quot;</span>
+}<span class="k"> else</span> {
+<span class="k">        disp</span> <span class="s">&quot;No option&quot;</span>
+    }
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>Invoke the program:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>opt_demo
+opt_demo, myoption
+</pre></div>
+</div>
+<p>Let’s look at another example:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">program</span> define table1_o
+<span class="k">syntax varlist</span> [if] , [round] <span class="c1">//set display format</span>
+<span class="k">if</span> <span class="s">&quot;</span><span class="nv">`round&#39;</span><span class="s">&quot;</span> <span class="o">!=</span> <span class="s">&quot;&quot;</span> {<span class="k"> local</span> D <span class="nx">%1.0f</span>
+}<span class="k"> else</span> {
+<span class="k">        local</span> D <span class="nx">%3.2f</span>
+    }
+<span class="k">disp</span> <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">,&quot;</span> <span class="nv">`D&#39;</span> <span class="nf">r</span>(mean) <span class="c1">//etc. end</span>
+</pre></div>
+</div>
+<p>The end-user may now do this:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>table1_o age bmi wait_yrs<span class="k"> if</span> age<span class="o">&lt;</span><span class="m">40</span>
+table1_o age bmi wait_yrs<span class="k"> if</span> age<span class="o">&gt;</span><span class="m">40</span>, round
+</pre></div>
+</div>
+<section id="options-that-take-values">
+<h3>Options that take values<a class="headerlink" href="#options-that-take-values" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">program</span> define minmax
+<span class="k">syntax</span> , [<span class="nf">min</span>(real <span class="m">0</span>) <span class="nf">max</span>(real <span class="m">99</span>)]<span class="k"> disp</span> <span class="s">&quot;Min: </span><span class="nv">`min&#39;</span><span class="s">&quot;</span> _col(<span class="m">9</span>) <span class="s">&quot;Max: </span><span class="nv">`max&#39;</span><span class="s">&quot;</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>minmax
+minmax, <span class="nf">min</span>(<span class="m">20</span>)
+minmax, <span class="nf">min</span>(<span class="m">20</span>) <span class="nf">max</span>(<span class="m">40</span>)
+</pre></div>
+</div>
+</section>
+<section id="another-example">
+<h3>Another example<a class="headerlink" href="#another-example" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">program</span> define list_top
+<span class="k">    syntax</span> varname, [top(int <span class="m">10</span>)] 
+<span class="k">    preserve</span>
+<span class="k">    gsort</span> <span class="o">-</span><span class="nv">`varlist&#39;</span>
+<span class="k">    list</span> <span class="nv">`varlist&#39;</span><span class="k"> in</span> <span class="m">1</span><span class="o">/</span><span class="nv">`top&#39;</span>, clean noobs 
+<span class="k">end</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Define the program</p></li>
+<li><p>Specify that it takes a single variable, and optionally takes the option “top” which is equal to 10 by default</p></li>
+<li><p>We’re about to temporarily mess up the dataset, so save a copy so that we don’t mess things up permanently</p></li>
+<li><p>Sort in descending order by the variable</p></li>
+<li><p>List the top `top’ values of the variable</p></li>
+</ul>
+</section>
+<section id="updating-our-table-1-program">
+<h3>Updating our table 1 program<a class="headerlink" href="#updating-our-table-1-program" title="Permalink to this heading">#</a></h3>
+<p><strong>Overview</strong>
+<code class="docutils literal notranslate"><span class="pre">table1_nice</span></code> adds considerable flexibility</p>
+<section id="program-structure">
+<h4>Program Structure<a class="headerlink" href="#program-structure" title="Permalink to this heading">#</a></h4>
+<ul>
+<li><p><strong>Program Initialization:</strong></p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">capture program drop</span> table1_nice
+<span class="k">program</span> define table1_nice
+</pre></div>
+</div>
+<p>This command sequence, as you should be familiar by now, ensures that if <code class="docutils literal notranslate"><span class="pre">table1_nice</span></code> is already defined, it is removed before defining a new version. This prevents any conflicts with previous definitions.</p>
+</li>
+<li><p><strong>Syntax Options:</strong></p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">syntax varlist</span> [if] , [replace] [precision(int <span class="m">1</span>)] [title(string)]
+</pre></div>
+</div>
+<p>Defines the syntax for the program. <code class="docutils literal notranslate"><span class="pre">varlist</span></code> is mandatory, while <code class="docutils literal notranslate"><span class="pre">if</span></code>, <code class="docutils literal notranslate"><span class="pre">replace</span></code>, <code class="docutils literal notranslate"><span class="pre">precision</span></code>, and <code class="docutils literal notranslate"><span class="pre">title</span></code> are optional. Each option serves a specific function:</p>
+<ul class="simple">
+<li><p><strong>if</strong>: Allows filtering of data based on conditions.</p></li>
+<li><p><strong>precision</strong>: Specifies the number of decimal places for numeric outputs, with a default of 1.</p></li>
+<li><p><strong>title</strong>: Allows for a custom title to be displayed at the top of the table.</p></li>
+</ul>
+</li>
+<li><p><strong>Data Preservation and Filtering:</strong></p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">preserve</span>
+<span class="k">capture keep</span> <span class="nv">`if&#39;</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">preserve</span></code> command saves the current dataset state. <code class="docutils literal notranslate"><span class="pre">capture</span> <span class="pre">keep</span></code> attempts to filter the dataset according to the user-defined <code class="docutils literal notranslate"><span class="pre">if</span></code> condition, suppressing any error if the condition is invalid.</p>
+</li>
+<li><p><strong>Display Formatting:</strong></p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">assert</span> <span class="nf">inrange</span>(<span class="nv">`precision&#39;</span>, <span class="m">0</span>, <span class="m">6</span>)
+<span class="k">local</span> pplus = <span class="nv">`precision&#39;</span> <span class="o">+</span> <span class="m">1</span>
+<span class="k">local</span> D %<span class="nv">`pplus&#39;</span>.<span class="nv">`precision&#39;</span>f
+</pre></div>
+</div>
+<p>Ensures that the <code class="docutils literal notranslate"><span class="pre">precision</span></code> falls between 0 and 6. It then adjusts the format string for numeric outputs to match the specified precision.</p>
+</li>
+<li><p><strong>Title Display:</strong></p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="s">&quot;</span><span class="nv">`title&#39;</span><span class="s">&quot;</span> <span class="o">!=</span> <span class="s">&quot;&quot;</span> {
+<span class="k">    disp</span> <span class="s">&quot;</span><span class="nv">`title&#39;</span><span class="s">&quot;</span>
+}
+</pre></div>
+</div>
+<p>Displays the title if one is specified.</p>
+</li>
+<li><p><strong>Summary Statistics Table:</strong></p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">disp</span> <span class="s">&quot;Variable&quot;</span> _col(<span class="m">12</span>) <span class="s">&quot;mean(SD)&quot;</span> _col(<span class="m">25</span>) <span class="s">&quot;range&quot;</span>
+<span class="k">foreach</span> v of<span class="k"> varlist</span> <span class="nv">`varlist&#39;</span> {
+<span class="k">    quietly sum</span> <span class="nv">`v&#39;</span> <span class="nv">`if&#39;</span>
+<span class="k">    disp</span> <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">&quot;</span> _col(<span class="m">12</span>) <span class="nv">`D&#39;</span> <span class="nf">r</span>(mean) <span class="s">&quot;(&quot;</span> <span class="nv">`D&#39;</span> <span class="nf">r</span>(sd) <span class="s">&quot;)&quot;</span> _col(<span class="m">25</span>) <span class="nv">`D&#39;</span> <span class="nf">r</span>(min) <span class="s">&quot;-&quot;</span> <span class="nv">`D&#39;</span> <span class="nf">r</span>(max)
+}
+</pre></div>
+</div>
+<p>Loops through each variable in <code class="docutils literal notranslate"><span class="pre">varlist</span></code>, calculates summary statistics, and displays them using the specified format. This includes the mean, standard deviation, and range for each variable.</p>
+</li>
+</ul>
+</section>
+<section id="example-usage">
+<h4>Example Usage<a class="headerlink" href="#example-usage" title="Permalink to this heading">#</a></h4>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>table1_nice age bmi wait_yrs<span class="k"> if</span> age<span class="o">&gt;</span><span class="m">40</span>, precision(<span class="m">2</span>)<span class="k"> replace</span> title(<span class="s">&quot;Study population&quot;</span>)
+</pre></div>
+</div>
+<p>This command runs <code class="docutils literal notranslate"><span class="pre">table1_nice</span></code> for variables <code class="docutils literal notranslate"><span class="pre">age</span></code>, <code class="docutils literal notranslate"><span class="pre">bmi</span></code>, and <code class="docutils literal notranslate"><span class="pre">wait_yrs</span></code> for records where <code class="docutils literal notranslate"><span class="pre">age</span></code> is greater than 40. It uses 2 decimal places for numeric outputs and displays “Study population” as the title.</p>
+</section>
+<section id="conclusion">
+<h4>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">#</a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">table1_nice</span></code> program offers a customizable approach to data analysis, allowing users to easily generate descriptive statistics tailored to specific research needs.</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//combining several of the above techniques into a &quot;table1&quot; program</span>
+<span class="k">capture program drop</span> table1_nice
+<span class="k">program</span> define table1_nice
+<span class="k">    syntax varlist</span> [if] , [replace] [precision(int <span class="m">1</span>)] [title(string)]
+    <span class="c1">//if: specify records to include in analysis (optional)</span>
+    <span class="c1">//precision: # of digits to the right of decimal point (optional, default 1)</span>
+    <span class="c1">//title: title to display before the table (optional)</span>
+
+<span class="k">    preserve</span>
+<span class="k">    capture keep</span> <span class="nv">`if&#39;</span> <span class="c1">//temporarily drop any records not required</span>
+
+    <span class="c1">//set display format</span>
+<span class="k">    assert</span> <span class="nf">inrange</span>(<span class="nv">`precision&#39;</span>, <span class="m">0</span>, <span class="m">6</span>) <span class="c1">//allow 0-6 digits to R of decimal point</span>
+<span class="k">    local</span> pplus = <span class="nv">`precision&#39;</span> <span class="o">+</span> <span class="m">1</span> <span class="c1">//first number for formatting code</span>
+<span class="k">    local</span> D %<span class="nv">`pplus&#39;</span>.<span class="nv">`precision&#39;</span>f
+
+<span class="k">    if</span> <span class="s">&quot;</span><span class="nv">`title&#39;</span><span class="s">&quot;</span> <span class="o">!=</span> <span class="s">&quot;&quot;</span> {
+<span class="k">        disp</span> <span class="s">&quot;</span><span class="nv">`title&#39;</span><span class="s">&quot;</span>
+    }
+
+<span class="k">    disp</span> <span class="s">&quot;Variable&quot;</span> _col(<span class="m">12</span>) <span class="s">&quot;mean(SD)&quot;</span> _col(<span class="m">25</span>) <span class="s">&quot;range&quot;</span>
+<span class="k">    foreach</span> v of<span class="k"> varlist</span> <span class="nv">`varlist&#39;</span> {
+<span class="k">        quietly sum</span> <span class="nv">`v&#39;</span> <span class="nv">`if&#39;</span>
+<span class="k">        disp</span> <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">&quot;</span> _col(<span class="m">12</span>) <span class="nv">`D&#39;</span> <span class="nf">r</span>(mean) <span class="s">&quot;(&quot;</span> <span class="nv">`D&#39;</span> <span class="nf">r</span>(sd) <span class="s">&quot;)&quot;</span> _col(<span class="m">25</span>) <span class="cs">///</span>
+            <span class="nv">`D&#39;</span> <span class="nf">r</span>(min) <span class="s">&quot;-&quot;</span> <span class="nv">`D&#39;</span> <span class="nf">r</span>(max)  <span class="c1">//notice we use macro D for format</span>
+    }
+<span class="k">end</span>
+
+
+table1_nice age bmi wait_yrs<span class="k"> if</span> age<span class="o">&gt;</span><span class="m">40</span>, precision(<span class="m">2</span>)<span class="k"> replace</span> <span class="cs">///</span>
+    title(<span class="s">&quot;Study population&quot;</span>)
+</pre></div>
+</div>
+</section>
+</section>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -749,6 +946,17 @@ want to make sure nearly all of your records match use transplants, clear</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fancier-merge-commands">Fancier merge commands</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#two-merges-in-a-row">Two merges in a row</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#merging-protip">Merging protip</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#options">4.3 Options</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#options-that-take-values">Options that take values</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#another-example">Another example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#updating-our-table-1-program">Updating our table 1 program</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#program-structure">Program Structure</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-usage">Example Usage</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
