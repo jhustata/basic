@@ -1421,7 +1421,35 @@ Previous transplant, %    XX<span class="m">.</span>X               XX<span clas
 <span class="k">di</span> <span class="s">&quot;</span><span class="nv">`study_arms&#39;</span><span class="s">&quot;</span>
 </pre></div>
 </div>
-</section>
+<p>And also consider using a “hardcoded” template to write your initial code for <code class="docutils literal notranslate"><span class="pre">.xlsx</span></code> output</p>
+<Details>
+   <Summary> Here's an Example </Summary>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>cls
+<span class="k">use</span> transplants,<span class="k"> clear</span> 
+<span class="c1">//col1</span>
+putexcel<span class="k"> set</span> table1,<span class="k"> replace</span>
+putexcel A1=<span class="s">&quot;Question 2&quot;</span>
+putexcel A2=<span class="s">&quot;Age, median (IQR)&quot;</span>
+putexcel A3=<span class="s">&quot;Previous transplant, %&quot;</span>
+
+<span class="c1">//col2</span>
+putexcel B1=<span class="s">&quot;Males (N=XX)&quot;</span>
+putexcel B2=<span class="s">&quot;XX (XX-XX)&quot;</span>
+putexcel B3=<span class="s">&quot;XX.X&quot;</span>
+
+<span class="c1">//col3</span>
+putexcel C1=<span class="s">&quot;Females (N=XX)&quot;</span>
+putexcel C2=<span class="s">&quot;XX (XX-XX)&quot;</span>
+putexcel C3=<span class="s">&quot;XX.X&quot;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>This code is adapted from the foundational code shared <a class="reference external" href="https://jhustata.github.io/basic/chapter2.html#results-output">here</a> in week two</p></li>
+<li><p>Your next steps involve replace the “XX” with the appropriate macro</p></li>
+<li><p>In later weeks you may consider using loops for efficiency</p></li>
+<li><p>And perhaps later, you may write an automated program to generalize this task beyond <code class="docutils literal notranslate"><span class="pre">transplants.dta</span></code></p></li>
+</ul>
+</Details></section>
 <section id="common-mistakes-from-hw1">
 <h3>Common Mistakes from HW1<a class="headerlink" href="#common-mistakes-from-hw1" title="Permalink to this heading">#</a></h3>
 <details>
