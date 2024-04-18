@@ -468,7 +468,7 @@ document.write(`
 <li><p><code class="docutils literal notranslate"><span class="pre">.docx</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">.html</span></code></p></li>
 </ul>
-<p>In the <strong>Intermediate</strong> class we’ve focused mostly on <code class="docutils literal notranslate"><span class="pre">.html</span></code>, since we’re creating websites to host our content online. In this <strong>Basic</strong> class we’ve directed our energies at <code class="docutils literal notranslate"><span class="pre">.xlsx</span></code> and <code class="docutils literal notranslate"><span class="pre">.log</span></code>, as seen in HW3, which is due today. Its time to revist <code class="docutils literal notranslate"><span class="pre">.dta</span></code>, which perhaps we didn’t have time to develop in week two. Here’s a <a class="reference external" href="https://jhustata.github.io/basic/chapter2.html#dta">link</a> to the section of the week to session in which we covered it, with explanatory notes.</p>
+<p>In the <strong>Intermediate</strong> class we’ve focused mostly on <code class="docutils literal notranslate"><span class="pre">.html</span></code>, since we’re creating websites to host our content online. In this <strong>Basic</strong> class we’ve directed our energies at <code class="docutils literal notranslate"><span class="pre">.xlsx</span></code> and <code class="docutils literal notranslate"><span class="pre">.log</span></code>, as seen in HW3, which is due today. Its time to revist <code class="docutils literal notranslate"><span class="pre">.dta</span></code>, which perhaps we didn’t have time to develop in week two. Here’s a <a class="reference external" href="https://jhustata.github.io/basic/chapter2.html#dta">link</a> to the notes.</p>
 <Details>
    <Summary>Review of Data Posting and Analysis in Stata</Summary>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">* Clear the previous data and results to ensure a clean workspace.</span>
@@ -737,10 +737,12 @@ want to make sure nearly all of your records match use transplants, clear</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">syntax</span> <span class="pre">varlist</span></code></p></li>
 </ul>
 <p>Now consider this program:</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">program</span> define opt_demo<span class="k"> syntax</span>, [myoption]
-<span class="k">if</span> <span class="s">&quot;</span><span class="nv">`myoption&#39;</span><span class="s">&quot;</span> <span class="o">!=</span> <span class="s">&quot;&quot;</span> {
-<span class="k">disp</span> <span class="s">&quot;You picked the option /// </span><span class="nv">`myoption&#39;</span><span class="s">&quot;</span>
-}<span class="k"> else</span> {
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">program</span> define opt_demo 
+<span class="k">    syntax</span>, [myoption]
+<span class="k">    if</span> <span class="s">&quot;</span><span class="nv">`myoption&#39;</span><span class="s">&quot;</span> <span class="o">!=</span> <span class="s">&quot;&quot;</span> {
+<span class="k">        disp</span> <span class="s">&quot;You picked the option /// </span><span class="nv">`myoption&#39;</span><span class="s">&quot;</span>
+    } 
+<span class="k">    else</span> {
 <span class="k">        disp</span> <span class="s">&quot;No option&quot;</span>
     }
 <span class="k">end</span>
@@ -753,12 +755,15 @@ opt_demo, myoption
 </div>
 <p>Let’s look at another example:</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">program</span> define table1_o
-<span class="k">syntax varlist</span> [if] , [round] <span class="c1">//set display format</span>
-<span class="k">if</span> <span class="s">&quot;</span><span class="nv">`round&#39;</span><span class="s">&quot;</span> <span class="o">!=</span> <span class="s">&quot;&quot;</span> {<span class="k"> local</span> D <span class="nx">%1.0f</span>
-}<span class="k"> else</span> {
+<span class="k">    syntax varlist</span> [if] , [round] <span class="c1">//set display format</span>
+<span class="k">    if</span> <span class="s">&quot;</span><span class="nv">`round&#39;</span><span class="s">&quot;</span> <span class="o">!=</span> <span class="s">&quot;&quot;</span> { 
+<span class="k">        local</span> D <span class="nx">%1.0f</span>  
+    } 
+<span class="k">    else</span> {
 <span class="k">        local</span> D <span class="nx">%3.2f</span>
     }
-<span class="k">disp</span> <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">,&quot;</span> <span class="nv">`D&#39;</span> <span class="nf">r</span>(mean) <span class="c1">//etc. end</span>
+<span class="k">    disp</span> <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">,&quot;</span> <span class="nv">`D&#39;</span> <span class="nf">r</span>(mean) <span class="c1">//etc. </span>
+<span class="k">end</span>
 </pre></div>
 </div>
 <p>The end-user may now do this:</p>
