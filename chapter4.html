@@ -921,15 +921,25 @@ table1_nice age bmi wait_yrs<span class="k"> if</span> age<span class="o">&gt;</
 </section>
 <section id="postfile-in-a-program">
 <h2>4.4 Postfile in a program<a class="headerlink" href="#postfile-in-a-program" title="Permalink to this heading">#</a></h2>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">program</span> define model
-<span class="k">    syntax varlist</span>, yvar(varname) filename(string) 
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//put it in a program</span>
+<span class="k">capture program drop</span> model
+<span class="k">program</span> define model
+    <span class="c1">//takes a varlist of independent (x) variables,</span>
+    <span class="c1">//a filename to post the data to,</span>
+    <span class="c1">//and the name of a dependent (y) variable</span>
+<span class="k">    syntax varlist</span>, yvar(varname) filename(string)
+
 <span class="k">    regress</span> <span class="nv">`yvar&#39;</span> <span class="nv">`varlist&#39;</span>
 
-<span class="k">    postfile</span> pp str80 variable <span class="cs">/// </span>
-        double(result CIleft CIright pvalue) <span class="cs">/// </span>
+<span class="k">    postfile</span> pp str80 variable double(result CIleft CIright pvalue) <span class="cs">///</span>
         using <span class="nv">`filename&#39;</span>,<span class="k"> replace</span>
-
-    <span class="c1">//calculate results / post to pp</span>
+<span class="k">    foreach</span> v of<span class="k"> varlist</span> <span class="nv">`varlist&#39;</span> {
+<span class="k">        local</span> res=_b[<span class="nv">`v&#39;</span>]
+<span class="k">        local</span> left=_b[<span class="nv">`v&#39;</span>]<span class="o">+</span>_se[<span class="nv">`v&#39;</span>]<span class="o">*</span><span class="nf">invttail</span>(<span class="nf">e</span>(df_r),<span class="m">0.975</span>)
+<span class="k">        local</span> right=_b[<span class="nv">`v&#39;</span>]<span class="o">+</span>_se[<span class="nv">`v&#39;</span>]<span class="o">*</span><span class="nf">invttail</span>(<span class="nf">e</span>(df_r),<span class="m">0.025</span>)
+<span class="k">        local</span> pval=<span class="m">2</span><span class="o">*</span><span class="nf">ttail</span>(<span class="nf">e</span>(df_r), <span class="nf">abs</span>(_b[<span class="nv">`v&#39;</span>]<span class="o">/</span>_se[<span class="nv">`v&#39;</span>]))
+<span class="k">        post</span> pp (<span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">&quot;</span>) (<span class="nv">`res&#39;</span>) (<span class="nv">`left&#39;</span>) (<span class="nv">`right&#39;</span>) (<span class="nv">`pval&#39;</span>)
+    }
 <span class="k">    postclose</span> pp
 <span class="k">end</span>
 </pre></div>
@@ -947,8 +957,10 @@ model age wait_yrs gender rec_hcv, <span class="cs">///</span>
 </pre></div>
 </div>
 <p>We may no look at the <code class="docutils literal notranslate"><span class="pre">.dta</span></code> file we created:</p>
-<p>use model_bmi, clear
-list, clean noobs</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> model_bmi,<span class="k"> clear</span>
+<span class="k">list</span>, clean noobs
+</pre></div>
+</div>
 </section>
 </section>
 
