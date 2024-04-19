@@ -554,7 +554,7 @@ cls
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> betas,<span class="k"> clear</span> 
 <span class="k">encode</span> coef,<span class="k"> gen</span>(Coef)
 <span class="k">twoway</span> (scatter result Coef) <span class="cs">///</span>
-    (rcap CIleft CIright Coef <span class="cs">///</span>
+ (rcap CIleft CIright Coef <span class="cs">///</span>
 , ms(<span class="o">*</span><span class="m">5</span>) <span class="cs">///</span>
 xlab(<span class="m">0</span>(<span class="m">1</span>)<span class="m">3</span> <span class="m">0</span> <span class="s">&quot; &quot;</span> <span class="m">1</span> <span class="s">&quot;Age&quot;</span> <span class="m">2</span> <span class="s">&quot;Gender&quot;</span> <span class="m">3</span> <span class="s">&quot; &quot;</span>) <span class="cs">///</span>
 xti(<span class="s">&quot;Predictors&quot;</span>) <span class="cs">///</span>
@@ -562,8 +562,10 @@ yti(<span class="s">&quot;Kg/m{sup:2}&quot;</span>, orientation(horizontal) size
 ti(<span class="s">&quot;Increase in BMI per unit increase in predictor &quot;</span>) <span class="cs">///</span>
 legend(off) <span class="cs">///</span>
 yline(<span class="m">0</span>, lc(lime) lp(dash)) <span class="cs">///</span>
+text(.<span class="m">13</span> .<span class="m">8</span> <span class="s">&quot;p&lt;0.01&quot;</span>) <span class="cs">///</span>
+text(.<span class="m">13</span> <span class="m">1.8</span> <span class="s">&quot;p=0.71&quot;</span>) <span class="cs">///</span>
 <span class="k">note</span>(<span class="s">&quot;Source: SRTR - Kidney Transplant Recipients in the US: 1988-2018&quot;</span>, pos(<span class="m">6</span>)) <span class="cs">///</span>
-    ) 
+ ) 
 </pre></div>
 </div>
 <p><img alt="" src="_images/betas.png" /></p>
