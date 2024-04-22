@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>5. Graphs &#8212; Stata Programming</title>
+    <title>5. Review of Weeks 1-4 &#8212; Stata Programming</title>
   
   
   
@@ -66,7 +66,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'chapter5';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="6. Review of Weeks 1-5" href="chapter6.html" />
+    <link rel="next" title="6. Visualizing data" href="chapter6.html" />
     <link rel="prev" title="4. Basic file management, Programming options" href="chapter4.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -163,8 +163,8 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="chapter2.html">2. Return values, macros, programs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="chapter3.html">3. Loops, Program Syntax, and Miscellany</a></li>
 <li class="toctree-l1"><a class="reference internal" href="chapter4.html">4. Basic file management, Programming options</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">5. Graphs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="chapter6.html">6. Review of Weeks 1-5</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">5. Review of Weeks 1-4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter6.html">6. Visualizing data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="chapter7.html">7. Survival Analysis: Non-parametric, Semi-parametric, Parametric</a></li>
 <li class="toctree-l1"><a class="reference internal" href="chapter8.html">8. Multilevel, Hierarchical Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quickrefs.html">Quick References</a></li>
@@ -351,7 +351,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>5. Graphs</h1>
+    <h1>5. Review of Weeks 1-4</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -361,6 +361,15 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stata-programming">5.0 Stata Programming</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basic">5.0.1 Basic</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intermediate">5.0.2 Intermediate</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced">5.0.3 Advanced</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#macros">5.1 Macros</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loops">5.3 Loops</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#file-management">5.4 File Management</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#histogram">5.1  histogram</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#density">5.1.1 density</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fraction">5.1.2 fraction</a></li>
@@ -395,8 +404,137 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="graphs">
-<h1>5. Graphs<a class="headerlink" href="#graphs" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="review-of-weeks-1-4">
+<h1>5. Review of Weeks 1-4<a class="headerlink" href="#review-of-weeks-1-4" title="Permalink to this heading">#</a></h1>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">()</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="mi">550</span><span class="p">,</span> <span class="mi">500</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;system&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">550</span><span class="p">,</span> <span class="mi">500</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;program&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">2000</span><span class="p">,</span> <span class="mi">960</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;syntax&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="mi">950</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;ado&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">3000</span><span class="p">,</span> <span class="mi">550</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;do&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="mi">3000</span><span class="p">,</span> <span class="mi">550</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;command&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">1900</span><span class="p">,</span> <span class="mi">150</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;queue&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="mi">1900</span><span class="p">,</span> <span class="mi">150</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;results&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;dta&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">475</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">1900</span><span class="p">,</span> <span class="o">-</span><span class="mi">475</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;excel&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">4000</span><span class="p">,</span> <span class="o">-</span><span class="mi">475</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;word&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="mi">1900</span><span class="p">,</span> <span class="o">-</span><span class="mi">475</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;html&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="mi">4000</span><span class="p">,</span> <span class="o">-</span><span class="mi">475</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;publish&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">950</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s2">&quot;program&quot;</span><span class="p">,</span> <span class="s2">&quot;ado&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;syntax&quot;</span><span class="p">,</span> <span class="s2">&quot;do&quot;</span><span class="p">)])</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s2">&quot;ado&quot;</span><span class="p">,</span> <span class="s2">&quot;command&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;do&quot;</span><span class="p">,</span> <span class="s2">&quot;queue&quot;</span><span class="p">)])</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s2">&quot;command&quot;</span><span class="p">,</span> <span class="s2">&quot;results&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;queue&quot;</span><span class="p">,</span> <span class="s2">&quot;results&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;results&quot;</span><span class="p">,</span> <span class="s2">&quot;excel&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;results&quot;</span><span class="p">,</span> <span class="s2">&quot;word&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;results&quot;</span><span class="p">,</span> <span class="s2">&quot;html&quot;</span><span class="p">)])</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s2">&quot;results&quot;</span><span class="p">,</span> <span class="s2">&quot;dta&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;results&quot;</span><span class="p">,</span> <span class="s2">&quot;log&quot;</span><span class="p">)])</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s2">&quot;dta&quot;</span><span class="p">,</span> <span class="s2">&quot;publish&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">,</span> <span class="s2">&quot;publish&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;excel&quot;</span><span class="p">,</span> <span class="s2">&quot;publish&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;word&quot;</span><span class="p">,</span> <span class="s2">&quot;publish&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;html&quot;</span><span class="p">,</span> <span class="s2">&quot;publish&quot;</span><span class="p">)])</span>
+
+<span class="n">pos</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">get_node_attributes</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="s1">&#39;pos&#39;</span><span class="p">)</span>
+<span class="n">node_colors</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;lightblue&quot;</span> <span class="k">if</span> <span class="n">node</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;results&quot;</span><span class="p">,</span> <span class="s2">&quot;excel&quot;</span><span class="p">,</span> <span class="s2">&quot;publish&quot;</span><span class="p">]</span> <span class="k">else</span> <span class="s2">&quot;lightpink&quot;</span> <span class="k">if</span> <span class="n">node</span> <span class="o">==</span> <span class="s2">&quot;excel&quot;</span> <span class="k">else</span> <span class="s2">&quot;lavender&quot;</span> <span class="k">if</span> <span class="n">node</span> <span class="o">==</span> <span class="s2">&quot;results&quot;</span> <span class="k">else</span> <span class="s2">&quot;lightgreen&quot;</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">()]</span>
+
+<span class="n">nx</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">with_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">font_weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span> <span class="n">node_size</span><span class="o">=</span><span class="mi">4500</span><span class="p">,</span> <span class="n">node_color</span><span class="o">=</span><span class="n">node_colors</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">collections</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_edgecolor</span><span class="p">(</span><span class="s2">&quot;#000000&quot;</span><span class="p">)</span>  <span class="c1"># Set edge color to black for better contrast</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="o">-</span><span class="mi">5000</span><span class="p">,</span> <span class="mi">5000</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="o">-</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/28ce096c7f7f5b6140101fec775e48d05afbb060895757e9e1d5e22c42b94659.png" src="_images/28ce096c7f7f5b6140101fec775e48d05afbb060895757e9e1d5e22c42b94659.png" />
+</div>
+</div>
+<section id="stata-programming">
+<h2>5.0 Stata Programming<a class="headerlink" href="#stata-programming" title="Permalink to this heading">#</a></h2>
+<section id="basic">
+<h3>5.0.1 Basic<a class="headerlink" href="#basic" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Installation of Stata BE/SE/MP</p></li>
+<li><p>Use of <code class="docutils literal notranslate"><span class="pre">.do</span></code> files vs. Stata results window</p></li>
+<li><p>Outputting results</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">.xlsx</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.log</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.docx</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.dta</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.html</span></code></p></li>
+</ul>
+</li>
+<li><p>Syntax</p></li>
+<li><p>Third-party Programs</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">which</span></code> command</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="intermediate">
+<h3>5.0.2 Intermediate<a class="headerlink" href="#intermediate" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Remote <code class="docutils literal notranslate"><span class="pre">.do</span></code>, <code class="docutils literal notranslate"><span class="pre">.ado</span></code>, <code class="docutils literal notranslate"><span class="pre">.csv</span></code>, etc. file management</p></li>
+<li><p>GitHub repo vs. local installation of Third-party programs (<code class="docutils literal notranslate"><span class="pre">.ado</span></code>)</p></li>
+<li><p>Creating websites (<code class="docutils literal notranslate"><span class="pre">.html</span></code>)</p></li>
+<li><p>Open science (sharing URLs with collaborators)</p></li>
+</ul>
+</section>
+<section id="advanced">
+<h3>5.0.3 Advanced<a class="headerlink" href="#advanced" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Use of a command line (e.g. Terminal, Visual Studio Code)</p></li>
+<li><p>Running Stata in batch mode</p>
+<ul>
+<li><p>Ability to run Python and R in batch mode</p></li>
+</ul>
+</li>
+<li><p>Private vs. Public repos</p></li>
+<li><p>Security, Privacy, Confidentiality, and HIPAA Compliance</p></li>
+</ul>
+</section>
+</section>
+<section id="macros">
+<h2>5.1 Macros<a class="headerlink" href="#macros" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>System</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">creturn</span> <span class="pre">list</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ereturn</span> <span class="pre">list</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">list</span></code></p></li>
+</ul>
+</li>
+<li><p>Local</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">local</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">global</span></code></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="loops">
+<h2>5.3 Loops<a class="headerlink" href="#loops" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">foreach</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">forvalues</span></code></p></li>
+</ul>
+</section>
+<section id="file-management">
+<h2>5.4 File Management<a class="headerlink" href="#file-management" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">postfile</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">excel</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">merge</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">syntax</span> <span class="pre">varlist</span> <span class="pre">[if],</span> <span class="pre">[optional]</span> <span class="pre">mandatory</span></code></p></li>
+</ul>
 <p>Visualizing data</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">capture log close</span> _all
 <span class="k">log</span> using creturn_list<span class="m">.</span>log,<span class="k"> replace</span> 
@@ -505,6 +643,7 @@ stcolor
 . 
 </pre></div>
 </div>
+</section>
 <section id="histogram">
 <h2>5.1  histogram<a class="headerlink" href="#histogram" title="Permalink to this heading">#</a></h2>
 <p>Univariable: distribution</p>
@@ -1134,7 +1273,7 @@ figure1 age abo, title(<span class="s">&quot;Age at Transplant&quot;</span>) xti
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">6. Review of Weeks 1-5</p>
+        <p class="prev-next-title">6. Visualizing data</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1156,6 +1295,15 @@ figure1 age abo, title(<span class="s">&quot;Age at Transplant&quot;</span>) xti
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stata-programming">5.0 Stata Programming</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basic">5.0.1 Basic</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intermediate">5.0.2 Intermediate</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced">5.0.3 Advanced</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#macros">5.1 Macros</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loops">5.3 Loops</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#file-management">5.4 File Management</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#histogram">5.1  histogram</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#density">5.1.1 density</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fraction">5.1.2 fraction</a></li>
