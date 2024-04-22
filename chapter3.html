@@ -456,6 +456,12 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expand">3.3.57 <code class="docutils literal notranslate"><span class="pre">expand</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#local-extended">3.3.58 <code class="docutils literal notranslate"><span class="pre">local</span></code>, extended</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#global-vs-local">3.3.59 <code class="docutils literal notranslate"><span class="pre">global</span></code> vs. <code class="docutils literal notranslate"><span class="pre">local</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histogram">3.3.60 <code class="docutils literal notranslate"><span class="pre">histogram</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#twoway">3.3.61 <code class="docutils literal notranslate"><span class="pre">twoway</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#min-max">3.3.62 <code class="docutils literal notranslate"><span class="pre">min</span></code>, <code class="docutils literal notranslate"><span class="pre">max</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#strings">3.3.63 strings</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#special-numeric-variables-dates-times">3.3.64 special numeric variables: dates &amp; times</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cond">3.3.65 <code class="docutils literal notranslate"><span class="pre">cond</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab">3.4 Lab</a></li>
@@ -2518,6 +2524,292 @@ labelval abo, val(<span class="m">3</span>)
 </pre></div>
 </div>
 </section>
+<section id="histogram">
+<h3>3.3.60 <code class="docutils literal notranslate"><span class="pre">histogram</span></code><a class="headerlink" href="#histogram" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//histograms</span>
+<span class="k">use</span> transplants,<span class="k"> clear</span>
+
+
+<span class="c1">//basic histogram (density histogram)</span>
+<span class="k">hist</span> bmi
+
+<span class="c1">//specify that each bar of the histogram covers an interval of two units</span>
+<span class="k">hist</span> bmi, width(<span class="m">2</span>)
+
+<span class="c1">//specify age interval of two years, and start the graph at age 0</span>
+<span class="k">hist</span> bmi, width(<span class="m">2</span>) start(<span class="m">0</span>)
+
+<span class="c1">//specify that we want ten bars</span>
+<span class="k">hist</span> bmi, bin(<span class="m">10</span>)
+
+<span class="c1">//a *density* histogram (the default)</span>
+<span class="k">hist</span> rec_wgt_kg, width(<span class="m">2</span>)
+<span class="k">hist</span> rec_wgt_kg, width(<span class="m">10</span>)
+
+<span class="c1">//specify that we want a *fraction* histogram (height of 0.1=10% of all values)</span>
+<span class="k">hist</span> rec_wgt_kg, fraction width(<span class="m">2</span>)
+<span class="k">hist</span> rec_wgt_kg, fraction width(<span class="m">10</span>)
+
+<span class="c1">//a *percent* histogram (height of 10 = 10% of all values)</span>
+<span class="k">hist</span> rec_wgt_kg, percent width(<span class="m">2</span>)
+<span class="k">hist</span> rec_wgt_kg, percent width(<span class="m">10</span>)
+
+<span class="c1">//a *frequency* histogram (height = # of records represented by one bar)</span>
+<span class="k">hist</span> rec_wgt_kg, freq width(<span class="m">2</span>)
+<span class="k">hist</span> rec_wgt_kg, freq width(<span class="m">10</span>)
+
+<span class="c1">//illustrating hist, discrete discrete</span>
+<span class="k">hist</span> dx <span class="c1">//each bar is &lt; 1 diagnosis - histogram looks weird</span>
+<span class="k">hist</span> dx, discrete <span class="c1">//1 bar per diagnosis</span>
+
+
+
+<span class="c1">//random number generation</span>
+<span class="c1">//setup</span>
+<span class="k">clear</span>
+<span class="k">set</span> obs <span class="m">1000</span>
+<span class="k">gen n</span> = _n
+
+<span class="c1">//random numbers - uniform distribution</span>
+<span class="k">disp</span> <span class="nf">runiform</span>()  <span class="c1">//displays random number uniformly distributed between 0 and 1</span>
+<span class="k">disp</span> <span class="nf">runiform</span>()
+<span class="k">disp</span> <span class="nf">runiform</span>()
+
+<span class="k">gen</span> unif1 = <span class="nf">runiform</span>()
+<span class="k">hist</span> unif1, width(.<span class="m">05</span>) start(<span class="m">0</span>) freq
+
+<span class="c1">//setting the random number seed</span>
+<span class="k">set</span> seed <span class="m">40301</span>
+<span class="c1">//should be . 43463916</span>
+<span class="k">disp</span> <span class="nf">runiform</span>() 
+
+<span class="c1">//random number between 0 and 10</span>
+<span class="k">gen</span> unif10 = <span class="nf">runiform</span>()<span class="o">*</span><span class="m">10</span>
+<span class="k">hist</span> unif10, width(<span class="m">1</span>) start(<span class="m">0</span>) freq
+
+<span class="c1">//random number between 0 and 10</span>
+<span class="k">gen</span> unif15 = <span class="nf">runiform</span>()<span class="o">*</span><span class="m">10+5</span>
+<span class="k">hist</span> unif15, width(<span class="m">1</span>) start(<span class="m">0</span>) freq
+
+<span class="k">gen</span> norm1 = <span class="nf">rnormal</span>()
+<span class="k">hist</span> norm1, width(<span class="m">0.5</span>) freq
+
+<span class="c1">//mean 5, SD 1</span>
+<span class="k">gen</span> norm5 = <span class="nf">rnormal</span>(<span class="m">5</span>)
+<span class="k">hist</span> norm5, width(<span class="m">0.5</span>) start(<span class="m">0</span>) freq
+
+<span class="c1">//mean 20, SD 4</span>
+<span class="k">gen</span> norm20 = <span class="nf">rnormal</span>(<span class="m">20</span>,<span class="m">3</span>)
+<span class="k">hist</span> norm20, width(<span class="m">1</span>) start(<span class="m">0</span>) freq
+
+<span class="c1">//binomial</span>
+<span class="k">gen</span> binom = <span class="nf">rbinomial</span>(<span class="m">10</span>,<span class="m">0.5</span>)
+<span class="k">hist</span> binom, discrete percent
+</pre></div>
+</div>
+</section>
+<section id="twoway">
+<h3>3.3.61 <code class="docutils literal notranslate"><span class="pre">twoway</span></code><a class="headerlink" href="#twoway" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//scatter plots</span>
+<span class="k">use</span> donors,<span class="k"> clear</span>
+<span class="k">graph twoway scatter</span> don_wgt don_hgt
+
+<span class="c1">//abbreviation</span>
+<span class="k">twoway scatter</span> don_wgt don_hgt
+<span class="k">tw sc</span> don_wgt don_hgt
+
+<span class="c1">//line plots</span>
+<span class="k">use</span> transplants,<span class="k"> clear</span>
+<span class="k">collapse</span> (mean) don_ecd,<span class="k"> by</span>(age) <span class="c1">//ececd = 0 or 1, so for each age get </span>
+<span class="c1">//proportion of transplants that were ecd</span>
+<span class="k">graph twoway line</span> don_ecd age
+
+
+
+<span class="c1">//math functions</span>
+
+<span class="c1">//setup for math functions</span>
+<span class="k">clear</span>
+<span class="k">set</span> obs <span class="m">1000</span>
+<span class="k">gen n</span> = _n<span class="o">/</span><span class="m">100</span> <span class="o">-</span> <span class="m">5</span>
+
+<span class="c1">//rounding method 1: floor</span>
+<span class="k">disp</span> <span class="nf">floor</span>(<span class="o">-</span><span class="m">0.3</span>)
+<span class="k">disp</span> <span class="nf">floor</span>(<span class="m">4.5</span>)
+<span class="k">disp</span> <span class="nf">floor</span>(<span class="m">8.9</span>)
+<span class="k">gen</span> nfloor = <span class="nf">floor</span>(n)
+<span class="k">graph twoway line</span> nfloor<span class="k"> n</span>
+
+<span class="c1">//overlay the function y=x</span>
+<span class="k">graph twoway line</span> nfloor<span class="k"> n</span> || function y=x,<span class="k"> range</span>(n)
+
+<span class="c1">//rounding method 2: ceil</span>
+<span class="k">disp</span> <span class="nf">ceil</span>(<span class="o">-</span><span class="m">0.3</span>)
+<span class="k">disp</span> <span class="nf">ceil</span>(<span class="m">4.5</span>)
+<span class="k">disp</span> <span class="nf">ceil</span>(<span class="m">8.9</span>)
+<span class="k">gen</span> nceil = <span class="nf">ceil</span>(n)
+<span class="k">local</span> DIAG || function y=x,<span class="k"> range</span>(n)
+<span class="k">graph twoway line</span> nceil<span class="k"> n</span> <span class="nv">`DIAG&#39;</span>
+
+<span class="c1">//rounding method 3: int</span>
+<span class="k">disp</span> <span class="nf">int</span>(<span class="o">-</span><span class="m">0.3</span>)
+<span class="k">disp</span> <span class="nf">int</span>(<span class="m">4.5</span>)
+<span class="k">disp</span> <span class="nf">int</span>(<span class="m">8.9</span>)
+<span class="k">gen</span> nint = <span class="nf">int</span>(n)
+<span class="k">graph twoway line</span> nint<span class="k"> n</span> <span class="nv">`DIAG&#39;</span>
+
+<span class="c1">//rounding method 4: round</span>
+<span class="k">disp</span> <span class="nf">round</span>(<span class="o">-</span><span class="m">0.3</span>)
+<span class="k">disp</span> <span class="nf">round</span>(<span class="m">4.5</span>)
+<span class="k">disp</span> <span class="nf">round</span>(<span class="m">8.9</span>)
+<span class="k">gen</span> nround = <span class="nf">round</span>(n)
+<span class="k">graph twoway line</span> nround<span class="k"> n</span> <span class="nv">`DIAG&#39;</span>
+
+<span class="c1">//using round to round to something other than nearest integer</span>
+<span class="k">disp</span> <span class="nf">round</span>(<span class="o">-</span><span class="m">0.32</span>, <span class="m">0.1</span>)  <span class="c1">//round to nearest 0.1</span>
+<span class="k">disp</span> <span class="nf">round</span>(<span class="m">4.5</span>, <span class="m">2</span>)   <span class="c1">//round to nearest 2</span>
+<span class="k">disp</span> <span class="nf">round</span>(<span class="m">8.9</span>, <span class="m">10</span>)  <span class="c1">//round to nearest 10</span>
+<span class="k">gen</span> round2 = <span class="nf">round</span>(n,<span class="m">2</span>)
+<span class="k">twoway line</span> round2<span class="k"> n</span> <span class="nv">`DIAG&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="min-max">
+<h3>3.3.62 <code class="docutils literal notranslate"><span class="pre">min</span></code>, <code class="docutils literal notranslate"><span class="pre">max</span></code><a class="headerlink" href="#min-max" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//min and max</span>
+<span class="k">disp</span> <span class="nf">min</span>(<span class="m">8</span>,<span class="m">6</span>,<span class="m">7</span>,<span class="m">5</span>,<span class="m">3</span>,<span class="m">0</span>,<span class="m">9</span>) <span class="c1">//display minimum value</span>
+<span class="k">disp</span> <span class="nf">max</span>(<span class="m">8</span>,<span class="m">6</span>,<span class="m">7</span>,<span class="m">5</span>,<span class="m">3</span>,<span class="m">0</span>,<span class="m">9</span>) <span class="c1">//display maximum value</span>
+
+<span class="k">use</span> ctr_yr<span class="k"> if</span> yr<span class="o">&gt;=</span><span class="m">2015</span>,<span class="k"> clear</span>
+<span class="k">reshape</span> wide<span class="k"> n</span>, i(ctr_id) j(yr)
+<span class="k">gen</span> max_vol = <span class="nf">max</span>(n2015,n2016,n2017, n2018, n2019) <span class="c1">//max of all variables</span>
+<span class="k">gen</span> min_vol = <span class="nf">min</span>(n2015,n2016,n2017, n2018, n2019) <span class="c1">//min of all variables</span>
+
+<span class="c1">//other math functions</span>
+<span class="k">disp</span> <span class="nf">exp</span>(<span class="m">1</span>)  <span class="c1">//exponent. e^1 = e.</span>
+<span class="k">disp</span> <span class="nf">ln</span>(<span class="m">20</span>)  <span class="c1">//log of 20 ~ 3</span>
+<span class="k">disp</span> <span class="nf">sqrt</span>(<span class="m">729</span>)  <span class="c1">//27</span>
+
+<span class="k">disp</span> <span class="nf">abs</span>(<span class="o">-</span><span class="m">6</span>)  <span class="c1">//absolute value</span>
+<span class="k">disp</span> <span class="nf">mod</span>(<span class="m">529</span>, <span class="m">10</span>) <span class="c1">//modulus (remainder)</span>
+<span class="k">disp</span> <span class="nf">c</span>(pi)  <span class="c1">//constant pi (for illustration of sine)</span>
+<span class="k">disp</span> <span class="nf">sin</span>(<span class="nf">c</span>(pi)<span class="o">/</span><span class="m">2</span>) <span class="c1">//sine function</span>
+</pre></div>
+</div>
+</section>
+<section id="strings">
+<h3>3.3.63 strings<a class="headerlink" href="#strings" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>//string functions
+use transplants, clear
+list extended_dgn in 1/5, clean
+
+disp word(&quot;Hello, is there anybody in there?&quot;, 4)
+list extended_dgn if word(ext, 5) != &quot;&quot;, clean noobs
+disp strlen(&quot;Same as it ever was&quot;)
+list extended_dgn if strlen(ext)&lt; 6, clean
+assert regexm(&quot;Earth&quot;, &quot;art&quot;)
+assert !regexm(&quot;team&quot;, &quot;I&quot;)
+
+tab ext if regexm(ext, &quot;HTN&quot;)
+list ext if regexm(ext, &quot;^A&quot;) 
+//starts with A
+
+list ext if regexm(ext, &quot;X$&quot;) 
+//ends with X
+
+tab ext if regexm(ext, &quot;HIV.*Y&quot;) 
+//contains &quot;HIV&quot;, then some other stuff, then Y
+
+
+</pre></div>
+</div>
+</section>
+<section id="special-numeric-variables-dates-times">
+<h3>3.3.64 special numeric variables: dates &amp; times<a class="headerlink" href="#special-numeric-variables-dates-times" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//date and time functions</span>
+<span class="c1">//review of number formats</span>
+<span class="k">disp</span> <span class="nx">%3.2f</span> <span class="nf">exp</span>(<span class="m">1</span>)
+<span class="k">disp</span> <span class="nx">%4.1f</span> <span class="m">3.14159</span>
+
+<span class="c1">//examples of the %td format for dates (days since 1/1/1960)</span>
+<span class="k">disp</span> <span class="nx">%td</span> <span class="m">19400</span>
+<span class="k">disp</span> <span class="nx">%td</span> <span class="m">366</span>
+<span class="k">disp</span> <span class="nx">%td</span> <span class="o">-</span><span class="m">5</span>
+
+<span class="c1">//example of %tc format for times (milliseconds since 1/1/1960)</span>
+<span class="k">disp</span> <span class="nx">%tc</span> <span class="m">4</span><span class="o">*</span><span class="m">365.25</span><span class="o">*</span><span class="m">24</span><span class="o">*</span><span class="m">60</span><span class="o">*</span><span class="m">60</span><span class="o">*</span><span class="m">1000</span>
+
+<span class="c1">//doing math on Stata dates</span>
+<span class="k">use</span> transplants,<span class="k"> clear</span>
+<span class="k">gen</span> oneweek = transplant_date <span class="o">+</span><span class="m">7</span>
+<span class="k">format</span> <span class="nx">%td</span> oneweek
+<span class="k">list</span> transplant_date  oneweek<span class="k"> in</span> <span class="m">1</span><span class="o">/</span><span class="m">3</span>
+
+<span class="c1">//date and time functions</span>
+<span class="c1">//td() function to give integer date for a given calendar date</span>
+<span class="k">disp</span> <span class="nf">td</span>(04jul1976)
+
+<span class="c1">//Assignment 2 due date (time travel?)</span>
+<span class="k">disp</span> <span class="nf">td</span>(5may2021) 
+
+<span class="c1">//mdy() function to give integer date for a given month/day/year</span>
+<span class="k">disp</span> <span class="nf">mdy</span>(<span class="m">7</span>,<span class="m">4</span>,<span class="m">1976</span>)
+
+<span class="c1">//Assignment 2 due date</span>
+<span class="k">disp</span> <span class="nf">mdy</span>(<span class="m">5</span>, <span class="m">5</span>, <span class="m">2021</span>) 
+
+
+
+
+<span class="c1">//date() function to convert strings to dates</span>
+<span class="c1">//Woodstock festival starts</span>
+<span class="k">disp</span> <span class="nf">date</span>(<span class="s">&quot;August 15, 1969&quot;</span>, <span class="s">&quot;MDY&quot;</span>)
+<span class="c1">//Next perihelion of Halley&#39;s comet</span>
+<span class="k">disp</span> <span class="nf">date</span>(<span class="s">&quot;2061 28 July&quot;</span>, <span class="s">&quot;YDM&quot;</span>)
+
+<span class="c1">//mdyhms() function to get a date and time</span>
+<span class="k">disp</span> <span class="nx">%15.0f</span> <span class="nf">mdyhms</span>(<span class="m">1</span>,<span class="m">1</span>,<span class="m">2011</span>,<span class="m">5</span>,<span class="m">15</span>,<span class="m">00</span>)
+
+<span class="c1">//Summer solstice 2019 (UTC)</span>
+<span class="k">disp</span> <span class="nx">%15.0f</span> <span class="nf">Clock</span>(<span class="s">&quot;June 20, 2021 23:31:00&quot;</span>, <span class="s">&quot;MDYhms&quot;</span>)
+
+<span class="k">disp</span> <span class="s">&quot;</span><span class="vg">$S_DATE</span><span class="s">&quot;</span>
+<span class="k">disp</span> <span class="s">&quot;</span><span class="vg">$S_TIME</span><span class="s">&quot;</span>
+<span class="c1">//using the Clock() function to time a command</span>
+<span class="k">local</span> start = <span class="nf">Clock</span>(<span class="s">&quot;</span><span class="vg">$S_DATE</span><span class="s"> </span><span class="vg">$S_TIME</span><span class="s">&quot;</span>, <span class="s">&quot;DMYhms&quot;</span>)
+
+<span class="c1">//using timer to time a command</span>
+<span class="k">timer clear</span>
+<span class="k">timer on</span> <span class="m">37</span>
+
+<span class="c1">//some code to waste time</span>
+<span class="k">use</span> transplants,<span class="k"> clear</span>
+<span class="k">quietly roccomp</span> gender bmi transplant_date  wait_yrs
+<span class="k">local end</span> = <span class="nf">Clock</span>(<span class="s">&quot;</span><span class="vg">$S_DATE</span><span class="s"> </span><span class="vg">$S_TIME</span><span class="s">&quot;</span>, <span class="s">&quot;DMYhms&quot;</span>)
+<span class="k">timer</span> off <span class="m">37</span>
+
+<span class="k">disp</span> (<span class="nv">`end&#39;</span><span class="o">-</span><span class="nv">`start&#39;</span>)<span class="o">/</span><span class="m">1000</span> <span class="s">&quot; seconds&quot;</span>
+<span class="k">timer list</span>
+<span class="k">disp</span> <span class="s">&quot;More precisely, &quot;</span> <span class="nf">r</span>(t37) <span class="s">&quot; seconds&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="cond">
+<h3>3.3.65 <code class="docutils literal notranslate"><span class="pre">cond</span></code><a class="headerlink" href="#cond" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//cond</span>
+<span class="k">capture program drop</span> datasize
+<span class="k">program</span> define datasize
+<span class="k">    disp</span> _c <span class="s">&quot;The dataset is &quot;</span>
+<span class="k">    disp</span> <span class="nf">cond</span>(_N<span class="o">&gt;=</span><span class="m">1000</span>, <span class="s">&quot;big&quot;</span>, <span class="s">&quot;small&quot;</span>)
+<span class="k">end</span>
+
+datasize
+
+<span class="k">gen</span> m_f = <span class="nf">cond</span>(gender<span class="o">==</span><span class="m">1</span>, <span class="s">&quot;Female&quot;</span>, <span class="s">&quot;Male&quot;</span>)
+<span class="k">tab</span> gender m_f
+</pre></div>
+</div>
+</section>
 </section>
 <section id="lab">
 <h2>3.4 Lab<a class="headerlink" href="#lab" title="Permalink to this heading">#</a></h2>
@@ -2815,6 +3107,12 @@ putexcel C3=<span class="s">&quot;XX.X&quot;</span>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expand">3.3.57 <code class="docutils literal notranslate"><span class="pre">expand</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#local-extended">3.3.58 <code class="docutils literal notranslate"><span class="pre">local</span></code>, extended</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#global-vs-local">3.3.59 <code class="docutils literal notranslate"><span class="pre">global</span></code> vs. <code class="docutils literal notranslate"><span class="pre">local</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histogram">3.3.60 <code class="docutils literal notranslate"><span class="pre">histogram</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#twoway">3.3.61 <code class="docutils literal notranslate"><span class="pre">twoway</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#min-max">3.3.62 <code class="docutils literal notranslate"><span class="pre">min</span></code>, <code class="docutils literal notranslate"><span class="pre">max</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#strings">3.3.63 strings</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#special-numeric-variables-dates-times">3.3.64 special numeric variables: dates &amp; times</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cond">3.3.65 <code class="docutils literal notranslate"><span class="pre">cond</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab">3.4 Lab</a></li>
