@@ -462,6 +462,8 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#strings">3.3.63 strings</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#special-numeric-variables-dates-times">3.3.64 special numeric variables: dates &amp; times</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cond">3.3.65 <code class="docutils literal notranslate"><span class="pre">cond</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nested-macros">3.3.70 Nested Macros</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#graph">3.3.71 <code class="docutils literal notranslate"><span class="pre">graph</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab">3.4 Lab</a></li>
@@ -2810,6 +2812,322 @@ datasize
 </pre></div>
 </div>
 </section>
+<section id="nested-macros">
+<h3>3.3.70 Nested Macros<a class="headerlink" href="#nested-macros" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//example: nested macros</span>
+<span class="k">local</span> a6 = <span class="m">35</span>
+<span class="k">local</span> b = <span class="m">6</span>
+<span class="k">disp</span> <span class="nv">`a`b&#39;&#39;</span>  <span class="c1">//get 35</span>
+
+
+<span class="c1">//more complicated example</span>
+<span class="k">use</span> transplants,<span class="k"> clear</span>
+<span class="k">local</span> vars age bmi prev_ki
+<span class="k">regress</span> peak_pra <span class="nv">`vars&#39;</span>
+<span class="k">foreach</span> v of<span class="k"> varlist</span> <span class="nv">`vars&#39;</span> {
+<span class="k">    local</span> beta_<span class="nv">`v&#39;</span> = _b[<span class="nv">`v&#39;</span>]
+}
+<span class="c1">//other stuff</span>
+<span class="k">foreach</span> v of<span class="k"> varlist</span> <span class="nv">`vars&#39;</span> {
+<span class="k">    disp</span> <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">&quot;</span> _col(<span class="m">10</span>) <span class="nx">%3.2f</span> <span class="nv">`beta_`v&#39;&#39;</span> 
+}
+
+<span class="c1">//even more complicated example</span>
+<span class="k">local</span> vars age bmi prev_ki
+<span class="k">regress</span> peak_pra <span class="nv">`vars&#39;</span><span class="k"> if</span> gender<span class="o">==</span><span class="m">0</span>  <span class="c1">//get coefficients for males</span>
+<span class="k">foreach</span> v of<span class="k"> varlist</span> <span class="nv">`vars&#39;</span> {
+<span class="k">    local</span> beta_<span class="nv">`v&#39;</span>_m = _b[<span class="nv">`v&#39;</span>]
+}
+<span class="k">regress</span> peak_pra <span class="nv">`vars&#39;</span><span class="k"> if</span> gender<span class="o">==</span><span class="m">1</span>
+<span class="k">foreach</span> v of<span class="k"> varlist</span> <span class="nv">`vars&#39;</span> {
+<span class="k">    local</span> beta_<span class="nv">`v&#39;</span>_f = _b[<span class="nv">`v&#39;</span>]
+}
+<span class="k">local</span> header = <span class="m">1</span>
+<span class="k">foreach</span> v of<span class="k"> varlist</span> <span class="nv">`vars&#39;</span> {
+<span class="k">    if</span> <span class="nv">`header&#39;</span> <span class="o">==</span> <span class="m">1</span> {
+<span class="k">        display</span> <span class="s">&quot;Variable&quot;</span> _col(<span class="m">10</span>) <span class="s">&quot;Overall&quot;</span> _col(<span class="m">20</span>) <span class="s">&quot;Male&quot;</span> _col(<span class="m">30</span>) <span class="s">&quot;Female&quot;</span>
+<span class="k">        local</span> header = <span class="m">0</span>
+    }
+<span class="k">    disp</span> <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">&quot;</span> _col(<span class="m">10</span>) <span class="nx">%3.2f</span> <span class="nv">`beta_`v&#39;&#39;</span> _col(<span class="m">20</span>) <span class="nx">%3.2f</span> <span class="nv">`beta_`v&#39;_m&#39;</span> _c
+<span class="k">    disp</span> _col(<span class="m">30</span>) <span class="nx">%3.2f</span> <span class="nv">`beta_`v&#39;_f&#39;</span>
+}
+</pre></div>
+</div>
+</section>
+<section id="graph">
+<h3>3.3.71 <code class="docutils literal notranslate"><span class="pre">graph</span></code><a class="headerlink" href="#graph" title="Permalink to this heading">#</a></h3>
+<p>In this script, we’re working with data from transplant records, focusing particularly on the gender distribution and type of transplants over the years. Let’s break down the script:</p>
+<ol class="arabic simple">
+<li><p>Data Preparation:</p></li>
+</ol>
+<ul class="simple">
+<li><p>You begin by loading a dataset named transplants and immediately cleaning it up by generating year information and preparing gender-related and transplant type (ECD vs. SCD) variables.</p></li>
+<li><p>You collapse the data to get yearly sums of total transplants, number of ECD transplants, and number of female transplants.</p></li>
+<li><p>From these sums, you calculate the number of SCD transplants and male transplants.</p></li>
+<li><p>This dataset is then saved for later use.</p></li>
+</ul>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">capture graph drop</span> _all
+
+<span class="c1">//prep work:</span>
+<span class="c1">//make a dataset of # SCD and ECD transplants for each year</span>
+<span class="k">use</span> transplants,<span class="k"> clear</span>
+<span class="k">gen</span> int yr = <span class="nf">year</span>(transplant_date)  <span class="c1">//year of transplant</span>
+<span class="k">gen</span> byte<span class="k"> n</span>=<span class="m">1</span> 
+<span class="k">rename</span> gender female <span class="c1">//total # female transplants</span>
+<span class="c1">//n = total # records; sum(ecd) = # SCD transplants; sum(female) = # females</span>
+<span class="k">rename</span> don_ecd ecd
+<span class="k">collapse</span> (sum)<span class="k"> n</span> ecd female,<span class="k"> by</span>(yr) 
+<span class="k">gen</span> int scd =<span class="k"> n</span><span class="o">-</span>ecd
+<span class="k">gen</span> int male =<span class="k"> n</span><span class="o">-</span>female
+<span class="k">save</span> tx_yr,<span class="k"> replace</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Basic Graphing:</p></li>
+</ol>
+<ul class="simple">
+<li><p>You create various simple graphs like line, connected, area, bar, and scatter plots to visualize the data. Each type of graph highlights different aspects of the data, such as trends over time or relationships between variables.</p></li>
+<li><p>Function plots with specified ranges and combinations of different plots are also included to showcase more advanced graphing capabilities.</p></li>
+</ul>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//show various kinds of graph in their simplest form</span>
+<span class="k">graph twoway line n</span> yr  <span class="c1">//line graph</span>
+<span class="k">graph twoway</span> connected<span class="k"> n</span> yr  <span class="c1">//connected graph</span>
+<span class="k">graph twoway</span> area<span class="k"> n</span> yr  <span class="c1">//area graph</span>
+<span class="k">graph twoway</span> bar<span class="k"> n</span> yr  <span class="c1">//bar graph</span>
+<span class="k">graph twoway scatter</span> ecd scd  <span class="c1">//scatter plot</span>
+<span class="k">graph twoway</span> function y=x<span class="o">^</span><span class="m">2+2</span>  <span class="c1">//function</span>
+
+
+<span class="c1">//range() option for function</span>
+<span class="k">graph twoway</span> function y=x<span class="o">^</span><span class="m">2+2</span>,<span class="k"> range</span> (<span class="m">1</span> <span class="m">10</span>)  <span class="c1">//function</span>
+<span class="k">graph twoway</span> function y=x<span class="o">^</span><span class="m">2+2</span>,<span class="k"> range</span>(yr)
+
+<span class="c1">//graphing more than one Y variable</span>
+<span class="k">graph twoway line</span> ecd scd yr
+<span class="k">graph twoway line n</span> ecd scd yr
+<span class="k">graph twoway</span> area ecd scd yr <span class="c1">//ecd area is hidden by scd area</span>
+<span class="k">graph twoway</span> area scd ecd yr <span class="c1">//now ecd area shows, since it&#39;s drawn second</span>
+<span class="k">graph twoway</span> bar  scd ecd yr 
+
+<span class="c1">//combining several plots</span>
+<span class="k">graph twoway line n</span> yr || connected male female yr
+
+<span class="c1">//another way of writing the same thing, using /// to continue the same</span>
+<span class="c1">//command on two lines</span>
+<span class="k">graph twoway line n</span> yr <span class="cs">///</span>
+     || connected male female yr
+
+<span class="c1">//overlay observed data with linear regression fit</span>
+<span class="k">regress n</span> yr
+<span class="k">graph twoway line n</span> yr <span class="cs">///</span>
+  || function y=_b[_cons]<span class="o">+</span>_b[yr]<span class="o">*</span>x,<span class="k"> range</span>(yr)
+<span class="k">graph copy</span> Graph slide51
+
+
+<span class="c1">//illustrate that you can combine lots of plots in one graph</span>
+<span class="k">graph twoway line</span> female yr <span class="cs">///</span>
+  ||<span class="k"> line</span> male yr <span class="cs">///</span>
+  ||<span class="k"> line</span> scd yr <span class="cs">///</span>
+  ||<span class="k"> line</span> ecd yr <span class="cs">///</span>
+  ||<span class="k"> line n</span> yr
+
+<span class="c1">//of course, you could make the same graph with</span>
+<span class="c1">//graph twoway line female male scd ecd n yr</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>Advanced Graphing Features:</p></li>
+</ol>
+<ul class="simple">
+<li><p>Further customization is applied using options like yscale, xscale, and graph labels to enhance the readability and presentation of the graphs. These options adjust the axis ranges, orientations, and legends, helping to clarify the data presentation for different audiences.</p></li>
+<li><p>Examples include log scaling, reversing axes, hiding axes, custom labels, and legend manipulations.</p></li>
+</ul>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//xscale/yscale</span>
+<span class="k">graph twoway line n</span> yr, yscale(range(<span class="m">0</span>)) <span class="c1">//range of Y axis includes zero</span>
+<span class="k">graph twoway line n</span> yr, yscale(range(<span class="m">0</span> <span class="m">700</span>)) <span class="c1">//Y axis range includes 0 and 700</span>
+
+<span class="c1">//specify ranges for both X and Y axes</span>
+<span class="k">graph twoway line n</span> yr, xscale(range(<span class="m">2050</span>)) 
+
+<span class="k">graph twoway line</span> female yr, yscale(log) <span class="c1">//write Y axis on a log scale</span>
+<span class="k">graph twoway line</span> female yr, xscale(reverse) <span class="c1">//reverse the X axis - mirror image</span>
+<span class="k">graph twoway line</span> female yr, xscale(off) yscale(off) <span class="c1">//suppress axes entirely</span>
+
+<span class="c1">//combining several scale options</span>
+<span class="c1">//this graph doesn&#39;t look great. For the variables that we&#39;re using for this</span>
+<span class="c1">//exercise, the default Stata axes look pretty good. But this illustrates</span>
+<span class="c1">//that you can combine as many scale options as you want.</span>
+<span class="k">graph twoway line</span> ecd yr, xscale(off) yscale(log<span class="k"> range</span>(<span class="m">1</span>) reverse)
+
+<span class="c1">//graph label options</span>
+<span class="c1">//Pick &quot;approximately four&quot; nice values based on axis range</span>
+<span class="k">graph twoway line n</span> yr, yscale(range(<span class="m">0</span>)) ylabel(#<span class="m">4</span>)
+
+<span class="c1">//label minimum and maximum values</span>
+<span class="k">graph twoway line n</span> yr, yscale(range(<span class="m">0</span>)) ylabel(minmax)
+
+<span class="c1">//start at 0, and go in increments of 100 up to 600</span>
+<span class="k">graph twoway line n</span> yr, yscale(range(<span class="m">0</span>)) ylabel(<span class="m">0</span>(<span class="m">100</span>)<span class="m">600</span>)
+
+<span class="c1">//custom labels</span>
+<span class="k">graph twoway line n</span> yr, ylabel(<span class="m">0</span>(<span class="m">100</span>)<span class="m">600</span>) <span class="cs">///</span>
+    xlabel(<span class="m">2005</span> <span class="m">2007</span> <span class="s">&quot;policy change&quot;</span> <span class="m">2010</span>(<span class="m">5</span>)<span class="m">2020</span>)
+ 
+
+<span class="c1">//add &quot;ticks&quot; (small vertical line) every unlabeled year in X axis</span>
+<span class="k">graph twoway line n</span> yr, yscale(range(<span class="m">0</span>)) ylabel(<span class="m">0</span>(<span class="m">100</span>)<span class="m">600</span>) xtick(<span class="m">2005</span>(<span class="m">1</span>)<span class="m">2020</span>)
+
+<span class="c1">//axis titles</span>
+<span class="c1">//DDKT = deceased donor kidney transplant</span>
+<span class="k">graph twoway line n</span> yr, xtitle(<span class="s">&quot;Calendar year&quot;</span>) ytitle(<span class="s">&quot;DDKT&quot;</span>) ylabel(<span class="m">0</span>(<span class="m">100</span>)<span class="m">600</span>)
+
+<span class="c1">//minor ticks</span>
+<span class="k">graph twoway line n</span> yr, ylabel(<span class="m">0</span>(<span class="m">200</span>)<span class="m">600</span>) ymlabel(<span class="m">100</span>(<span class="m">200</span>)<span class="m">500</span>)
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>Exporting and Managing Graphs:</p></li>
+</ol>
+<ul class="simple">
+<li><p>The script also demonstrates how to export graphs into PNG format for inclusion in documents, and how to manage saved graphs within Stata.</p></li>
+<li><p>This functionality is crucial for documenting and sharing results in professional or academic settings.</p></li>
+</ul>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">graph</span> export l7_mlabel<span class="m">.</span>png,<span class="k"> replace</span> width(<span class="m">600</span>)
+
+<span class="c1">//angle</span>
+<span class="k">graph twoway line n</span> yr,  ylabel(<span class="m">0</span>(<span class="m">100</span>)<span class="m">600</span>, angle(horizontal))
+<span class="k">graph</span> export l7_angle<span class="m">.</span>png,<span class="k"> replace</span> width(<span class="m">600</span>)
+
+<span class="c1">//graph titles</span>
+<span class="k">graph twoway line n</span> yr, title(<span class="s">&quot;Transplants per year&quot;</span>) ylabel(<span class="m">0</span>(<span class="m">100</span>)<span class="m">600</span>)
+
+<span class="c1">//title and subtitle</span>
+<span class="k">graph twoway line n</span> yr, title(<span class="s">&quot;Transplants per year&quot;</span>) ylabel(<span class="m">0</span>(<span class="m">100</span>)<span class="m">600</span>) <span class="cs">///</span>
+    subtitle(<span class="s">&quot;2006-2018&quot;</span>) 
+
+<span class="c1">//note and caption options</span>
+<span class="k">graph twoway line n</span> yr, title(<span class="s">&quot;title&quot;</span>) subtitle(<span class="s">&quot;subtitle&quot;</span>) <span class="cs">///</span>
+<span class="k">  note</span>(<span class="s">&quot;note&quot;</span>) caption(<span class="s">&quot;caption&quot;</span>)
+<span class="k"> graph copy</span> Graph slide79
+
+<span class="c1">//stacking up the options</span>
+<span class="k">graph twoway line</span> male female yr, title(<span class="s">&quot;Transplants per year, 2006-2018&quot;</span>) subtitle(<span class="s">&quot;stratified by gender&quot;</span>) 
+ 
+
+ 
+<span class="c1">//legend options</span>
+<span class="c1">//put the legend inside the graph</span>
+<span class="k">graph twoway line</span> male female yr, legend(ring(<span class="m">0</span>)) 
+
+<span class="c1">//put the legend inside the graph, in upper-left corner (&quot;eleven o&#39;clock&quot;)</span>
+<span class="k">graph twoway line</span> male female yr, legend(ring(<span class="m">0</span>) pos(<span class="m">11</span>)) 
+
+<span class="c1">//put the legend inside the graph, in lower-right corner (&quot;five o&#39;clock&quot;)</span>
+<span class="k">graph twoway line</span> male female yr, legend(ring(<span class="m">0</span>) pos(<span class="m">5</span>)) 
+
+<span class="c1">//put the legend at 5:00 - change Y range so it fits</span>
+<span class="k">graph twoway line</span> male female yr, legend(ring(<span class="m">0</span>) pos(<span class="m">5</span>)) yscale(range(<span class="m">0</span>))
+
+<span class="c1">//put the different legend &quot;keys&quot; in one column</span>
+<span class="k">graph twoway line</span> male female yr, legend(ring(<span class="m">0</span>) pos(<span class="m">5</span>) cols(<span class="m">1</span>)) 
+
+<span class="c1">//change the order of the &quot;keys&quot;</span>
+<span class="c1">//in this case, you just could do &quot;twoway line female male yr&quot;</span>
+<span class="c1">//but order() is really handy when you have complicated graphs containing</span>
+<span class="c1">//multiple types of plot</span>
+<span class="k">graph twoway line</span> male female yr, legend(ring(<span class="m">0</span>) pos(<span class="m">5</span>) <span class="k"> order</span>(<span class="m">2</span> <span class="m">1</span>)) 
+<span class="k">graph twoway line</span> male female yr, legend(ring(<span class="m">0</span>) pos(<span class="m">5</span>) cols(<span class="m">1</span>)<span class="k"> order</span>(<span class="m">2</span> <span class="m">1</span>)) 
+
+<span class="c1">//print the legend for males but not females</span>
+<span class="c1">// (&quot;order&quot;) suppresses legend for anything that&#39;s not included)</span>
+<span class="k">graph twoway line</span> male female yr, legend(ring(<span class="m">0</span>) pos(<span class="m">5</span>) cols(<span class="m">1</span>)<span class="k"> order</span>(<span class="m">1</span>)) 
+
+<span class="c1">//legend labels</span>
+<span class="k">graph twoway line</span> male female yr, <span class="cs">///</span>
+    legend(ring(<span class="m">0</span>) pos(<span class="m">5</span>) cols(<span class="m">1</span>)<span class="k"> label</span>(<span class="m">1</span> <span class="s">&quot;Men&quot;</span>)<span class="k"> label</span>(<span class="m">2</span> <span class="s">&quot;Women&quot;</span>))
+<span class="k">	graph copy</span> Graph slide88
+
+<span class="c1">//force legend to print (when it normally wouldn&#39;t)</span>
+<span class="k">graph twoway line n</span> yr, legend(on)
+
+<span class="c1">//force legend *NOT* to print (when it normally would)</span>
+<span class="k">graph twoway line</span> male female yr, legend(off)
+
+<span class="c1">//line options</span>
+<span class="k">twoway line n</span> yr, xline(<span class="m">2007</span>)
+<span class="k">twoway line n</span> yr, yline(<span class="m">500</span>)
+
+<span class="c1">//text option</span>
+<span class="c1">//add the text &quot;policy change&quot; at y=450 x=2007 on the graph</span>
+<span class="k">twoway line n</span> yr, xline(<span class="m">2007</span>) text(<span class="m">450</span> <span class="m">2007</span> <span class="s">&quot;Policy change&quot;</span>)
+
+<span class="k">twoway line n</span> yr, ylabel(<span class="m">0</span>(<span class="m">100</span>)<span class="m">600</span>) text(<span class="m">600</span> <span class="m">2017</span> <span class="s">&quot;Local peak in 2017&quot;</span>)
+
+<span class="c1">//twoway line options</span>
+<span class="c1">//sort</span>
+<span class="c1">//first, we have to *UN*sort</span>
+
+<span class="k">sort n</span>
+<span class="k">list</span>, clean noobs
+
+<span class="c1">//display unsorted graph</span>
+<span class="k">twoway line n</span> yr, ylabel(<span class="m">0</span>(<span class="m">100</span>)<span class="m">600</span>)
+
+<span class="c1">//now display the graph with the line drawn properly</span>
+<span class="k">twoway line n</span> yr, ylabel(<span class="m">0</span>(<span class="m">100</span>)<span class="m">600</span>)<span class="k"> sort</span> 
+
+<span class="c1">//options for drawing the line: line color</span>
+<span class="k">twoway line</span>  scd ecd yr, lcolor(green pink)<span class="k"> sort</span>
+
+<span class="c1">//line thickness</span>
+<span class="k">twoway line</span> scd ecd  yr, lwidth(thick thick)<span class="k"> sort</span>
+<span class="c1">//valid thicknesses are:</span>
+<span class="c1">//vvthin vthin thin medthin medium medthick thick vthick vvthick vvvthick </span>
+
+
+<span class="c1">//line pattern</span>
+<span class="k">twoway line</span> scd ecd yr, lpattern(solid dash)<span class="k"> sort</span>
+<span class="k">graph copy</span> Graph slide105
+<span class="c1">//valid patterns are:</span>
+<span class="c1">//solid dash dot dash_dot shortdash shortdash_dot longdash longdash_dot blank </span>
+
+<span class="c1">//scatter plot options</span>
+<span class="k">use</span> transplants<span class="m">.</span>dta,<span class="k"> clear</span>
+<span class="k">keep if</span> peak_pra <span class="o">&lt;=</span> <span class="m">10</span>
+<span class="k">graph twoway scatter</span> peak_pra age
+
+<span class="c1">//add jitter (random noise)</span>
+<span class="k">graph twoway scatter</span> peak_pra age, jitter(<span class="m">2</span>)
+
+<span class="k">graph twoway scatter</span> bmi age<span class="k"> if</span> gender<span class="o">==</span><span class="m">0</span>, mcolor(orange) <span class="cs">///</span>
+ ||<span class="k"> scatter</span> bmi age<span class="k"> if</span> gender<span class="o">==</span><span class="m">1</span>, mcolor(black)
+<span class="k"> graph copy</span> Graph slide110
+
+<span class="c1">//marker symbol</span>
+<span class="k">graph twoway scatter</span> bmi age<span class="k"> if</span> gender<span class="o">==</span><span class="m">0</span>, msymbol(D) <span class="cs">///</span>
+    ||<span class="k"> scatter</span> bmi age<span class="k"> if</span> gender<span class="o">==</span><span class="m">1</span>, msymbol(<span class="o">+</span>)
+
+<span class="c1">//marker size</span>
+<span class="k">graph twoway scatter</span> bmi age<span class="k"> if</span> gender<span class="o">==</span><span class="m">0</span>, msize(small) <span class="cs">///</span>
+    ||<span class="k"> scatter</span> bmi age<span class="k"> if</span> gender<span class="o">==</span><span class="m">1</span>, msize(large)
+<span class="c1">//valid sizes:</span>
+<span class="c1">// tiny vsmall small medsmall medium medlarge large vlarge huge </span>
+
+
+<span class="c1">//displaying a graph stored from earlier</span>
+<span class="k">graph display</span> slide51
+<span class="k">graph dir</span>
+<span class="k">assert</span> <span class="m">0</span>
+
+<span class="c1">//saving a graph as a Stata .gph file</span>
+<span class="k">graph save</span> slide51<span class="m">.</span>gph,<span class="k"> replace</span>
+
+<span class="c1">//exporting a graph to .PNG (for putting in a document)</span>
+<span class="k">graph</span> export slide51<span class="m">.</span>png,<span class="k"> replace</span>
+</pre></div>
+</div>
+<p>These practice examples attempt to be comprehensive and utilize Stata’s capabilities to analyze and visualize <code class="docutils literal notranslate"><span class="pre">transplant.dta</span></code>.</p>
+</section>
 </section>
 <section id="lab">
 <h2>3.4 Lab<a class="headerlink" href="#lab" title="Permalink to this heading">#</a></h2>
@@ -3113,6 +3431,8 @@ putexcel C3=<span class="s">&quot;XX.X&quot;</span>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#strings">3.3.63 strings</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#special-numeric-variables-dates-times">3.3.64 special numeric variables: dates &amp; times</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cond">3.3.65 <code class="docutils literal notranslate"><span class="pre">cond</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nested-macros">3.3.70 Nested Macros</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#graph">3.3.71 <code class="docutils literal notranslate"><span class="pre">graph</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab">3.4 Lab</a></li>
