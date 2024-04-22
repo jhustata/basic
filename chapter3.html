@@ -440,6 +440,12 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quietly">3.3.41 <code class="docutils literal notranslate"><span class="pre">quietly</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#which">3.3.42 <code class="docutils literal notranslate"><span class="pre">which</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#program-define">3.3.43 <code class="docutils literal notranslate"><span class="pre">program</span> <span class="pre">define</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">3.3.44 <code class="docutils literal notranslate"><span class="pre">by</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#egen">3.3.45 <code class="docutils literal notranslate"><span class="pre">egen</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">3.3.46 <code class="docutils literal notranslate"><span class="pre">tag</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#if">3.3.47 <code class="docutils literal notranslate"><span class="pre">if</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#for">3.3.48 <code class="docutils literal notranslate"><span class="pre">for</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#table1">3.3.49 <code class="docutils literal notranslate"><span class="pre">table1</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab">3.4 Lab</a></li>
@@ -1523,6 +1529,231 @@ table1
 </pre></div>
 </div>
 </section>
+<section id="id1">
+<h3>3.3.44 <code class="docutils literal notranslate"><span class="pre">by</span></code><a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//by</span>
+
+<span class="k">use</span> transplants,<span class="k"> clear</span>
+<span class="k">sort</span> abo
+<span class="k">by</span> abo:<span class="k"> gen</span> cat_n = _N <span class="c1">//cat_n = # records in each abo category</span>
+
+<span class="k">sort</span> abo age
+<span class="k">by</span> abo:<span class="k"> gen</span> cat_id = _n <span class="c1">//1 for youngest patient, 2 for next youngest, etc.</span>
+</pre></div>
+</div>
+</section>
+<section id="egen">
+<h3>3.3.45 <code class="docutils literal notranslate"><span class="pre">egen</span></code><a class="headerlink" href="#egen" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="o">/</span>egen
+
+<span class="c1">//obtaining mean age and storing it in a variable</span>
+<span class="k">use</span> transplants,<span class="k"> clear</span>
+<span class="k">egen</span> mean_age =<span class="k"> mean</span>(age)
+
+<span class="c1">//more egen examples</span>
+<span class="k">egen</span> median_age =<span class="k"> median</span>(age)
+<span class="k">egen</span> max_age = <span class="nf">max</span>(age)
+<span class="k">egen</span> min_age = <span class="nf">min</span>(age)
+<span class="k">egen</span> age_q1 =<span class="k"> pctile</span>(age), p(<span class="m">25</span>) <span class="c1">//25th percentile</span>
+<span class="k">egen</span> age_sd = sd(age)  <span class="c1">//standard deviation</span>
+<span class="k">egen</span> total_prev =<span class="k"> sum</span>(prev) <span class="c1">//add all the values (all are 1 or 0 in this case)</span>
+
+<span class="c1">//using egen with by</span>
+<span class="k">use</span> transplants,<span class="k"> clear</span>
+<span class="k">sort</span> dx
+<span class="k">by</span> dx:<span class="k"> egen</span> mean_age =<span class="k"> mean</span>(age)
+<span class="k">by</span> dx:<span class="k"> egen</span> min_bmi = <span class="nf">min</span>(bmi)
+
+<span class="c1">//combining sort and by to get bysort / bys</span>
+<span class="k">use</span> transplants,<span class="k"> clear</span>
+<span class="k">bys</span> abo:<span class="k"> egen</span> m_bmi=mean(bmi)
+<span class="k">bys</span> abo gender:<span class="k"> egen</span> max_bmi = <span class="nf">max</span>(bmi)
+<span class="k">bys</span> abo gender:<span class="k"> egen</span> min_bmi = <span class="nf">min</span>(bmi)
+<span class="k">gen</span> spread = max_bmi <span class="o">-</span> min_bmi
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h3>3.3.46 <code class="docutils literal notranslate"><span class="pre">tag</span></code><a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//egen = tag</span>
+<span class="k">egen</span> grouptag = tag(abo gender)
+<span class="c1">//now, for all gorups of abo/gender, (1/M, 3/F, etc), there&#39;s exactly one</span>
+<span class="c1">//record that has grouptag = &quot;1&quot;. All others have grouptag = &quot;0&quot;.</span>
+
+<span class="k">list</span> abo gender spread<span class="k"> if</span> grouptag
+
+
+<span class="c1">//graphing example with egen and tag</span>
+<span class="k">use</span> transplants,<span class="k"> clear</span>
+<span class="k">egen</span> tag_race = tag(race)
+<span class="k">bys</span> race:<span class="k"> egen</span> mean_bmi=mean(bmi)
+<span class="k">bys</span> race:<span class="k"> egen</span> mean_age=mean(age)
+
+<span class="k">label</span> define race_label <span class="m">1</span> <span class="s">&quot;White&quot;</span> <span class="cs">///</span>
+    <span class="m">2</span> <span class="s">&quot;Black/AA&quot;</span> <span class="m">4</span> <span class="s">&quot;Hispanic/Latino&quot;</span> <span class="cs">///</span>
+    <span class="m">5</span> <span class="s">&quot;East Asian&quot;</span> <span class="m">6</span> <span class="s">&quot;Native American&quot;</span> <span class="cs">///</span>
+    <span class="m">7</span> <span class="s">&quot;Asian Indian&quot;</span> <span class="m">9</span> <span class="s">&quot;Other&quot;</span>  <span class="c1">//create a label race_label</span>
+
+<span class="c1">//I personally find this more legible than cond() with seven cases,</span>
+<span class="c1">//although cond() has its champions</span>
+<span class="k">gen</span> racedesc = <span class="s">&quot;White/Caucasian&quot;</span><span class="k"> if</span> race<span class="o">==</span><span class="m">1</span>
+<span class="k">replace</span> racedesc = <span class="s">&quot;Black/AA&quot;</span><span class="k"> if</span> race<span class="o">==</span><span class="m">2</span>
+<span class="k">replace</span> racedesc = <span class="s">&quot;Hispanic/Latino&quot;</span><span class="k"> if</span> race<span class="o">==</span><span class="m">4</span>
+<span class="k">replace</span> racedesc = <span class="s">&quot;Native American&quot;</span><span class="k"> if</span> race<span class="o">==</span><span class="m">5</span>
+<span class="k">replace</span> racedesc = <span class="s">&quot;East Asian&quot;</span><span class="k"> if</span> race<span class="o">==</span><span class="m">6</span>
+<span class="k">replace</span> racedesc = <span class="s">&quot;Asian Indian&quot;</span><span class="k"> if</span> race<span class="o">==</span><span class="m">7</span>
+<span class="k">replace</span> racedesc = <span class="s">&quot;Other&quot;</span><span class="k"> if</span> race<span class="o">==</span><span class="m">9</span>
+
+<span class="k">twoway scatter m</span><span class="o">~</span>_bmi<span class="k"> m</span><span class="o">~</span>_age<span class="k"> if</span> tag_race, <span class="cs">///</span>
+    title(<span class="s">&quot;Mean age and BMI by race/ethnicity&quot;</span>) <span class="cs">///</span>
+    xtitle(<span class="s">&quot;Mean age&quot;</span>) ytitle(<span class="s">&quot;Mean BMI&quot;</span>) <span class="cs">///</span>
+    xlabel(<span class="m">40</span>(<span class="m">2</span>)<span class="m">60</span>) ylabel(<span class="m">20</span>(<span class="m">2</span>)<span class="m">30</span>) <span class="cs">///</span>
+    mlabel(racedesc)
+<span class="k">graph</span> export graph_lecture3<span class="m">.</span>png,<span class="k"> replace</span> width(<span class="m">2400</span>)
+</pre></div>
+</div>
+</section>
+<section id="if">
+<h3>3.3.47 <code class="docutils literal notranslate"><span class="pre">if</span></code><a class="headerlink" href="#if" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//conditional if</span>
+<span class="k">if</span> _N <span class="o">&gt;</span> <span class="m">100</span> {
+<span class="k">    disp</span> <span class="s">&quot;Meh. That&#39;s a big dataset&quot;</span>
+}
+<span class="k">if</span> _N <span class="o">&gt;</span> <span class="m">10000</span> { 
+<span class="k">    disp</span> <span class="s">&quot;That&#39;s a huge dataset&quot;</span>
+}
+<span class="k">else</span> {
+<span class="k">    disp</span> <span class="s">&quot;Bah! Not so big.&quot;</span>
+}
+
+
+
+<span class="k">tab</span> dx gender, chi2
+<span class="k">if</span> <span class="nf">r</span>(p) <span class="o">&lt;</span> <span class="m">0.05</span> {
+<span class="k">    disp</span> <span class="s">&quot;p&lt;0.05&quot;</span>
+}
+<span class="k">else</span> {
+<span class="k">    disp</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(p)
+}
+
+<span class="k">count if</span> <span class="o">!</span><span class="nf">inlist</span>(rec_hcv_antibody, <span class="m">0</span>, <span class="m">1</span>, .)
+<span class="k">if</span> <span class="nf">r</span>(N) <span class="o">==</span> <span class="m">0</span> {
+<span class="k">    logistic</span> rec_hcv_antibody age
+}
+<span class="k">else</span> {
+<span class="k">    disp</span> <span class="s">&quot;Non-binary outcome. &quot;</span> <span class="cs">///</span>
+        <span class="s">&quot;can&#39;t do logistic regression&quot;</span>
+}
+
+<span class="c1">//note the line continuation ( ///) in the previous else-statement. </span>
+<span class="c1">//line continuations can be used to improve readibility of a do-file, but </span>
+<span class="c1">//they should not change functionality.</span>
+<span class="c1">//stata interprets &quot; ///&quot; as if the next line is on the same line</span>
+</pre></div>
+</div>
+</section>
+<section id="for">
+<h3>3.3.48 <code class="docutils literal notranslate"><span class="pre">for</span></code><a class="headerlink" href="#for" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//for loops.</span>
+<span class="k">forvalues</span> i = <span class="m">1</span><span class="o">/</span><span class="m">5</span> {  <span class="c1">//first time: create a macro i, set it equal to 1</span>
+<span class="k">    disp</span> <span class="nv">`i&#39;</span>        <span class="c1">//display macro i</span>
+}                  <span class="c1">//go back to the &quot;forvalues&quot; statement.</span>
+<span class="c1">//the second time, macro i will equal 2 and it will run again.</span>
+<span class="c1">//then it will go back and set i equal to 3 and run again</span>
+<span class="c1">//and then run a fourth time with i equal to 4</span>
+<span class="c1">//finally, it will run one last time with i equal to 5</span>
+<span class="c1">//then it will stop.</span>
+
+<span class="c1">//all the output from a &quot;forvalues&quot; loop is displayed together, because</span>
+<span class="c1">//Stata doesn&#39;t actually start running code in the loop until you type the</span>
+<span class="c1">//closing brace }. So if you have a bunch of &quot;disp&quot; statements and you want</span>
+<span class="c1">//all the display to appear together (instead of separately, after each </span>
+<span class="c1">//&quot;disp&quot; command in your code) you can put it all inside a loop that</span>
+<span class="c1">//only runs once.</span>
+
+<span class="c1">//another example of &quot;forvalues&quot;</span>
+<span class="k">forvalues</span> b = <span class="m">35</span><span class="o">/</span><span class="m">45</span> {
+<span class="k">    quietly count if</span> age<span class="o">&gt;=</span><span class="nv">`b&#39;</span> <span class="o">&amp;</span> age<span class="o">&lt;</span><span class="nv">`b&#39;</span><span class="o">+</span><span class="m">1</span>
+<span class="k">    disp</span> <span class="s">&quot;Age of </span><span class="nv">`b&#39;</span><span class="s">: &quot;</span> <span class="nf">r</span>(N) <span class="s">&quot; patients&quot;</span>
+}
+
+
+<span class="k">foreach</span> v of<span class="k"> varlist</span> age wait_yrs died {
+<span class="k">    if</span> <span class="nf">inlist</span>(<span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">&quot;</span>, <span class="s">&quot;age&quot;</span>,  <span class="s">&quot;wait_yrs&quot;</span>) {
+<span class="k">        quietly sum</span> <span class="nv">`v&#39;</span>
+<span class="k">        disp</span> <span class="s">&quot;Mean </span><span class="nv">`v&#39;</span><span class="s">: &quot;</span> _col(<span class="m">20</span>) <span class="nx">%3.2f</span> <span class="nf">r</span>(mean)
+    }
+<span class="k">    else</span> {
+<span class="k">        quietly sum</span> <span class="nv">`v&#39;</span>
+<span class="k">        disp</span> <span class="s">&quot;Percent </span><span class="nv">`v&#39;</span><span class="s">: &quot;</span> _col(<span class="m">20</span>) <span class="nx">%3.2f</span> <span class="m">100</span> <span class="o">*</span> <span class="nf">r</span>(mean) <span class="s">&quot;%&quot;</span>
+    }
+}
+
+<span class="c1">//foreach works like forvalues. Except that forvalues sets the macro</span>
+<span class="c1">//equal to a number which increases each time, and foreach sets the macro</span>
+<span class="c1">//equal to something from a list.</span>
+<span class="c1">//there are actually several varieties of foreach, but a useful one is </span>
+<span class="c1">//foreach... of varlist...</span>
+
+<span class="c1">//first time through the loop, macro v will equal &quot;age&quot;. Second time it will</span>
+<span class="c1">//equal &quot;wait_yrs&quot;. Third time it will equal &quot;died&quot;.</span>
+<span class="k">foreach</span> v of<span class="k"> varlist</span> age wait_yrs died { 
+<span class="k">    quietly sum</span> <span class="nv">`v&#39;</span> <span class="c1">//summarize whatever variable is referred to by &quot;v&quot;</span>
+<span class="k">    disp</span> <span class="s">&quot;Max </span><span class="nv">`v&#39;</span><span class="s">: &quot;</span> _col(<span class="m">10</span>) <span class="nf">r</span>(max) <span class="c1">//display maximum value</span>
+}
+
+
+<span class="c1">//example of foreach.. of varlist with if-statement</span>
+<span class="k">foreach</span> v of<span class="k"> varlist</span> age wait_yrs died {
+<span class="k">    if</span> <span class="nf">inlist</span>(<span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">&quot;</span>, <span class="s">&quot;age&quot;</span>,  <span class="s">&quot;wait_yrs&quot;</span>) {
+<span class="k">        quietly sum</span> <span class="nv">`v&#39;</span>
+<span class="k">        disp</span> <span class="s">&quot;Mean </span><span class="nv">`v&#39;</span><span class="s">: &quot;</span> _col(<span class="m">20</span>) <span class="nx">%3.2f</span> <span class="nf">r</span>(mean)
+    }
+<span class="k">    else</span> {
+<span class="k">        quietly sum</span> <span class="nv">`v&#39;</span>
+<span class="k">        disp</span> <span class="s">&quot;Percent </span><span class="nv">`v&#39;</span><span class="s">: &quot;</span> _col(<span class="m">20</span>) <span class="nx">%3.2f</span> <span class="m">100</span> <span class="o">*</span> <span class="nf">r</span>(mean) <span class="s">&quot;%&quot;</span>
+    }
+}
+</pre></div>
+</div>
+</section>
+<section id="table1">
+<h3>3.3.49 <code class="docutils literal notranslate"><span class="pre">table1</span></code><a class="headerlink" href="#table1" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//table1 program from lecture 2</span>
+<span class="k">capture program drop</span> table1
+<span class="k">program</span> define table1
+<span class="k">    disp</span> <span class="s">&quot;Variable&quot;</span> _col(<span class="m">20</span>) <span class="s">&quot;mean (SD)&quot;</span> _col(<span class="m">40</span>) <span class="s">&quot;range&quot;</span>
+<span class="k">    quietly sum</span> age
+<span class="k">    disp</span> <span class="s">&quot;age&quot;</span> _col(<span class="m">20</span>) <span class="nx">%3.2f</span> <span class="nf">r</span>(mean) <span class="s">&quot; (&quot;</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(sd) <span class="s">&quot;)&quot;</span> <span class="cs">///</span>
+            _col(<span class="m">40</span>) <span class="nx">%3.2f</span> <span class="nf">r</span>(min) <span class="s">&quot;-&quot;</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(max)
+<span class="k">    quietly sum</span> wait_yrs
+<span class="k">    disp</span> <span class="s">&quot;wait_yrs&quot;</span> _col(<span class="m">20</span>) <span class="nx">%3.2f</span> <span class="nf">r</span>(mean) <span class="s">&quot; (&quot;</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(sd) <span class="s">&quot;)&quot;</span> <span class="cs">///</span>
+            _col(<span class="m">40</span>) <span class="nx">%3.2f</span> <span class="nf">r</span>(min) <span class="s">&quot;-&quot;</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(max)
+<span class="k">    quietly sum</span> bmi
+<span class="k">    disp</span> <span class="s">&quot;bmi&quot;</span> _col(<span class="m">20</span>) <span class="nx">%3.2f</span> <span class="nf">r</span>(mean) <span class="s">&quot; (&quot;</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(sd) <span class="s">&quot;)&quot;</span> <span class="cs">///</span>
+            _col(<span class="m">40</span>) <span class="nx">%3.2f</span> <span class="nf">r</span>(min) <span class="s">&quot;-&quot;</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(max)
+<span class="k">end</span>
+
+table1
+table1 age peak_pra
+
+<span class="c1">//add &quot;syntax varlist&quot; to control the list of variables</span>
+<span class="k">capture program drop</span> table1_v
+<span class="k">program</span> define table1_v
+<span class="k">    syntax varlist</span>
+    <span class="c1">//write out a nicely formatted table </span>
+    <span class="c1">//NOTE: could also write out with commas instead of spacing</span>
+    <span class="c1">//which would make it easier to import into Excel</span>
+<span class="k">    disp</span> <span class="s">&quot;Variable&quot;</span> _col(<span class="m">15</span>) <span class="s">&quot;mean(SD)&quot;</span> _col(<span class="m">30</span>) <span class="s">&quot;range&quot;</span>
+<span class="k">    foreach</span> v of<span class="k"> varlist</span> <span class="nv">`varlist&#39;</span> {
+<span class="k">        quietly sum</span> <span class="nv">`v&#39;</span>
+<span class="k">        disp</span> <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">&quot;</span> _col(<span class="m">15</span>) <span class="nx">%3.2f</span> <span class="nf">r</span>(mean) <span class="s">&quot;(&quot;</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(sd) <span class="s">&quot;)&quot;</span> _col(<span class="m">30</span>) <span class="cs">///</span>
+            <span class="nx">%3.2f</span> <span class="nf">r</span>(min) <span class="s">&quot;-&quot;</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(max)
+    }
+<span class="k">end</span>
+</pre></div>
+</div>
+</section>
 </section>
 <section id="lab">
 <h2>3.4 Lab<a class="headerlink" href="#lab" title="Permalink to this heading">#</a></h2>
@@ -1804,6 +2035,12 @@ putexcel C3=<span class="s">&quot;XX.X&quot;</span>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quietly">3.3.41 <code class="docutils literal notranslate"><span class="pre">quietly</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#which">3.3.42 <code class="docutils literal notranslate"><span class="pre">which</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#program-define">3.3.43 <code class="docutils literal notranslate"><span class="pre">program</span> <span class="pre">define</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">3.3.44 <code class="docutils literal notranslate"><span class="pre">by</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#egen">3.3.45 <code class="docutils literal notranslate"><span class="pre">egen</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">3.3.46 <code class="docutils literal notranslate"><span class="pre">tag</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#if">3.3.47 <code class="docutils literal notranslate"><span class="pre">if</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#for">3.3.48 <code class="docutils literal notranslate"><span class="pre">for</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#table1">3.3.49 <code class="docutils literal notranslate"><span class="pre">table1</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab">3.4 Lab</a></li>
