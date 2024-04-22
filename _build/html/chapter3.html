@@ -360,16 +360,16 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loops">3.1 Loops</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#forvalues">3.1.1 Forvalues</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#forvalues">3.1.1 <code class="docutils literal notranslate"><span class="pre">forvalues</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#what-this-does">What This Does</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#why-it-s-useful">Why It’s Useful</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#but-here-s-the-catch">But Here’s the Catch</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#foreach">3.1.2 Foreach</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#foreach">3.1.2 <code class="docutils literal notranslate"><span class="pre">foreach</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#program-syntax">3.2 Program Syntax</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#syntax-varlist">3.2 <code class="docutils literal notranslate"><span class="pre">syntax</span> <span class="pre">varlist</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#myfirst">3.2.1 myfirst</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mysecond">3.2.2 mysecond</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mythird">3.2.3 mythird</a></li>
@@ -425,16 +425,17 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#capture">3.3.33 Capture</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#assert">3.3.34 Assert</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scalars-macros-matrices">3.3.35 Scalars, macros, matrices</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">3.3.36 Scalars, macros, matrices</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#r-class-commands">3.3.37 R-class commands</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#r-class-commands">3.3.36 R-class commands</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#examples-from-the-r-class">Examples from the R-class</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ereturn-list">3.3.38 <code class="docutils literal notranslate"><span class="pre">ereturn</span> <span class="pre">list</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#indentation">3.3.39 Indentation</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#script-breakdown-and-annotation">Script Breakdown and Annotation</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notes-on-indentation">Notes on Indentation</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#general-annotation-tips-for-students">General Annotation Tips for Students</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ereturn-list">3.3.37 <code class="docutils literal notranslate"><span class="pre">ereturn</span> <span class="pre">list</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#indentation">3.3.38 Indentation</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#notes-on-indentation">Notes on Indentation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#general-annotation-tips">General Annotation Tips</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">3.3.39 Indentation</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab">3.4 Lab</a></li>
@@ -523,7 +524,7 @@ document.write(`
 <section id="loops">
 <h2>3.1 Loops<a class="headerlink" href="#loops" title="Permalink to this heading">#</a></h2>
 <section id="forvalues">
-<h3>3.1.1 Forvalues<a class="headerlink" href="#forvalues" title="Permalink to this heading">#</a></h3>
+<h3>3.1.1 <code class="docutils literal notranslate"><span class="pre">forvalues</span></code><a class="headerlink" href="#forvalues" title="Permalink to this heading">#</a></h3>
 <p>In the realm of data analysis, especially when dealing with repetitive tasks, loops are your steadfast allies. They save time, reduce errors, and make your code cleaner. Consider the following Stata code snippet:</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">forvalues</span> i = <span class="m">1</span><span class="o">/</span><span class="m">26</span> {
 <span class="k">    di</span> <span class="nv">`i&#39;</span>
@@ -544,7 +545,7 @@ document.write(`
 </section>
 </section>
 <section id="foreach">
-<h3>3.1.2 Foreach<a class="headerlink" href="#foreach" title="Permalink to this heading">#</a></h3>
+<h3>3.1.2 <code class="docutils literal notranslate"><span class="pre">foreach</span></code><a class="headerlink" href="#foreach" title="Permalink to this heading">#</a></h3>
 <p>Looping through numeric ranges is just the tip of the iceberg. When you’re knee-deep in data analysis, more often than not, you’ll find yourself needing to apply operations across numerous variables within your dataset. Here’s where the <code class="docutils literal notranslate"><span class="pre">foreach</span></code> loop comes into play, showcasing its versatility:</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> transplants,<span class="k"> clear</span>
 <span class="k">foreach</span> v of<span class="k"> varlist</span> <span class="o">*</span> {
@@ -570,8 +571,8 @@ document.write(`
 </div>
 </section>
 </section>
-<section id="program-syntax">
-<h2>3.2 Program Syntax<a class="headerlink" href="#program-syntax" title="Permalink to this heading">#</a></h2>
+<section id="syntax-varlist">
+<h2>3.2 <code class="docutils literal notranslate"><span class="pre">syntax</span> <span class="pre">varlist</span></code><a class="headerlink" href="#syntax-varlist" title="Permalink to this heading">#</a></h2>
 <p>We wrote our first program last week and it now time to build on that foundation</p>
 <section id="myfirst">
 <h3>3.2.1 myfirst<a class="headerlink" href="#myfirst" title="Permalink to this heading">#</a></h3>
@@ -1177,23 +1178,8 @@ document.write(`
 </div>
 <p>A command that saves results in <code class="docutils literal notranslate"><span class="pre">r()</span></code> is said to be an “r-class command”</p>
 </section>
-<section id="id2">
-<h3>3.3.36 Scalars, macros, matrices<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
-<p>Saved results can be either of the following:</p>
-<ul class="simple">
-<li><p>Scalars (numbers)</p></li>
-<li><p>Macros (numbers, string, or both)</p></li>
-<li><p>Matrices (lists or tables of numbers)</p></li>
-</ul>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">sum</span> bmi, detail
-<span class="k">disp</span> <span class="s">&quot;median: &quot;</span> _col(<span class="m">12</span>) <span class="nf">r</span>(p50)
-<span class="k">disp</span> <span class="s">&quot;IQR: &quot;</span> _col(<span class="m">12</span>) <span class="nf">r</span>(p25) <span class="s">&quot;-&quot;</span> <span class="nf">r</span>(p75)<span class="k"> disp</span> <span class="s">&quot;kurtosis: &quot;</span> _col(<span class="m">12</span>) <span class="nf">r</span>(kurtosis)
-</pre></div>
-</div>
-<p>A command that saves results in <code class="docutils literal notranslate"><span class="pre">r()</span></code> is said to be an “r-class command”</p>
-</section>
 <section id="r-class-commands">
-<h3>3.3.37 R-class commands<a class="headerlink" href="#r-class-commands" title="Permalink to this heading">#</a></h3>
+<h3>3.3.36 R-class commands<a class="headerlink" href="#r-class-commands" title="Permalink to this heading">#</a></h3>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">summarize</span>
 <span class="k">tabulate</span>
 <span class="k">describe</span>
@@ -1248,7 +1234,7 @@ document.write(`
 </section>
 </section>
 <section id="ereturn-list">
-<h3>3.3.38 <code class="docutils literal notranslate"><span class="pre">ereturn</span> <span class="pre">list</span></code><a class="headerlink" href="#ereturn-list" title="Permalink to this heading">#</a></h3>
+<h3>3.3.37 <code class="docutils literal notranslate"><span class="pre">ereturn</span> <span class="pre">list</span></code><a class="headerlink" href="#ereturn-list" title="Permalink to this heading">#</a></h3>
 <p>Some commands (mostly regression commands) are e-class. (The “e” stands for “estimation”).</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">regress</span> bmi gender age 
 <span class="k">ereturn list</span>
@@ -1274,7 +1260,7 @@ document.write(`
 </div>
 </section>
 <section id="indentation">
-<h3>3.3.39 Indentation<a class="headerlink" href="#indentation" title="Permalink to this heading">#</a></h3>
+<h3>3.3.38 Indentation<a class="headerlink" href="#indentation" title="Permalink to this heading">#</a></h3>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> {
 cls
 <span class="k">capture program drop</span> myprogram 
@@ -1291,12 +1277,8 @@ cls
 }
 </pre></div>
 </div>
-</section>
-<section id="script-breakdown-and-annotation">
-<h3>Script Breakdown and Annotation<a class="headerlink" href="#script-breakdown-and-annotation" title="Permalink to this heading">#</a></h3>
-</section>
 <section id="notes-on-indentation">
-<h3>Notes on Indentation<a class="headerlink" href="#notes-on-indentation" title="Permalink to this heading">#</a></h3>
+<h4>Notes on Indentation<a class="headerlink" href="#notes-on-indentation" title="Permalink to this heading">#</a></h4>
 <p>Indentation is crucial in programming for several reasons:</p>
 <ul class="simple">
 <li><p><strong>Readability:</strong> Proper indentation makes it easier for someone (including future you) to read and understand the code. It visually separates code blocks that belong to different logical structures like loops, if-else conditions, etc.</p></li>
@@ -1326,8 +1308,8 @@ cls
 </pre></div>
 </div>
 </section>
-<section id="general-annotation-tips-for-students">
-<h3>General Annotation Tips for Students<a class="headerlink" href="#general-annotation-tips-for-students" title="Permalink to this heading">#</a></h3>
+<section id="general-annotation-tips">
+<h4>General Annotation Tips<a class="headerlink" href="#general-annotation-tips" title="Permalink to this heading">#</a></h4>
 <p>When annotating code:</p>
 <ul class="simple">
 <li><p><strong>Comment Generously:</strong> Explain what each major block of code is intended to do, especially if the logic might not be immediately clear.</p></li>
@@ -1335,6 +1317,10 @@ cls
 <li><p><strong>Explain the Purpose:</strong> Especially explain why certain commands are used (like <code class="docutils literal notranslate"><span class="pre">capture</span></code> which is used here to avoid errors if the program does not exist when trying to drop it).</p></li>
 <li><p><strong>GPT-4 for indentation, annotation, debugging:</strong> You may copy and paste your code snippet into a generative AI interface and ask it to annotate your code. The above code block was both indented and annotated by <code class="docutils literal notranslate"><span class="pre">GPT-4</span></code>. <code class="docutils literal notranslate"><span class="pre">GitHub</span> <span class="pre">co-pilot</span></code> is also specifically develop to help with coding, but its a $15/month service and you may have to code in a GitHub compatible environment such as <code class="docutils literal notranslate"><span class="pre">Visual</span> <span class="pre">Studio</span> <span class="pre">Code</span></code>. Explore free GPTs including <code class="docutils literal notranslate"><span class="pre">GPT-3.5</span></code>, <code class="docutils literal notranslate"><span class="pre">Gemini</span></code>, and <code class="docutils literal notranslate"><span class="pre">Claude</span></code>.</p></li>
 </ul>
+</section>
+</section>
+<section id="id2">
+<h3>3.3.39 Indentation<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
 </section>
 </section>
 <section id="lab">
@@ -1537,16 +1523,16 @@ putexcel C3=<span class="s">&quot;XX.X&quot;</span>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loops">3.1 Loops</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#forvalues">3.1.1 Forvalues</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#forvalues">3.1.1 <code class="docutils literal notranslate"><span class="pre">forvalues</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#what-this-does">What This Does</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#why-it-s-useful">Why It’s Useful</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#but-here-s-the-catch">But Here’s the Catch</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#foreach">3.1.2 Foreach</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#foreach">3.1.2 <code class="docutils literal notranslate"><span class="pre">foreach</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#program-syntax">3.2 Program Syntax</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#syntax-varlist">3.2 <code class="docutils literal notranslate"><span class="pre">syntax</span> <span class="pre">varlist</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#myfirst">3.2.1 myfirst</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mysecond">3.2.2 mysecond</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mythird">3.2.3 mythird</a></li>
@@ -1602,16 +1588,17 @@ putexcel C3=<span class="s">&quot;XX.X&quot;</span>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#capture">3.3.33 Capture</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#assert">3.3.34 Assert</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scalars-macros-matrices">3.3.35 Scalars, macros, matrices</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">3.3.36 Scalars, macros, matrices</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#r-class-commands">3.3.37 R-class commands</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#r-class-commands">3.3.36 R-class commands</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#examples-from-the-r-class">Examples from the R-class</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ereturn-list">3.3.38 <code class="docutils literal notranslate"><span class="pre">ereturn</span> <span class="pre">list</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#indentation">3.3.39 Indentation</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#script-breakdown-and-annotation">Script Breakdown and Annotation</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notes-on-indentation">Notes on Indentation</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#general-annotation-tips-for-students">General Annotation Tips for Students</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ereturn-list">3.3.37 <code class="docutils literal notranslate"><span class="pre">ereturn</span> <span class="pre">list</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#indentation">3.3.38 Indentation</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#notes-on-indentation">Notes on Indentation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#general-annotation-tips">General Annotation Tips</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">3.3.39 Indentation</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab">3.4 Lab</a></li>
