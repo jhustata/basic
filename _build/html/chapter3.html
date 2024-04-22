@@ -464,6 +464,10 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cond">3.3.65 <code class="docutils literal notranslate"><span class="pre">cond</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nested-macros">3.3.70 Nested Macros</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#graph">3.3.71 <code class="docutils literal notranslate"><span class="pre">graph</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#frame">3.3.80 <code class="docutils literal notranslate"><span class="pre">frame</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#putdocx">3.3.81 <code class="docutils literal notranslate"><span class="pre">putdocx</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#levelsof">3.3.82 <code class="docutils literal notranslate"><span class="pre">levelsof</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tables-beyond-table1">3.3.83 tables beyond <code class="docutils literal notranslate"><span class="pre">table1</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab">3.4 Lab</a></li>
@@ -1299,6 +1303,33 @@ document.write(`
 <span class="k">disp</span> <span class="nf">c</span>(current_date)
 <span class="k">disp</span> <span class="nf">c</span>(os)
 <span class="k">disp</span> <span class="nf">c</span>(pi)
+</pre></div>
+</div>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="nf">c</span>(version) <span class="o">&gt;=</span> <span class="m">17</span> {
+<span class="k">    disp</span> <span class="s">&quot;You are running Stata 17&quot;</span>
+}
+<span class="k">else</span> {
+<span class="k">    disp</span> <span class="s">&quot;You are running an earlier version of Stata&quot;</span>
+}
+
+<span class="c1">//transparent graph colors</span>
+<span class="k">use</span> transplants,<span class="k"> clear</span>
+
+<span class="k">if</span> <span class="nf">c</span>(version) <span class="o">&gt;=</span> <span class="m">15</span> {
+<span class="k">    tw scatter</span> rec_wgt_kg rec_hgt_cm<span class="k"> if</span> age<span class="o">&gt;</span><span class="m">18</span>, mcolor(%<span class="m">20</span>)
+<span class="k">    tw scatter</span> rec_wgt_kg rec_hgt_cm<span class="k"> if</span> age<span class="o">&gt;</span><span class="m">18</span>, mcolor(red%<span class="m">20</span>)
+}
+
+
+<span class="c1">//FRAMES (version 16)</span>
+<span class="k">if</span> <span class="nf">c</span>(version) <span class="o">&gt;=</span> <span class="m">16</span> {
+<span class="k">    do</span> lecture8_frames_2021
+}
+
+
+<span class="k">if</span> <span class="nf">c</span>(version) <span class="o">&gt;=</span> <span class="m">15</span> {
+<span class="k">    do</span> lecture8_putdocx_2021
+}
 </pre></div>
 </div>
 <p>Also, remember that <code class="docutils literal notranslate"><span class="pre">c(N)</span></code>, <code class="docutils literal notranslate"><span class="pre">e(N)</span></code>, and <code class="docutils literal notranslate"><span class="pre">r(N)</span></code> may be identical or diverge depending on patterns of missingness in your dataset</p>
@@ -3128,6 +3159,339 @@ datasize
 </div>
 <p>These practice examples attempt to be comprehensive and utilize Stata’s capabilities to analyze and visualize <code class="docutils literal notranslate"><span class="pre">transplant.dta</span></code>.</p>
 </section>
+<section id="frame">
+<h3>3.3.80 <code class="docutils literal notranslate"><span class="pre">frame</span></code><a class="headerlink" href="#frame" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//no log file because this is supposed to be called from lecture8_2022.do</span>
+
+<span class="c1">//frames</span>
+
+<span class="c1">//only works in Stata 16 or later</span>
+<span class="k">version</span> <span class="m">16</span>
+
+<span class="c1">//frames demo</span>
+
+<span class="c1">//create a new frame</span>
+<span class="k">capture</span> frame<span class="k"> drop</span> donors
+frame create donors
+
+<span class="c1">//load donors.dta into the new frame</span>
+frame donors:<span class="k"> use</span> donors,<span class="k"> clear</span>
+
+<span class="c1">//count how many records there are in frame &quot;donors&quot;</span>
+frame donors:<span class="k"> count</span>
+
+<span class="c1">//load in transplants.dta into our main frame</span>
+<span class="k">use</span> transplants,<span class="k"> clear</span>
+<span class="k">count</span>
+
+<span class="c1">//do some more work in frame donors</span>
+frame donors {
+<span class="k">    count</span> 
+<span class="k">    sum</span> don_creat
+<span class="k">    corr</span> don_creat age_don
+}
+
+<span class="c1">//switch to frame donors</span>
+frame change donors
+<span class="k">count</span>
+
+<span class="c1">//switch back to the default frame, which has transplants.dta loaded</span>
+frame change default
+<span class="k">count</span>
+
+<span class="c1">//copy existing data into a new frame</span>
+<span class="k">capture</span> frame<span class="k"> drop</span> kids
+frame put fake_id age gender race died<span class="k"> if</span> age<span class="o">&lt;</span><span class="m">18</span>, into(kids)
+
+frame kids:<span class="k"> list in</span> <span class="m">1</span><span class="o">/</span><span class="m">10</span>, clean
+
+frame kids {
+<span class="k">     count</span>
+<span class="k">     sum</span> age
+}
+
+<span class="k">count</span>
+<span class="k">sum</span> age
+
+frame change kids
+<span class="k">count</span>
+<span class="k">sum</span> age
+
+frame change default
+<span class="k">count</span>
+<span class="k">sum</span> age
+</pre></div>
+</div>
+</section>
+<section id="putdocx">
+<h3>3.3.81 <code class="docutils literal notranslate"><span class="pre">putdocx</span></code><a class="headerlink" href="#putdocx" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//putdocx: make Word docs</span>
+
+<span class="c1">//only works in Stata 15 or later</span>
+<span class="k">version</span> <span class="m">15</span>
+
+<span class="c1">//do a &quot;hello, world&quot; with putdocx</span>
+putdocx<span class="k"> clear</span>
+
+<span class="c1">//start a new doc</span>
+putdocx begin
+
+<span class="c1">//required before &quot;putdocx text&quot; otherwise r(198) &quot;no active paragraph&quot;</span>
+putdocx paragraph
+
+putdocx text (<span class="s">&quot;Fourth quarter is almost over&quot;</span>)
+
+<span class="c1">//NOTE: &quot;putdocx save&quot; requires the Word document to  be closed</span>
+<span class="c1">//otherwise r(603) &quot;failed to save document&quot;</span>
+putdocx<span class="k"> save</span> doc1<span class="m">.</span>docx,<span class="k"> replace</span>
+
+<span class="c1">//fancier text</span>
+putdocx begin
+
+putdocx paragraph
+putdocx text (<span class="s">&quot;Fourth quarter is &quot;</span>)
+putdocx text (<span class="s">&quot;almost over&quot;</span>), bold
+putdocx text (<span class="s">&quot;.&quot;</span>)
+
+putdocx paragraph
+putdocx text (<span class="s">&quot;Some of us are &quot;</span>)
+putdocx text (<span class="s">&quot;graduating&quot;</span>), underline
+putdocx text (<span class="s">&quot;!&quot;</span>)
+putdocx<span class="k"> save</span> doc2<span class="m">.</span>docx,<span class="k"> replace</span>
+
+<span class="c1">//let&#39;s do a logistic regression and output the results</span>
+<span class="k">use</span> transplants,<span class="k"> clear</span>
+<span class="c1">//who is more likely to get an ECD donor?</span>
+<span class="k">logistic</span> don_ecd age i<span class="m">.</span>abo bmi i<span class="m">.</span>race i<span class="m">.</span>gender
+
+putdocx begin
+
+<span class="c1">//how many participants in the regression model?</span>
+<span class="k">count if e</span>(sample)
+<span class="k">local</span> nn = <span class="nf">r</span>(N)
+
+putdocx paragraph
+putdocx text <span class="cs">///</span>
+    (<span class="s">&quot;Table 1: Characteristics associated with receiving an ECD kidney,&quot;</span>), bold 
+
+<span class="c1">//write a macro right into the Word doc</span>
+putdocx text (<span class="s">&quot; from Stata class dataset (N=</span><span class="nv">`nn&#39;</span><span class="s">)&quot;</span>), bold
+
+<span class="c1">//NOTE: you have to run your model *right before* using &quot;putdocx table=etable&quot;</span>
+<span class="c1">//(or replay it)</span>
+<span class="k">logistic</span>
+putdocx<span class="k"> table</span> model1_table = etable
+
+<span class="c1">//jump to a new page</span>
+putdocx pagebreak
+
+<span class="c1">//start a new paragraph</span>
+putdocx paragraph
+putdocx text <span class="cs">///</span>
+    (<span class="s">&quot;Figure 1: Age of DDKT recipients, stratified by donor type.&quot;</span>), bold 
+
+<span class="c1">//make a figure</span>
+<span class="k">label</span> define ecd <span class="m">0</span> <span class="s">&quot;SCD donor&quot;</span> <span class="m">1</span> <span class="s">&quot;ECD donor&quot;</span>
+<span class="k">label</span> values don_ecd ecd
+<span class="k">graph</span> box age, over(don_ecd) title(<span class="s">&quot;&quot;</span>) <span class="c1">//no title bc it&#39;s gonna have a caption</span>
+<span class="k">graph</span> export figure1<span class="m">.</span>png,<span class="k"> replace</span> width(<span class="m">2400</span>)
+
+putdocx paragraph, halign(center) <span class="c1">//center the paragraph containing the image</span>
+putdocx image figure1<span class="m">.</span>png, width(<span class="m">7</span>)  <span class="c1">//make it 7 inches wide</span>
+<span class="c1">//width(15cm) = 15 cm. Can also be width(360pt) = 360 points (5 inches)</span>
+ 
+
+putdocx<span class="k"> save</span> doc3<span class="m">.</span>docx,<span class="k"> replace</span>
+</pre></div>
+</div>
+</section>
+<section id="levelsof">
+<h3>3.3.82 <code class="docutils literal notranslate"><span class="pre">levelsof</span></code><a class="headerlink" href="#levelsof" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//levelsof</span>
+<span class="k">levelsof</span> race
+<span class="k">disp</span> <span class="nf">r</span>(levels)
+<span class="k">local</span> rlevel = <span class="nf">r</span>(levels)
+<span class="k">foreach</span> r<span class="k"> in</span> <span class="nv">`rlevel&#39;</span> {
+<span class="k">    sum</span> age<span class="k"> if</span> race<span class="o">==</span><span class="nv">`r&#39;</span>
+}
+</pre></div>
+</div>
+</section>
+<section id="tables-beyond-table1">
+<h3>3.3.83 tables beyond <code class="docutils literal notranslate"><span class="pre">table1</span></code><a class="headerlink" href="#tables-beyond-table1" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//PROGRAMS FOR WRITING OUT STATA TABLES</span>
+
+<span class="k">capture program drop</span> v14_setup
+<span class="k">program</span> define v14_setup
+<span class="k">    syntax</span>, filename(string)
+    putexcel<span class="k"> set</span> <span class="nv">`filename&#39;</span>, modify
+
+    putexcel B1= (<span class="s">&quot;aOR&quot;</span>)
+    putexcel C1= (<span class="s">&quot;p&quot;</span>)
+<span class="k">end</span>
+
+<span class="k">capture program drop</span> v14_writerow
+<span class="k">program</span> define v14_writerow
+<span class="k">    syntax</span>, row(int)<span class="k"> label</span>(string) parameter(string)
+    <span class="c1">//&quot;int&quot; = row we&#39;re writing to</span>
+    <span class="c1">//&quot;label&quot; = label of first column</span>
+    <span class="c1">//&quot;parameter&quot; = parameter to do in this row</span>
+
+<span class="k">    lincom</span> <span class="nv">`parameter&#39;</span>  <span class="c1">//obtain estimate, 95% CI, p value</span>
+                       <span class="c1">//NOTE: v13/14 lincom gives only estimate and se</span>
+<span class="c1">//     return list</span>
+<span class="c1">//     assert 0</span>
+<span class="k">    local</span> lb:<span class="k"> disp</span> <span class="nx">%2.1f</span> <span class="nf">r</span>(lb)
+<span class="k">    local</span> ub:<span class="k"> disp</span> <span class="nx">%2.1f</span> <span class="nf">r</span>(ub)
+<span class="k">    local</span> p = <span class="nf">r</span>(p)
+<span class="k">    local est</span>:<span class="k"> disp</span> <span class="nx">%2.1f</span> <span class="nf">r</span>(estimate)
+
+<span class="k">    local</span> pdisp:<span class="k"> disp</span> <span class="nx">%2.1f</span> <span class="nv">`p&#39;</span>
+<span class="k">    if</span> <span class="nv">`p&#39;</span> <span class="o">&lt;</span> <span class="m">0.15</span> {
+<span class="k">        local</span> pdisp:<span class="k"> disp</span> <span class="nx">%3.2f</span> <span class="nv">`p&#39;</span>
+    }
+<span class="k">    if</span> <span class="nf">inrange</span>(<span class="nv">`p&#39;</span>, <span class="m">0.045</span>, <span class="m">0.055</span>) {
+<span class="k">        local</span> pdisp:<span class="k"> disp</span> <span class="nx">%4.3f</span> <span class="nv">`p&#39;</span>
+    }
+<span class="k">    if</span> <span class="nv">`p&#39;</span> <span class="o">&lt;</span> <span class="m">0.01</span> {
+<span class="k">        local</span> pdisp = <span class="s">&quot;&lt;0.01&quot;</span>
+    }
+<span class="k">    if</span> <span class="nv">`p&#39;</span> <span class="o">&lt;</span> <span class="m">0.001</span> {
+<span class="k">        local</span> pdisp = <span class="s">&quot;&lt;0.001&quot;</span>
+    }
+
+    putexcel A<span class="nv">`row&#39;</span>=(<span class="s">&quot;</span><span class="nv">`label&#39;</span><span class="s">&quot;</span>)
+    putexcel B<span class="nv">`row&#39;</span> = (<span class="s">&quot;</span><span class="nv">`est&#39;</span><span class="s"> (</span><span class="nv">`lb&#39;</span><span class="s">-</span><span class="nv">`ub&#39;</span><span class="s">)&quot;</span>)
+    putexcel C<span class="nv">`row&#39;</span> = (<span class="s">&quot;</span><span class="nv">`pdisp&#39;</span><span class="s">&quot;</span>)
+<span class="k">end</span>
+
+
+
+
+<span class="k">capture program drop</span> v15_docsetup
+<span class="k">program</span> define v15_docsetup
+    putdocx<span class="k"> clear</span>
+    putdocx begin
+<span class="k">end</span>
+
+<span class="k">capture program drop</span> v15_tablesetup
+<span class="k">program</span> define v15_tablesetup
+<span class="k">    syntax</span>, caption(string)<span class="k"> table</span>(string)
+
+    putdocx paragraph, font(Calibri,<span class="m">11</span>, black)
+    putdocx text (<span class="s">&quot;</span><span class="nv">`caption&#39;</span><span class="s">&quot;</span>), bold
+
+    <span class="c1">//create a custom-formatted table</span>
+    putdocx<span class="k"> table</span> <span class="nv">`table&#39;</span> = (<span class="m">6</span>,<span class="m">3</span>), <span class="cs">///    6 rows, 3 columns</span>
+        halign(center)          <span class="cs">///       center the table</span>
+        border(insideH,, white) <span class="cs">///       interior horiz borders are white</span>
+        border(insideV,, white) <span class="cs">///       interior vert  borders are white</span>
+        border(start,, white)  <span class="cs">///        left border is white</span>
+        border(end,, white)  <span class="cs">///          right border is white</span>
+        border(top,, black)  <span class="cs">///          top border is black</span>
+        border(bottom,, black)  <span class="cs">///       bottom border is black</span>
+        width(<span class="m">70</span>%)         <span class="c1">//             make the table 70% as wide as the page</span>
+
+    <span class="c1">//make the top row (header) have a black bottom border</span>
+    <span class="c1">//NOTE: must have *no space* between table name and parenthesis</span>
+    <span class="c1">//because Stata is soooo fussy about spaces</span>
+    putdocx<span class="k"> table</span> <span class="nv">`table&#39;</span>(<span class="m">1</span>,.), border(bottom,,black)
+
+
+    <span class="c1">//write header text</span>
+    <span class="c1">//NOTE: produces an error if there&#39;s a space between the &quot;e&quot; and the &quot;(&quot;</span>
+    <span class="c1">//because of course it does</span>
+    putdocx<span class="k"> table</span> <span class="nv">`table&#39;</span>(<span class="m">1</span>,<span class="m">2</span>) = (<span class="s">&quot;aOR&quot;</span>), halign(center)
+    putdocx<span class="k"> table</span> <span class="nv">`table&#39;</span>(<span class="m">1</span>,<span class="m">3</span>) = (<span class="s">&quot;p&quot;</span>), halign(center)
+
+<span class="k">end</span>
+
+<span class="k">capture program drop</span> v15_writerow
+<span class="k">program</span> define v15_writerow
+<span class="k">    syntax</span>,<span class="k"> table</span>(string) row(int)<span class="k"> label</span>(string) parameter(string)
+    <span class="c1">//&quot;table&quot; = name of the table we&#39;re writing to</span>
+    <span class="c1">//&quot;int&quot; = row we&#39;re writing to</span>
+    <span class="c1">//&quot;label&quot; = label of first column</span>
+    <span class="c1">//&quot;parameter&quot; = parameter to do in this row</span>
+
+    <span class="c1">//put the label for the table row (first column)</span>
+    <span class="c1">//remember: no space between table name and parenthesis</span>
+    putdocx<span class="k"> table</span> <span class="nv">`table&#39;</span>(<span class="nv">`row&#39;</span>, <span class="m">1</span>)=(<span class="s">&quot;</span><span class="nv">`label&#39;</span><span class="s">&quot;</span>)
+
+    <span class="c1">//calculate OR for parameter</span>
+    <span class="c1">//use lincom so that we can pass, say, 10*age</span>
+<span class="k">    lincom</span> <span class="nv">`parameter&#39;</span>
+<span class="k">    local</span> lb:<span class="k"> disp</span> <span class="nx">%2.1f</span> <span class="nf">r</span>(lb)
+<span class="k">    local</span> ub:<span class="k"> disp</span> <span class="nx">%2.1f</span> <span class="nf">r</span>(ub)
+<span class="k">    local</span> p = <span class="nf">r</span>(p)
+<span class="k">    local est</span>:<span class="k"> disp</span> <span class="nx">%2.1f</span> <span class="nf">r</span>(estimate)
+<span class="k">    if</span> <span class="nf">r</span>(p)<span class="o">&lt;</span><span class="m">0.05</span> {
+<span class="k">        local</span> b = <span class="s">&quot;bold&quot;</span>
+    }
+
+    <span class="c1">//p value</span>
+<span class="k">    local</span> pdisp:<span class="k"> disp</span> <span class="nx">%2.1f</span> <span class="nv">`p&#39;</span>
+<span class="k">    if</span> <span class="nv">`p&#39;</span> <span class="o">&lt;</span> <span class="m">0.15</span> {
+<span class="k">        local</span> pdisp:<span class="k"> disp</span> <span class="nx">%3.2f</span> <span class="nv">`p&#39;</span>
+    }
+<span class="k">    if</span> <span class="nf">inrange</span>(<span class="nv">`p&#39;</span>, <span class="m">0.045</span>, <span class="m">0.055</span>) {
+<span class="k">        local</span> pdisp:<span class="k"> disp</span> <span class="nx">%4.3f</span> <span class="nv">`p&#39;</span>
+    }
+<span class="k">    if</span> <span class="nv">`p&#39;</span> <span class="o">&lt;</span> <span class="m">0.01</span> {
+<span class="k">        local</span> pdisp = <span class="s">&quot;&lt;0.01&quot;</span>
+    }
+<span class="k">    if</span> <span class="nv">`p&#39;</span> <span class="o">&lt;</span> <span class="m">0.001</span> {
+<span class="k">        local</span> pdisp = <span class="s">&quot;&lt;0.001&quot;</span>
+    }
+
+    <span class="c1">//whew! Now actually put the stuff in the table</span>
+    putdocx<span class="k"> table</span> <span class="nv">`table&#39;</span>(<span class="nv">`row&#39;</span>, <span class="m">2</span>) = (<span class="s">&quot;</span><span class="nv">`lb&#39;</span><span class="s">&quot;</span>), <span class="nv">`b&#39;</span> halign(center) script(sub)
+    putdocx<span class="k"> table</span> <span class="nv">`table&#39;</span>(<span class="nv">`row&#39;</span>, <span class="m">2</span>) = (<span class="s">&quot; </span><span class="nv">`est&#39;</span><span class="s"> &quot;</span>), <span class="nv">`b&#39;</span><span class="k"> append</span>
+    putdocx<span class="k"> table</span> <span class="nv">`table&#39;</span>(<span class="nv">`row&#39;</span>, <span class="m">2</span>) = (<span class="s">&quot;</span><span class="nv">`ub&#39;</span><span class="s">&quot;</span>), <span class="nv">`b&#39;</span> script(sub)<span class="k"> append</span>
+
+    putdocx<span class="k"> table</span> <span class="nv">`table&#39;</span>(<span class="nv">`row&#39;</span>, <span class="m">3</span>) = (<span class="s">&quot;</span><span class="nv">`pdisp&#39;</span><span class="s">&quot;</span>), halign(center)
+<span class="k">end</span>
+
+<span class="c1">//a bit of prep work</span>
+<span class="k">use</span> transplants,<span class="k"> clear</span>
+<span class="c1">//new functional form of race/ethnicity based on prior regression</span>
+<span class="k">gen</span> byte race_aa = race<span class="o">==</span><span class="m">2</span>  <span class="c1">//African-American</span>
+<span class="k">gen</span> byte race_na = race<span class="o">==</span><span class="m">5</span>  <span class="c1">//Native American/indigenous</span>
+
+<span class="k">logistic</span> don_ecd age race_aa race_na gender bmi
+
+<span class="c1">//this code requires Stata 15.1 or later to work</span>
+<span class="k">assert</span> <span class="nf">c</span>(stata_version)<span class="o">&gt;=</span><span class="m">15.1</span>
+
+<span class="c1">//Stata 13/14</span>
+
+<span class="k">if</span> <span class="nf">c</span>(stata_version)<span class="o">&lt;</span><span class="m">15</span> {
+    v14_setup, filename(<span class="s">&quot;table_v14.xlsx&quot;</span>)
+
+    v14_writerow, row(<span class="m">2</span>)<span class="k"> label</span>(<span class="s">&quot;Age (per 10y)&quot;</span>) parameter(<span class="m">10</span><span class="o">*</span>age)
+    v14_writerow, row(<span class="m">3</span>)<span class="k"> label</span>(<span class="s">&quot;African-American&quot;</span>) parameter(race_aa)
+    v14_writerow, row(<span class="m">4</span>)<span class="k"> label</span>(<span class="s">&quot;Native American&quot;</span>) parameter(race_na)
+    v14_writerow, row(<span class="m">5</span>)<span class="k"> label</span>(<span class="s">&quot;Female&quot;</span>) parameter(gender)
+    v14_writerow, row(<span class="m">6</span>)<span class="k"> label</span>(<span class="s">&quot;BMI (per 5 units)&quot;</span>) parameter(<span class="m">5</span><span class="o">*</span>bmi)
+}
+<span class="k">else</span> {
+    <span class="c1">//Stata 15 version</span>
+    putdocx begin
+    v15_tablesetup,<span class="k"> table</span>(t1) <span class="cs">///</span>
+    caption(<span class="s">&quot;Table 1. Characteristics associated with receiving an ECD kidney.&quot;</span>)
+
+
+    v15_writerow,<span class="k"> table</span>(t1) row(<span class="m">2</span>)<span class="k"> label</span>(<span class="s">&quot;Age (per 10y)&quot;</span>) parameter(<span class="m">10</span><span class="o">*</span>age)
+    v15_writerow,<span class="k"> table</span>(t1) row(<span class="m">3</span>)<span class="k"> label</span>(<span class="s">&quot;African-American&quot;</span>) parameter(race_aa)
+    v15_writerow,<span class="k"> table</span>(t1) row(<span class="m">4</span>)<span class="k"> label</span>(<span class="s">&quot;Native American&quot;</span>) parameter(race_na)
+    v15_writerow,<span class="k"> table</span>(t1) row(<span class="m">5</span>)<span class="k"> label</span>(<span class="s">&quot;Female&quot;</span>) parameter(gender)
+    v15_writerow,<span class="k"> table</span>(t1) row(<span class="m">6</span>)<span class="k"> label</span>(<span class="s">&quot;BMI (per 5 units)&quot;</span>) parameter(<span class="m">5</span><span class="o">*</span>bmi)
+
+    putdocx<span class="k"> save</span> doc4<span class="m">.</span>docx,<span class="k"> replace</span>
+}
+</pre></div>
+</div>
+</section>
 </section>
 <section id="lab">
 <h2>3.4 Lab<a class="headerlink" href="#lab" title="Permalink to this heading">#</a></h2>
@@ -3433,6 +3797,10 @@ putexcel C3=<span class="s">&quot;XX.X&quot;</span>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cond">3.3.65 <code class="docutils literal notranslate"><span class="pre">cond</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nested-macros">3.3.70 Nested Macros</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#graph">3.3.71 <code class="docutils literal notranslate"><span class="pre">graph</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#frame">3.3.80 <code class="docutils literal notranslate"><span class="pre">frame</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#putdocx">3.3.81 <code class="docutils literal notranslate"><span class="pre">putdocx</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#levelsof">3.3.82 <code class="docutils literal notranslate"><span class="pre">levelsof</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tables-beyond-table1">3.3.83 tables beyond <code class="docutils literal notranslate"><span class="pre">table1</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab">3.4 Lab</a></li>
