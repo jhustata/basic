@@ -446,6 +446,10 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#if">3.3.47 <code class="docutils literal notranslate"><span class="pre">if</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#for">3.3.48 <code class="docutils literal notranslate"><span class="pre">for</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#table1">3.3.49 <code class="docutils literal notranslate"><span class="pre">table1</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#merge">3.3.50 <code class="docutils literal notranslate"><span class="pre">merge</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#postfile">3.3.51 <code class="docutils literal notranslate"><span class="pre">postfile</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#export-excel">3.3.52 <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">excel</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#options">3.3.53 Options</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab">3.4 Lab</a></li>
@@ -1526,6 +1530,185 @@ do_something_else
 
 <span class="k">use</span> transplants,<span class="k"> clear</span>
 table1
+
+<span class="c1">//table1 program from lecture 2</span>
+<span class="k">capture program drop</span> table1
+<span class="k">program</span> define table1
+<span class="k">    disp</span> <span class="s">&quot;Variable&quot;</span> _col(<span class="m">20</span>) <span class="s">&quot;mean (SD)&quot;</span> _col(<span class="m">40</span>) <span class="s">&quot;range&quot;</span>
+<span class="k">    quietly sum</span> age
+<span class="k">    disp</span> <span class="s">&quot;age&quot;</span> _col(<span class="m">20</span>) <span class="nx">%3.2f</span> <span class="nf">r</span>(mean) <span class="s">&quot; (&quot;</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(sd) <span class="s">&quot;)&quot;</span> <span class="cs">///</span>
+            _col(<span class="m">40</span>) <span class="nx">%3.2f</span> <span class="nf">r</span>(min) <span class="s">&quot;-&quot;</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(max)
+<span class="k">    quietly sum</span> wait_yrs
+<span class="k">    disp</span> <span class="s">&quot;wait_yrs&quot;</span> _col(<span class="m">20</span>) <span class="nx">%3.2f</span> <span class="nf">r</span>(mean) <span class="s">&quot; (&quot;</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(sd) <span class="s">&quot;)&quot;</span> <span class="cs">///</span>
+            _col(<span class="m">40</span>) <span class="nx">%3.2f</span> <span class="nf">r</span>(min) <span class="s">&quot;-&quot;</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(max)
+<span class="k">    quietly sum</span> bmi
+<span class="k">    disp</span> <span class="s">&quot;bmi&quot;</span> _col(<span class="m">20</span>) <span class="nx">%3.2f</span> <span class="nf">r</span>(mean) <span class="s">&quot; (&quot;</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(sd) <span class="s">&quot;)&quot;</span> <span class="cs">///</span>
+            _col(<span class="m">40</span>) <span class="nx">%3.2f</span> <span class="nf">r</span>(min) <span class="s">&quot;-&quot;</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(max)
+<span class="k">end</span>
+
+table1
+table1 age peak_pra
+
+<span class="c1">//add &quot;syntax varlist&quot; to control the list of variables</span>
+<span class="k">capture program drop</span> table1_v
+<span class="k">program</span> define table1_v
+<span class="k">    syntax varlist</span>
+    <span class="c1">//write out a nicely formatted table </span>
+    <span class="c1">//NOTE: could also write out with commas instead of spacing</span>
+    <span class="c1">//which would make it easier to import into Excel</span>
+<span class="k">    disp</span> <span class="s">&quot;Variable&quot;</span> _col(<span class="m">15</span>) <span class="s">&quot;mean(SD)&quot;</span> _col(<span class="m">30</span>) <span class="s">&quot;range&quot;</span>
+<span class="k">    foreach</span> v of<span class="k"> varlist</span> <span class="nv">`varlist&#39;</span> {
+<span class="k">        quietly sum</span> <span class="nv">`v&#39;</span>
+<span class="k">        disp</span> <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">&quot;</span> _col(<span class="m">15</span>) <span class="nx">%3.2f</span> <span class="nf">r</span>(mean) <span class="s">&quot;(&quot;</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(sd) <span class="s">&quot;)&quot;</span> _col(<span class="m">30</span>) <span class="cs">///</span>
+            <span class="nx">%3.2f</span> <span class="nf">r</span>(min) <span class="s">&quot;-&quot;</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(max)
+    }
+<span class="k">end</span>
+
+table1_v age wait_yrs rec_wgt_kg 
+
+<span class="c1">//demonstrate behavior of local macros inside programs</span>
+<span class="k">program</span> define varprogram
+<span class="k">    syntax varlist</span>  
+<span class="k">    disp</span> <span class="s">&quot;</span><span class="nv">`varlist&#39;</span><span class="s">&quot;</span>  <span class="c1">//displays the varlist macro</span>
+<span class="k">end</span>
+
+<span class="c1">//syntax varname: exactly one variable</span>
+<span class="k">program</span> define varfavorite
+<span class="k">    syntax</span> varname  
+<span class="k">    disp</span> <span class="s">&quot;My favorite variable is </span><span class="nv">`varlist&#39;</span><span class="s">&quot;</span>  <span class="c1">//displays the varlist macro</span>
+<span class="k">end</span>
+
+varfavorite fake_id
+
+varprogram fake_id
+<span class="k">disp</span> <span class="s">&quot;</span><span class="nv">`varlist&#39;</span><span class="s">&quot;</span>  <span class="c1">//displays nothing. Stata has forgotten the varlist macro</span>
+
+<span class="k">program</span> define macroprog
+<span class="k">    local</span> a=<span class="m">4</span>   <span class="c1">//define local macro a</span>
+<span class="k">    disp</span> <span class="s">&quot;</span><span class="nv">`a&#39;</span><span class="s">        </span><span class="nv">`b&#39;</span><span class="s">&quot;</span>  <span class="c1">//Stata knows macro a, but macro b is empty</span>
+<span class="k">end</span>
+<span class="k">local</span> b=<span class="m">3</span>   <span class="c1">//define local macro b</span>
+macroprog
+<span class="k">disp</span> <span class="s">&quot;</span><span class="nv">`a&#39;</span><span class="s">        </span><span class="nv">`b&#39;</span><span class="s">&quot;</span>  <span class="c1">//Stata knows macro b, but macro a is empty</span>
+
+
+<span class="k">program</span> define varprogram2
+<span class="k">    syntax</span> [varlist]   <span class="c1">//now, &quot;varlist&quot; is optional</span>
+<span class="k">    disp</span> <span class="s">&quot;</span><span class="nv">`varlist&#39;</span><span class="s">&quot;</span>
+<span class="k">end</span>
+
+
+varprogram2 fake_id
+varprogram2 
+
+<span class="k">program</span> define myif
+<span class="k">    syntax</span> [if]  <span class="c1">//accepts an optional &quot;if&quot; statement</span>
+<span class="k">    if</span> <span class="s">&quot;</span><span class="nv">`if&#39;</span><span class="s">&quot;</span> <span class="o">!=</span> <span class="s">&quot;&quot;</span> {  <span class="c1">//if there&#39;s something in the &quot;if&quot; statement...</span>
+<span class="k">        disp</span> <span class="s">&quot;</span><span class="nv">`if&#39;</span><span class="s">&quot;</span>    <span class="c1">//display it</span>
+    }
+<span class="k">    else</span> {
+<span class="k">        disp</span> <span class="s">&quot;No if statement&quot;</span>  <span class="c1">//otherwise, display this message</span>
+    }
+<span class="k">end</span>
+
+
+
+myif  <span class="c1">//displays &quot;no if statement&quot;</span>
+myif<span class="k"> if</span> age <span class="o">&gt;</span> <span class="m">35</span>  <span class="c1">//displays &quot;if age &gt; 35&quot;</span>
+
+<span class="k">capture program drop</span> countif
+<span class="k">program</span> define countif 
+<span class="k">    syntax if</span>
+<span class="k">    quietly count</span> <span class="nv">`if&#39;</span>
+<span class="k">    disp</span> <span class="s">&quot;total count is &quot;</span> <span class="nf">r</span>(N)
+<span class="k">end</span>
+
+
+
+
+<span class="k">capture program drop</span> table1_if
+<span class="k">program</span> define table1_if
+<span class="k">    syntax varlist</span> [if]
+    <span class="c1">//write out a nicely formatted table</span>
+<span class="k">    disp</span> <span class="s">&quot;Variable&quot;</span> _col(<span class="m">12</span>) <span class="s">&quot;mean(SD)&quot;</span> _col(<span class="m">25</span>) <span class="s">&quot;range&quot;</span>
+<span class="k">    foreach</span> v of<span class="k"> varlist</span> <span class="nv">`varlist&#39;</span> {
+<span class="k">        quietly sum</span> <span class="nv">`v&#39;</span> <span class="nv">`if&#39;</span> 
+<span class="k">        disp</span> <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">&quot;</span> _col(<span class="m">12</span>) <span class="nx">%3.2f</span> <span class="nf">r</span>(mean) <span class="s">&quot;(&quot;</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(sd) <span class="s">&quot;)&quot;</span> _col(<span class="m">25</span>) <span class="cs">///</span>
+            <span class="nx">%3.2f</span> <span class="nf">r</span>(min) <span class="s">&quot;-&quot;</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(max)
+    }
+<span class="k">end</span>
+
+table1_if age peak_pra wait_yrs
+table1_if age peak_pra wait_yrs<span class="k"> if</span> race<span class="o">==</span><span class="m">1</span> <span class="c1">//summarize for only race==1</span>
+
+<span class="c1">//tempvar</span>
+
+<span class="c1">//non-working program - as an example</span>
+<span class="k">capture program drop</span> tabyear0
+<span class="k">program</span> define tabyear0
+<span class="k">    syntax</span> varname
+<span class="k">    gen</span> year = <span class="nf">year</span>(<span class="nv">`varlist&#39;</span>)
+<span class="k">    tab</span> year
+<span class="k">end</span>
+
+<span class="c1">//here&#39;s how you *should* do it (using a temporary variable)</span>
+<span class="k">capture program drop</span> tabyear
+<span class="k">program</span> define tabyear
+<span class="k">    syntax</span> varname
+<span class="k">    tempvar</span> year  <span class="c1">//create a temporary variable called year</span>
+    <span class="c1">//use backquote-apostrophe to refer to the temporary variable (like a macro)</span>
+    <span class="c1">//NOTE: even if, by some chance, there&#39;s already a variable called &quot;year&quot;,</span>
+    <span class="c1">//this code will still work</span>
+<span class="k">    gen</span> <span class="nv">`year&#39;</span> = <span class="nf">year</span>(<span class="nv">`varlist&#39;</span>)
+<span class="k">    tab</span> <span class="nv">`year&#39;</span>
+    <span class="c1">//the temporary variable disappears automatically when the program is done</span>
+<span class="k">end</span>
+
+tabyear transplant_date
+tabyear end_date
+
+<span class="c1">//an example of what *not* to do when you want to temporarily alter the dataset</span>
+<span class="k">capture program drop</span> savesample0
+<span class="k">program</span> define savesample0
+    <span class="c1">//save random 10% of records</span>
+<span class="k">    syntax</span> using<span class="o">/</span> , [replace]
+<span class="k">    sample</span> <span class="m">10</span> <span class="c1">//delete 90% of records!</span>
+<span class="k">    save</span> <span class="nv">`using&#39;</span>, <span class="nv">`replace&#39;</span>
+<span class="k">end</span>
+
+<span class="c1">//here&#39;s how you should do it</span>
+<span class="k">capture program drop</span> savesample
+<span class="k">program</span> define savesample
+    <span class="c1">//save random 10% of records</span>
+<span class="k">    syntax</span> using<span class="o">/</span> , [replace]
+<span class="k">    preserve</span>   <span class="c1">//save a temporary copy of the data</span>
+<span class="k">    sample</span> <span class="m">10</span> <span class="c1">//no worries</span>
+<span class="k">    save</span> <span class="nv">`using&#39;</span> , <span class="nv">`replace&#39;</span>
+    <span class="c1">//when the program reaches the end, the temporary copy is reloaded,</span>
+    <span class="c1">//undoing any changes</span>
+<span class="k">end</span>
+
+<span class="k">count</span>
+savesample using tenpct<span class="m">.</span>dta,<span class="k"> replace</span>
+<span class="k">count</span>
+
+<span class="c1">//another way to do table1_if</span>
+<span class="k">capture program drop</span> table1_if2
+<span class="k">program</span> define table1_if2
+<span class="k">    syntax varlist</span> [if]
+<span class="k">    preserve</span>
+<span class="k">    capture keep</span> <span class="nv">`if&#39;</span>
+    <span class="c1">//write out a nicely formatted table</span>
+<span class="k">    disp</span> <span class="s">&quot;Variable&quot;</span> _col(<span class="m">12</span>) <span class="s">&quot;mean(SD)&quot;</span> _col(<span class="m">25</span>) <span class="s">&quot;range&quot;</span>
+<span class="k">    foreach</span> v of<span class="k"> varlist</span> <span class="nv">`varlist&#39;</span> {
+<span class="k">        quietly sum</span> <span class="nv">`v&#39;</span> <span class="nv">`if&#39;</span> 
+<span class="k">        disp</span> <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">&quot;</span> _col(<span class="m">12</span>) <span class="nx">%3.2f</span> <span class="nf">r</span>(mean) <span class="s">&quot;(&quot;</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(sd) <span class="s">&quot;)&quot;</span> _col(<span class="m">25</span>) <span class="cs">///</span>
+            <span class="nx">%3.2f</span> <span class="nf">r</span>(min) <span class="s">&quot;-&quot;</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(max)
+    }
+<span class="k">end</span>
+
+table1_if2 age peak_pra wait_yrs
+table1_if age peak_pra wait_yrs<span class="k"> if</span> age<span class="o">&lt;</span><span class="m">40</span> <span class="c1">//summarize for only age&lt;40</span>
 </pre></div>
 </div>
 </section>
@@ -1751,6 +1934,335 @@ table1 age peak_pra
             <span class="nx">%3.2f</span> <span class="nf">r</span>(min) <span class="s">&quot;-&quot;</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(max)
     }
 <span class="k">end</span>
+
+table1_v age wait_yrs rec_wgt_kg
+</pre></div>
+</div>
+</section>
+<section id="merge">
+<h3>3.3.50 <code class="docutils literal notranslate"><span class="pre">merge</span></code><a class="headerlink" href="#merge" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">// Merging</span>
+<span class="k">use</span> transplants,<span class="k"> clear</span>
+
+<span class="c1">//examples of syntax for merging</span>
+<span class="c1">//NOTE: after each example we reload transplants.dta</span>
+
+<span class="c1">//simplest merge: link data in memory (transplants.dta) to donors_recipients.dta</span>
+<span class="c1">//by matching on the variable fake_id which appears in both datasets</span>
+<span class="c1">//NOTE: rename your datasets after downloading </span>
+<span class="c1">//e.g. donors_recipients2022.dta -&gt; donors_recipients.dta</span>
+<span class="k">merge</span> <span class="m">1</span>:<span class="m">1</span> fake_id using donors_recipients
+
+<span class="c1">//the merge command creates a new variable, _merge</span>
+<span class="c1">//check how many records matched</span>
+<span class="k">tab</span> _merge
+
+<span class="c1">//&quot;master&quot; = dataset that was in memory before we merged</span>
+<span class="c1">//&quot;using&quot; = dataset that we are bringing in with the merge command</span>
+<span class="c1">//&quot;match&quot; = appears in both master and using datasets</span>
+
+<span class="k">use</span> transplants,<span class="k"> clear</span>
+<span class="k">merge</span> <span class="m">1</span>:<span class="m">1</span> fake_id using donors_recipients,<span class="k"> keep</span>(match)
+<span class="c1">//only keep records that appear both in the original dataset and in the new dataset</span>
+
+
+<span class="k">use</span> transplants,<span class="k"> clear</span>
+<span class="k">merge</span> <span class="m">1</span>:<span class="m">1</span> fake_id using donors_recipients,<span class="k"> keep</span>(master match)
+<span class="c1">//only keep records that appear in the master dataset only, or both datasets</span>
+
+<span class="k">use</span> transplants,<span class="k"> clear</span>
+<span class="k">merge</span> <span class="m">1</span>:<span class="m">1</span> fake_id using donors_recipients,<span class="k"> keep</span>(master using)
+<span class="c1">//only keep records that appear in the master dataset only, </span>
+<span class="c1">//or the using dataset only, but not both</span>
+
+<span class="k">use</span> transplants,<span class="k"> clear</span>
+<span class="k">merge</span> <span class="m">1</span>:<span class="m">1</span> fake_id using donors_recipients,<span class="k"> keep</span>(master match)<span class="k"> gen</span>(mergevar)
+<span class="c1">//call the newly created created variable &quot;mergevar&quot; instead of &quot;_merge&quot;</span>
+
+<span class="k">use</span> transplants,<span class="k"> clear</span>
+<span class="k">merge</span> <span class="m">1</span>:<span class="m">1</span> fake_id using donors_recipients,<span class="k"> keep</span>(match) nogen
+<span class="c1">//don&#39;t create a new variable</span>
+
+<span class="k">merge m</span>:<span class="m">1</span> fake_don_id using donors,<span class="k"> keep</span>(match) nogen keepusing(age_don)
+<span class="c1">//don&#39;t load all the new variables from the donors dataset.</span>
+<span class="c1">//just load age_don.</span>
+
+<span class="k">corr</span> age<span class="o">*</span>
+<span class="c1">//are donor age and recipient age correlated in our fake data? No.</span>
+
+<span class="c1">//merging: using assert to make sure that all your records match</span>
+<span class="k">use</span> transplants,<span class="k"> clear</span>
+<span class="k">merge</span> <span class="m">1</span>:<span class="m">1</span> fake_id using donors_recipients,<span class="k"> keep</span>(master match)
+<span class="k">assert</span> _merge<span class="o">==</span><span class="m">3</span>
+<span class="k">drop</span> _merge
+
+<span class="c1">//merging: using assert to make sure that *most* of your records match</span>
+<span class="k">use</span> transplants,<span class="k"> clear</span>
+<span class="k">merge</span> <span class="m">1</span>:<span class="m">1</span> fake_id using donors_recipients,<span class="k"> keep</span>(master match)
+<span class="k">assert</span> <span class="nf">inlist</span>(_merge, <span class="m">1</span>, <span class="m">3</span>) <span class="c1">//master only, or matched</span>
+<span class="k">quietly count if</span> _merge <span class="o">==</span> <span class="m">3</span>
+<span class="k">assert</span> <span class="nf">r</span>(N)<span class="o">/</span>_N <span class="o">&gt;</span> <span class="m">0.99</span>  <span class="c1">//99% of records have _merge==3</span>
+<span class="k">drop</span> _merge
+</pre></div>
+</div>
+</section>
+<section id="postfile">
+<h3>3.3.51 <code class="docutils literal notranslate"><span class="pre">postfile</span></code><a class="headerlink" href="#postfile" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//minimal postfile example</span>
+
+<span class="c1">//create a new dataset. The &quot;postname&quot; (what we&#39;ll call this dataset within</span>
+<span class="c1">//our Stata script) is &quot;mypost&quot;. There will be three variables, a, b, and c.</span>
+<span class="c1">//the file name on disk will be abc.dta</span>
+<span class="k">postfile</span> mypost a b c using abc<span class="m">.</span>dta,<span class="k"> replace</span>
+
+<span class="c1">//write three rows of data directly into the new dataset.</span>
+<span class="c1">//note that each value has to be surrounded by parentheses</span>
+<span class="k">post</span> mypost (<span class="m">1</span>) (<span class="m">2</span>) (<span class="m">3</span>)
+<span class="k">post</span> mypost (<span class="m">4</span>) (<span class="m">5</span>) (<span class="m">6</span>)
+<span class="k">post</span> mypost (<span class="m">7</span>) (<span class="m">8</span>) (<span class="o">-</span><span class="m">2</span>)
+
+<span class="c1">//all done. Save the file and close it</span>
+<span class="k">postclose</span> mypost
+
+<span class="c1">//check out our results</span>
+<span class="k">use</span> abc,<span class="k"> clear</span>
+<span class="k">list</span>, clean noobs
+
+
+<span class="k">use</span> transplants,<span class="k"> clear</span>
+
+<span class="k">regress</span> bmi gender age 
+<span class="k">postfile</span> pp str80 coef double(result CIleft CIright pvalue) <span class="cs">///</span>
+    using betas<span class="m">.</span>dta,<span class="k"> replace</span>
+<span class="k">foreach</span> v of<span class="k"> varlist</span> gender age {
+<span class="k">    local</span> res=_b[<span class="nv">`v&#39;</span>]
+<span class="k">    local</span> left=_b[<span class="nv">`v&#39;</span>]<span class="o">+</span>_se[<span class="nv">`v&#39;</span>]<span class="o">*</span><span class="nf">invttail</span>(<span class="nf">e</span>(df_r),<span class="m">0.975</span>)
+<span class="k">    local</span> right=_b[<span class="nv">`v&#39;</span>]<span class="o">+</span>_se[<span class="nv">`v&#39;</span>]<span class="o">*</span><span class="nf">invttail</span>(<span class="nf">e</span>(df_r),<span class="m">0.025</span>)
+<span class="k">    local</span> pval=<span class="m">2</span><span class="o">*</span><span class="nf">ttail</span>(<span class="nf">e</span>(df_r), <span class="nf">abs</span>(_b[<span class="nv">`v&#39;</span>]<span class="o">/</span>_se[<span class="nv">`v&#39;</span>]))
+<span class="k">    post</span> pp (<span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">&quot;</span>) (<span class="nv">`res&#39;</span>) (<span class="nv">`left&#39;</span>) (<span class="nv">`right&#39;</span>) (<span class="nv">`pval&#39;</span>)
+}
+<span class="k">postclose</span> pp
+
+<span class="c1">//let&#39;s have a look</span>
+<span class="k">use</span> betas,<span class="k"> clear</span>
+<span class="k">list</span>, clean noobs
+</pre></div>
+</div>
+</section>
+<section id="export-excel">
+<h3>3.3.52 <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">excel</span></code><a class="headerlink" href="#export-excel" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>export excel coef result CIleft CIright using betas_table<span class="m">.</span>xlsx,<span class="k"> replace</span>
+
+<span class="k">format</span> <span class="nx">%3.2f</span> result
+
+<span class="k">gen ci</span> = <span class="s">&quot;(&quot;</span> <span class="o">+</span> <span class="nf">string</span>(CIleft, <span class="s">&quot;%3.2f&quot;</span>) <span class="o">+</span> <span class="s">&quot;, &quot;</span> <span class="o">+</span> <span class="nf">string</span>(CIright, <span class="s">&quot;%3.2f&quot;</span>) <span class="o">+</span> <span class="s">&quot;)&quot;</span>
+
+export excel coef result<span class="k"> ci</span> using betas_table2<span class="m">.</span>xlsx,<span class="k"> replace</span> firstrow(variables)
+
+<span class="k">label var</span> coef <span class="s">&quot;Variable&quot;</span>
+<span class="k">label var</span> result <span class="s">&quot;Coefficient&quot;</span>
+<span class="k">label var ci</span> <span class="s">&quot;95% CI&quot;</span>
+export excel coef result<span class="k"> ci</span> using betas_table3<span class="m">.</span>xlsx,<span class="k"> replace</span> firstrow(varlabels)
+</pre></div>
+</div>
+</section>
+<section id="options">
+<h3>3.3.53 Options<a class="headerlink" href="#options" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//demonstrate options</span>
+<span class="k">use</span> transplants,<span class="k"> clear</span>
+
+<span class="k">capture program drop</span> opt_demo
+<span class="k">program</span> define opt_demo
+<span class="k">    syntax</span>, [myoption]  <span class="c1">//the user can choose to specify &quot;myoption&quot;</span>
+<span class="k">    if</span> <span class="s">&quot;</span><span class="nv">`myoption&#39;</span><span class="s">&quot;</span> <span class="o">!=</span> <span class="s">&quot;&quot;</span> {  <span class="c1">//if they said &quot;myoption&quot;, display it</span>
+<span class="k">        disp</span> <span class="s">&quot;You picked the option </span><span class="nv">`myoption&#39;</span><span class="s">&quot;</span>
+    }
+<span class="k">    else</span> {
+<span class="k">        disp</span> <span class="s">&quot;No option&quot;</span> <span class="c1">//otherwise, display this</span>
+    }
+<span class="k">end</span>
+
+opt_demo   <span class="c1">//&quot;No option&quot;</span>
+opt_demo, myoption   <span class="c1">//&quot;You picked the option myoption&quot;</span>
+
+<span class="k">capture program drop</span> table1_o
+<span class="k">program</span> define table1_o
+<span class="k">    syntax varlist</span> [if] , [round]
+
+    <span class="c1">//set display format</span>
+    <span class="c1">//if they specified &quot;round&quot;, then macro round will equal the word &quot;round&quot;</span>
+    <span class="c1">//otherwise, it&#39;s blank (equals &quot;&quot;)</span>
+<span class="k">    if</span> <span class="s">&quot;</span><span class="nv">`round&#39;</span><span class="s">&quot;</span> <span class="o">!=</span> <span class="s">&quot;&quot;</span> {  
+<span class="k">        local</span> D <span class="nx">%1.0f</span>  <span class="c1">//macro D will contain the display format</span>
+    }
+<span class="k">    else</span> {
+<span class="k">        local</span> D <span class="nx">%3.2f</span>  <span class="c1">//set macro D to %3.2f</span>
+    }
+
+<span class="k">    disp</span> <span class="s">&quot;Variable&quot;</span> _col(<span class="m">12</span>) <span class="s">&quot;mean(SD)&quot;</span> _col(<span class="m">25</span>) <span class="s">&quot;range&quot;</span>
+<span class="k">    foreach</span> v of<span class="k"> varlist</span> <span class="nv">`varlist&#39;</span> {
+<span class="k">        quietly sum</span> <span class="nv">`v&#39;</span> <span class="nv">`if&#39;</span>
+<span class="k">        disp</span> <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">&quot;</span> _col(<span class="m">12</span>) <span class="nv">`D&#39;</span> <span class="nf">r</span>(mean) <span class="s">&quot;(&quot;</span> <span class="nv">`D&#39;</span> <span class="nf">r</span>(sd) <span class="s">&quot;)&quot;</span> _col(<span class="m">25</span>) <span class="cs">///</span>
+            <span class="nv">`D&#39;</span> <span class="nf">r</span>(min) <span class="s">&quot;-&quot;</span> <span class="nv">`D&#39;</span> <span class="nf">r</span>(max)  <span class="c1">//notice we use macro D for format</span>
+    }
+<span class="k">end</span>
+
+
+table1_o age bmi wait_yrs<span class="k"> if</span> age<span class="o">&lt;</span><span class="m">40</span>
+table1_o age bmi wait_yrs<span class="k"> if</span> age<span class="o">&gt;</span><span class="m">40</span>, round
+
+<span class="k">capture program drop</span> minmax
+<span class="k">program</span> define minmax
+<span class="k">    syntax</span>  , [<span class="nf">min</span>(int <span class="m">0</span>) <span class="nf">max</span>(int <span class="m">99</span>)]
+<span class="k">    disp</span> <span class="s">&quot;Min: </span><span class="nv">`min&#39;</span><span class="s">&quot;</span> _col(<span class="m">12</span>) <span class="s">&quot;Max: </span><span class="nv">`max&#39;</span><span class="s">&quot;</span>
+<span class="k">end</span>
+minmax
+minmax, <span class="nf">min</span>(<span class="m">20</span>)
+minmax, <span class="nf">min</span>(<span class="m">20</span>) <span class="nf">max</span>(<span class="m">40</span>)
+
+<span class="c1">//another example</span>
+<span class="k">capture program drop</span> list_top
+<span class="k">program</span> define list_top
+<span class="k">    syntax</span> varname, [top(int <span class="m">10</span>)]
+    <span class="c1">//list the top `top&#39; values</span>
+    <span class="c1">//if `top&#39; not specified, list the top 10</span>
+<span class="k">    preserve</span>
+<span class="k">    gsort</span> <span class="o">-</span><span class="nv">`varlist&#39;</span>
+<span class="k">    list</span> <span class="nv">`varlist&#39;</span><span class="k"> in</span> <span class="m">1</span><span class="o">/</span><span class="nv">`top&#39;</span>, clean noobs
+<span class="k">end</span>
+
+list_top age
+list_top age, top(<span class="m">5</span>)
+
+<span class="c1">//illustrating a function that takes a string option</span>
+<span class="k">capture program drop</span> disptwice
+<span class="k">program</span> define disptwice
+<span class="k">    syntax</span>, [mystring(string)]
+<span class="k">    disp</span> <span class="s">&quot;</span><span class="nv">`mystring&#39;</span><span class="s">&quot;</span>
+<span class="k">    disp</span> <span class="s">&quot;</span><span class="nv">`mystring&#39;</span><span class="s">&quot;</span>
+<span class="k">end</span>
+
+
+<span class="k">program</span> define birthday
+<span class="k">    syntax</span>, name(string)
+    disptwice, mystring(<span class="s">&quot;Happy Birthday to you&quot;</span>)
+<span class="k">    disp</span> <span class="s">&quot;Happy Birthday, dear </span><span class="nv">`name&#39;</span><span class="s">&quot;</span>
+<span class="k">    disp</span> <span class="s">&quot;Happy birthday to you&quot;</span>
+<span class="k">end</span>
+
+birthday, name(<span class="s">&quot;Gugu Mbatha&quot;</span>)  <span class="c1">//04/21/1983</span>
+
+
+<span class="c1">//combining several of the above techniques into a &quot;table1&quot; program</span>
+<span class="k">capture program drop</span> table1_nice
+<span class="k">program</span> define table1_nice
+<span class="k">    syntax varlist</span> [if] , [replace] [precision(int <span class="m">1</span>)] [title(string)]
+    <span class="c1">//if: specify records to include in analysis (optional)</span>
+    <span class="c1">//precision: # of digits to the right of decimal point (optional, default 1)</span>
+    <span class="c1">//title: title to display before the table (optional)</span>
+
+<span class="k">    preserve</span>
+<span class="k">    capture keep</span> <span class="nv">`if&#39;</span> <span class="c1">//temporarily drop any records not required</span>
+
+    <span class="c1">//set display format</span>
+<span class="k">    assert</span> <span class="nf">inrange</span>(<span class="nv">`precision&#39;</span>, <span class="m">0</span>, <span class="m">6</span>) <span class="c1">//allow 0-6 digits to R of decimal point</span>
+<span class="k">    local</span> pplus = <span class="nv">`precision&#39;</span> <span class="o">+</span> <span class="m">1</span> <span class="c1">//first number for formatting code</span>
+<span class="k">    local</span> D %<span class="nv">`pplus&#39;</span>.<span class="nv">`precision&#39;</span>f
+
+<span class="k">    if</span> <span class="s">&quot;</span><span class="nv">`title&#39;</span><span class="s">&quot;</span> <span class="o">!=</span> <span class="s">&quot;&quot;</span> {
+<span class="k">        disp</span> <span class="s">&quot;</span><span class="nv">`title&#39;</span><span class="s">&quot;</span>
+    }
+
+<span class="k">    disp</span> <span class="s">&quot;Variable&quot;</span> _col(<span class="m">12</span>) <span class="s">&quot;mean(SD)&quot;</span> _col(<span class="m">25</span>) <span class="s">&quot;range&quot;</span>
+<span class="k">    foreach</span> v of<span class="k"> varlist</span> <span class="nv">`varlist&#39;</span> {
+<span class="k">        quietly sum</span> <span class="nv">`v&#39;</span> <span class="nv">`if&#39;</span>
+<span class="k">        disp</span> <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">&quot;</span> _col(<span class="m">12</span>) <span class="nv">`D&#39;</span> <span class="nf">r</span>(mean) <span class="s">&quot;(&quot;</span> <span class="nv">`D&#39;</span> <span class="nf">r</span>(sd) <span class="s">&quot;)&quot;</span> _col(<span class="m">25</span>) <span class="cs">///</span>
+            <span class="nv">`D&#39;</span> <span class="nf">r</span>(min) <span class="s">&quot;-&quot;</span> <span class="nv">`D&#39;</span> <span class="nf">r</span>(max)  <span class="c1">//notice we use macro D for format</span>
+    }
+<span class="k">end</span>
+
+
+table1_nice age bmi wait_yrs<span class="k"> if</span> age<span class="o">&gt;</span><span class="m">40</span>, precision(<span class="m">2</span>)<span class="k"> replace</span> <span class="cs">///</span>
+    title(<span class="s">&quot;Study population&quot;</span>)
+
+
+
+
+
+<span class="c1">//put it in a program</span>
+<span class="k">capture program drop</span> model
+<span class="k">program</span> define model
+    <span class="c1">//takes a varlist of independent (x) variables,</span>
+    <span class="c1">//a filename to post the data to,</span>
+    <span class="c1">//and the name of a dependent (y) variable</span>
+<span class="k">    syntax varlist</span>, yvar(varname) filename(string)
+
+<span class="k">    regress</span> <span class="nv">`yvar&#39;</span> <span class="nv">`varlist&#39;</span>
+
+<span class="k">    postfile</span> pp str80 variable double(result CIleft CIright pvalue) <span class="cs">///</span>
+        using <span class="nv">`filename&#39;</span>,<span class="k"> replace</span>
+<span class="k">    foreach</span> v of<span class="k"> varlist</span> <span class="nv">`varlist&#39;</span> {
+<span class="k">        local</span> res=_b[<span class="nv">`v&#39;</span>]
+<span class="k">        local</span> left=_b[<span class="nv">`v&#39;</span>]<span class="o">+</span>_se[<span class="nv">`v&#39;</span>]<span class="o">*</span><span class="nf">invttail</span>(<span class="nf">e</span>(df_r),<span class="m">0.975</span>)
+<span class="k">        local</span> right=_b[<span class="nv">`v&#39;</span>]<span class="o">+</span>_se[<span class="nv">`v&#39;</span>]<span class="o">*</span><span class="nf">invttail</span>(<span class="nf">e</span>(df_r),<span class="m">0.025</span>)
+<span class="k">        local</span> pval=<span class="m">2</span><span class="o">*</span><span class="nf">ttail</span>(<span class="nf">e</span>(df_r), <span class="nf">abs</span>(_b[<span class="nv">`v&#39;</span>]<span class="o">/</span>_se[<span class="nv">`v&#39;</span>]))
+<span class="k">        post</span> pp (<span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">&quot;</span>) (<span class="nv">`res&#39;</span>) (<span class="nv">`left&#39;</span>) (<span class="nv">`right&#39;</span>) (<span class="nv">`pval&#39;</span>)
+    }
+<span class="k">    postclose</span> pp
+<span class="k">end</span>
+
+<span class="k">use</span> transplants,<span class="k"> clear</span>
+model age wait_yrs gender rec_hcv_antibody, yvar(bmi) filename(model_bmi)
+
+
+<span class="k">use</span> model_bmi,<span class="k"> clear</span>
+<span class="k">list</span>, clean noobs
+
+<span class="c1">//BONUS: make it fancy</span>
+<span class="k">capture program drop</span> model2
+<span class="k">program</span> define model2
+<span class="k">    syntax varlist</span>, cmd(string) [show<span class="k"> replace</span>] filename(string)
+
+    <span class="nv">`cmd&#39;</span> <span class="nv">`varlist&#39;</span>
+<span class="k">     local</span> cmd1=<span class="nf">word</span>(<span class="s">&quot;</span><span class="nv">`cmd&#39;</span><span class="s">&quot;</span>,<span class="m">1</span>)
+
+<span class="k">    assert</span> <span class="nf">inlist</span>(<span class="s">&quot;</span><span class="nv">`cmd1&#39;</span><span class="s">&quot;</span>, <span class="s">&quot;regress&quot;</span>, <span class="s">&quot;logit&quot;</span>, <span class="s">&quot;logistic&quot;</span>)
+
+<span class="k">    postfile</span> pp str80 variable double(result CIleft CIright pvalue) <span class="cs">///</span>
+        using <span class="nv">`filename&#39;</span>, <span class="nv">`replace&#39;</span>
+<span class="k">    foreach</span> v of<span class="k"> varlist</span> <span class="nv">`varlist&#39;</span> {
+<span class="k">        if</span> <span class="s">&quot;</span><span class="nv">`cmd1&#39;</span><span class="s">&quot;</span><span class="o">==</span><span class="s">&quot;logistic&quot;</span> | <span class="s">&quot;</span><span class="nv">`cmd1&#39;</span><span class="s">&quot;</span> <span class="o">==</span> <span class="s">&quot;logit&quot;</span> {
+<span class="k">            local</span> res=<span class="nf">exp</span>(_b[<span class="nv">`v&#39;</span>])
+<span class="k">            local</span> left=<span class="nf">exp</span>(_b[<span class="nv">`v&#39;</span>]<span class="o">+</span>_se[<span class="nv">`v&#39;</span>]<span class="o">*</span><span class="nf">invnormal</span>(<span class="m">0.025</span>))
+<span class="k">            local</span> right=<span class="nf">exp</span>(_b[<span class="nv">`v&#39;</span>]<span class="o">+</span>_se[<span class="nv">`v&#39;</span>]<span class="o">*</span><span class="nf">invnormal</span>(<span class="m">0.975</span>))
+<span class="k">            local</span> pval=(<span class="m">1</span><span class="o">-</span><span class="nf">normal</span>(<span class="nf">abs</span>(_b[<span class="nv">`v&#39;</span>]<span class="o">/</span>_se[<span class="nv">`v&#39;</span>])))<span class="o">*</span><span class="m">2</span>
+        }
+<span class="k">        else if</span> <span class="s">&quot;</span><span class="nv">`cmd1&#39;</span><span class="s">&quot;</span><span class="o">==</span><span class="s">&quot;regress&quot;</span> {
+<span class="k">            local</span> res=_b[<span class="nv">`v&#39;</span>]
+<span class="k">            local</span> left=_b[<span class="nv">`v&#39;</span>]<span class="o">+</span>_se[<span class="nv">`v&#39;</span>]<span class="o">*</span><span class="nf">invttail</span>(<span class="nf">e</span>(df_r),<span class="m">0.975</span>)
+<span class="k">            local</span> right=_b[<span class="nv">`v&#39;</span>]<span class="o">+</span>_se[<span class="nv">`v&#39;</span>]<span class="o">*</span><span class="nf">invttail</span>(<span class="nf">e</span>(df_r),<span class="m">0.025</span>)
+<span class="k">            local</span> pval=<span class="m">2</span><span class="o">*</span><span class="nf">ttail</span>(<span class="nf">e</span>(df_r), <span class="nf">abs</span>(_b[<span class="nv">`v&#39;</span>]<span class="o">/</span>_se[<span class="nv">`v&#39;</span>]))
+        }
+<span class="k">        post</span> pp (<span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">&quot;</span>) (<span class="nv">`res&#39;</span>) (<span class="nv">`left&#39;</span>) (<span class="nv">`right&#39;</span>) (<span class="nv">`pval&#39;</span>)
+    }
+<span class="k">    postclose</span> pp
+
+<span class="k">    quietly</span> {
+<span class="k">        preserve</span>
+<span class="k">        use</span> <span class="nv">`filename&#39;</span>,<span class="k"> clear</span>
+<span class="k">        if</span> <span class="s">&quot;</span><span class="nv">`show&#39;</span><span class="s">&quot;</span><span class="o">!=</span><span class="s">&quot;&quot;</span> {
+<span class="k">            noisily list</span>, clean noobs
+        }
+<span class="k">        compress</span>
+<span class="k">        save</span>,<span class="k"> replace</span>
+<span class="k">        format</span> <span class="nx">%3.2f</span> result CIleft CIright pvalue
+        export excel using <span class="nv">`filename&#39;</span>.xlsx,<span class="k"> replace</span> firstrow(variables)
+    }
+<span class="k">end</span>
+
+<span class="k">use</span> transplants,<span class="k"> clear</span>
+model2 gender race age, filename(model_bmi) cmd(<span class="s">&quot;regress bmi&quot;</span>) show<span class="k"> replace</span>
+model2 bmi race age, filename(model_gender) cmd(<span class="s">&quot;logistic gender&quot;</span>) show<span class="k"> replace</span>
 </pre></div>
 </div>
 </section>
@@ -2041,6 +2553,10 @@ putexcel C3=<span class="s">&quot;XX.X&quot;</span>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#if">3.3.47 <code class="docutils literal notranslate"><span class="pre">if</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#for">3.3.48 <code class="docutils literal notranslate"><span class="pre">for</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#table1">3.3.49 <code class="docutils literal notranslate"><span class="pre">table1</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#merge">3.3.50 <code class="docutils literal notranslate"><span class="pre">merge</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#postfile">3.3.51 <code class="docutils literal notranslate"><span class="pre">postfile</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#export-excel">3.3.52 <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">excel</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#options">3.3.53 Options</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab">3.4 Lab</a></li>
