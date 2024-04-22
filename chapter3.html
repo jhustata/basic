@@ -450,6 +450,12 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#postfile">3.3.51 <code class="docutils literal notranslate"><span class="pre">postfile</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#export-excel">3.3.52 <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">excel</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#options">3.3.53 Options</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#set">3.3.54 <code class="docutils literal notranslate"><span class="pre">set</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#collapse">3.3.55 <code class="docutils literal notranslate"><span class="pre">collapse</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reshape">3.3.56 <code class="docutils literal notranslate"><span class="pre">reshape</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expand">3.3.57 <code class="docutils literal notranslate"><span class="pre">expand</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#local-extended">3.3.58 <code class="docutils literal notranslate"><span class="pre">local</span></code>, extended</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#global-vs-local">3.3.59 <code class="docutils literal notranslate"><span class="pre">global</span></code> vs. <code class="docutils literal notranslate"><span class="pre">local</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab">3.4 Lab</a></li>
@@ -2265,6 +2271,252 @@ model2 gender race age, filename(model_bmi) cmd(<span class="s">&quot;regress bm
 model2 bmi race age, filename(model_gender) cmd(<span class="s">&quot;logistic gender&quot;</span>) show<span class="k"> replace</span>
 </pre></div>
 </div>
+<p>Certainly! Let’s break down and annotate the Stata code more clearly, focusing on key sections and explaining their purposes in smaller, more digestible parts. I’ll highlight a few important commands and provide explanatory notes on how they’re used.</p>
+</section>
+<section id="set">
+<h3>3.3.54 <code class="docutils literal notranslate"><span class="pre">set</span></code><a class="headerlink" href="#set" title="Permalink to this heading">#</a></h3>
+<p><strong>Setting Up the Stata Environment</strong></p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">version</span> <span class="m">18</span>
+<span class="k">clear</span> all
+<span class="k">macro drop</span> _all
+<span class="k">set more</span> off
+<span class="k">set</span> linesize <span class="m">80</span>
+<span class="k">set</span> varabbrev<span class="k"> on</span>
+</pre></div>
+</div>
+<p>Here we configure the Stata environment:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">version</span> <span class="pre">18</span></code>: Ensures that the session uses Stata version 11’s features and syntax.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">clear</span> <span class="pre">all</span></code>: Clears all data from memory to start with a clean slate.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">macro</span> <span class="pre">drop</span> <span class="pre">_all</span></code>: Deletes all existing macros to prevent unexpected behavior.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">more</span> <span class="pre">off</span></code>: Outputs all results at once without pausing.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">linesize</span> <span class="pre">80</span></code>: Sets the output line width to 80 characters.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">varabbrev</span> <span class="pre">on</span></code>: Allows using abbreviated names for variables.</p></li>
+</ul>
+</section>
+<section id="collapse">
+<h3>3.3.55 <code class="docutils literal notranslate"><span class="pre">collapse</span></code><a class="headerlink" href="#collapse" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> transplants,<span class="k"> clear</span>
+<span class="k">describe</span> ctr_id
+<span class="k">tab</span> ctr_id,<span class="k"> sum</span>(age)
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">use</span> <span class="pre">transplants,</span> <span class="pre">clear</span></code>: Loads the “transplants” dataset, clearing any existing data in memory.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">describe</span> <span class="pre">ctr_id</span></code>: Displays details about the ‘ctr_id’ variable, such as its storage type and labels.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tab</span> <span class="pre">ctr_id,</span> <span class="pre">sum(age)</span></code>: Tabulates the ‘ctr_id’ variable, summarizing the ‘age’ data alongside to provide insight into the distribution of ages within each ‘ctr_id’ group.</p></li>
+</ul>
+<p><strong>Data Aggregation</strong></p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">collapse</span> (mean) age,<span class="k"> by</span>(ctr_id)
+<span class="k">list</span>, clean
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">collapse</span> <span class="pre">(mean)</span> <span class="pre">age,</span> <span class="pre">by(ctr_id)</span></code>: This command collapses the dataset to one observation per ‘ctr_id’ group, calculating the mean age for each group.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">list,</span> <span class="pre">clean</span></code>: Displays the collapsed data in a simple, clean format.</p></li>
+</ul>
+<p><strong>Alternative Syntax for Aggregation</strong></p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> transplants,<span class="k"> clear</span>
+<span class="k">collapse</span> (mean) mean_age=age,<span class="k"> by</span>(ctr_id)
+<span class="k">list</span>, clean
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>After reloading the dataset, this snippet performs a similar collapse but assigns a new variable name ‘mean_age’ for the mean age, making the output more understandable.</p></li>
+</ul>
+<p><strong>Multiple Variable Aggregation</strong></p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> transplants,<span class="k"> clear</span>
+<span class="k">collapse</span> (mean) age wait bmi,<span class="k"> by</span>(ctr_id)
+<span class="k">list</span>, clean noobs
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>This section shows how to collapse multiple variables at once, calculating the mean of ‘age’, ‘wait’, and ‘BMI’ by each ‘ctr_id’.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">noobs</span></code> option in the <code class="docutils literal notranslate"><span class="pre">list</span></code> command omits observation numbers for a cleaner display.</p></li>
+</ul>
+<p>These snippets and explanations provide a clearer picture of what each part of the code is doing, making it less intimidating and more approachable. If you need further details or explanations on other sections, feel free to ask!</p>
+</section>
+<section id="reshape">
+<h3>3.3.56 <code class="docutils literal notranslate"><span class="pre">reshape</span></code><a class="headerlink" href="#reshape" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//example of reshape wide</span>
+<span class="k">reshape</span> wide<span class="k"> n</span>, i(ctr_id) j(yr)
+<span class="k">list</span> ctr_id n2007<span class="o">-</span>n2010, clean noobs
+
+
+<span class="c1">//go back to long</span>
+<span class="k">reshape</span> long
+
+<span class="c1">//and again</span>
+<span class="k">reshape</span> wide
+<span class="k">reshape</span> long
+<span class="k">reshape</span> wide
+
+<span class="c1">//change missingness of n2006-n2015 variables to 0</span>
+<span class="k">foreach</span> v of<span class="k"> varlist</span> n20<span class="o">*</span> {
+<span class="k">    replace</span> <span class="nv">`v&#39;</span> = <span class="m">0</span><span class="k"> if</span> <span class="nf">missing</span>(<span class="nv">`v&#39;</span>)
+}
+
+<span class="k">reshape</span> long
+
+<span class="c1">//syntax for reshaping wide to long</span>
+<span class="c1">//setup</span>
+<span class="k">reshape</span> wide
+<span class="k">reshape clear</span>
+
+<span class="k">reshape</span> long<span class="k"> n</span>, i(ctr_id) j(yr)
+<span class="k">list</span>, clean noobs
+ 
+</pre></div>
+</div>
+</section>
+<section id="expand">
+<h3>3.3.57 <code class="docutils literal notranslate"><span class="pre">expand</span></code><a class="headerlink" href="#expand" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//expand</span>
+
+<span class="c1">//a simple example with expand</span>
+<span class="c1">//prep work</span>
+<span class="k">clear</span>
+<span class="k">set</span> obs <span class="m">3</span>   <span class="c1">//set # of records in dataset</span>
+<span class="k">gen</span> id = _n
+<span class="k">list</span>,clean 
+
+<span class="c1">//expand 3 (2 more of each observation)</span>
+<span class="k">expand</span> <span class="m">3</span>
+<span class="k">list</span>,clean
+
+
+<span class="c1">//prep work for more complicated &quot;expand&quot; example</span>
+<span class="k">use</span> transplants,<span class="k"> clear</span>
+<span class="k">gen</span> int<span class="k"> n</span>=<span class="m">1</span>
+<span class="k">collapse</span> (sum)<span class="k"> n</span> (mean)mean_age=age (sd)sd_age=age,<span class="k"> by</span>(ctr_id)
+<span class="k">save</span> ctr_age,<span class="k"> replace</span>
+
+<span class="k">list if</span> ctr_id<span class="o">==</span><span class="m">24</span>, clean noobs
+
+<span class="c1">//now we have a dataset of transplant centers</span>
+<span class="c1">//we want one record per patient</span>
+<span class="c1">//perhaps we&#39;re going to do some sort of simulation</span>
+
+<span class="k">use</span> ctr_age,<span class="k"> clear</span>
+<span class="k">count</span>
+<span class="k">expand n</span> <span class="c1">//make n copies of each record</span>
+<span class="k">count</span> 
+<span class="c1">//since the original transplants.dta has 2000 records, after doing our</span>
+<span class="c1">//collapse then expand we should still have 2000 records</span>
+<span class="k">assert</span> <span class="nf">r</span>(N) <span class="o">==</span> <span class="m">6000</span>
+
+<span class="c1">//now generate sim ages (just as a demonstration)</span>
+<span class="k">gen</span> sim_age = mean_age<span class="o">+</span><span class="nf">rnormal</span>()<span class="o">*</span>sd_age
+
+<span class="c1">//were the sim ages realistic?</span>
+<span class="k">sum</span> sim_age
+</pre></div>
+</div>
+</section>
+<section id="local-extended">
+<h3>3.3.58 <code class="docutils literal notranslate"><span class="pre">local</span></code>, extended<a class="headerlink" href="#local-extended" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> transplants,<span class="k"> clear</span>
+<span class="k">sum</span> age
+<span class="c1">//mean+SD are similar, but sim ages had more extreme values than the real ones</span>
+
+<span class="c1">//extended macro functions</span>
+<span class="k">local</span> ll: variable<span class="k"> label</span> race
+<span class="k">disp</span> <span class="s">&quot;</span><span class="nv">`ll&#39;</span><span class="s">&quot;</span>   <span class="c1">//display &quot;Patient race&quot;</span>
+
+<span class="k">local</span> ll: variable<span class="k"> label</span> gender
+<span class="k">disp</span> <span class="s">&quot;</span><span class="nv">`ll&#39;</span><span class="s">&quot;</span>   <span class="c1">//nothing</span>
+
+<span class="k">local</span> vlabel: value<span class="k"> label</span> race
+<span class="k">disp</span> <span class="s">&quot;</span><span class="nv">`vlabel&#39;</span><span class="s">&quot;</span>   <span class="c1">//display &quot;race&quot; which is the name of race&#39;s value label</span>
+
+<span class="k">local</span> val:<span class="k"> label</span> race <span class="m">4</span>
+<span class="k">disp</span> <span class="s">&quot;</span><span class="nv">`val&#39;</span><span class="s">&quot;</span>   <span class="c1">//display &quot;4=Hispanic&quot;</span>
+
+<span class="k">sum</span> wait_yrs
+<span class="k">local</span> m1:<span class="k"> disp</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(mean)
+<span class="k">disp</span> <span class="s">&quot;</span><span class="nv">`m1&#39;</span><span class="s">&quot;</span>
+
+<span class="k">sum</span> wait_yrs
+<span class="k">local</span> m2:<span class="k"> di</span> <span class="s">&quot;Mean: &quot;</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(mean)
+<span class="k">display</span> <span class="s">&quot;</span><span class="nv">`m2&#39;</span><span class="s">&quot;</span>
+
+<span class="k">sum</span> wait_yrs
+<span class="k">local</span> m3:<span class="k"> di</span> <span class="s">&quot;Range: &quot;</span> <span class="cs">///</span>
+    <span class="nx">%3.1f</span> <span class="nf">r</span>(min) <span class="s">&quot;-&quot;</span> <span class="nx">%3.1f</span> <span class="nf">r</span>(max)
+<span class="k">display</span> <span class="s">&quot;</span><span class="nv">`m3&#39;</span><span class="s">&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="global-vs-local">
+<h3>3.3.59 <code class="docutils literal notranslate"><span class="pre">global</span></code> vs. <code class="docutils literal notranslate"><span class="pre">local</span></code><a class="headerlink" href="#global-vs-local" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//global vs local macros</span>
+<span class="k">global</span> mymacro = <span class="m">11</span>
+<span class="k">disp</span> <span class="s">&quot;Here is </span><span class="vg">$mymacro</span><span class="s">&quot;</span>
+
+<span class="k">local</span> mymacro = <span class="m">7</span>
+<span class="k">global</span> mymacro = <span class="m">11</span>
+<span class="k">disp</span> <span class="s">&quot;Headed to the </span><span class="nv">`mymacro&#39;</span><span class="s">-</span><span class="vg">$mymacro</span><span class="s">&quot;</span>
+
+<span class="c1">//show the difference between local and global macros</span>
+<span class="k">capture program drop</span> macro_show
+<span class="k">program</span> define macro_show
+<span class="k">    local</span> inside = <span class="s">&quot;in Vegas&quot;</span>
+<span class="k">    global</span> inside = <span class="s">&quot;in Vegas&quot;</span>
+<span class="k">    disp</span> <span class="s">&quot;Local: </span><span class="nv">`inside&#39;</span><span class="s">  </span><span class="nv">`outside&#39;</span><span class="s">&quot;</span>
+<span class="k">    disp</span> <span class="s">&quot;Global: </span><span class="vg">$inside</span><span class="s">  </span><span class="vg">$outside</span><span class="s">&quot;</span>
+<span class="k">    disp</span> <span class="s">&quot;Done.&quot;</span>
+<span class="k">end</span>
+<span class="k">local</span> outside = <span class="s">&quot;At home&quot;</span>
+<span class="k">global</span> outside = <span class="s">&quot;At home&quot;</span>
+macro_show
+<span class="k">disp</span> <span class="s">&quot;Local: </span><span class="nv">`inside&#39;</span><span class="s">  </span><span class="nv">`outside&#39;</span><span class="s">&quot;</span>
+<span class="k">disp</span> <span class="s">&quot;Global: </span><span class="vg">$inside</span><span class="s">  </span><span class="vg">$outside</span><span class="s">&quot;</span>
+
+<span class="k">capture program drop</span> mystery_program
+<span class="k">program</span> define mystery_program
+<span class="k">    local</span> myvalue = <span class="m">24</span>
+<span class="k">    global</span> myvalue = <span class="m">24</span>
+<span class="k">end</span>
+
+<span class="k">local</span> myvalue = <span class="m">5</span>
+<span class="k">global</span> myvalue = <span class="m">5</span>
+mystery_program
+<span class="k">disp</span> <span class="s">&quot;I have </span><span class="nv">`myvalue&#39;</span><span class="s"> fingers.&quot;</span>
+<span class="k">disp</span> <span class="s">&quot;I have </span><span class="vg">$myvalue</span><span class="s"> fingers.&quot;</span>
+
+
+<span class="c1">//skeleton &quot;unlabeled&quot; program</span>
+<span class="c1">//fill this in as an in-class exercise</span>
+<span class="k">capture program drop</span> unlabeled
+<span class="k">program</span> define unlabeled 
+   <span class="c1">//list variables with no variable label</span>
+<span class="k">   syntax varlist</span>
+<span class="k">   foreach</span> v of<span class="k"> varlist</span> <span class="nv">`varlist&#39;</span> {
+<span class="k">       local</span> vlabel: variable<span class="k"> label</span> <span class="nv">`v&#39;</span>
+<span class="k">       if</span> <span class="s">&quot;</span><span class="nv">`vlabel&#39;</span><span class="s">&quot;</span> <span class="o">==</span> <span class="s">&quot;&quot;</span> {
+<span class="k">            disp</span> <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">&quot;</span>
+       }
+       <span class="c1">//What goes here?</span>
+   }
+<span class="k">end</span>
+
+<span class="c1">//test</span>
+unlabeled age race ctr_id don_ecd
+
+<span class="k">capture program drop</span> labelval
+<span class="k">program</span> define labelval 
+   <span class="c1">//labelval abo, val(3) prints &quot;3=B&quot;</span>
+<span class="k">   syntax</span> varname, val(int)
+<span class="k">   local</span> labname: value<span class="k"> label</span> <span class="nv">`varlist&#39;</span>
+<span class="k">   local</span> opt:<span class="k"> label</span> <span class="nv">`labname&#39;</span> <span class="nv">`val&#39;</span>
+<span class="k">   disp</span> <span class="s">&quot;</span><span class="nv">`opt&#39;</span><span class="s">&quot;</span>
+   <span class="c1">//What goes here?</span>
+<span class="k">end</span>
+
+<span class="c1">//test</span>
+labelval abo, val(<span class="m">3</span>)
+</pre></div>
+</div>
 </section>
 </section>
 <section id="lab">
@@ -2557,6 +2809,12 @@ putexcel C3=<span class="s">&quot;XX.X&quot;</span>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#postfile">3.3.51 <code class="docutils literal notranslate"><span class="pre">postfile</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#export-excel">3.3.52 <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">excel</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#options">3.3.53 Options</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#set">3.3.54 <code class="docutils literal notranslate"><span class="pre">set</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#collapse">3.3.55 <code class="docutils literal notranslate"><span class="pre">collapse</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reshape">3.3.56 <code class="docutils literal notranslate"><span class="pre">reshape</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expand">3.3.57 <code class="docutils literal notranslate"><span class="pre">expand</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#local-extended">3.3.58 <code class="docutils literal notranslate"><span class="pre">local</span></code>, extended</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#global-vs-local">3.3.59 <code class="docutils literal notranslate"><span class="pre">global</span></code> vs. <code class="docutils literal notranslate"><span class="pre">local</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab">3.4 Lab</a></li>
