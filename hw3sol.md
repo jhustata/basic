@@ -80,7 +80,7 @@ quietly {
 		       local female`i'_age_p75: di %2.0f r(p75)
 
 		       //row3
-		       sum prev if female==`i' //Maya debugged this!!
+		       sum prev if female==`i'  
 		       local female`i'_prev: di %2.1f r(mean)*100
 			   
 			             // Output for males and females, assuming they start from row 1
@@ -250,7 +250,7 @@ Managing your workflow in Stata effectively, especially when dealing with comple
 
 **5. Encourage Good Practices:**
    - **Commenting:** Encourage adding comments on why certain blocks are turned off (e.g., `if 0 // temporarily disabled for debugging`).
-   - **Version Control:** Teach the use of version control systems like Git. This allows students to experiment with different script versions without fear of losing the original settings or analyses.
+   - **Version Control:** Use of version control systems like Git. This allows you to experiment with different script versions without fear of losing the original settings or analyses. [GitHub](https://github.com) is the most widely used system for version control. Create an account and start saving your `.do` and `.ado` files there, as well as any other files such as manuscripts, presentations, capstones, theses. More on this in the Intermediate Class.
 
 **6. Example for Clarity:**
 
@@ -277,6 +277,5 @@ if $run_section3 {
 ```
 
 **7. Continuous Learning:**
-   - **Regular Revisions:** Encourage students to regularly revise their scripts, adjusting the conditional flags as their focus shifts between different analyses.
+   - **Regular Revisions:** Think of `.do` file script management as akin to DNA transcription in a cell. Just as a cell selectively activates certain genes in response to environmental changes, you're encouraged to adaptively revise your scripts as new data or analysis needs arise. This dynamic process (e.g. changing `if 0` to `if 2` or the reverse), much like the activation and silencing of genes, ensures that your analytical tools remain responsive and tailored to specific tasks at hand.
 
-By guiding students to use these practices, they not only learn to manage their scripts more effectively but also build good habits for future programming tasks in Stata or any other language. This structured approach enhances their understanding and keeps their work organized and efficient.

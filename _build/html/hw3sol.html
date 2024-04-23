@@ -463,7 +463,7 @@ document.write(`
 <span class="k">		       local</span> female<span class="nv">`i&#39;</span>_age_p75:<span class="k"> di</span> <span class="nx">%2.0f</span> <span class="nf">r</span>(p75)
 
 		       <span class="c1">//row3</span>
-<span class="k">		       sum</span> prev<span class="k"> if</span> female<span class="o">==</span><span class="nv">`i&#39;</span> <span class="c1">//Maya debugged this!!</span>
+<span class="k">		       sum</span> prev<span class="k"> if</span> female<span class="o">==</span><span class="nv">`i&#39;</span>  
 <span class="k">		       local</span> female<span class="nv">`i&#39;</span>_prev:<span class="k"> di</span> <span class="nx">%2.1f</span> <span class="nf">r</span>(mean)<span class="o">*</span><span class="m">100</span>
 			   
 			             <span class="c1">// Output for males and females, assuming they start from row 1</span>
@@ -648,7 +648,7 @@ document.write(`
 <p><strong>5. Encourage Good Practices:</strong></p>
 <ul class="simple">
 <li><p><strong>Commenting:</strong> Encourage adding comments on why certain blocks are turned off (e.g., <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">0</span> <span class="pre">//</span> <span class="pre">temporarily</span> <span class="pre">disabled</span> <span class="pre">for</span> <span class="pre">debugging</span></code>).</p></li>
-<li><p><strong>Version Control:</strong> Teach the use of version control systems like Git. This allows students to experiment with different script versions without fear of losing the original settings or analyses.</p></li>
+<li><p><strong>Version Control:</strong> Use of version control systems like Git. This allows you to experiment with different script versions without fear of losing the original settings or analyses. <a class="reference external" href="https://github.com">GitHub</a> is the most widely used system for version control. Create an account and start saving your <code class="docutils literal notranslate"><span class="pre">.do</span></code> and <code class="docutils literal notranslate"><span class="pre">.ado</span></code> files there, as well as any other files such as manuscripts, presentations, capstones, theses. More on this in the Intermediate Class.</p></li>
 </ul>
 <p><strong>6. Example for Clarity:</strong></p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define which sections to run</span>
@@ -674,9 +674,8 @@ document.write(`
 </div>
 <p><strong>7. Continuous Learning:</strong></p>
 <ul class="simple">
-<li><p><strong>Regular Revisions:</strong> Encourage students to regularly revise their scripts, adjusting the conditional flags as their focus shifts between different analyses.</p></li>
+<li><p><strong>Regular Revisions:</strong> Think of <code class="docutils literal notranslate"><span class="pre">.do</span></code> file script management as akin to DNA transcription in a cell. Just as a cell selectively activates certain genes in response to environmental changes, you’re encouraged to adaptively revise your scripts as new data or analysis needs arise. This dynamic process (e.g. changing <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">0</span></code> to <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">2</span></code> or the reverse), much like the activation and silencing of genes, ensures that your analytical tools remain responsive and tailored to specific tasks at hand.</p></li>
 </ul>
-<p>By guiding students to use these practices, they not only learn to manage their scripts more effectively but also build good habits for future programming tasks in Stata or any other language. This structured approach enhances their understanding and keeps their work organized and efficient.</p>
 </section>
 </section>
 
