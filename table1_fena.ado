@@ -16,6 +16,12 @@ qui {
 					local var : di stritrim(subinstr("`var_helper'", "`by'", "", .))
 				}
 				noi var_type, var(`var') catt(`catt')
+				if (strupper("${terminator}") == "EXIT") {
+					exit
+				}				
+				if (strupper("${terminator}") != "EXIT") {
+					noi missing_detect, v(${terminator})
+				}
 				
 				// double verify the variable types 
 				// ask for user input
@@ -63,9 +69,9 @@ qui {
 				
 				// call the table1 program generate table 1
 				noi di as error "Generating Table1"
-				noi table1_creation `if', bin(${bin}) cat(${cat}) con(${con}) title(`title') excel(`excel') by(`by') `missingness'
+				noi table1_creation `if', bin(${bin}) cat(${cat}) con(${con}) title(`title') excel(`excel') by(`by') `missingness' orders(`var')
 				noi di ""
-				noi di as error "Table 1 saved as `title' to the following directory:"
+				noi di as error "Table 1 saved as `excel' to the following directory:"
 				noi di in g "`c(pwd)'"
 			}
 			
@@ -116,17 +122,24 @@ qui {
 			
 			// start to detect
 			foreach i in `vlist' {
-				
+				/*
 				levelsof `i', local(l1) s("!*!")
-				local l2 : di subinstr("`l1'", "!*!", "", .)
-				local ln1 = strlen("`l1'")
-				local ln2 = strlen("`l2'")
+				
+				local l2 : di subinstr(`"`l1'"', "!*!", "", .)
+				local ln1 = strlen(`"`l1'"')
+				local ln2 = strlen(`"`l2'"')
 				local ln_diff = (`ln1' - `ln2') / 3
-
-				if (`ln_diff' == 1) {
+				*/
+				local ln_diff = -1
+				levelsof `i', local(l1)
+				foreach var_val in `l1' {
+					local ln_diff = `ln_diff' + 1
+				}
+				
+				if (`ln_diff' == 1 | `ln_diff' < 1) {
 					global bin : di "${bin}" " " "`i'"
 				}
-				else if (`ln_diff' > 1 & `ln_diff' < (`catt')) {
+				else if (`ln_diff' > 1 & `ln_diff' < `catt') {
 					global cat : di "${cat}" " " "`i'"
 				}
 				else if (inrange(`ln_diff', (`catt' - 1), (`catt' - 1 + 15))) {
@@ -225,7 +238,7 @@ qui {
 	capture program drop table1_creation
 	program define table1_creation
 
-		syntax [if] [, title(string) bin(string) cat(string) con(string) foot(string) by(varname) excel(string) missingness]
+		syntax [if] [, title(string) bin(string) cat(string) con(string) foot(string) by(varname) excel(string) missingness orders(string)]
 		
 		qui {
 			
@@ -243,6 +256,10 @@ qui {
 				}
 				if ("`excel'" == "") {
 					local excel : di "Table 1 Outputs"
+				}
+				if ("`orders'" == "") {
+					ds
+					local orders `r(varlist)'
 				}
 			}
 			
@@ -263,7 +280,7 @@ qui {
 				local col1: di "_col(40)"
 				local col2: di "_col(50)"
 				local cfac = 20
-				local csep = 40
+				local csep = 60
 			}
 			
 			// run byvar checker
@@ -314,6 +331,15 @@ qui {
 				local by_l : value label `by'
 				// print out by line
 				local cheader = 0
+				// detect byvar type
+				local bstringvar = 1
+				local b_if : di ("`" + "by" + "'" + " == " + `"""' +"`" + "k" + "'" + `"""') 
+				qui capture confirm string var `by'
+				if _rc {
+					local bstringvar = 0
+					local b_if : di ("`" + "by" + "'" + " == " + "`" + "k" + "'")
+				}
+				
 				if ("`by'" != "byvar_helper") {
 					local erc = `erc' + 1
 					foreach i in `b_vals' {
@@ -330,7 +356,12 @@ qui {
 						else if ("`by_l'" != "") {
 							local val_lab : label `by_l' `i'
 						}
-						count if `by' == `i'
+						if (`bstringvar' == 1) {
+							count if `by' == "`i'"
+						}
+						else {
+							count if `by' == `i'
+						}
 						local total = r(N)
 						noi di `col_s'  "`val_lab'" " " "(n=`total')", _continue
 						${ind}
@@ -342,18 +373,81 @@ qui {
 				local cheader = 0
 				// get some constant for byvar
 				foreach i in `b_vals' {
-					count if `by'  == `i'
+					if (`bstringvar' == 1) {
+						count if `by' == "`i'"
+					}
+					else {
+						count if `by' == `i'
+					}
 					local cnt`i' = r(N)
 				}
 			}
 			
-			// run through binary and categorical variable
-			if 9 {
-				local bincat `bin' `cat'
-				foreach var in `bincat' {
-					
+			// run through continuous variable
+			local bincat `bin' `cat'
+			foreach var in `orders' {
+				if (strpos("`con'", "`var'") != 0) {
 					// print out the variable
 					// first detect if variable label exist
+					local var_l : variable label `var'
+					if ("`var_l'" == "") {
+						local var_lab : di "`var'"
+					}
+					else if ("`var_l'" != "") {
+						local var_lab : di "`var_l'"
+					}
+					// no need to detect value label since it is continuous
+					noi di "`var_lab'" ", median[IQR]", _continue
+					local erc = `erc' + 1
+					${ind}
+					putexcel ${ul_cell} = "`var_lab', median[IQR]"
+					// detect if string var accidentally got into cont vars
+					local stringvar = 1
+					qui capture confirm string var `var'
+					if _rc {
+						local stringvar = 0
+					}
+					if (`stringvar' == 1) {
+						local ctemp = `csep'
+						local col_s : di "_col(`ctemp')"
+						noi di as error `col_s' "`var' is in string format and not valid as continuous variables", _continue
+						local ecc = `ecc' + 1
+						${ind}
+						putexcel ${ul_cell} = "`var' is in string format and not valid as continuous variables"
+					}
+					else {
+						local cheader = 0
+						// loop through byvar is enough
+						foreach k in `b_vals' {
+							local cheader = `cheader' + 1
+							sum `var' if `b_if', detail
+							local med = r(p50)
+							local lq = r(p25)
+							local hq = r(p75)
+							local m_iqr : di %2.1f `med' "[" %2.1f `lq' ", " %2.1f `hq' "]"
+							local ctemp = `csep' + `cfac' * (`cheader' - 1)
+							local col_s : di "_col(`ctemp')"
+							noi di `col_s' "`m_iqr'", _continue
+							local ecc = `ecc' + 1
+							${ind}
+							putexcel ${ul_cell} = "`m_iqr'"
+						}
+					}
+					noi di in g ""
+					local ecc = 1
+				}
+				else if (strpos("`bincat'", "`var'") != 0) {
+					// run through binary and categorical variable
+					// print out the variable
+					// first detect if variable label exist
+					
+					// detect if this var is string or not
+					local stringvar = 1
+					qui capture confirm string var `var'
+					if _rc {
+						local stringvar = 0
+					}
+					
 					local var_l : variable label `var'
 					if ("`var_l'" == "") {
 						local var_lab : di "`var'"
@@ -393,7 +487,12 @@ qui {
 						putexcel ${ul_cell} = "    `val_lab'"
 						// count and percentage
 						foreach k in `b_vals' {
-							count if `var' == `j' & `by' == `k'
+							if `stringvar' == 1 {
+								count if `var' == "`j'" & `b_if'
+							}
+							else {
+								count if `var' == `j' & `b_if'
+							}
 							local cnt = r(N)
 							local per = `cnt' / `cnt`k'' * 100
 							// assemble count and per
@@ -412,43 +511,6 @@ qui {
 					}
 				}
 				
-				// run through continuous variable
-				if 10 {
-					foreach var in `con' {
-						// print out the variable
-						// first detect if variable label exist
-						local var_l : variable label `var'
-						if ("`var_l'" == "") {
-							local var_lab : di "`var'"
-						}
-						else if ("`var_l'" != "") {
-							local var_lab : di "`var_l'"
-						}
-						// no need to detect value label since it is continuous
-						noi di "`var_lab'" ", median[IQR]", _continue
-						local erc = `erc' + 1
-						${ind}
-						putexcel ${ul_cell} = "`var_lab', median[IQR]"
-						local cheader = 0
-						// loop through byvar is enough
-						foreach k in `b_vals' {
-							local cheader = `cheader' + 1
-							sum `var' if `by' == `k', detail
-							local med = r(p50)
-							local lq = r(p25)
-							local hq = r(p75)
-							local m_iqr : di %2.1f `med' "[" %2.1f `lq' ", " %2.1f `hq' "]"
-							local ctemp = `csep' + `cfac' * (`cheader' - 1)
-							local col_s : di "_col(`ctemp')"
-							noi di `col_s' "`m_iqr'", _continue
-							local ecc = `ecc' + 1
-							${ind}
-							putexcel ${ul_cell} = "`m_iqr'"
-						}
-						noi di ""
-						local ecc = 1
-					}
-				}
 			}
 			
 			// missingness
