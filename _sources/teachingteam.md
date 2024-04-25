@@ -5,8 +5,9 @@
    - [Lab 1 Solution](lab1sol.md)
    - [Lab 2 Solution](lab1sol.md) *(Note: Same link to Lab 1's solution. No error)*
    - [Lab 3 Solution](lab3sol.md)
-   - Lab 4 Solution (pending)
-   - Lab 5 Solution (pending)
+   - <strike>Lab 4 Solution</strike>
+   - [Lab 5 Solution](lab5sol.md)  
+   - Lab 6 Solution
 
 ## 2. Homework Solutions
    - [HW 1 Solution](hw1sol.md)
