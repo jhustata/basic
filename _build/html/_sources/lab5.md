@@ -1,37 +1,55 @@
-﻿# Lab 5 
+﻿# Lab 5
 
-## Part 1
+This lab is optional; you are NOT required to complete these questions. Please use this lab as an opportunity to review the course material and prepare yourself for the homework questions. Sample responses to the lab questions will be on Friday May 2, 2024.
 
-Write a .do file which imports the requested data sets and creates the graphs described below using the slides we have discussed in class. Your .do file (lab5_lastname.do) must create a log file (lab5_lastname.log). This file will contain your answers for both part 1 and part 2 of today's lab. Your .do file should follow conventions for .do file structure described in class. Do **not** submit your log files as part of the assignment. 
+# Part I
 
-`Look at lastname_q1.png through q5.png`
+1. Start Stata, open your do-file editor, write the header, and load `transplants.dta`.
 
-1. Import [transplants.dta](transplants.dta). Create a variable label for the variable `wait_yrs`, such as "Time on the waitlist in years." Then, create a scatter plot with `wait_yrs` on the y-axis and age at transplant (`age`) on the x-axis. 
+```stata
+use "https://github.com/jhustata/basic/raw/main/transplants.dta", clear
+```
 
-![](lab5fig1.png)
+2. `ctr_id` indicates the ID of the transplant center where the patient received the transplant. Count the number of recipients at each center, and store in a new variable `volume`.
 
-2. Import [tx_yr.dta](tx_yr.dta) (created by [lecture5.do](lecture5do.md)).  In this task you will create one graph that is two plots overlaid on one another. The graph should illustrate (1) the number of recipients who were unemployed (variable: not_working) per year (yr) as a bar graph and (2) the total number of transplants (variable: total) per year (yr) as a line graph. 
+3. List `ctr_id` and `volume` to see how many patients each center has. Maybe let's try this:
 
-![](lab5fig2.png)
+   `list ctr_id volume`
 
-3. Fix your graph from question 2 so that the y-axis begins at 0 and labels go from 0 to to 250 by increments of 50.
+4. This is not what we wanted. Generate a variable `ctr_tag` that "tags" one observation per center.
 
-![](lab5fig3.png)
+5. Now `list ctr_id` and `volume`, but just for one record per center.
 
-## Part 2
+6. Calculate the mean age of the patients at each center, and store in a new variable `mean_age`.
 
-Edit your code for questions 1-3 so that you export the three graphs as `lastname_q1.png`, `lastname_q2.png`, and `lastname_q3.png`.
+7. For each primary diagnosis subgroup (use variable `dx`), run a regression with age as the predictor and peak PRA (`peak_pra`) as the outcome.
 
-4. Import transplants.dta. Create a graph that is two scatter plots overlaid. Graph recipient weight in kilograms (`rec_wgt_kg`) on the y-axis and age at transplant (`age`) on the x-axis, with separate colors and/or makers for males and females. (<u>HINT</u>: if might be helpful). The legend should denote the two categories as "male recipients" and "female recipients". Export the graph as `lastname_q4.png`.
+8. Now let's make the output cleaner. Count the number of cases within each diagnosis group. If there are more than 500 cases, run the regression and display the output. If not, display "There are fewer than 500 cases."
 
-![](lab5fig4.png)
+9. Define a program called `reg_pra`. This program will perform the same tasks as described in Question 8, but the regression will take one or more variables specified by the user as the predictor.
 
-5. Import [tx_yr.dta](tx_yr.dta) (created by lecture5_2019.do). Graph unknown, hypertensive, and diabetes by yr. Include a title, y-axis title, a red-vertical line at year 2008, change the colors and patterns of each line, change the labels in the legend, make the legend span 3 columns, and fix the y-axis. The graph should look like this: 
+10. You have all your commands in your do file, right? Run your do file from the beginning and make sure your do file does exactly the same thing.
 
-![](lab5fig5.png)
+# Part II
 
-Export the graph as `lastname_q5.png`.
+# lab4
 
-For an extra point: Add the text "Policy Change" to the figure near the red line.
+1. We discussed how you can define your own “program”. It’s an awesome tool that allows us to automate a specific task. If you think a specific part of your code will be used multiple times, you might as well put that into a program. In this lab, we will practice customizing our programs.
 
+2. Start Stata, open your do-file editor and consider using conditional code-blocks (`if 2` for instance) as you answer each question in this lab. That way each block has some autonomy and you can "silence" it (`if 0`) while you run other code-blocks.
 
+3. Write a program called `mymean`. This program will take `varlist` as a user input, and calculate the mean value of each variable, and display the values.
+
+4. Modify your program `mymean` so that when an `if` argument is supplied, `mymean` would only include the observations that meet the condition specified by the `if` argument. In other words, if the user types `mymean height if age>65`, the program `mymean` will calculate the mean only among patients older than 65.
+
+5. Further modify your program `mymean` to include the option `sd`. When the option `sd` is supplied, `mymean` will display the standard deviation along with the mean. This version of `mymean` should still be able to accommodate the `if` argument.
+
+6. Further modify your program `mymean` to include the option `digits()`, with a number in the parenthesis. When the option `digits()` is supplied, `mymean` will round up the mean (and the standard deviation, if applicable) in units of `digits()`. If `digits()` is NOT supplied, round in units of 0.001. (Hint: use the Stata function `round()`)
+
+7. Did you make `if`, `sd`, and `digits()` optional arguments? That is, your program should run whether or not these arguments are supplied. To do so, simply surround each argument with brackets. For example, `[sd]`
+
+8. I’d like to draw your attention to the merge command. It’s hard to write a question around `merge`, but it’s a really important command in practice. For instance, we used it in the [week 4](https://jhustata.github.io/basic/chapter4.html#merging-files). Reference these notes when necessary in the future.
+
+9. We want to study if death (`died==1`) is associated with several predictor variables: `bmi`, `prev_ki`, `age`, `peak_pra`, or `gender`. Run logistic regression between `died` and each of the predictor variables using `foreach` loop. At each run, save the name and the regression coefficient of the predictor variable into an external Stata dataset file named `output.dta`.
+
+10. You have all your commands in your do file, right? Run your do file from the beginning and make sure your do file does exactly the same thing.
