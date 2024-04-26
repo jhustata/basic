@@ -537,13 +537,19 @@ document.write(`
 </ul>
 </li>
 </ul>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>putexcel<span class="k"> set</span> table2<span class="m">.</span>xlsx,<span class="k"> replace</span> 
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">global</span> oldrepo <span class="s">&quot;https://github.com/jhustata/book/&quot;</span>
+<span class="k">global</span> repo <span class="s">&quot;https://github.com/jhustata/basic/&quot;</span>
+<span class="k">global dir</span> <span class="s">&quot;raw/main/&quot;</span>
+<span class="k">global varlist</span>:<span class="k"> di</span> <span class="s">&quot;died age gender bmi wait_yrs&quot;</span>
+<span class="k">use</span> <span class="s">&quot;</span><span class="vg">${oldrepo}${dir}</span><span class="s">transplants&quot;</span>,<span class="k"> clear</span>
+putexcel<span class="k"> set</span> table2<span class="m">.</span>xlsx,<span class="k"> replace</span> 
 putexcel B1=(<span class="s">&quot;slope (95%CI)&quot;</span>)
 <span class="k">local</span> row=<span class="m">2</span> 
-<span class="k">foreach var</span> of<span class="k"> varlist</span> <span class="nv">`varlist&#39;</span> {
-<span class="k">    qui</span> regression <span class="nv">`varlist&#39;</span>
-<span class="k">    qui lincom</span> <span class="nf">word</span>(<span class="s">&quot;</span><span class="nv">`varlist&#39;</span><span class="s">&quot;</span>, <span class="nv">`row&#39;</span>)
-<span class="k">    local</span> estimate:<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nv">`r(estimate)&#39;</span> (<span class="nv">`r(lb)&#39;</span> <span class="o">-</span> <span class="nv">`r(ub)&#39;</span>)
+<span class="k">logistic</span> <span class="vg">$varlist</span>  
+<span class="k">foreach</span> v of<span class="k"> varlist</span> <span class="s">&quot;</span><span class="vg">$varlist</span><span class="s">&quot;</span> {
+<span class="k">    local est</span>:<span class="k"> di</span> <span class="nf">word</span>(<span class="s">&quot;</span><span class="vg">$varlist</span><span class="s">&quot;</span>, <span class="nv">`row&#39;</span>) <span class="c1">//debug</span>
+<span class="k">    qui lincom</span> <span class="s">&quot;</span><span class="nv">`est&#39;</span><span class="s">&quot;</span>	
+<span class="k">    local</span> estimate:<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nv">`r(estimate)&#39;</span> <span class="s">&quot;(&quot;</span> <span class="nx">%3.2f</span> <span class="nv">`r(lb)&#39;</span> <span class="s">&quot;-&quot;</span>  <span class="nx">%3.2f</span> <span class="nv">`r(ub)&#39;</span> <span class="s">&quot;)&quot;</span>
 <span class="k">    di</span> <span class="s">&quot;</span><span class="nv">`estimate&#39;</span><span class="s">&quot;</span>
     putexcel B<span class="nv">`row&#39;</span>=(<span class="s">&quot;</span><span class="nv">`estimate&#39;</span><span class="s">&quot;</span>) 
 <span class="k">    local</span> row=<span class="nv">`row&#39;</span> <span class="o">+</span> <span class="m">1</span> <span class="c1">//row tracker in loop</span>
