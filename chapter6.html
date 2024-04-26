@@ -513,6 +513,11 @@ document.write(`
 <li><p><code class="docutils literal notranslate"><span class="pre">c()</span></code></p></li>
 </ul>
 </li>
+<li><p>Bayesian parameters include <em>a priori</em> “beliefs”</p>
+<ul>
+<li><p>Justifies <em><strong>not</strong></em> placing data “upstream” of parameters</p></li>
+</ul>
+</li>
 </ul>
 </section>
 <section id="inferences">
@@ -520,23 +525,34 @@ document.write(`
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">r(p)</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">r(estimate)</span></code>, <code class="docutils literal notranslate"><span class="pre">r(lb)</span></code>, <code class="docutils literal notranslate"><span class="pre">r(ub)</span></code></p></li>
+<li><p>Including <em>posteriori</em> stance of Bayesian statistics</p></li>
 </ul>
 </section>
 <section id="updates">
 <h2>Updates<a class="headerlink" href="#updates" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
-<li><p>New variables in model (i.e. multivariable regression exploring either new variables, functional forms, or interaction-terms)</p></li>
+<li><p>New variables in model</p>
+<ul>
+<li><p>Multivariable regression exploring either new variables, altered functional forms, or interaction-terms (investigating effect-modification)</p></li>
+</ul>
+</li>
 </ul>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>putexcel<span class="k"> set</span> table2<span class="m">.</span>xlsx,<span class="k"> replace</span> 
 putexcel B1=(<span class="s">&quot;slope (95%CI)&quot;</span>)
-<span class="k">local</span> row=<span class="m">2</span>
-<span class="k">foreach var</span> of<span class="k"> varlist</span> <span class="nv">`varlist` {</span>
-<span class="nv">    qui regression `varlist`</span>
-<span class="nv">    qui lincom word(&quot;`varlist&#39;&quot;, `row&#39;)</span>
-<span class="nv">    local estimate: di %3.2f `r(estimate)&#39; (`r(lb)&#39; - `r(ub)&#39;)</span>
-<span class="nv">    di &quot;`estimate&#39;&quot;</span>
-<span class="nv">    putexcel B`row&#39;=(&quot;`estimate&#39;&quot;)</span>
-<span class="nv">}</span>
+<span class="k">local</span> row=<span class="m">2</span> 
+<span class="k">foreach var</span> of<span class="k"> varlist</span> <span class="nv">`varlist&#39;</span> {
+<span class="k">    qui</span> regression <span class="nv">`varlist&#39;</span>
+<span class="k">    qui lincom</span> <span class="nf">word</span>(<span class="s">&quot;</span><span class="nv">`varlist&#39;</span><span class="s">&quot;</span>, <span class="nv">`row&#39;</span>)
+<span class="k">    local</span> estimate:<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nv">`r(estimate)&#39;</span> (<span class="nv">`r(lb)&#39;</span> <span class="o">-</span> <span class="nv">`r(ub)&#39;</span>)
+<span class="k">    di</span> <span class="s">&quot;</span><span class="nv">`estimate&#39;</span><span class="s">&quot;</span>
+    putexcel B<span class="nv">`row&#39;</span>=(<span class="s">&quot;</span><span class="nv">`estimate&#39;</span><span class="s">&quot;</span>) 
+<span class="k">    local</span> row=<span class="nv">`row&#39;</span> <span class="o">+</span> <span class="m">1</span> <span class="c1">//row tracker in loop</span>
+    <span class="cm">/*</span>
+<span class="cm">    since no output is hardcoded, </span>
+<span class="cm">    minimal additional effort needed </span>
+<span class="cm">    when data, code, or parameters are updated</span>
+<span class="cm">    */</span>
+}
 </pre></div>
 </div>
 </section>
