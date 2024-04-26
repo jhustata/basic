@@ -364,7 +364,6 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parameters">Parameters</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inferences">Inferences</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#updates">Updates</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transparency">Transparency</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#oneway">6.1 oneway</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#twoway">6.2 <code class="docutils literal notranslate"><span class="pre">twoway</span></code></a></li>
@@ -531,43 +530,56 @@ document.write(`
 <section id="updates">
 <h2>Updates<a class="headerlink" href="#updates" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
-<li><p>New variables in model</p>
+<li><p>Changes to prior model</p>
 <ul>
 <li><p>Multivariable regression exploring either new variables, altered functional forms, or interaction-terms (investigating effect-modification)</p></li>
 </ul>
 </li>
 </ul>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">global</span> oldrepo <span class="s">&quot;https://github.com/jhustata/book/&quot;</span>
-<span class="k">global</span> repo <span class="s">&quot;https://github.com/jhustata/basic/&quot;</span>
-<span class="k">global dir</span> <span class="s">&quot;raw/main/&quot;</span>
-<span class="k">global varlist</span>:<span class="k"> di</span> <span class="s">&quot;died age gender bmi wait_yrs&quot;</span>
-<span class="k">use</span> <span class="s">&quot;</span><span class="vg">${oldrepo}${dir}</span><span class="s">transplants&quot;</span>,<span class="k"> clear</span>
-putexcel<span class="k"> set</span> table2<span class="m">.</span>xlsx,<span class="k"> replace</span> 
-putexcel B1=(<span class="s">&quot;slope (95%CI)&quot;</span>)
-<span class="k">local</span> row=<span class="m">2</span> 
-<span class="k">logistic</span> <span class="vg">$varlist</span>  
-<span class="k">foreach</span> v of<span class="k"> varlist</span> <span class="s">&quot;</span><span class="vg">$varlist</span><span class="s">&quot;</span> {
-<span class="k">    local est</span>:<span class="k"> di</span> <span class="nf">word</span>(<span class="s">&quot;</span><span class="vg">$varlist</span><span class="s">&quot;</span>, <span class="nv">`row&#39;</span>) <span class="c1">//debug</span>
-<span class="k">    qui lincom</span> <span class="s">&quot;</span><span class="nv">`est&#39;</span><span class="s">&quot;</span>	
-<span class="k">    local</span> estimate:<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nv">`r(estimate)&#39;</span> <span class="s">&quot;(&quot;</span> <span class="nx">%3.2f</span> <span class="nv">`r(lb)&#39;</span> <span class="s">&quot;-&quot;</span>  <span class="nx">%3.2f</span> <span class="nv">`r(ub)&#39;</span> <span class="s">&quot;)&quot;</span>
-<span class="k">    di</span> <span class="s">&quot;</span><span class="nv">`estimate&#39;</span><span class="s">&quot;</span>
-    putexcel B<span class="nv">`row&#39;</span>=(<span class="s">&quot;</span><span class="nv">`estimate&#39;</span><span class="s">&quot;</span>) 
-<span class="k">    local</span> row=<span class="nv">`row&#39;</span> <span class="o">+</span> <span class="m">1</span> <span class="c1">//row tracker in loop</span>
-    <span class="cm">/*</span>
-<span class="cm">    since no output is hardcoded, </span>
-<span class="cm">    minimal additional effort needed </span>
-<span class="cm">    when data, code, or parameters are updated</span>
-<span class="cm">    */</span>
+<Details>
+   <Summary></Summary>
+<ul class="simple">
+<li><p>I added <code class="docutils literal notranslate"><span class="pre">qui</span> <span class="pre">{}</span></code> as an after thought (i.e., first &amp; last line of all the code)</p></li>
+<li><p>Then I copied an pasted into GPT-4 and asked for help with indentation</p></li>
+<li><p>Essentially, GPT-4 didn’t an outstanding job (see below)</p></li>
+<li><p>However, <code class="docutils literal notranslate"><span class="pre">local</span> <span class="pre">estimate1:</span> <span class="pre">di</span> <span class="pre">%3.2f</span> </code>r(estimate)’ “(” %3.2f <code class="docutils literal notranslate"><span class="pre">r(lb)'</span> <span class="pre">&quot;-&quot;</span> </code> was presented as <code class="docutils literal notranslate"><span class="pre">local</span> <span class="pre">estimate1</span> <span class="pre">=</span> <span class="pre">%3.2f</span> </code>r(estimate)’ “(” %3.2f <code class="docutils literal notranslate"><span class="pre">r(lb)'</span> <span class="pre">&quot;-&quot;</span> </code></p></li>
+<li><p>Can you spot the difference? GPT-4 outstanding indentation came with a bug!!!!</p></li>
+</ul>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> {
+    cls
+<span class="k">    global</span> oldrepo <span class="s">&quot;https://github.com/jhustata/book/&quot;</span>
+<span class="k">    global</span> repo <span class="s">&quot;https://github.com/jhustata/basic/&quot;</span>
+<span class="k">    global dir</span> <span class="s">&quot;raw/main/&quot;</span>
+<span class="k">    global varlist</span> <span class="s">&quot;died age gender bmi wait_yrs&quot;</span>
+<span class="k">    use</span> <span class="s">&quot;</span><span class="vg">${oldrepo}${dir}</span><span class="s">transplants&quot;</span>,<span class="k"> clear</span>
+    putexcel<span class="k"> set</span> table2<span class="m">.</span>xlsx,<span class="k"> replace</span> 
+    putexcel B1=(<span class="s">&quot;slope (95%CI)&quot;</span>)
+<span class="k">    local</span> row=<span class="m">2</span> 
+<span class="k">    logistic</span> <span class="vg">$varlist</span>
+<span class="k">    forvalues</span> i = <span class="m">2</span><span class="o">/</span><span class="m">5</span> {
+<span class="k">        local var</span> = <span class="nf">word</span>(<span class="s">&quot;</span><span class="vg">$varlist</span><span class="s">&quot;</span>, <span class="nv">`i&#39;</span>)
+<span class="k">        qui lincom</span> <span class="nv">`var&#39;</span>
+<span class="k">        local</span> estimate1:<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nv">`r(estimate)&#39;</span> <span class="s">&quot;(&quot;</span> <span class="nx">%3.2f</span> <span class="nv">`r(lb)&#39;</span> <span class="s">&quot;-&quot;</span>   
+<span class="k">		local</span> estimate2:<span class="k"> di</span>  <span class="nx">%3.2f</span> <span class="nv">`r(ub)&#39;</span> <span class="s">&quot;)&quot;</span>
+<span class="k">        local</span> estimate:<span class="k"> di</span> <span class="s">&quot;</span><span class="nv">`estimate1&#39;</span><span class="s">&quot;</span> <span class="s">&quot;</span><span class="nv">`estimate2&#39;</span><span class="s">&quot;</span> 
+<span class="k">        di</span> <span class="s">&quot;</span><span class="nv">`estimate&#39;</span><span class="s">&quot;</span>
+        putexcel B<span class="nv">`row&#39;</span>=(<span class="s">&quot;</span><span class="nv">`estimate&#39;</span><span class="s">&quot;</span>) 
+<span class="k">        local</span> row = <span class="nv">`row&#39;</span> <span class="o">+</span> <span class="m">1</span> <span class="c1">// row tracker in loop</span>
+        <span class="cm">/*</span>
+<span class="cm">        since no output is hardcoded, </span>
+<span class="cm">        minimal additional effort needed </span>
+<span class="cm">        when data, code, or parameters are updated</span>
+<span class="cm">        */</span>
+    }
 }
 </pre></div>
 </div>
-</section>
-<section id="transparency">
-<h2>Transparency<a class="headerlink" href="#transparency" title="Permalink to this heading">#</a></h2>
-<ul class="simple">
-<li><p>Reproducibility of all the above by third-party</p></li>
-<li><p>Most compelling when macros rather than hard-coded results are used as output from analyses</p></li>
-</ul>
+</Details>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Transparency</span>
+   <span class="o">-</span> <span class="n">Reproducibility</span> <span class="n">of</span> <span class="nb">all</span> <span class="n">the</span> <span class="n">above</span> <span class="n">by</span> <span class="n">third</span><span class="o">-</span><span class="n">party</span>
+   <span class="o">-</span> <span class="n">Most</span> <span class="n">compelling</span> <span class="n">when</span> <span class="n">macros</span> <span class="n">rather</span> <span class="n">than</span> <span class="n">hard</span><span class="o">-</span><span class="n">coded</span> <span class="n">results</span> <span class="n">are</span> <span class="n">used</span> <span class="k">as</span> <span class="n">output</span> <span class="kn">from</span> <span class="nn">analyses</span>
+</pre></div>
+</div>
 </section>
 <section id="id1">
 <h2><a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
@@ -699,7 +711,6 @@ putexcel B1=(<span class="s">&quot;slope (95%CI)&quot;</span>)
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parameters">Parameters</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inferences">Inferences</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#updates">Updates</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transparency">Transparency</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#oneway">6.1 oneway</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#twoway">6.2 <code class="docutils literal notranslate"><span class="pre">twoway</span></code></a></li>
