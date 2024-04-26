@@ -359,7 +359,16 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coming">Coming…</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data">Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code">Code</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parameters">Parameters</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inferences">Inferences</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#updates">Updates</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transparency">Transparency</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#oneway">6.1 oneway</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#twoway">6.2 <code class="docutils literal notranslate"><span class="pre">twoway</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adjusted">6.3 adjusted</a></li>
 </ul>
             </nav>
         </div>
@@ -373,8 +382,187 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="visualizing-data">
 <h1>6. Visualizing data<a class="headerlink" href="#visualizing-data" title="Permalink to this heading">#</a></h1>
-<section id="coming">
-<h2>Coming…<a class="headerlink" href="#coming" title="Permalink to this heading">#</a></h2>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">()</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="mi">550</span><span class="p">,</span> <span class="mi">500</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;system&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">550</span><span class="p">,</span> <span class="mi">500</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;program&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">2000</span><span class="p">,</span> <span class="mi">960</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;syntax&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="mi">950</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;ado&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">3000</span><span class="p">,</span> <span class="mi">550</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;do&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="mi">3000</span><span class="p">,</span> <span class="mi">550</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;command&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">1900</span><span class="p">,</span> <span class="mi">150</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;queue&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="mi">1900</span><span class="p">,</span> <span class="mi">150</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;macros&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;dta&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">475</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">1900</span><span class="p">,</span> <span class="o">-</span><span class="mi">475</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;excel&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">4000</span><span class="p">,</span> <span class="o">-</span><span class="mi">475</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;word&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="mi">1900</span><span class="p">,</span> <span class="o">-</span><span class="mi">475</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;html&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="mi">4000</span><span class="p">,</span> <span class="o">-</span><span class="mi">475</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;publish&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">950</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s2">&quot;program&quot;</span><span class="p">,</span> <span class="s2">&quot;ado&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;syntax&quot;</span><span class="p">,</span> <span class="s2">&quot;do&quot;</span><span class="p">)])</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s2">&quot;ado&quot;</span><span class="p">,</span> <span class="s2">&quot;command&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;do&quot;</span><span class="p">,</span> <span class="s2">&quot;queue&quot;</span><span class="p">)])</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s2">&quot;command&quot;</span><span class="p">,</span> <span class="s2">&quot;macros&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;queue&quot;</span><span class="p">,</span> <span class="s2">&quot;macros&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;macros&quot;</span><span class="p">,</span> <span class="s2">&quot;excel&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;macros&quot;</span><span class="p">,</span> <span class="s2">&quot;word&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;macros&quot;</span><span class="p">,</span> <span class="s2">&quot;html&quot;</span><span class="p">)])</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s2">&quot;macros&quot;</span><span class="p">,</span> <span class="s2">&quot;dta&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;macros&quot;</span><span class="p">,</span> <span class="s2">&quot;log&quot;</span><span class="p">)])</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s2">&quot;dta&quot;</span><span class="p">,</span> <span class="s2">&quot;publish&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">,</span> <span class="s2">&quot;publish&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;excel&quot;</span><span class="p">,</span> <span class="s2">&quot;publish&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;word&quot;</span><span class="p">,</span> <span class="s2">&quot;publish&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;html&quot;</span><span class="p">,</span> <span class="s2">&quot;publish&quot;</span><span class="p">)])</span>
+
+<span class="n">pos</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">get_node_attributes</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="s1">&#39;pos&#39;</span><span class="p">)</span>
+<span class="n">node_colors</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;lightblue&quot;</span> <span class="k">if</span> <span class="n">node</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;macros&quot;</span><span class="p">,</span> <span class="s2">&quot;excel&quot;</span><span class="p">,</span> <span class="s2">&quot;publish&quot;</span><span class="p">]</span> <span class="k">else</span> <span class="s2">&quot;lightpink&quot;</span> <span class="k">if</span> <span class="n">node</span> <span class="o">==</span> <span class="s2">&quot;excel&quot;</span> <span class="k">else</span> <span class="s2">&quot;lavender&quot;</span> <span class="k">if</span> <span class="n">node</span> <span class="o">==</span> <span class="s2">&quot;macros&quot;</span> <span class="k">else</span> <span class="s2">&quot;lightgreen&quot;</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">()]</span>
+
+<span class="n">nx</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">with_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">font_weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span> <span class="n">node_size</span><span class="o">=</span><span class="mi">4500</span><span class="p">,</span> <span class="n">node_color</span><span class="o">=</span><span class="n">node_colors</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">collections</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_edgecolor</span><span class="p">(</span><span class="s2">&quot;#000000&quot;</span><span class="p">)</span>  <span class="c1"># Set edge color to black for better contrast</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="o">-</span><span class="mi">5000</span><span class="p">,</span> <span class="mi">5000</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="o">-</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/ef7b6665ff8f42141b393b05380f60e99aa9ff72409713c596e7020e3efb19ba.png" src="_images/ef7b6665ff8f42141b393b05380f60e99aa9ff72409713c596e7020e3efb19ba.png" />
+</div>
+</div>
+<p><strong>Note:</strong> we now replace “results” with “macros”. HW1 invited you to hardcode results into your <code class="docutils literal notranslate"><span class="pre">.do</span></code> file. By HW2, however, you were expected to use macros instead of hardcoding, introducing flexibility to your <code class="docutils literal notranslate"><span class="pre">.do</span></code> file scripts. This figurative update is a reminder to never hardcode output in a <code class="docutils literal notranslate"><span class="pre">.do</span></code> file. Consider the following <em>Directed Acyclic Graph:</em></p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">()</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;Data&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">2500</span><span class="p">,</span> <span class="mi">700</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;Code&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">4200</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;Inferences&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;Parameters&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">2500</span><span class="p">,</span> <span class="o">-</span><span class="mi">700</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;Updates&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="mi">1500</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;Transparency&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="mi">4000</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s2">&quot;Data&quot;</span><span class="p">,</span> <span class="s2">&quot;Inferences&quot;</span><span class="p">)])</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s2">&quot;Code&quot;</span><span class="p">,</span> <span class="s2">&quot;Inferences&quot;</span><span class="p">)])</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s2">&quot;Parameters&quot;</span><span class="p">,</span> <span class="s2">&quot;Inferences&quot;</span><span class="p">)])</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s2">&quot;Inferences&quot;</span><span class="p">,</span> <span class="s2">&quot;Updates&quot;</span><span class="p">)])</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s2">&quot;Updates&quot;</span><span class="p">,</span> <span class="s2">&quot;Transparency&quot;</span><span class="p">)])</span>
+
+<span class="n">pos</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">get_node_attributes</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="s1">&#39;pos&#39;</span><span class="p">)</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Inferences&quot;</span><span class="p">:</span> <span class="s2">&quot;Inferences&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;Data&quot;</span><span class="p">:</span> <span class="s2">&quot;Data&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;Code&quot;</span><span class="p">:</span> <span class="s2">&quot;Code&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;Parameters&quot;</span><span class="p">:</span> <span class="s2">&quot;Parameters&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;Updates&quot;</span><span class="p">:</span> <span class="s2">&quot;Updates&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;Transparency&quot;</span><span class="p">:</span> <span class="s2">&quot;Transparency&quot;</span><span class="p">}</span>  <span class="c1"># Added label for &quot;NDI&quot; node in the labels dictionary</span>
+
+<span class="c1"># Update color for the &quot;Scenarios&quot; node</span>
+<span class="n">node_colors</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;lightblue&quot;</span><span class="p">,</span><span class="s2">&quot;lightblue&quot;</span><span class="p">,</span> <span class="s2">&quot;lavender&quot;</span><span class="p">,</span> <span class="s2">&quot;lightblue&quot;</span><span class="p">,</span> <span class="s2">&quot;lightblue&quot;</span><span class="p">,</span> <span class="s2">&quot;lightblue&quot;</span><span class="p">]</span>
+<span class="c1"># node_colors = [&quot;lightblue&quot;,&quot;lavender&quot;, &quot;lavender&quot;, &quot;lightgreen&quot;, &quot;lightpink&quot;, &quot;lightpink&quot;]</span>
+<span class="c1"># Suppress the deprecation warning</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">DeprecationWarning</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">nx</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">with_labels</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">node_size</span><span class="o">=</span><span class="mi">20000</span><span class="p">,</span> <span class="n">node_color</span><span class="o">=</span><span class="n">node_colors</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">edge_color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;solid&#39;</span><span class="p">)</span>
+<span class="n">nx</span><span class="o">.</span><span class="n">draw_networkx_labels</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">font_size</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span> <span class="c1"># , font_weight=&#39;bold&#39;</span>
+<span class="n">nx</span><span class="o">.</span><span class="n">draw_networkx_edges</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">edge_color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;solid&#39;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">5000</span><span class="p">,</span> <span class="mi">5000</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/bd7156ffdc732b3095dad1da740b099ae999597c4cb8154a81a988a589e43517.png" src="_images/bd7156ffdc732b3095dad1da740b099ae999597c4cb8154a81a988a589e43517.png" />
+</div>
+</div>
+<section id="data">
+<h2>Data<a class="headerlink" href="#data" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>The data being analyzed</p></li>
+</ul>
+</section>
+<section id="code">
+<h2>Code<a class="headerlink" href="#code" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Your <code class="docutils literal notranslate"><span class="pre">.do</span></code> file scripts</p></li>
+</ul>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Heart of your output</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">r()</span></code></p>
+<ul>
+<li><p>e.g. <code class="docutils literal notranslate"><span class="pre">r(mean)</span></code>, <code class="docutils literal notranslate"><span class="pre">r(se)</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">e()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">c()</span></code></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="inferences">
+<h2>Inferences<a class="headerlink" href="#inferences" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">r(p)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">r(estimate)</span></code>, <code class="docutils literal notranslate"><span class="pre">r(lb)</span></code>, <code class="docutils literal notranslate"><span class="pre">r(ub)</span></code></p></li>
+</ul>
+</section>
+<section id="updates">
+<h2>Updates<a class="headerlink" href="#updates" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>New variables in model (i.e. multivariable regression exploring either new variables, functional forms, or interaction-terms)</p></li>
+</ul>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>putexcel<span class="k"> set</span> table2<span class="m">.</span>xlsx,<span class="k"> replace</span> 
+putexcel B1=(<span class="s">&quot;slope (95%CI)&quot;</span>)
+<span class="k">local</span> row=<span class="m">2</span>
+<span class="k">foreach var</span> of<span class="k"> varlist</span> <span class="nv">`varlist` {</span>
+<span class="nv">    qui regression `varlist`</span>
+<span class="nv">    qui lincom word(&quot;`varlist&#39;&quot;, `row&#39;)</span>
+<span class="nv">    local estimate: di %3.2f `r(estimate)&#39; (`r(lb)&#39; - `r(ub)&#39;)</span>
+<span class="nv">    di &quot;`estimate&#39;&quot;</span>
+<span class="nv">    putexcel B`row&#39;=(&quot;`estimate&#39;&quot;)</span>
+<span class="nv">}</span>
+</pre></div>
+</div>
+</section>
+<section id="transparency">
+<h2>Transparency<a class="headerlink" href="#transparency" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Reproducibility of all the above by third-party</p></li>
+<li><p>Most compelling when macros rather than hard-coded results are used as output from analyses</p></li>
+</ul>
+</section>
+<section id="id1">
+<h2><a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
+</section>
+<section id="oneway">
+<h2>6.1 oneway<a class="headerlink" href="#oneway" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Just an outcome</p></li>
+<li><p>Or a predictor</p></li>
+</ul>
+</section>
+<section id="twoway">
+<h2>6.2 <code class="docutils literal notranslate"><span class="pre">twoway</span></code><a class="headerlink" href="#twoway" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Typically outcome vs. predictor</p></li>
+<li><p>But can be correlational between two predictors</p></li>
+</ul>
 <p>Let’s revisit the first graph we produce in week one, but with a twist:</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">// Load the life expectancy dataset</span>
 <span class="k">webuse</span> lifeexp,<span class="k"> clear</span>
@@ -406,6 +594,14 @@ document.write(`
 <p>This version refines the plotting to make the representation of data clearer and more informative, including dynamic placement for the mean life expectancy annotation. Feel free to adjust the specifics of the plotting commands (<code class="docutils literal notranslate"><span class="pre">mlabel</span></code>, <code class="docutils literal notranslate"><span class="pre">text</span></code>, <code class="docutils literal notranslate"><span class="pre">place</span></code>, etc.) to better suit your preferences and the characteristics of your dataset.</p>
 <p><img alt="" src="_images/lexp_bycountry_review.png" /></p>
 <p>How may we edit our code to make this graph more meaningful?</p>
+</section>
+<section id="adjusted">
+<h2>6.3 adjusted<a class="headerlink" href="#adjusted" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Uses parameters (macros) from multivariable regression</p></li>
+<li><p>Statistical inferences (95%CI, p-values, credibility intervals) can be made</p></li>
+<li><p>Aspire towards this since its what science is all about</p></li>
+</ul>
 </section>
 </section>
 
@@ -476,7 +672,16 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coming">Coming…</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data">Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code">Code</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parameters">Parameters</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inferences">Inferences</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#updates">Updates</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transparency">Transparency</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#oneway">6.1 oneway</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#twoway">6.2 <code class="docutils literal notranslate"><span class="pre">twoway</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adjusted">6.3 adjusted</a></li>
 </ul>
   </nav></div>
 
