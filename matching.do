@@ -38,7 +38,7 @@ qui{
 		   codebook 
 		   keep fake_id_case
 		   rename fake_id_case fake_id
-		   merge m:1 fake_id using $tx, keep(matched)
+		   merge m:1 fake_id us`ing $tx, keep(matched)
 		   save matched_cases, replace 
 		restore 
 		keep fake_id*
