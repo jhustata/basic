@@ -373,20 +373,17 @@ document.write(`
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#forvalues"><code class="docutils literal notranslate"><span class="pre">forvalues</span></code></a></li>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#foreach"><code class="docutils literal notranslate"><span class="pre">foreach</span></code></a></li>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#numlist"><code class="docutils literal notranslate"><span class="pre">numlist</span></code></a></li>
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><code class="docutils literal notranslate"><span class="pre">tokenize</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><code class="docutils literal notranslate"><span class="pre">tokenize</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#putexcel">Putexcel</a></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#macros">Macros</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">[Varlist]</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#putexcel">Putexcel</a></li>
 </ul>
 </li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#macros">Macros</a></li>
 </ul>
             </nav>
         </div>
@@ -458,11 +455,11 @@ document.write(`
 <span class="k">end</span> 
 </pre></div>
 </div>
-</Details>
 <p>Now the user has flexibility:</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>myvarlist age gender race abo bmi
 </pre></div>
 </div>
+</Details>
 <section id="c-alpha">
 <h4><code class="docutils literal notranslate"><span class="pre">c(ALPHA)</span></code><a class="headerlink" href="#c-alpha" title="Permalink to this heading">#</a></h4>
 <p>What if you wish to loop over a list of strings that aren’t variables?</p>
@@ -485,11 +482,11 @@ document.write(`
 </div>
 <Details>
    <Summary></Summary>
-```stata
-set timeout1 1000
-import sasxport5 "https://wwwn.cdc.gov/Nchs/Nhanes/1999-2000/DEMO.XPT", clear
-```
-Can you write a script that imports NHANES DEMO.XPT (1999-2000) and iteratively `appends` NHANES DEMO.XPT from the next two survey cycles 2001-2002, 2003-2004? Visit the website to see the naming convention for the various years (e.g. [NHANES 2001 - 2002](https://wwwn.cdc.gov/nchs/nhanes/search/datapage.aspx?Component=Demographics&CycleBeginYear=2001))
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">set</span> timeout1 <span class="m">1000</span>
+import sasxport5 <span class="s">&quot;https://wwwn.cdc.gov/Nchs/Nhanes/1999-2000/DEMO.XPT&quot;</span>,<span class="k"> clear</span>
+</pre></div>
+</div>
+<p>Can you write a script that imports NHANES DEMO.XPT (1999-2000) and iteratively <code class="docutils literal notranslate"><span class="pre">appends</span></code> NHANES DEMO.XPT from the next two survey cycles 2001-2002, 2003-2004? Visit the website to see the naming convention for the various years (e.g. <a class="reference external" href="https://wwwn.cdc.gov/nchs/nhanes/search/datapage.aspx?Component=Demographics&amp;CycleBeginYear=2001">NHANES 2001 - 2002</a>)</p>
 </Details>
 <section id="varlist">
 <h5><code class="docutils literal notranslate"><span class="pre">varlist</span></code><a class="headerlink" href="#varlist" title="Permalink to this heading">#</a></h5>
@@ -589,12 +586,6 @@ Can you write a script that imports NHANES DEMO.XPT (1999-2000) and iteratively 
  } 
 </pre></div>
 </div>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k"> local numlist</span> <span class="s">&quot;1 3 5 7&quot;</span>
-<span class="k"> foreach n</span> of<span class="k"> numlist</span> <span class="nv">`numlist&#39;</span> {
-<span class="k"> 	di</span> <span class="nv">`n&#39;</span>
- } 
-</pre></div>
-</div>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> {
 	<span class="c1">//earlier code</span>
 <span class="k">		foreach n</span> of<span class="k"> numlist</span> <span class="nv">`dxcat&#39;</span> {
@@ -626,6 +617,24 @@ Can you write a script that imports NHANES DEMO.XPT (1999-2000) and iteratively 
     }
 </pre></div>
 </div>
+<section id="putexcel">
+<h6>Putexcel<a class="headerlink" href="#putexcel" title="Permalink to this heading">#</a></h6>
+<p>Output a <code class="docutils literal notranslate"><span class="pre">varlist</span></code>, <code class="docutils literal notranslate"><span class="pre">numlist</span></code>, and some other list into <code class="docutils literal notranslate"><span class="pre">.xlsx</span></code></p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">clear</span>  
+putexcel<span class="k"> set</span> lab6,<span class="k"> replace</span> 
+<span class="k">use</span> <span class="vg">$repo$data1</span>,<span class="k"> clear</span>
+<span class="k">qui ds</span>
+<span class="k">local</span> row=<span class="m">2</span>
+<span class="k">foreach</span> v of<span class="k"> varlist</span> <span class="nv">`r(varlist)&#39;</span> {
+<span class="k">	qui</span> putexcel A<span class="nv">`row&#39;</span> = <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">&quot;</span>
+<span class="k">	local</span> row=<span class="nv">`row&#39;</span><span class="o">+</span> <span class="m">1</span>
+}
+<span class="k">ls</span> 
+ 
+</pre></div>
+</div>
+<p>Review the <code class="docutils literal notranslate"><span class="pre">.xlsx</span></code> file you’ve just created</p>
+</section>
 </section>
 </section>
 </section>
@@ -650,29 +659,6 @@ Can you write a script that imports NHANES DEMO.XPT (1999-2000) and iteratively 
 </ul>
 </li>
 </ul>
-<section id="id2">
-<h3>[Varlist]<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
-<section id="putexcel">
-<h4>Putexcel<a class="headerlink" href="#putexcel" title="Permalink to this heading">#</a></h4>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
-1. HW2 grading 
-2. Agenda Friday 
-3. HW3 grading 
-4. Weeks 6-8
-5. Document Ronan Farrows NY post article: ambiguity there is really impressive 
-6. Edit so that hw1.txt is also input 
-7. Make each code-block independent; “if 0” to all others leaves it functional; if 0 to it leaves script functional 
-
-
-Chord-stack system for my fave church chord:
-
-3rd-3rd-3rd-b3rd 
-
-Anxious Stata II students on GitHub 
-
-DAG!!! No results (hardcoded or log file) in a do file 
-</pre></div>
-</div>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> {
 <span class="k">	if</span> <span class="m">0</span> { <span class="c1">//Background</span>
 		<span class="m">1</span>. Loops
@@ -757,8 +743,6 @@ DAG!!! No results (hardcoded or log file) in a do file
 </div>
 </section>
 </section>
-</section>
-</section>
 
     <script type="text/x-thebe-config">
     {
@@ -825,20 +809,17 @@ DAG!!! No results (hardcoded or log file) in a do file
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#forvalues"><code class="docutils literal notranslate"><span class="pre">forvalues</span></code></a></li>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#foreach"><code class="docutils literal notranslate"><span class="pre">foreach</span></code></a></li>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#numlist"><code class="docutils literal notranslate"><span class="pre">numlist</span></code></a></li>
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><code class="docutils literal notranslate"><span class="pre">tokenize</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><code class="docutils literal notranslate"><span class="pre">tokenize</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#putexcel">Putexcel</a></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#macros">Macros</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">[Varlist]</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#putexcel">Putexcel</a></li>
 </ul>
 </li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#macros">Macros</a></li>
 </ul>
   </nav></div>
 
