@@ -537,20 +537,21 @@ import sasxport5 <span class="s">&quot;https://wwwn.cdc.gov/Nchs/Nhanes/1999-200
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>Continuous</p></td>
+<tr class="row-even"><td><p>Continuous  (Units)</p></td>
 <td><p>Median (IQR)</p></td>
 </tr>
-<tr class="row-odd"><td><p>Binary</p></td>
+<tr class="row-odd"><td><p>Binary (One is enough)</p></td>
 <td><p>%</p></td>
 </tr>
-<tr class="row-even"><td><p>Multicategory</p></td>
+<tr class="row-even"><td><p>Multicategory (Each reported)</p></td>
 <td><p>Variable label</p></td>
 </tr>
-<tr class="row-odd"><td><p>Specific category</p></td>
+<tr class="row-odd"><td><p>Specific or collapsed</p></td>
 <td><p>%</p></td>
 </tr>
 </tbody>
 </table>
+<p><code class="docutils literal notranslate"><span class="pre">recode</span> <span class="pre">multicat</span> <span class="pre">(1-3=1</span> <span class="pre">&quot;Level</span> <span class="pre">1&quot;)</span> <span class="pre">(4=2</span> <span class="pre">&quot;Level</span> <span class="pre">2&quot;)</span> <span class="pre">(5/max=3</span> <span class="pre">&quot;Level</span> <span class="pre">3&quot;),</span> <span class="pre">gen(collpased)</span></code></p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">h ds</span>
 <span class="k">ds</span>, has(type string)
 <span class="k">levelsof</span> extended_dgn
