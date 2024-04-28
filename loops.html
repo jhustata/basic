@@ -625,10 +625,23 @@ putexcel<span class="k"> set</span> lab6,<span class="k"> replace</span>
 <span class="k">use</span> <span class="vg">$repo$data1</span>,<span class="k"> clear</span>
 <span class="k">qui ds</span>
 <span class="k">local</span> row=<span class="m">2</span>
-<span class="k">foreach</span> v of<span class="k"> varlist</span> <span class="nv">`r(varlist)&#39;</span> {
-<span class="k">	qui</span> putexcel A<span class="nv">`row&#39;</span> = <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">&quot;</span>
-<span class="k">	local</span> row=<span class="nv">`row&#39;</span><span class="o">+</span> <span class="m">1</span>
-}
+<span class="c1">//nested loop</span>
+<span class="k">tokenize</span> <span class="s">&quot;</span><span class="nv">`c(ALPHA)&#39;</span><span class="s">&quot;</span>
+<span class="k">forvalues</span> i = <span class="m">1</span><span class="o">/</span><span class="m">2</span> {
+<span class="k">	foreach</span> v of<span class="k"> varlist</span> <span class="nv">`r(varlist)&#39;</span> {
+<span class="k">		if</span> <span class="nv">`i&#39;</span> <span class="o">==</span> <span class="m">1</span> {
+<span class="k">			qui</span> putexcel <span class="nv">``i&#39;&#39;`row&#39;</span> = <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">&quot;</span>
+<span class="k">	        local</span> row=<span class="nv">`row&#39;</span><span class="o">+</span> <span class="m">1</span>	
+		}
+<span class="k">		if</span> <span class="nv">`i&#39;</span> <span class="o">==</span> <span class="m">2</span> {
+<span class="k">			qui sum</span> <span class="nv">`v&#39;</span>
+<span class="k">			local mean</span>:<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(mean)
+<span class="k">			qui</span> putexcel <span class="nv">``i&#39;&#39;`row&#39;</span> = <span class="s">&quot;</span><span class="nv">`mean&#39;</span><span class="s">&quot;</span>
+<span class="k">	        local</span> row=<span class="nv">`row&#39;</span>	<span class="o">+</span> <span class="m">1</span>
+		}
+    } 
+} 
+
 <span class="k">ls</span> 
  
 </pre></div>
