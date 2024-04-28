@@ -529,6 +529,28 @@ import sasxport5 <span class="s">&quot;https://wwwn.cdc.gov/Nchs/Nhanes/1999-200
 </div>
 <Details>
    <Summary></Summary>
+<p>Variable type determines the parameters you report in Table 1:</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Variable Type</p></th>
+<th class="head"><p>Statistic</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Continuous</p></td>
+<td><p>Median (IQR)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Binary</p></td>
+<td><p>%</p></td>
+</tr>
+<tr class="row-even"><td><p>Multicategory</p></td>
+<td><p>Variable label</p></td>
+</tr>
+<tr class="row-odd"><td><p>Specific category</p></td>
+<td><p>%</p></td>
+</tr>
+</tbody>
+</table>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">h ds</span>
 <span class="k">ds</span>, has(type string)
 <span class="k">levelsof</span> extended_dgn
@@ -539,6 +561,27 @@ import sasxport5 <span class="s">&quot;https://wwwn.cdc.gov/Nchs/Nhanes/1999-200
 <span class="k">ds</span>, has(varl <span class="o">*</span>TX<span class="o">*</span> <span class="o">*</span>transplant<span class="o">*</span>)
 <span class="k">ds</span>, has(format %t<span class="o">*</span>) 
 <span class="k">ds</span>, has(format <span class="o">*</span>f)  
+</pre></div>
+</div>
+<p>Here’s a simple script that classifies each variable:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> {
+	cls
+<span class="k">    ds</span>, not(type string) <span class="c1">//otherwise, extended diagnosis is continuous! </span>
+<span class="k">	global</span> threshold <span class="m">9</span> <span class="c1">//for multicat vs. continuous</span>
+<span class="k">    foreach</span> v of<span class="k"> varlist</span> <span class="nv">`r(varlist)&#39;</span> {
+<span class="k">	    levelsof</span> <span class="nv">`v&#39;</span>,<span class="k"> local</span>(numlevels)
+<span class="k">	    if</span> <span class="nf">r</span>(r) <span class="o">==</span> <span class="m">2</span> {  
+<span class="k">			noi di</span> <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s"> binary&quot;</span>
+	    }
+<span class="k">	    else if</span> <span class="nf">inrange</span>(<span class="nv">`r(r)&#39;</span>, <span class="m">3</span>, <span class="vg">$threshold</span>) {  
+<span class="k">			noi di</span> <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s"> multicat&quot;</span>
+	    }
+<span class="k">	    else</span> {  
+<span class="k">			noi di</span> <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s"> continuous&quot;</span>
+	    }
+    }
+	
+}
 </pre></div>
 </div>
 </Details>
