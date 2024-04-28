@@ -18,9 +18,19 @@ qui {
 		foreach v of varlist `r(varlist)' {
 			noi di "`v'"
 		}
+		//levelsof is a "numlist"
 		levelsof dx, local(dxcat)
+		local varlab: var lab dx 
+		//think of Table1 in the choice of the display below
+		noi di "`varlab', %"
+		//dx is confusing since its both variable name & variable label 
+		noi de dx 
+		local vallab: value lab dx
 		foreach n of numlist `dxcat' {
-			noi di `n'
+			//noi di `n'
+			local dxvarlab: lab `vallab' `n'
+			//see how this space manifests as indentation in the output
+			noi di "   `dxvarlab'" 
 		}
 	}
 }

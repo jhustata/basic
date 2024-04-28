@@ -357,17 +357,17 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#types">Types</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kinds-of-loops">Kinds of loops</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#foreach-v-of-varlist"><code class="docutils literal notranslate"><span class="pre">foreach</span> <span class="pre">v</span> <span class="pre">of</span> <span class="pre">varlist</span> <span class="pre">{</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#foreach-n-of-numlist"><code class="docutils literal notranslate"><span class="pre">foreach</span> <span class="pre">n</span> <span class="pre">of</span> <span class="pre">numlist</span> <span class="pre">{</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#foreach-n-of-numlist"><code class="docutils literal notranslate"><span class="pre">foreach</span> <span class="pre">n</span> <span class="pre">of</span> <span class="pre">numlist</span> <span class="pre">{</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#variable-lab"><code class="docutils literal notranslate"><span class="pre">variable</span> <span class="pre">lab</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#value-lab"><code class="docutils literal notranslate"><span class="pre">value</span> <span class="pre">lab</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#label-value-lab"><code class="docutils literal notranslate"><span class="pre">label</span> <span class="pre">value</span> <span class="pre">lab</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#macros">Macros</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#values">Values</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#string">String</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#numeric">Numeric</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">String</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#integer">Integer</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#macros">Macros</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encoding">Encoding</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#varlist">[Varlist]</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#putexcel">Putexcel</a></li>
@@ -406,8 +406,8 @@ document.write(`
 }
 </pre></div>
 </div>
-<section id="types">
-<h2>Types<a class="headerlink" href="#types" title="Permalink to this heading">#</a></h2>
+<section id="kinds-of-loops">
+<h2>Kinds of loops<a class="headerlink" href="#kinds-of-loops" title="Permalink to this heading">#</a></h2>
 <section id="foreach-v-of-varlist">
 <h3><code class="docutils literal notranslate"><span class="pre">foreach</span> <span class="pre">v</span> <span class="pre">of</span> <span class="pre">varlist</span> <span class="pre">{</span></code><a class="headerlink" href="#foreach-v-of-varlist" title="Permalink to this heading">#</a></h3>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> {
@@ -439,9 +439,9 @@ document.write(`
 <section id="foreach-n-of-numlist">
 <h3><code class="docutils literal notranslate"><span class="pre">foreach</span> <span class="pre">n</span> <span class="pre">of</span> <span class="pre">numlist</span> <span class="pre">{</span></code><a class="headerlink" href="#foreach-n-of-numlist" title="Permalink to this heading">#</a></h3>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> {
-    <span class="c1">// code</span>
+    <span class="c1">//earlier code</span>
 <span class="k">	if</span> <span class="vg">$N</span> {
-        <span class="c1">// code</span>
+        <span class="c1">// earlier code</span>
 <span class="k">		levelsof</span> dx,<span class="k"> local</span>(dxcat)
 		<span class="c1">//numlist: list of numbers</span>
 <span class="k">		foreach n</span> of<span class="k"> numlist</span> <span class="nv">`dxcat&#39;</span> {
@@ -451,6 +451,64 @@ document.write(`
 }
 </pre></div>
 </div>
+<section id="variable-lab">
+<h4><code class="docutils literal notranslate"><span class="pre">variable</span> <span class="pre">lab</span></code><a class="headerlink" href="#variable-lab" title="Permalink to this heading">#</a></h4>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>qui {
+	if $ N {
+	//earlier code
+		//levelsof is a &quot;numlist&quot;
+		levelsof dx, local(dxcat)
+		local varlab: var lab dx 
+		//later code
+	}
+}
+</pre></div>
+</div>
+<Details>
+   <Summary><Summary>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">h ds</span>
+<span class="k">ds</span>, has(type string)
+<span class="k">levelsof</span> extended_dgn
+<span class="k">return list</span>
+<span class="k">ds</span>, not(type string)
+<span class="k">ds</span>, has(type int)
+<span class="k">ds</span>, has(varl <span class="s">&quot;*TX*&quot;</span>)
+<span class="k">ds</span>, has(varl <span class="o">*</span>TX<span class="o">*</span> <span class="o">*</span>transplant<span class="o">*</span>)
+<span class="k">ds</span>, has(format %t<span class="o">*</span>) 
+<span class="k">ds</span>, has(format <span class="o">*</span>f)  
+</pre></div>
+</div>
+</Details>
+</section>
+<section id="value-lab">
+<h4><code class="docutils literal notranslate"><span class="pre">value</span> <span class="pre">lab</span></code><a class="headerlink" href="#value-lab" title="Permalink to this heading">#</a></h4>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>qui {
+	if $ N {
+	//earlier code
+		//earlier code
+		local vallab: value lab dx
+		foreach n of numlist `dxcat&#39; {
+			//code
+		}
+	}
+}
+</pre></div>
+</div>
+</section>
+<section id="label-value-lab">
+<h4><code class="docutils literal notranslate"><span class="pre">label</span> <span class="pre">value</span> <span class="pre">lab</span></code><a class="headerlink" href="#label-value-lab" title="Permalink to this heading">#</a></h4>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>qui {
+	if $ N {
+	//earlier code
+		foreach n of numlist `dxcat&#39; {
+			local dxvarlab: lab `vallab&#39; `n&#39;
+			//later code
+		}
+	}
+}
+</pre></div>
+</div>
+</section>
 </section>
 </section>
 <section id="macros">
@@ -473,31 +531,6 @@ document.write(`
 </ul>
 </li>
 </ul>
-</section>
-<section id="values">
-<h2>Values<a class="headerlink" href="#values" title="Permalink to this heading">#</a></h2>
-</section>
-<section id="string">
-<h2>String<a class="headerlink" href="#string" title="Permalink to this heading">#</a></h2>
-</section>
-<section id="numeric">
-<h2>Numeric<a class="headerlink" href="#numeric" title="Permalink to this heading">#</a></h2>
-<p>Spot the macro!!!!!
-“Loop-in” all week 6-8 concepts</p>
-<p>Creturn list
-Return list
-Ereturnlist</p>
-<p>capture confirm file</p>
-<p>_request()</p>
-<section id="id1">
-<h3>String<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
-<p>Foreach var of varlist</p>
-</section>
-<section id="integer">
-<h3>Integer<a class="headerlink" href="#integer" title="Permalink to this heading">#</a></h3>
-<p>Foreaxh num of numlist
-Forvalues I=1/5</p>
-</section>
 <section id="encoding">
 <h3>Encoding<a class="headerlink" href="#encoding" title="Permalink to this heading">#</a></h3>
 <p>Tokenize
@@ -662,17 +695,17 @@ DAG!!! No results (hardcoded or log file) in a do file
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#types">Types</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kinds-of-loops">Kinds of loops</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#foreach-v-of-varlist"><code class="docutils literal notranslate"><span class="pre">foreach</span> <span class="pre">v</span> <span class="pre">of</span> <span class="pre">varlist</span> <span class="pre">{</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#foreach-n-of-numlist"><code class="docutils literal notranslate"><span class="pre">foreach</span> <span class="pre">n</span> <span class="pre">of</span> <span class="pre">numlist</span> <span class="pre">{</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#foreach-n-of-numlist"><code class="docutils literal notranslate"><span class="pre">foreach</span> <span class="pre">n</span> <span class="pre">of</span> <span class="pre">numlist</span> <span class="pre">{</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#variable-lab"><code class="docutils literal notranslate"><span class="pre">variable</span> <span class="pre">lab</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#value-lab"><code class="docutils literal notranslate"><span class="pre">value</span> <span class="pre">lab</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#label-value-lab"><code class="docutils literal notranslate"><span class="pre">label</span> <span class="pre">value</span> <span class="pre">lab</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#macros">Macros</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#values">Values</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#string">String</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#numeric">Numeric</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">String</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#integer">Integer</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#macros">Macros</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encoding">Encoding</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#varlist">[Varlist]</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#putexcel">Putexcel</a></li>
