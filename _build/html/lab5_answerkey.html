@@ -359,9 +359,12 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Lab 5 solution</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-i">Part I</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">4.1</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">4.2</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">5</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">3</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">4.1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">4.2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">5</a></li>
 </ul>
 </li>
 </ul>
@@ -384,13 +387,78 @@ document.write(`
 <section id="part-i">
 <h2>Part I<a class="headerlink" href="#part-i" title="Permalink to this heading">#</a></h2>
 <section id="id1">
-<h3>4.1<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<h3>1<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<p>Let the students know that there are no shortcuts: the more practice, the better they’ll become</p>
+</section>
+<section id="id2">
+<h3>2<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">// 1</span>
+_request(N)
+<span class="vg">$N</span>
+
+<span class="c1">// 2</span>
+<span class="k">forvalues</span> i=<span class="m">1</span><span class="o">/</span><span class="vg">$N</span> {
+<span class="k">    di</span> <span class="nv">`i&#39;</span> <span class="c1">//local macro</span>
+}
+
+
+<span class="c1">// 3</span>
+_request(data<span class="nv">`i&#39;</span>)
+<span class="vg">${data</span><span class="nv">`i&#39;</span><span class="vg">}</span>
+
+<span class="c1">// 4</span>
+<span class="k">global</span> repo <span class="s">&quot;https://github.com/jhustata/basic/raw/main/&quot;</span>
+<span class="vg">$repo</span>
+
+<span class="c1">// 5</span>
+<span class="k">global</span> nhanes <span class="s">&quot;https://wwwn.cdc.gov/Nchs/Nhanes/&quot;</span>
+<span class="vg">$nhanes</span>
+
+<span class="c1">// 6</span>
+<span class="k">ds</span>
+<span class="nv">`r(varlist)&#39;</span>
+
+<span class="c1">// 7</span>
+<span class="k">foreach</span> v of<span class="k"> varlist</span> <span class="nv">`r(varlist)&#39;</span> {
+    <span class="nv">`v&#39;</span>
+}
+
+<span class="c1">// 8</span>
+<span class="k">foreach</span> v<span class="k"> in</span> <span class="nv">`c(ALPHA)&#39;</span> {
+<span class="k">   di</span>  <span class="nv">`c(ALPHA)&#39;</span> <span class="c1">//c() class macro</span>
+<span class="k">   creturn list</span>
+}
+
+<span class="c1">// etc.</span>
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h3>3<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
+<p>Simple example under <code class="docutils literal notranslate"><span class="pre">foreach</span> <span class="pre">v</span> <span class="pre">of</span> <span class="pre">varlist</span> <span class="pre">{</span></code> in Lab 5 Part I Section 2.1:</p>
+<ul class="simple">
+<li><p>Click on the “token”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">varlist</span></code> in the program might have been a list of hardcoded variabes in a <code class="docutils literal notranslate"><span class="pre">.do</span></code> file</p>
+<ul>
+<li><p>e.g. init_age bmi</p></li>
+</ul>
+</li>
+<li><p>But a program generalizes this using <code class="docutils literal notranslate"><span class="pre">syntax</span> <span class="pre">varlist</span></code></p>
+<ul>
+<li><p>The user may then choose the  variable list of their preference</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id4">
+<h3>4.1<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">do</span> <span class="vg">${repo}</span>loopxpt<span class="m">.</span>do
 </pre></div>
 </div>
 </section>
-<section id="id2">
-<h3>4.2<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
+<section id="id5">
+<h3>4.2<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
+<p>You can copy and paste this into <strong>ChatGPT</strong> and ask for notes. Encourage students to do this. Please let them use other AIs as well.</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> {
 	cls
 <span class="k">    clear</span> 
@@ -428,10 +496,54 @@ document.write(`
 }
 </pre></div>
 </div>
+<p>Here’s an example with the query: <strong>annotate</strong>:</p>
+<p>This code appears to be written in Stata, a statistical software package. It’s designed to automate the process of downloading, importing, and merging demographic datasets from multiple biennial waves of the National Health and Nutrition Examination Survey (NHANES) hosted by the CDC. Let me annotate each segment for you:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> {   <span class="c1">// Start a quiet block where outputs are suppressed</span>
+    cls   <span class="c1">// Clear the screen</span>
+<span class="k">    clear</span> <span class="c1">// Clear any existing data in memory</span>
+<span class="k">    set</span> timeout1 <span class="m">1000</span>  <span class="c1">// Set a timeout for potentially slow operations</span>
+<span class="k">    global</span> nhanes <span class="s">&quot;https://wwwn.cdc.gov/Nchs/Nhanes/&quot;</span> <span class="c1">// Define a global variable for the NHANES website URL</span>
+<span class="k">    tokenize</span> <span class="s">&quot;</span><span class="nv">`c(ALPHA)&#39;</span><span class="s">&quot;</span> <span class="c1">// This line seems erroneous or out of context</span>
+<span class="k">    local</span> y = <span class="m">1999</span> <span class="c1">// Initialize a local variable &#39;y&#39; to start from the year 1999</span>
+
+<span class="k">    forvalues</span> i=<span class="m">1</span><span class="o">/</span><span class="m">3</span> { <span class="c1">// Loop over three biennial cycles (1999-2000, 2001-2002, 2003-2004)</span>
+<span class="k">        local</span> yp1 = <span class="nv">`y&#39;</span> <span class="o">+</span> <span class="m">1</span> <span class="c1">// Calculate the end year of the biennial cycle</span>
+<span class="k">        if</span> <span class="nv">`y&#39;</span> <span class="o">==</span> <span class="m">1999</span> {
+<span class="k">            local</span> letter = <span class="s">&quot;&quot;</span> <span class="c1">// No letter suffix for the first cycle</span>
+        }
+<span class="k">        else</span> {
+<span class="k">            local</span> letter = <span class="s">&quot;_</span><span class="nv">``i&#39;&#39;</span><span class="s">&quot;</span> <span class="c1">// Suffix for file names in subsequent cycles, seems incorrect should be `_` not `_``i&#39;&#39;`</span>
+        }
+        import sasxport5 <span class="s">&quot;</span><span class="vg">${nhanes}</span><span class="nv">`y&#39;</span><span class="s">-</span><span class="nv">`yp1&#39;</span><span class="s">/DEMO</span><span class="nv">`letter&#39;</span><span class="s">.XPT&quot;</span>,<span class="k"> clear</span> <span class="c1">// Import the dataset from a .XPT file</span>
+        <span class="c1">//tempfile nh`y&#39;_`yp1&#39;  // Define a temporary file, commented out</span>
+<span class="k">        g</span> surv = <span class="s">&quot;</span><span class="nv">`i&#39;</span><span class="s">&quot;</span> <span class="c1">// Generate a new variable &#39;surv&#39; to distinguish each survey wave</span>
+<span class="k">        save</span> nh<span class="nv">`y&#39;</span>_<span class="nv">`yp1&#39;</span>,<span class="k"> replace</span>  <span class="c1">// Save the dataset with a new name</span>
+<span class="k">        noi di</span> <span class="s">&quot;</span><span class="nv">`letter&#39;</span><span class="s">&quot;</span> <span class="c1">// Display the suffix letter quietly, for debugging</span>
+<span class="k">        local</span> y = <span class="nv">`y&#39;</span> <span class="o">+</span> <span class="m">2</span> <span class="c1">// Increment the start year by 2 for the next biennial cycle</span>
+    }
+
+<span class="k">    clear</span>  <span class="c1">// Clear the data in memory</span>
+<span class="k">    local</span> y = <span class="m">1999</span> <span class="c1">// Reset the start year for merging process</span>
+
+<span class="k">    forvalues</span> i=<span class="m">1</span><span class="o">/</span><span class="m">3</span> { <span class="c1">// Loop over the same three cycles for merging</span>
+<span class="k">        local</span> yp1 = <span class="nv">`y&#39;</span> <span class="o">+</span> <span class="m">1</span> <span class="c1">// Calculate the end year for each cycle</span>
+<span class="k">        append</span> using nh<span class="nv">`y&#39;</span>_<span class="nv">`yp1&#39;</span>  <span class="c1">// Append each dataset to the master dataset</span>
+<span class="k">        rm</span> <span class="s">&quot;nh</span><span class="nv">`y&#39;</span><span class="s">_</span><span class="nv">`yp1&#39;</span><span class="s">.dta&quot;</span> <span class="c1">// Remove the intermediate Stata data files, wrong extension should be .dta</span>
+<span class="k">        local</span> y = <span class="nv">`y&#39;</span> <span class="o">+</span> <span class="m">2</span> <span class="c1">// Increment the start year by 2 for the next cycle</span>
+    }
+
+<span class="k">    save</span> nh,<span class="k"> replace</span>  <span class="c1">// Save the final merged dataset as &#39;nh&#39;</span>
+    <span class="c1">//verify at https://wwwn.cdc.gov/Nchs/Nhanes/1999-2000/DEMO.htm // Comment for verification</span>
+<span class="k">    noi tab</span> surv  <span class="c1">// Tabulate the &#39;surv&#39; variable quietly to check data consistency</span>
+<span class="k">    noi ls</span> <span class="c1">// List the files in the current directory quietly</span>
+}
+</pre></div>
+</div>
+<p>There are some potential issues and errors in the script that may need addressing, such as file suffix logic and file extensions in the <code class="docutils literal notranslate"><span class="pre">rm</span></code> command.</p>
 </section>
-<section id="id3">
-<h3>5<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
-<p>I copied the above script into the template below &amp; asked GPT-4 to “help indent”</p>
+<section id="id6">
+<h3>5<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h3>
+<p>I copied the above script into the template below &amp; asked GPT-4 to “help indent”. And then I made a few edit to empower the user, as they select the NHANES surveys of interest to them.</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">capture program drop</span> nhanes_demo
 <span class="k">program</span> define nhanes_demo
     <span class="c1">//copy &amp; paste here</span>
@@ -448,7 +560,7 @@ document.write(`
 <span class="k">        set</span> timeout1 <span class="m">1000</span>
 <span class="k">        global</span> nhanes <span class="s">&quot;https://wwwn.cdc.gov/Nchs/Nhanes/&quot;</span>
 <span class="k">        tokenize</span> <span class="s">&quot;</span><span class="nv">`c(ALPHA)&#39;</span><span class="s">&quot;</span>
-<span class="k">        local</span> y = <span class="nv">`begin&#39;</span> <span class="c1">//edit</span>
+<span class="k">        local</span> y = <span class="nv">`begin&#39;</span> <span class="c1">//edit, this macro is from the syntax command</span>
 <span class="k">		local</span> N = <span class="nv">`end&#39;</span> <span class="o">-</span> <span class="nv">`begin&#39;</span> <span class="c1">//insertion</span>
 <span class="k">        forvalues</span> i=<span class="m">1</span><span class="o">/</span><span class="nv">`N&#39;</span> { <span class="c1">//edit</span>
 <span class="k">            local</span> yp1 = <span class="nv">`y&#39;</span> <span class="o">+</span> <span class="m">1</span>
@@ -634,9 +746,12 @@ document.write(`
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Lab 5 solution</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-i">Part I</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">4.1</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">4.2</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">5</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">3</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">4.1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">4.2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">5</a></li>
 </ul>
 </li>
 </ul>

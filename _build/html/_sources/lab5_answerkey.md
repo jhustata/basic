@@ -2,6 +2,63 @@
 
 ## Part I 
 
+### 1
+
+Let the students know that there are no shortcuts: the more practice, the better they'll become
+
+### 2
+
+```stata
+// 1
+_request(N)
+$N
+
+// 2
+forvalues i=1/$N {
+    di `i' //local macro
+}
+
+
+// 3
+_request(data`i')
+${data`i'}
+
+// 4
+global repo "https://github.com/jhustata/basic/raw/main/"
+$repo
+
+// 5
+global nhanes "https://wwwn.cdc.gov/Nchs/Nhanes/"
+$nhanes
+
+// 6
+ds
+`r(varlist)'
+
+// 7
+foreach v of varlist `r(varlist)' {
+    `v'
+}
+
+// 8
+foreach v in `c(ALPHA)' {
+   di  `c(ALPHA)' //c() class macro
+   creturn list
+}
+
+// etc.
+```
+
+### 3
+
+Simple example under `foreach v of varlist {` in Lab 5 Part I Section 2.1:
+- Click on the "token"
+- `varlist` in the program might have been a list of hardcoded variabes in a `.do` file 
+   - e.g. init_age bmi
+- But a program generalizes this using `syntax varlist`
+   - The user may then choose the  variable list of their preference
+
+
 ### 4.1
 
 ```stata
@@ -9,6 +66,8 @@ do ${repo}loopxpt.do
 ```
 
 ### 4.2
+
+You can copy and paste this into **ChatGPT** and ask for notes. Encourage students to do this. Please let them use other AIs as well.
 
 ```stata
 qui {
@@ -48,9 +107,57 @@ qui {
 }
 ```
 
+Here's an example with the query: **annotate**:
+
+This code appears to be written in Stata, a statistical software package. It's designed to automate the process of downloading, importing, and merging demographic datasets from multiple biennial waves of the National Health and Nutrition Examination Survey (NHANES) hosted by the CDC. Let me annotate each segment for you:
+
+```stata
+qui {   // Start a quiet block where outputs are suppressed
+    cls   // Clear the screen
+    clear // Clear any existing data in memory
+    set timeout1 1000  // Set a timeout for potentially slow operations
+    global nhanes "https://wwwn.cdc.gov/Nchs/Nhanes/" // Define a global variable for the NHANES website URL
+    tokenize "`c(ALPHA)'" // This line seems erroneous or out of context
+    local y = 1999 // Initialize a local variable 'y' to start from the year 1999
+
+    forvalues i=1/3 { // Loop over three biennial cycles (1999-2000, 2001-2002, 2003-2004)
+        local yp1 = `y' + 1 // Calculate the end year of the biennial cycle
+        if `y' == 1999 {
+            local letter = "" // No letter suffix for the first cycle
+        }
+        else {
+            local letter = "_``i''" // Suffix for file names in subsequent cycles, seems incorrect should be `_` not `_``i''`
+        }
+        import sasxport5 "${nhanes}`y'-`yp1'/DEMO`letter'.XPT", clear // Import the dataset from a .XPT file
+        //tempfile nh`y'_`yp1'  // Define a temporary file, commented out
+        g surv = "`i'" // Generate a new variable 'surv' to distinguish each survey wave
+        save nh`y'_`yp1', replace  // Save the dataset with a new name
+        noi di "`letter'" // Display the suffix letter quietly, for debugging
+        local y = `y' + 2 // Increment the start year by 2 for the next biennial cycle
+    }
+
+    clear  // Clear the data in memory
+    local y = 1999 // Reset the start year for merging process
+
+    forvalues i=1/3 { // Loop over the same three cycles for merging
+        local yp1 = `y' + 1 // Calculate the end year for each cycle
+        append using nh`y'_`yp1'  // Append each dataset to the master dataset
+        rm "nh`y'_`yp1'.dta" // Remove the intermediate Stata data files, wrong extension should be .dta
+        local y = `y' + 2 // Increment the start year by 2 for the next cycle
+    }
+
+    save nh, replace  // Save the final merged dataset as 'nh'
+    //verify at https://wwwn.cdc.gov/Nchs/Nhanes/1999-2000/DEMO.htm // Comment for verification
+    noi tab surv  // Tabulate the 'surv' variable quietly to check data consistency
+    noi ls // List the files in the current directory quietly
+}
+```
+
+There are some potential issues and errors in the script that may need addressing, such as file suffix logic and file extensions in the `rm` command.
+
 ### 5
 
-I copied the above script into the template below & asked GPT-4 to "help indent"
+I copied the above script into the template below & asked GPT-4 to "help indent". And then I made a few edit to empower the user, as they select the NHANES surveys of interest to them.
 
 ```stata
 capture program drop nhanes_demo
@@ -71,7 +178,7 @@ program define nhanes_demo
         set timeout1 1000
         global nhanes "https://wwwn.cdc.gov/Nchs/Nhanes/"
         tokenize "`c(ALPHA)'"
-        local y = `begin' //edit
+        local y = `begin' //edit, this macro is from the syntax command
 		local N = `end' - `begin' //insertion
         forvalues i=1/`N' { //edit
             local yp1 = `y' + 1
