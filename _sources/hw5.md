@@ -48,3 +48,16 @@ Hint: If you like, you may these expressions below after logistic regression to 
 | Odds ratio            | `r(estimate)`                                        |
 | Lower bound of 95% CI | `r(lb)`                                              |
 | Upper bound of 95% CI | `ub`                                                 |
+
+
+**Additional Credit.** (Maximum $+5%$)
+
+```stata
+global repo https://github.com/jhustata/basic/raw/main/
+do ${repo}annotate.do
+```
+
+Tasks:
+1. Run the above script remotely to figure out what it does.
+2. Then download it and annotate it to explain to your self or someone else what it accomplishes
+3. Use the ExtraCredit DropBox to hand in your version of `annotate.do` 
