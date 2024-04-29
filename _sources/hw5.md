@@ -60,6 +60,9 @@ do ${repo}annotate.do
 ```
 
 Tasks:
-1. Run this remote script to figure out what it does.
+1. Run this remote script to figure out what it does. **Guaranteed 5 points** if you can debug it.
+   - Use your knowledge
+   - Or the assistance of any GPT
+   - Welcome to brainstorm with peers in the [GitHub Discussion Forum](https://github.com/jhufena/discussions/discussions)
 2. Then download it and annotate it to explain to yourself and others what it accomplishes
 3. Use the ExtraCredit DropBox to hand in your version of `annotate.do` 
