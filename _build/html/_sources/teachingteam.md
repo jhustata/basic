@@ -3,7 +3,7 @@
 
 ## 1. Lab Solutions
    - [Lab 1 Solution](lab1sol.md)
-   - [Lab 2 Solution](lab1sol.md) *(Note: Same link to Lab 1's solution. No error)*
+   - [Lab 2 Solution](lab1sol.md)  
    - [Lab 3 Solution](lab3sol.md)
    - <strike>Lab 4 Solution</strike>
    - [Lab 5 Solution](lab5_answerkey.md)  
@@ -12,9 +12,9 @@
 ## 2. Homework Solutions
    - [HW 1 Solution](hw1sol.md)
    - [HW 2 Solution](hw2sol.md)
-   - [HW 3 Solution](hw3sol.md) This is now available to students
+   - [HW 3 Solution](hw3sol.md)  
    - <strike>HW 4 Solution </strike>
-   - [HW 5 Solution](hw5solnotes.ipynb) //to be updated, but this works for now
+   - [HW 5 Solution](hw5sol.md)  
       - The Extra Credit section is to be submitted separately
       - We'll create a DropBox for it
       - I'll grade this one

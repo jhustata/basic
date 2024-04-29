@@ -55,10 +55,13 @@ qui {
 ### 2.1 `foreach v of varlist {`
 ```stata
 qui {
-	/*
-	1. Kidney Transplant Recipient Data
-	2. NHANES 1999-2000 Demographics Data  
-	3. Homework 1 Textfile Data
+   /*
+	1. Kidney Transplant Recipient Data (from GitHub.com)
+	   - `transplants.dta`
+	   - `donors.dta`
+	   - `donors_recipients.dta`
+	2. NHANES 1999-2000 Demographics Data (from CDC.gov)
+	   - `DEMO.XPT`
 	*/
 	if 0 { //Deactivated  
 		cls
