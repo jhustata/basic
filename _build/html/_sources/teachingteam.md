@@ -6,7 +6,7 @@
    - [Lab 2 Solution](lab1sol.md) *(Note: Same link to Lab 1's solution. No error)*
    - [Lab 3 Solution](lab3sol.md)
    - <strike>Lab 4 Solution</strike>
-   - [Lab 5 Solution](lab5sol.md)  
+   - [Lab 5 Solution](lab5_answerkey.md)  
    - Lab 6 Solution
 
 ## 2. Homework Solutions
@@ -14,7 +14,10 @@
    - [HW 2 Solution](hw2sol.md)
    - [HW 3 Solution](hw3sol.md) This is now available to students
    - <strike>HW 4 Solution </strike>
-   - HW 5 Solution (pending)
+   - [HW 5 Solution](hw5solnotes.ipynb) //to be updated, but this works for now
+      - The Extra Credit section is to be submitted separately
+      - We'll create a DropBox for it
+      - I'll grade this one
    - HW 6 Solution (pending)
    - HW 7 Solution (pending)
 
@@ -25,10 +28,11 @@
    - Link to discussions (pending)
 
 ## 5. TA-Student Match
-   - [TA-Student Matching for HW3 Grading](tastudentmatch.md)
+   - [TA-Student Matching for HW5 Grading](tastudentmatch.md)
    - Overview:
-     - TAs will grade assigned students for HW3.
-     - TAs should provide feedback in the `.do` file and via GradeBook notifications.
+     - Provide feedback in the `.do` file and post to DropBox
+     - But await Ning's confirmation that all scripts have been graded
+        - Let's send out email notifications at around the same time
      - The matching list will be updated for subsequent homeworks.
 
 ## 6. Rubrics for Grading
