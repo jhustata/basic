@@ -457,10 +457,13 @@ import sasxport5 <span class="s">&quot;https://wwwn.cdc.gov/Nchs/Nhanes/1999-200
 <section id="foreach-v-of-varlist">
 <h3>2.1 <code class="docutils literal notranslate"><span class="pre">foreach</span> <span class="pre">v</span> <span class="pre">of</span> <span class="pre">varlist</span> <span class="pre">{</span></code><a class="headerlink" href="#foreach-v-of-varlist" title="Permalink to this heading">#</a></h3>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> {
-	<span class="cm">/*</span>
-<span class="cm">	1. Kidney Transplant Recipient Data</span>
-<span class="cm">	2. NHANES 1999-2000 Demographics Data  </span>
-<span class="cm">	3. Homework 1 Textfile Data</span>
+   <span class="cm">/*</span>
+<span class="cm">	1. Kidney Transplant Recipient Data (from GitHub.com)</span>
+<span class="cm">	   - `transplants.dta`</span>
+<span class="cm">	   - `donors.dta`</span>
+<span class="cm">	   - `donors_recipients.dta`</span>
+<span class="cm">	2. NHANES 1999-2000 Demographics Data (from CDC.gov)</span>
+<span class="cm">	   - `DEMO.XPT`</span>
 <span class="cm">	*/</span>
 <span class="k">	if</span> <span class="m">0</span> { <span class="c1">//Deactivated  </span>
 		cls
