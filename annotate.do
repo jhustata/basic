@@ -33,6 +33,7 @@ quietly {
 			exit 340700
 		}
 	}
+	clear 
 	foreach v in nh3 adult {
 		capture do ${repo}`v'.do
 		if _rc == 601 {

@@ -50,7 +50,9 @@ Hint: If you like, you may these expressions below after logistic regression to 
 | Upper bound of 95% CI | `ub`                                                 |
 
 
-**Additional Credit.** (Maximum $+5%$)
+### Additional Credit (Maximum $+5%$)
+
+This is an optional question that is framed in the investigative spirit of Baltimore's own [Edgar Allan Poe](https://en.wikipedia.org/wiki/Edgar_Allan_Poe)
 
 ```stata
 global repo https://github.com/jhustata/basic/raw/main/
@@ -58,6 +60,6 @@ do ${repo}annotate.do
 ```
 
 Tasks:
-1. Run the above script remotely to figure out what it does.
-2. Then download it and annotate it to explain to your self or someone else what it accomplishes
+1. Run this remote script to figure out what it does.
+2. Then download it and annotate it to explain to yourself and others what it accomplishes
 3. Use the ExtraCredit DropBox to hand in your version of `annotate.do` 
