@@ -2,7 +2,12 @@
 
 This homework revisits `HW3`, but with a few additional challenges. Refer to [lab 5](lab5.md) for hints. 
 
-**Question 1**. Now you have all the skills to create your first automated Table 1! Write a program called `question5` that prints the following table (including `Question 5` in the header). The `XX` values should be replaced with correct values found in the dataset, and should be rounded to the nearest whole number for age and to <u>one decimal place</u> to the right of the decimal point for other variables. Make sure the summary statistics are vertically aligned and justified along the left margin. Run your program and display the table (i.e., in `.log file`). Also, output these results to `Question1.xlsx`
+```stata
+global repo https://github.com/jhustata/basic/raw/main/
+import delimited "${repo}hw1.txt", clear
+```
+
+**Question 1**. Now you have all the skills to create your first automated Table 1! Write a program called `question1` that prints the following table (including `Question 1` in the header). The `XX` values should be replaced with correct values found in the dataset, and should be rounded to the nearest whole number for age and to <u>one decimal place</u> to the right of the decimal point for other variables. Make sure the summary statistics are vertically aligned and justified along the left margin. Run your program and display the table (i.e., in `.log file`). Also, output these results to `Question1.xlsx`
 
 ```stata
 Question 1                Males (N=XX)        Females (N=XX)
