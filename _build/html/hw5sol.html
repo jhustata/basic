@@ -334,9 +334,7 @@ document.write(`
   </button>
 `);
 </script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</label>
+
 </div></div>
       
     </div>
@@ -352,20 +350,6 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
-            <div>
-                <h2> Contents </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">HW5 Solution</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-i">Part I</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-ii">Part II</a></li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lab4">lab4</a></li>
-</ul>
-
-            </nav>
         </div>
     </div>
 </div>
@@ -377,174 +361,203 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="hw5-solution">
 <h1>HW5 Solution<a class="headerlink" href="#hw5-solution" title="Permalink to this heading">#</a></h1>
-<section id="part-i">
-<h2>Part I<a class="headerlink" href="#part-i" title="Permalink to this heading">#</a></h2>
-<ol class="arabic">
-<li><p>Start Stata, open your do-file editor, write the header, and load <code class="docutils literal notranslate"><span class="pre">transplants.dta</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ctr_id</span></code> indicates the ID of the transplant center where the patient received the transplant. Count the number of recipients at each center, and store in a new variable <code class="docutils literal notranslate"><span class="pre">volume</span></code>.</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">bysort</span> ctr_id:<span class="k"> gen</span> volume=_N
-</pre></div>
-</div>
+<p>There’s no code to output <code class="docutils literal notranslate"><span class="pre">.xlsx</span></code>in the solution below:</p>
+<ul class="simple">
+<li><p>But please use the lab 5 code for this</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">putexcel</span></code> section <a class="reference external" href="https://jhustata.github.io/basic/lab5.html#putexcel">here</a></p></li>
+</ul>
 </li>
-<li><p>List <code class="docutils literal notranslate"><span class="pre">ctr_id</span></code> and <code class="docutils literal notranslate"><span class="pre">volume</span></code> to see how many patients each center has. Maybe let’s try this:</p>
-<p><code class="docutils literal notranslate"><span class="pre">list</span> <span class="pre">ctr_id</span> <span class="pre">volume</span></code></p>
-</li>
-<li><p>This is not what we wanted. Generate a variable <code class="docutils literal notranslate"><span class="pre">ctr_tag</span></code> that “tags” one observation per center.</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">egen</span> ctr_tag=tag(ctr_id)
-</pre></div>
-</div>
-</li>
-<li><p>Now <code class="docutils literal notranslate"><span class="pre">list</span> <span class="pre">ctr_id</span></code> and <code class="docutils literal notranslate"><span class="pre">volume</span></code>, but just for one record per center.</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">list</span> ctr_id volume<span class="k"> if</span> ctr_tag<span class="o">==</span><span class="m">1</span>
-</pre></div>
-</div>
-</li>
-<li><p>Calculate the mean age of the patients at each center, and store in a new variable <code class="docutils literal notranslate"><span class="pre">mean_age</span></code>.</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">bys</span> ctr_id:<span class="k"> egen</span> mean_age=mean(age)
-</pre></div>
-</div>
-</li>
-<li><p>For each primary diagnosis subgroup (use variable <code class="docutils literal notranslate"><span class="pre">dx</span></code>), run a regression with age as the predictor and peak PRA (<code class="docutils literal notranslate"><span class="pre">peak_pra</span></code>) as the outcome.</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">forvalue</span> i=<span class="m">1</span><span class="o">/</span><span class="m">9</span> {
-<span class="k">        regress</span> peak_pra age<span class="k"> if</span> dx<span class="o">==</span><span class="nv">`i&#39;</span>
+<li><p>Also references the <a class="reference external" href="https://jhustata.github.io/basic/hw3sol.html">HW3 solution</a></p></li>
+<li><p>Will get an optimal solution ASAP</p></li>
+</ul>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> {
+	
+	<span class="cm">/*</span>
+<span class="cm">   Adapted from 2023 HW1 solution</span>
+<span class="cm">   */</span>
+<span class="k">	</span>
+<span class="k">	if</span> <span class="m">1</span> { <span class="c1">//methods: macros, logfile, settings</span>
+<span class="k">	   global</span> repo https:<span class="o">//</span>github<span class="m">.</span>com<span class="o">/</span>jhustata<span class="o">/</span>basic<span class="o">/</span>raw<span class="o">/</span>main<span class="o">/</span>
+<span class="k">		noi di</span> <span class="s">&quot;What is your working directory?&quot;</span> _request(workdir)
+<span class="k">      cd</span> <span class="vg">$workdir</span>
+<span class="k">		capture log close</span> 
+<span class="k">		log</span> using <span class="s">&quot;hw1.lastname.firstname.log&quot;</span>,<span class="k"> replace</span>
+		cls
+<span class="k">		set more</span> off
+	}
+<span class="k">	if</span> <span class="m">2</span> { <span class="c1">//results: data, shape, etc.</span>
+		import delimited <span class="s">&quot;</span><span class="vg">${repo}</span><span class="s">hw1.txt&quot;</span>,<span class="k"> clear</span>  		
+	}
+<span class="k">	if</span> <span class="m">3</span> { <span class="c1">//conclusions: questions, code, output</span>
+		<span class="c1">//q1</span>
+<span class="k">		capture program drop</span> question1 
+<span class="k">		program</span> define question1
+		    
+			#delimit ; <span class="c1">//use throughout program</span>
+<span class="k">		    qui</span> { ; <span class="c1">//line 1 quietly doesn&#39;t apply inside this program </span>
+				
+		        <span class="c1">//label variables with output in mind</span>
+<span class="k">		        lab var</span> init_age <span class="s">&quot;Age, median [IQR]&quot;</span>; 
+<span class="k">		        local</span> age_lab:<span class="k"> var lab</span> init_age;
+<span class="k">				</span>
+<span class="k">				lab var</span> prev <span class="s">&quot;Previous transplant, %&quot;</span> ; 
+<span class="k">				local</span> prev_lab:<span class="k"> var lab</span> prev; 
+<span class="k">		</span>
+<span class="k">		        forvalues</span> i=<span class="m">1</span><span class="o">/</span><span class="m">2</span> { ; <span class="c1">//columns 1 &amp; 2</span>
+<span class="k">			</span>
+<span class="k">			        count if</span> <span class="o">!</span><span class="nf">missing</span>(dx) <span class="o">&amp;</span> female<span class="o">==</span><span class="nv">`i&#39;</span><span class="o">-</span><span class="m">1</span>;
+			
+			        <span class="c1">//row1</span>
+<span class="k">			        count if</span> female<span class="o">==</span><span class="nv">`i&#39;</span><span class="o">-</span><span class="m">1</span>;
+<span class="k">			        local</span> female<span class="nv">`i&#39;</span>_N=<span class="nf">r</span>(N); 
+<span class="k">	     		    local</span> row1:<span class="k"> di</span> <span class="s">&quot;Question 5&quot;</span> 
+					      _col(<span class="m">30</span>) <span class="s">&quot;Males (N=</span><span class="nv">`female1_N&#39;</span><span class="s">)&quot;</span> 
+						  _col(<span class="m">50</span>) <span class="s">&quot;Females (N=</span><span class="nv">`female2_N&#39;</span><span class="s">)&quot;</span>
+					;
+		    	    <span class="c1">//row2</span>
+<span class="k">			        sum</span> init_age<span class="k"> if</span> female<span class="o">==</span><span class="nv">`i&#39;</span><span class="o">-</span><span class="m">1</span>, 
+					    detail; <span class="c1">//copy&amp;paste from q2, edit</span>
+<span class="k">					</span>
+<span class="k">			        local</span> m_iqr<span class="nv">`i&#39;</span>:<span class="k"> di</span> <span class="nx">%2.0f</span> <span class="nf">r</span>(p50) 
+					              <span class="s">&quot; [&quot;</span> <span class="nx">%2.0f</span> <span class="nf">r</span>(p25) 
+								   <span class="s">&quot;-&quot;</span> <span class="nx">%2.0f</span> <span class="nf">r</span>(p75) 
+								   <span class="s">&quot;]&quot;</span>  
+			        ;
+<span class="k">		            local</span> row2:<span class="k"> di</span> <span class="s">&quot;</span><span class="nv">`age_lab&#39;</span><span class="s">&quot;</span>  
+					      _col(<span class="m">30</span>) <span class="s">&quot;</span><span class="nv">`m_iqr1&#39;</span><span class="s">&quot;</span>              
+						  _col(<span class="m">50</span>) <span class="s">&quot;</span><span class="nv">`m_iqr2&#39;</span><span class="s">&quot;</span>
+
+			        ;
+					<span class="c1">//row3</span>
+<span class="k">					sum</span> prev<span class="k"> if</span> female<span class="o">==</span><span class="nv">`i&#39;</span><span class="o">-</span><span class="m">1</span> ;
+<span class="k">					local</span> per_prev<span class="nv">`i&#39;</span>:<span class="k"> di</span> <span class="nx">%2.1f</span> <span class="nf">r</span>(mean)<span class="o">*</span><span class="m">100</span> ;
+<span class="k">					local</span> row3:<span class="k"> di</span> <span class="s">&quot;</span><span class="nv">`prev_lab&#39;</span><span class="s">&quot;</span>
+					      _col(<span class="m">30</span>) <span class="s">&quot;</span><span class="nv">`per_prev1&#39;</span><span class="s">&quot;</span>
+						  _col(<span class="m">50</span>) <span class="s">&quot;</span><span class="nv">`per_prev2&#39;</span><span class="s">&quot;</span>
+					;
+		        } ;
+
+			    <span class="c1">//rows4_13</span>
+<span class="k">		        split</span> dx, p(<span class="s">&quot;=&quot;</span>) ; <span class="c1">//from chapter: delimit</span>
+<span class="k">		        destring</span> dx1,<span class="k"> replace</span> ; 
+<span class="k">		        lab var</span> dx1 <span class="s">&quot;Cause of ESRD, %&quot;</span> ;
+<span class="k"> 		 </span>
+<span class="k">		        local</span> varlab:<span class="k"> var lab</span> dx1 ;
+<span class="k">		</span>
+<span class="k">		        label</span> def varlab
+		            <span class="m">1</span> <span class="s">&quot;Glomerular&quot;</span>
+			        <span class="m">2</span> <span class="s">&quot;Diabetes&quot;</span>
+			        <span class="m">3</span> <span class="s">&quot;PKD&quot;</span>
+			        <span class="m">4</span> <span class="s">&quot;Hypertensive&quot;</span>
+			        <span class="m">5</span> <span class="s">&quot;Renovascular&quot;</span>
+			        <span class="m">6</span> <span class="s">&quot;Congenital&quot;</span>
+			        <span class="m">7</span> <span class="s">&quot;Tubulo&quot;</span>
+			        <span class="m">8</span> <span class="s">&quot;Neoplasm&quot;</span>
+			        <span class="m">9</span> <span class="s">&quot;Other&quot;</span>
+		        ;
+
+<span class="k">		        lab</span> values dx1 varlab;
+<span class="k">				local</span> row4:<span class="k"> di</span> <span class="s">&quot;</span><span class="nv">`varlab&#39;</span><span class="s">&quot;</span>  ;
+<span class="k">	     	    local</span> vallab: value<span class="k"> label</span> dx1 
+				 ; <span class="c1">//debug: chatGPT moved this from line 137 to 152!!!</span>
+<span class="k">				 </span>
+<span class="k">				 forvalues</span> i=<span class="m">1</span><span class="o">/</span><span class="m">2</span> { ; <span class="c1">//columns 1 &amp; 2</span>
+<span class="k">				</span>
+<span class="k">				    levelsof</span> dx1<span class="k"> if</span> female<span class="o">==</span><span class="nv">`i&#39;</span><span class="o">-</span><span class="m">1</span>, 
+<span class="k">					    local</span>(diagnosis) ; <span class="c1">//variable-level</span>
+<span class="k">			        global</span> N_<span class="nv">`i&#39;</span>=<span class="nf">r</span>(N) ;
+<span class="k">					</span>
+<span class="k">		            local</span> row=<span class="m">5</span> ; <span class="c1">//based on Q5. template</span>
+<span class="k">				</span>
+<span class="k">			        foreach l</span> of<span class="k"> numlist</span> <span class="nv">`diagnosis&#39;</span> { ;
+<span class="k">			</span>
+<span class="k">			            local</span> dxcat:<span class="k"> lab</span> <span class="nv">`vallab&#39;</span> <span class="nv">`l&#39;</span> ; <span class="c1">//alliterative</span>
+<span class="k">			            sum</span> dx1<span class="k"> if</span> dx1<span class="o">==</span><span class="nv">`l&#39;</span> <span class="o">&amp;</span> female<span class="o">==</span>(<span class="nv">`i&#39;</span><span class="o">-</span><span class="m">1</span>) ;
+<span class="k">			            local</span> col_<span class="nv">`i&#39;</span>_<span class="nv">`row&#39;</span>:<span class="k"> di</span> <span class="nx">%2.1f</span> <span class="nf">r</span>(N)<span class="o">*</span><span class="m">100</span><span class="o">/</span><span class="vg">${N_</span><span class="nv">`i&#39;</span><span class="vg">}</span> ;
+					
+					    <span class="c1">//indent the lab `dxcat&#39; </span>
+<span class="k">		                local</span> row<span class="nv">`row&#39;</span>:<span class="k"> di</span> <span class="s">&quot;    </span><span class="nv">`dxcat&#39;</span><span class="s">&quot;</span> 
+						          _col(<span class="m">30</span>) <span class="s">&quot;</span><span class="nv">`col_1_`row&#39;&#39;</span><span class="s">&quot;</span> 
+								  _col(<span class="m">50</span>) <span class="s">&quot;</span><span class="nv">`col_2_`row&#39;&#39;</span><span class="s">&quot;</span> 
+								  ;
+<span class="k">		                local</span> row = <span class="nv">`row&#39;</span> <span class="o">+</span> <span class="m">1</span> ; <span class="c1">//tracks rows 5-13</span>
+
+		            } ;
+			
+		         } ;
+<span class="k">				</span>
+<span class="k">			     forvalues</span> i=<span class="m">1</span><span class="o">/</span><span class="m">13</span> { ; <span class="c1">//rows1-13</span>
+<span class="k">				 	</span>
+<span class="k">					noi di</span> <span class="s">&quot;</span><span class="nv">`row`i&#39;&#39;</span><span class="s">&quot;</span>;  
+					
+				 } ;
+				 
+      
+	        } ; 
+	   
+	    #delimit cr
+<span class="k">	    end</span> 
+<span class="k">		</span>
+<span class="k">		noi</span> question1
+		
+		<span class="c1">//q6</span>
+<span class="k">		</span>
+<span class="k">		logistic</span> received_kt init_age female
+<span class="k">		matrix</span> define<span class="k"> m</span>=<span class="nf">r</span>(table)
+		
+		<span class="c1">//row1 </span>
+<span class="k">		noi di</span> <span class="s">&quot;&quot;</span>
+<span class="k">		noi di</span> <span class="s">&quot;Question 6&quot;</span>
+		
+		<span class="c1">//row2 </span>
+<span class="k">		local</span> row2:<span class="k"> di</span> <span class="s">&quot;Variable&quot;</span> _col(<span class="m">30</span>) <span class="s">&quot;OR&quot;</span> _col(<span class="m">35</span>) <span class="s">&quot;(95% CI)&quot;</span>
+<span class="k">		noi di</span> <span class="s">&quot;</span><span class="nv">`row2&#39;</span><span class="s">&quot;</span>
+		
+		<span class="c1">//rows3-4</span>
+<span class="k">		lab var</span> init_age <span class="s">&quot;Age&quot;</span>
+<span class="k">		local</span> age_lab:<span class="k"> var lab</span> init_age 
+<span class="k">		</span>
+<span class="k">		lab var</span> female <span class="s">&quot;Female&quot;</span>
+<span class="k">		local</span> female_lab:<span class="k"> var lab</span> female 
+<span class="k">		</span>
+<span class="k">		local</span> row=<span class="m">3</span>
+<span class="k">		local</span> col=<span class="m">1</span>
+<span class="k">		foreach</span> v of<span class="k"> varlist</span> init_age female {
+<span class="k">			</span>
+<span class="k">			local</span> <span class="nv">`v&#39;</span>_lab:<span class="k"> var lab</span> <span class="nv">`v&#39;</span>
+			
+			#delimit ;
+<span class="k">			local</span> row<span class="nv">`col&#39;</span>:<span class="k"> di</span> <span class="s">&quot;</span><span class="nv">``v&#39;_lab&#39;</span><span class="s">&quot;</span> <span class="nx">%3.2f</span> _col(<span class="m">30</span>)<span class="k"> m</span>[<span class="m">1</span>,<span class="nv">`col&#39;</span>] 
+			                               <span class="nx">%3.2f</span> _col(<span class="m">35</span>) 
+									   <span class="s">&quot;(&quot;</span> <span class="nx">%3.2f</span>         <span class="k"> m</span>[<span class="m">5</span>,<span class="nv">`col&#39;</span>] 
+									   <span class="s">&quot;-&quot;</span> <span class="nx">%3.2f</span>         <span class="k"> m</span>[<span class="m">6</span>,<span class="nv">`col&#39;</span>] 
+									   <span class="s">&quot;)&quot;</span>
+			;
+			#delimit cr
+			<span class="c1">//noi di &quot;`row`num&#39;&#39;&quot;</span>
+<span class="k">			</span>
+<span class="k">			local</span> row=<span class="nv">`row&#39;</span> <span class="o">+</span> <span class="m">1</span>
+<span class="k">			local</span> col=<span class="nv">`col&#39;</span> <span class="o">+</span> <span class="m">1</span>
+
+		}
+<span class="k">		</span>
+<span class="k">		noi di</span> <span class="s">&quot;</span><span class="nv">`row1&#39;</span><span class="s">&quot;</span>
+<span class="k">		noi di</span> <span class="s">&quot;</span><span class="nv">`row2&#39;</span><span class="s">&quot;</span>
+<span class="k">		noi di</span> <span class="s">&quot;&quot;</span>
+		
+		<span class="c1">//Not part of Homework, But nice for discussion during labs	</span>
+<span class="k">		noi di</span> <span class="s">&quot;This regression included </span><span class="nv">`e(N)&#39;</span><span class="s"> observations whereas the study dataset has </span><span class="nv">`c(N)&#39;</span><span class="s"> observations in total.&quot;</span>
+<span class="k">		noi di</span> <span class="s">&quot;&quot;</span>
+		
+	
+	}
+<span class="k">			</span>
+<span class="k">	log close</span>
+	
 }
 </pre></div>
 </div>
-</li>
-<li><p>Now let’s make the output cleaner. Count the number of cases within each diagnosis group. If there are more than 500 cases, run the regression and display the output. If not, display “There are fewer than 500 cases.”</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">forvalue</span> i=<span class="m">1</span><span class="o">/</span><span class="m">9</span> {
-<span class="k">    qui count if</span> dx<span class="o">==</span><span class="nv">`i&#39;</span>
-<span class="k">    if</span> <span class="nf">r</span>(N)<span class="o">&gt;</span><span class="m">500</span> {
-<span class="k">          regress</span> peak_pra age<span class="k"> if</span> dx<span class="o">==</span><span class="nv">`i&#39;</span>
-    } 
-<span class="k">    else</span> {
-<span class="k">          di</span> <span class="s">&quot;There are fewer than 500 cases.&quot;</span>
-    }
-}
-</pre></div>
-</div>
-</li>
-<li><p>Define a program called <code class="docutils literal notranslate"><span class="pre">reg_pra</span></code>. This program will perform the same tasks as described in Question 8, but the regression will take one or more variables specified by the user as the predictor.</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">capture program drop</span> reg_pra
-<span class="k">program</span> define reg_pra
-<span class="k">    syntax varlist</span>
-
-<span class="k">    forvalue</span> i=<span class="m">1</span><span class="o">/</span><span class="m">9</span> {
-<span class="k">        qui count if</span> dx<span class="o">==</span><span class="nv">`i&#39;</span>
-<span class="k">        if</span> <span class="nf">r</span>(N)<span class="o">&gt;</span><span class="m">500</span> {
-<span class="k">              regress</span> peak_pra <span class="nv">`varlist&#39;</span><span class="k"> if</span> dx<span class="o">==</span><span class="nv">`i&#39;</span>
-        } 
-<span class="k">        else</span> {
-<span class="k">              di</span> <span class="s">&quot;There are fewer than 500 cases.&quot;</span>
-        }
-      }
-
-<span class="k">end</span>
-</pre></div>
-</div>
-</li>
-<li><p>You have all your commands in your do file, right? Run your do file from the beginning and make sure your do file does exactly the same thing.</p></li>
-</ol>
-</section>
-<section id="part-ii">
-<h2>Part II<a class="headerlink" href="#part-ii" title="Permalink to this heading">#</a></h2>
-</section>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="lab4">
-<h1>lab4<a class="headerlink" href="#lab4" title="Permalink to this heading">#</a></h1>
-<p>We discussed how you can define your own “program”. It’s an awesome tool that allows us to automate a specific task. If you think a specific part of your code will be used multiple times, you might as well put that into a program. In this lab, we will practice customizing our programs.</p>
-<ol class="arabic" start="2">
-<li><p>Start Stata, open your do-file editor, lay out a template for your basic .do file structure using <code class="docutils literal notranslate"><span class="pre">qui</span> <span class="pre">{</span></code>, <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">0</span> <span class="pre">{</span></code>, and and <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">1</span></code>. Load <code class="docutils literal notranslate"><span class="pre">transplants.dta</span></code>  in your <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">2</span></code> block or wherever you feel it fits best.</p></li>
-<li><p>Write a program called <code class="docutils literal notranslate"><span class="pre">mymean</span></code>. This program will take <code class="docutils literal notranslate"><span class="pre">varlist</span></code> as a user input, and calculate the mean value of each variable, and display the values.</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">capture program drop</span> mymean
-<span class="k">program</span> define mymean
-<span class="k">    syntax varlist</span>
-<span class="k">    foreach var in</span> <span class="nv">`varlist&#39;</span> {   
-<span class="k">        quietly sum</span> <span class="nv">`var&#39;</span>
-<span class="k">        display</span> <span class="nf">r</span>(mean)
-    }
-<span class="k">end</span>
-</pre></div>
-</div>
-</li>
-<li><p>Modify your program <code class="docutils literal notranslate"><span class="pre">mymean</span></code> so that when an <code class="docutils literal notranslate"><span class="pre">if</span></code> argument is supplied, <code class="docutils literal notranslate"><span class="pre">mymean</span></code> would only include the observations that meet the condition specified by the <code class="docutils literal notranslate"><span class="pre">if</span></code> argument. In other words, if the user types <code class="docutils literal notranslate"><span class="pre">mymean</span> <span class="pre">height</span> <span class="pre">if</span> <span class="pre">age&gt;65</span></code>, the program <code class="docutils literal notranslate"><span class="pre">mymean</span></code> will calculate the mean only among patients older than 65.</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">capture program drop</span> mymean
-<span class="k">program</span> define mymean
-<span class="k">    syntax varlist</span> [if]
-<span class="k">    foreach var in</span> <span class="nv">`varlist&#39;</span> {
-<span class="k">        quietly sum</span> <span class="nv">`var&#39;</span> <span class="nv">`if&#39;</span>
-<span class="k">        display</span> <span class="nf">r</span>(mean)
-    }
-<span class="k">end</span>
-</pre></div>
-</div>
-</li>
-<li><p>Further modify your program <code class="docutils literal notranslate"><span class="pre">mymean</span></code> to include the option <code class="docutils literal notranslate"><span class="pre">sd</span></code>. When the option <code class="docutils literal notranslate"><span class="pre">sd</span></code> is supplied, <code class="docutils literal notranslate"><span class="pre">mymean</span></code> will display the standard deviation along with the mean. This version of <code class="docutils literal notranslate"><span class="pre">mymean</span></code> should still be able to accommodate the <code class="docutils literal notranslate"><span class="pre">if</span></code> argument.</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">capture program drop</span> mymean
-<span class="k">program</span> define mymean
-<span class="k">    syntax varlist</span> [if], [sd]
-<span class="k">    foreach var in</span> <span class="nv">`varlist&#39;</span> {
-<span class="k">        quietly sum</span> <span class="nv">`var&#39;</span> <span class="nv">`if&#39;</span>
-<span class="k">        display</span> <span class="nf">r</span>(mean)
-<span class="k">        if</span> <span class="s">&quot;</span><span class="nv">`sd&#39;</span><span class="s">&quot;</span> <span class="o">!=</span> <span class="s">&quot;&quot;</span> {
-<span class="k">              display</span> <span class="nf">r</span>(sd)
-        }
-    }
-<span class="k">end</span>
-
-   <span class="c1">// The answer above is in the simplest possible form for clarity. In practice, I will arrange the outputs a little bit better.</span>
-<span class="k">capture program drop</span> mymean
-<span class="k">program</span> define mymean
-<span class="k">    syntax varlist</span> [if], [sd]
-<span class="k">    foreach var in</span> <span class="nv">`varlist&#39;</span> {
-<span class="k">        quietly sum</span> <span class="nv">`var&#39;</span> <span class="nv">`if&#39;</span>
-<span class="k">        if</span> <span class="s">&quot;</span><span class="nv">`sd&#39;</span><span class="s">&quot;</span> <span class="o">!=</span> <span class="s">&quot;&quot;</span> {
-<span class="k">              display</span> <span class="s">&quot;</span><span class="nv">`var&#39;</span><span class="s">: &quot;</span> <span class="nf">r</span>(mean) <span class="s">&quot; (&quot;</span> <span class="nf">r</span>(sd) <span class="s">&quot;)&quot;</span>
-        }
-<span class="k">        else</span> {
-<span class="k">              display</span> <span class="s">&quot;</span><span class="nv">`var&#39;</span><span class="s">: &quot;</span> <span class="nf">r</span>(mean)
-        }
-    }
-<span class="k">end</span>
-</pre></div>
-</div>
-</li>
-<li><p>Further modify your program <code class="docutils literal notranslate"><span class="pre">mymean</span></code> to include the option <code class="docutils literal notranslate"><span class="pre">digits()</span></code>, with a number in the parenthesis. When the option <code class="docutils literal notranslate"><span class="pre">digits()</span></code> is supplied, <code class="docutils literal notranslate"><span class="pre">mymean</span></code> will round up the mean (and the standard deviation, if applicable) in units of <code class="docutils literal notranslate"><span class="pre">digits()</span></code>. If <code class="docutils literal notranslate"><span class="pre">digits()</span></code> is NOT supplied, round in units of 0.001. (Hint: use the Stata function <code class="docutils literal notranslate"><span class="pre">round()</span></code>)</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">capture program drop</span> mymean
-<span class="k">program</span> define mymean
-<span class="k">    syntax varlist</span> [if], [sd] [digits(real <span class="m">0.001</span>)]
-<span class="k">    foreach var in</span> <span class="nv">`varlist&#39;</span> {
-<span class="k">        quietly sum</span> <span class="nv">`var&#39;</span> <span class="nv">`if&#39;</span>
-<span class="k">        display</span> <span class="nf">round</span>(<span class="nf">r</span>(mean), <span class="nv">`digits&#39;</span>)
-<span class="k">        if</span> <span class="s">&quot;</span><span class="nv">`sd&#39;</span><span class="s">&quot;</span> <span class="o">!=</span> <span class="s">&quot;&quot;</span> {
-<span class="k">              display</span> <span class="nf">round</span>(<span class="nf">r</span>(sd), <span class="nv">`digits&#39;</span>)
-        }
-    }
-<span class="k">end</span>
-</pre></div>
-</div>
-</li>
-<li><p>Did you make <code class="docutils literal notranslate"><span class="pre">if</span></code>, <code class="docutils literal notranslate"><span class="pre">sd</span></code>, and <code class="docutils literal notranslate"><span class="pre">digits()</span></code> optional arguments? That is, your program should run whether or not these arguments are supplied. To do so, simply surround each argument with brackets. For example, <code class="docutils literal notranslate"><span class="pre">[sd]</span></code></p></li>
-<li><p>I’d like to draw your attention to the merge command. It’s hard to write a question around <code class="docutils literal notranslate"><span class="pre">merge</span></code>, but it’s a really important command in practice. For instance, we used it in the <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">4</span> <span class="pre">{</span></code> <a class="reference external" href="https://jhustata.github.io/book/fff.html">code-block</a> of chapter: <code class="docutils literal notranslate"><span class="pre">r(mean)</span></code></p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">merge</span> <span class="m">1</span>:<span class="m">1</span> fake_id using donors_recipients
-</pre></div>
-</div>
-<p>​        This is the code from the lecture. We are merging <code class="docutils literal notranslate"><span class="pre">transplants.dta</span></code> with <code class="docutils literal notranslate"><span class="pre">donors_recipients.dta</span></code>. We are merging observations with the same <code class="docutils literal notranslate"><span class="pre">fake_id</span></code>, and expect that there will be only one observation per <code class="docutils literal notranslate"><span class="pre">fake_id</span></code> in both datasets.</p>
-</li>
-<li><p>We want to study if death (<code class="docutils literal notranslate"><span class="pre">died==1</span></code>) is associated with several predictor variables: <code class="docutils literal notranslate"><span class="pre">bmi</span></code>, <code class="docutils literal notranslate"><span class="pre">prev_ki</span></code>, <code class="docutils literal notranslate"><span class="pre">age</span></code>, <code class="docutils literal notranslate"><span class="pre">peak_pra</span></code>, or <code class="docutils literal notranslate"><span class="pre">gender</span></code>. Run logistic regression between <code class="docutils literal notranslate"><span class="pre">died</span></code> and each of the predictor variables using <code class="docutils literal notranslate"><span class="pre">foreach</span></code> loop. At each run, save the name and the regression coefficient of the predictor variable into an external Stata dataset file named <code class="docutils literal notranslate"><span class="pre">output.dta</span></code>.</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">postfile</span> output str30 name coef using output
-<span class="c1">// you may add &quot;, replace&quot; to allow overwriting output.dta</span>
-
-<span class="k">foreach var in</span> bmi prev_ki age peak_pra gender {
-<span class="k">    quietly logistic</span> died <span class="nv">`var&#39;</span>
-<span class="k">    post</span> output (<span class="s">&quot;</span><span class="nv">`var&#39;</span><span class="s">&quot;</span>) (_b[<span class="nv">`var&#39;</span>])
-}
-<span class="k">postclose</span> output
-</pre></div>
-</div>
-</li>
-<li><p>You have all your commands in your do file, right? Run your do file from the beginning and make sure your do file does exactly the same thing.</p></li>
-</ol>
 </section>
 
     <script type="text/x-thebe-config">
@@ -587,26 +600,6 @@ document.write(`
             </div>
             
             
-              
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">HW5 Solution</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-i">Part I</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-ii">Part II</a></li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lab4">lab4</a></li>
-</ul>
-
-  </nav></div>
-
-</div></div>
               
             
           </div>
