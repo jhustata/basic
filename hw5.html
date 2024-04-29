@@ -336,7 +336,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -352,6 +354,14 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-credit-maximum-5">Additional Credit (Maximum <span class="math notranslate nohighlight">\(+5%\)</span>)</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -412,17 +422,20 @@ Female           X<span class="m">.</span>XX  (X<span class="m">.</span>XX<span 
 </tr>
 </tbody>
 </table>
-<p><strong>Additional Credit.</strong> (Maximum <span class="math notranslate nohighlight">\(+5%\)</span>)</p>
+<section id="additional-credit-maximum-5">
+<h2>Additional Credit (Maximum <span class="math notranslate nohighlight">\(+5%\)</span>)<a class="headerlink" href="#additional-credit-maximum-5" title="Permalink to this heading">#</a></h2>
+<p>This is an optional question that is framed in the investigative spirit of Baltimore’s own <a class="reference external" href="https://en.wikipedia.org/wiki/Edgar_Allan_Poe">Edgar Allan Poe</a></p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">global</span> repo https:<span class="o">//</span>github<span class="m">.</span>com<span class="o">/</span>jhustata<span class="o">/</span>basic<span class="o">/</span>raw<span class="o">/</span>main<span class="o">/</span>
 <span class="k">do</span> <span class="vg">${repo}</span>annotate<span class="m">.</span>do
 </pre></div>
 </div>
 <p>Tasks:</p>
 <ol class="arabic simple">
-<li><p>Run the above script remotely to figure out what it does.</p></li>
-<li><p>Then download it and annotate it to explain to your self or someone else what it accomplishes</p></li>
+<li><p>Run this remote script to figure out what it does.</p></li>
+<li><p>Then download it and annotate it to explain to yourself and others what it accomplishes</p></li>
 <li><p>Use the ExtraCredit DropBox to hand in your version of <code class="docutils literal notranslate"><span class="pre">annotate.do</span></code></p></li>
 </ol>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -465,6 +478,20 @@ Female           X<span class="m">.</span>XX  (X<span class="m">.</span>XX<span 
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-credit-maximum-5">Additional Credit (Maximum <span class="math notranslate nohighlight">\(+5%\)</span>)</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
