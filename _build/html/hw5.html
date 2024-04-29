@@ -334,9 +334,7 @@ document.write(`
   </button>
 `);
 </script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</label>
+
 </div></div>
       
     </div>
@@ -352,14 +350,6 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
-            <div>
-                <h2> Contents </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#question-2">Question 2</a></li>
-</ul>
-            </nav>
         </div>
     </div>
 </div>
@@ -371,171 +361,55 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="hw-5">
 <h1>HW 5<a class="headerlink" href="#hw-5" title="Permalink to this heading">#</a></h1>
-<p><strong>Note:</strong> This homework will be edited depending on how much ground we cover during session 5 on Thu April 25, 2024.</p>
-<p>Write a .do file that performs the tasks described below. Your .do file must be called
-<code class="docutils literal notranslate"><span class="pre">hw5.lastname.firstname.do</span></code>. Make sure your script will run on our machines by approaching filepaths with <strong>ambiguity</strong> (i.e., incorporate <code class="docutils literal notranslate"><span class="pre">if</span></code> conditional codeblocks to allow for flexibility). Look at your <a class="reference external" href="https://jhustata.github.io/basic/hw3sol.html">HW3</a> solution for a nice example. Do <strong>not</strong> submit your log files as part of the assignment.</p>
-<p>Evaluation will be based on the log file produced when <strong>we</strong> run your script on our machines.</p>
-<p>For Question 1, use the dataset <a class="reference external" href="https://github.com/jhustata/basic/raw/main/hw5_pra_hist.dta">hw5_pra_hist.dta</a> and <a class="reference external" href="https://github.com/jhustata/basic/raw/main/hw5_hosp.dta">hw5_hosp.dta</a> to perform the required tasks. Your .do file may be run on <u>a different dataset</u> with more
-visits.</p>
-<p>For the other questions, simply define your program. You do not need to run the programs you write in
-your .do file. The graders will run your programs using a dataset that will not be released to you.</p>
-<p>A successful <u>answer</u> would look like this:</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>[insert your header code]
-
-<span class="c1">// Question 1</span>
-[insert your code]
-
-<span class="c1">// Question 2</span>
-[insert your code,<span class="k"> if</span> necessary]
-<span class="k">program</span> define unilogit
-		[insert your code]
-<span class="k">end</span>
+<p>This homework revisits <code class="docutils literal notranslate"><span class="pre">HW3</span></code>, but with a few additional challenges. Refer to <a class="reference internal" href="lab5.html"><span class="doc std std-doc">lab 5</span></a> for hints.</p>
+<p><strong>Question 1</strong>. Now you have all the skills to create your first automated Table 1! Write a program called <code class="docutils literal notranslate"><span class="pre">question5</span></code> that prints the following table (including <code class="docutils literal notranslate"><span class="pre">Question</span> <span class="pre">5</span></code> in the header). The <code class="docutils literal notranslate"><span class="pre">XX</span></code> values should be replaced with correct values found in the dataset, and should be rounded to the nearest whole number for age and to <u>one decimal place</u> to the right of the decimal point for other variables. Make sure the summary statistics are vertically aligned and justified along the left margin. Run your program and display the table (i.e., in <code class="docutils literal notranslate"><span class="pre">.log</span> <span class="pre">file</span></code>). Also, output these results to <code class="docutils literal notranslate"><span class="pre">Question1.xlsx</span></code></p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>Question <span class="m">1</span>                Males (N=XX)        Females (N=XX)
+Age,<span class="k"> median</span> (IQR)         XX (XX<span class="o">-</span>XX)          XX (XX<span class="o">-</span>XX)
+Previous transplant, %    XX<span class="m">.</span>X               XX<span class="m">.</span>X
+Cause of ESRD:
+Glomerular, %             XX<span class="m">.</span>X               XX<span class="m">.</span>X
+Diabetes, %               XX<span class="m">.</span>X               XX<span class="m">.</span>X
+PKD, %                    XX<span class="m">.</span>X               XX<span class="m">.</span>X
+Hypertensive, %           XX<span class="m">.</span>X               XX<span class="m">.</span>X
+Renovascular, %           XX<span class="m">.</span>X               XX<span class="m">.</span>X
+Congenital, %             XX<span class="m">.</span>X               XX<span class="m">.</span>X
+Tubulo, %                 XX<span class="m">.</span>X               XX<span class="m">.</span>X
+Neoplasm, %               XX<span class="m">.</span>X               XX<span class="m">.</span>X
+Other, %                  XX<span class="m">.</span>X               XX<span class="m">.</span>X
 </pre></div>
 </div>
-<p>Another script called <a class="reference download internal" download="" href="_downloads/af7c7303332f3430682f436365b6fb1a/hw5_test.do"><span class="xref download myst">hw5_test.do</span></a> is required. We will use a script that
-looks like this to grade your responses. Use this script to test your code yourself.</p>
-<p>Questions</p>
-<p><strong>Context</strong> : You are conducting a study that examines the regional variation in the distribution of panel-
-reactive antibody (PRA). You recruited 73 patients (px_id = 1, …., 73 ) from 10 hospitals (hosp_id=1, …,10)
-in 3 regions (region=A, B, C, … ), and measured PRA 3 times: visit 1, visit 2, and visit 3. You hear that the
-organization that funds your research plans to extend the funding for several more visits (visit 4, visit 5,
-…, visit N). Since you do not know how many more visits there will be, you decide to write a .do file that
-can work regardless of how many visits the dataset has.</p>
-<p><strong>Codebook</strong></p>
+<p><strong>Question 2.</strong> Your research group is investigating demographic characteristics associated with receiving a kidney transplant for waitlisted patients. You run a logistic regression using the following command:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">logistic</span> received_kt init_age female
+<span class="k">lincom</span> init_age
+<span class="k">return list</span>
+</pre></div>
+</div>
+<p>Print a summary table as shown below (this is how it should appear in your <code class="docutils literal notranslate"><span class="pre">.log</span></code> file), with odds ratios (OR) and 95% confidence intervals (CI). The <code class="docutils literal notranslate"><span class="pre">XXXX</span></code> values should be replaced with the actual values found in the dataset, and should be displayed with <u><strong>two</strong></u> decimal places to the right of the decimal point. Also, create a <code class="docutils literal notranslate"><span class="pre">Question2.xlsx</span></code> with this output properly formatted.</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>Question <span class="m">2</span>
+Variable         OR    (<span class="m">95</span>% CI)
+Age              X<span class="m">.</span>XX  (X<span class="m">.</span>XX<span class="o">-</span>X<span class="m">.</span>XX)
+Female           X<span class="m">.</span>XX  (X<span class="m">.</span>XX<span class="o">-</span>X<span class="m">.</span>XX)
+</pre></div>
+</div>
+<p>Hint: If you like, you may these expressions below after logistic regression to obtain the odds ratio and 95% CI. We will use <code class="docutils literal notranslate"><span class="pre">init_age</span></code> as an example.</p>
 <table class="colwidths-auto table">
 <thead>
-<tr class="row-odd"><th class="head"><p>Variable</p></th>
-<th class="head"><p>Description</p></th>
-<th class="head"><p>Values/Range</p></th>
+<tr class="row-odd"><th class="head"><p>Parameters</p></th>
+<th class="head"><p>Expressions</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><strong>hw2_pra_hist_2022.dta</strong></p></td>
-<td><p></p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p>Odds ratio</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">r(estimate)</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hosp_id</span></code></p></td>
-<td><p>Hospital ID</p></td>
-<td><p>Integers: 1 – 10</p></td>
+<tr class="row-odd"><td><p>Lower bound of 95% CI</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">r(lb)</span></code></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">px_id</span></code></p></td>
-<td><p>Patient ID</p></td>
-<td><p>Integers: 1 – 94</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">visit_id</span></code></p></td>
-<td><p>Visit ID</p></td>
-<td><p>Integers: 1 – N<br/>1 indicates the first visit. K indicates the K-th visit.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pra</span></code></p></td>
-<td><p>PRA value at the visit</p></td>
-<td><p>Integers: 0 – 100</p></td>
-</tr>
-<tr class="row-odd"><td><p><strong>hw2_hosp_2022.dta</strong></p></td>
-<td><p></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hosp_id</span></code></p></td>
-<td><p>Hospital ID</p></td>
-<td><p>Integers: 1 – 10</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Region</span></code></p></td>
-<td><p>Region</p></td>
-<td><p>Alphabets</p></td>
+<tr class="row-even"><td><p>Upper bound of 95% CI</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ub</span></code></p></td>
 </tr>
 </tbody>
 </table>
-<p>Note: to uniquely identify a patient you’d have to specify both hospital ID <strong>and</strong> patient ID. In other words, patients in different hospitals may have the same Patient ID</p>
-<p><strong>i)</strong> Load <code class="docutils literal notranslate"><span class="pre">hw5_pra_hist.dta</span></code>. Print a table as shown below, which displays the number of
-patients with a non-missing PRA value at each visit. <code class="docutils literal notranslate"><span class="pre">N</span></code> and <code class="docutils literal notranslate"><span class="pre">XX</span></code> should be replaced with the
-correct values from the dataset. (Hint: how do you write a forvalue loop for all values of
-<code class="docutils literal notranslate"><span class="pre">visit_id</span></code>?)</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>Question <span class="m">1.i</span>)
-Visit 	Count
-<span class="m">1</span> 			XX
-<span class="m">2</span> 			XX
-		⋮
-[omitted, but your .do<span class="k"> file</span> should<span class="k"> display</span> all variables]
-		⋮
-N 			XX
-</pre></div>
-</div>
-<p><strong>ii)</strong> Create a new variable <code class="docutils literal notranslate"><span class="pre">peak_pra</span></code>, which contains the maximum value of PRA within each
-participant. Print the median (IQR) of <code class="docutils literal notranslate"><span class="pre">peak_pra</span></code> across the patients as shown below. <code class="docutils literal notranslate"><span class="pre">XX.X</span></code>
-should be replaced with the correct values from the dataset and formatted with one digit after
-the decimal point (e.g., 12.0 ). (Hint: each patient must be counted only once when calculating
-the median and IQR.)</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>Question <span class="m">1.</span>ii): The<span class="k"> median</span> (IQR) of peak_pra is xx<span class="m">.</span>x (xx<span class="m">.</span>x<span class="o">-</span>xx<span class="m">.</span>x).
-</pre></div>
-</div>
-<p><strong>iii)</strong> Another dataset provided to you, <code class="docutils literal notranslate"><span class="pre">hw5_hosp.dta</span></code>, has information on which region each
-hospital is located in. Merge the current dataset in memory with hw2_hosp.dta without
-altering the number of observations in memory. Use the command <code class="docutils literal notranslate"><span class="pre">list</span></code> to list the ID of the
-patient with the highest peak_pra value for each region as shown below.</p>
-<p><code class="docutils literal notranslate"><span class="pre">XX</span></code> should be replaced with the correct values from the dataset. If there are ties (i.e., multiple
-patients with the highest value), print all tied patients. If region C has ties (while A and B does
-not), the table will look like below.</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="o">+------------------------------------+</span>
-| region 	px_id 	peak_pra         |
-|<span class="o">------------------------------------</span>|
-| A  	        XXXX    XXXX         |
-|<span class="o">------------------------------------</span>|
-| B  	        XXXX    XXXX         |
-|<span class="o">------------------------------------</span>|
-| C 	        XXXX    XXXX         |
-| C  	        XXXX    XXXX         |
-<span class="o">+------------------------------------+</span>
-</pre></div>
-</div>
-<p>Hint: your <code class="docutils literal notranslate"><span class="pre">list</span></code> command should look like this</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">list</span> region px_id peak_pra [insert your code here], sepby(region) noobs
-</pre></div>
-</div>
-<section id="question-2">
-<h2>Question 2<a class="headerlink" href="#question-2" title="Permalink to this heading">#</a></h2>
-<p>Define a program called <code class="docutils literal notranslate"><span class="pre">unilogit</span></code>. This program runs a series of univariable (simple) logistic
-regressions between each of the predictors supplied by the user and a binary outcome variable
-also supplied by the user.</p>
-<p>For example, if the user runs</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>unilogit var1 var2 var3 var4, outcome(var5)
-</pre></div>
-</div>
-<p>this program will quietly run four univariable logistic regressions on var5,</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">logistic</span> var5<span class="k"> var</span>
-<span class="k">logistic</span> var5<span class="k"> var</span>
-<span class="k">logistic</span> var5<span class="k"> var</span>
-<span class="k">logistic</span> var5<span class="k"> var</span>
-</pre></div>
-</div>
-<p>and return the following output, assuming that <code class="docutils literal notranslate"><span class="pre">var2</span></code> and <code class="docutils literal notranslate"><span class="pre">var4</span></code> were significantly (p&lt;0.05)
-associated with <code class="docutils literal notranslate"><span class="pre">var5</span></code>.</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>Significantly associated with var5:
-var2 (p=x<span class="m">.</span>xxx)
-var4 (p=x<span class="m">.</span>xxx)
-</pre></div>
-</div>
-<p>P-values should be rounded to the nearest thousandth (i.e., three digits after the decimal point).</p>
-<p><u>This program should also support if subsetting.</u> For example, if the user runs</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>unilogit var1 var2 var3<span class="k"> if</span> var4<span class="o">==</span><span class="m">1</span>, outcome(var5)
-</pre></div>
-</div>
-<p>this program should run only on the observations with <code class="docutils literal notranslate"><span class="pre">var4==1</span></code>.</p>
-<p><u>This program should not alter the dataset in the memory</u>: i.e., if you need to alter the dataset,
-<code class="docutils literal notranslate"><span class="pre">preserve</span></code> before making changes and <code class="docutils literal notranslate"><span class="pre">restore</span></code> to the original status after completing your
-procedures.</p>
-<p>Hint: The program <code class="docutils literal notranslate"><span class="pre">model</span></code> in lecture 4 has some similarities with this question. The p-value after
-<code class="docutils literal notranslate"><span class="pre">logistic</span></code> can be obtained using the following code:</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//stata14 &amp; older</span>
-(<span class="m">1</span><span class="o">-</span><span class="nf">normal</span>(<span class="nf">abs</span>(_b[var1]<span class="o">/</span>_se[var1])))<span class="o">*</span><span class="m">2</span>
-
-<span class="c1">//stata15 &amp; newer</span>
-<span class="k">matrix</span> define<span class="k"> m</span>=<span class="nf">r</span>(table)
-
-<span class="c1">//see `chapter: by` on how to select the p-value</span>
-
-<span class="c1">//alternatively: use `lincom`, then `return list`</span>
-</pre></div>
-</div>
-</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -578,20 +452,6 @@ procedures.</p>
             </div>
             
             
-              
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#question-2">Question 2</a></li>
-</ul>
-  </nav></div>
-
-</div></div>
               
             
           </div>
