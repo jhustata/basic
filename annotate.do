@@ -34,8 +34,12 @@ quietly {
 		}
 	}
 	foreach v in nh3 adult {
-		do ${repo}`v'.do
+		capture do ${repo}`v'.do
+		if _rc == 601 {
+			do `v'.do
+		}
 	}
+	noi di "obs: c(N) & vars: c(k)"
 	log close 
 }
 
