@@ -41,7 +41,7 @@ quietly {
 			do `v'.do
 		}
 	}
-	noi di "obs: c(N) & vars: c(k)"
+	noi di "obs: `c(N)' & vars: `c(k)'"
 	log close 
 }
 
