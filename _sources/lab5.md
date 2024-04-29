@@ -4,7 +4,7 @@ Please use this lab as an opportunity to review the course material and prepare 
 
 Tasks:
 1. Walk through as many examples as you can to appreciate the efficiency loops bring to programming.
-2. Make a list of the number of macros that are defined throughout this exercize. How many do you come up with? Compare this with your classmates. Post your "exhaustive" list of macros (inlude the total count) in [GitHub Discussions](https://github.com/jhufena/discussions/discussions) and challenges others to identify a longer list.
+2. Make a list of the number of macros that are defined throughout this exercize. How many do you come up with? Compare this with your classmates. Post your "exhaustive" list of macros (inlude the total count) in [GitHub Discussions](https://github.com/jhufena/discussions/discussions) and challenge others to identify a longer list.
 3. Consider how some of these macros might be used when writing a flexible program. (e.g. `syntax varlist`). Part II of this lab focuses on flexible programs, all of which employ macro "names" to capture user "values" and inputs (i.e., varlists, numlists, varnames, filepaths, etc).
 4. Finally, write a script that imports NHANES DEMO.XPT (1999-2000) and iteratively `appends` NHANES `DEMO.XPT` from the next two survey cycles 2001-2002, 2003-2004. Visit the website to see the naming convention for the various years (e.g. [NHANES 2001 - 2002](https://wwwn.cdc.gov/nchs/nhanes/search/datapage.aspx?Component=Demographics&CycleBeginYear=2001)) 
 
@@ -25,7 +25,7 @@ end
 
 # Part I: Loops (30 min)
 
-## 1. Setting Up the Environment
+## 1. Settings
 
 Let's start by reading in datasets we may need for demos
 
@@ -47,8 +47,8 @@ qui {
 }
 ```
 
-## Kinds of loops
-### `foreach v of varlist {`
+## 2. Kinds of loops
+### 2.1 `foreach v of varlist {`
 ```stata
 qui {
 	/*
@@ -63,6 +63,7 @@ qui {
 		    noi di "What is dataset `i'?" _request(data`i')
 	    }
 	    global repo "https://github.com/jhustata/basic/raw/main/"
+		global nhanes "https://wwwn.cdc.gov/Nchs/Nhanes/
 	}	
 	if $N { //Import Data
         use $repo$data1, clear
@@ -76,7 +77,7 @@ qui {
 ```
 
 <Details>
-   <Summary></Summary>
+   <Summary>🌕</Summary>
 
 The `r(varlist)` can be replaced with a user-defined varlist in a customized program:
 
@@ -120,11 +121,14 @@ forval i = 1/26 {
 ```
 
 <Details>
-   <Summary></Summary>
+   <Summary>🥇</Summary>
 
 ```stata
 set timeout1 1000
-import sasxport5 "https://wwwn.cdc.gov/Nchs/Nhanes/1999-2000/DEMO.XPT", clear
+//see too much repetition? then innovate with loops!!
+import sasxport5 "${nhanes}$/1999-2000/DEMO.XPT", clear
+import sasxport5 "${nhanes}$/2001-2002/DEMO_B.XPT", clear
+import sasxport5 "${nhanes}$/2003-2004/DEMO_C.XPT", clear
 ```
 
 Can you write a script that imports NHANES DEMO.XPT (1999-2000) and iteratively `appends` NHANES DEMO.XPT from the next two survey cycles 2001-2002, 2003-2004? Visit the website to see the naming convention for the various years (e.g. [NHANES 2001 - 2002](https://wwwn.cdc.gov/nchs/nhanes/search/datapage.aspx?Component=Demographics&CycleBeginYear=2001))
@@ -132,7 +136,7 @@ Can you write a script that imports NHANES DEMO.XPT (1999-2000) and iteratively 
 </Details>
 
 ##### `varlist` 
-What if you wish to loop over a list of strings that aren't variables?
+What if you wish to loop over non-variable strings?
 
 ```stata
  cls 
@@ -142,7 +146,7 @@ local varlist "Egypt Portugal Swaziland Ireland"
  } 
 ```
 
-### `foreach n of numlist {`
+### 2.2 `foreach n of numlist {`
 ```stata
 qui {
 	//earlier code
@@ -159,7 +163,6 @@ qui {
 
 #### `variable lab`
 
-
 ```stata
 qui {
 	//earlier code
@@ -172,7 +175,7 @@ qui {
 
 <Details>
 
-   <Summary></Summary>
+   <Summary>🔥</Summary>
 
 Variable type determines the parameters you report in Table 1:
 
@@ -345,6 +348,10 @@ Review the `.xlsx` file you've just created
 # Part II (30 min)
 
 1. We discussed how you can define your own “program”. It’s an awesome tool that allows us to automate a specific task. If you think a specific part of your code will be used multiple times, you might as well put that into a program. In this second half of lab, we will practice customizing our programs.
+
+```stata
+use "${repo}${transplants}", clear
+```
 
 2. Start Stata, open your do-file editor and consider using conditional code-blocks (`if 2` for instance) as you answer each question in this lab. That way each block has some autonomy and you can "silence" it (`if 0`) while you run other code-blocks. Review Part I for instances where macros replace the `0` and `2` in the `if 0` blocks.
 
