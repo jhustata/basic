@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>&lt;no title&gt; &#8212; Stata Programming</title>
+    <title>HW3 &#8212; Stata Programming</title>
   
   
   
@@ -347,7 +347,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1><no title></h1>
+    <h1>HW3</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -356,7 +356,9 @@ document.write(`
                 <h2> Contents </h2>
             </div>
             <nav aria-label="Page">
-                <ul class="simple visible nav section-nav flex-column">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">HW3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#hw5">HW5</a></li>
 </ul>
 
             </nav>
@@ -370,6 +372,8 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <p>First letter of Student’s Last Name</p>
+<section class="tex2jax_ignore mathjax_ignore" id="hw3">
+<h1>HW3<a class="headerlink" href="#hw3" title="Permalink to this heading">#</a></h1>
 <ol class="arabic simple">
 <li><p>SLBTM -&gt; Ning Meng</p></li>
 <li><p>YZRVU -&gt; Natalie Daya Malek</p></li>
@@ -377,6 +381,69 @@ document.write(`
 <li><p>FIDXC -&gt; Maya Aboumrad</p></li>
 <li><p>APEON -&gt; Darien Colson-Fearon</p></li>
 </ol>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="hw5">
+<h1>HW5<a class="headerlink" href="#hw5" title="Permalink to this heading">#</a></h1>
+<ol class="arabic simple">
+<li><p>MIFJD -&gt; Ning Meng</p></li>
+<li><p>HYGUZ -&gt; Natalie Daya Malek</p></li>
+<li><p>QAKSN -&gt; Xujun Gu</p></li>
+<li><p>LOPXR -&gt; Maya Aboumrad</p></li>
+<li><p>ETCWVB -&gt; Darien Colson-Fearon</p></li>
+</ol>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> {
+<span class="k">    </span>
+<span class="k">    </span>
+<span class="k">    if</span> <span class="m">1</span> { <span class="c1">//N=26</span>
+        
+        cls
+<span class="k">        clear</span>
+<span class="k">        set</span> obs <span class="m">26</span>
+<span class="k">        </span>
+<span class="k">        capture log close</span> 
+<span class="k">        log</span> using<span class="k"> tokenize</span><span class="m">.</span>log,<span class="k"> replace</span>  
+        
+    }
+<span class="k">    </span>
+<span class="k">    if</span> <span class="m">2</span> { <span class="c1">//Int 1-26</span>
+<span class="k">        </span>
+<span class="k">        egen</span> lastname = seq(), f(<span class="m">1</span>) <span class="nf">t</span>(<span class="m">26</span>)
+<span class="k">        tostring</span> lastname,<span class="k"> replace</span> 
+<span class="k">        tokenize</span> <span class="s">&quot;</span><span class="nv">`c(ALPHA)&#39;</span><span class="s">&quot;</span> 
+        
+    }
+
+<span class="k">    if</span> <span class="m">3</span> { <span class="c1">//Tokenize</span>
+<span class="k">        </span>
+<span class="k">        forval</span> i = <span class="m">1</span><span class="o">/</span><span class="m">26</span> {
+<span class="k">            </span>
+<span class="k">            replace</span> lastname = <span class="s">&quot;</span><span class="nv">``i&#39;&#39;</span><span class="s">&quot;</span><span class="k"> if</span> lastname <span class="o">==</span> <span class="s">&quot;</span><span class="nv">`i&#39;</span><span class="s">&quot;</span> 
+            
+        }
+        
+    }
+<span class="k">    </span>
+<span class="k">    if</span> <span class="m">4</span> { <span class="c1">//Randomly</span>
+        
+        <span class="c1">//set seed 340600 //HW3 seed</span>
+<span class="k">		set</span> seed <span class="m">340700</span> <span class="c1">//HW5 seed</span>
+<span class="k">        g</span> randomorder=<span class="nf">runiform</span>()
+<span class="k">        sort</span> random  
+<span class="k">        drop</span> random    
+        
+    }
+<span class="k">    </span>
+<span class="k">    if</span> <span class="m">5</span> { <span class="c1">//Output</span>
+<span class="k">        </span>
+<span class="k">        noi list</span> 
+<span class="k">        log close</span> 
+        
+    }
+
+}
+</pre></div>
+</div>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -426,7 +493,9 @@ document.write(`
     <i class="fa-solid fa-list"></i> Contents
   </div>
   <nav class="bd-toc-nav page-toc">
-    <ul class="simple visible nav section-nav flex-column">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">HW3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#hw5">HW5</a></li>
 </ul>
 
   </nav></div>
