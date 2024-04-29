@@ -32,9 +32,12 @@ Let's start by reading in datasets we may need for demos
 ```stata
 qui {
 	/*
-	1. Kidney Transplant Recipient Data
-	2. NHANES 1999-2000 Demographics Data  
-	3. Homework 1 Textfile Data
+	1. Kidney Transplant Recipient Data (from GitHub.com)
+	   - `transplants.dta`
+	   - `donors.dta`
+	   - `donors_recipients.dta`
+	2. NHANES 1999-2000 Demographics Data (from CDC.gov)
+	   - `DEMO.XPT`
 	*/
 	if 1 { //Activated 
 		cls
@@ -43,6 +46,7 @@ qui {
 		    noi di "What is dataset `i'?" _request(data`i')
 	    }
 	    global repo "https://github.com/jhustata/basic/raw/main/"
+		global nhanes "https://wwwn.cdc.gov/Nchs/Nhanes/
 	}	
 }
 ```
@@ -126,9 +130,9 @@ forval i = 1/26 {
 ```stata
 set timeout1 1000
 //see too much repetition? then innovate with loops!!
-import sasxport5 "${nhanes}$/1999-2000/DEMO.XPT", clear
-import sasxport5 "${nhanes}$/2001-2002/DEMO_B.XPT", clear
-import sasxport5 "${nhanes}$/2003-2004/DEMO_C.XPT", clear
+import sasxport5 "${nhanes}1999-2000/DEMO.XPT", clear
+import sasxport5 "${nhanes}2001-2002/DEMO_B.XPT", clear
+import sasxport5 "${nhanes}2003-2004/DEMO_C.XPT", clear
 ```
 
 Can you write a script that imports NHANES DEMO.XPT (1999-2000) and iteratively `appends` NHANES DEMO.XPT from the next two survey cycles 2001-2002, 2003-2004? Visit the website to see the naming convention for the various years (e.g. [NHANES 2001 - 2002](https://wwwn.cdc.gov/nchs/nhanes/search/datapage.aspx?Component=Demographics&CycleBeginYear=2001))
@@ -350,7 +354,9 @@ Review the `.xlsx` file you've just created
 1. We discussed how you can define your own “program”. It’s an awesome tool that allows us to automate a specific task. If you think a specific part of your code will be used multiple times, you might as well put that into a program. In this second half of lab, we will practice customizing our programs.
 
 ```stata
-use "${repo}${transplants}", clear
+use "${repo}${data1}", clear
+use "${repo}${data2}", clear
+use "${repo}${data3}", clear
 ```
 
 2. Start Stata, open your do-file editor and consider using conditional code-blocks (`if 2` for instance) as you answer each question in this lab. That way each block has some autonomy and you can "silence" it (`if 0`) while you run other code-blocks. Review Part I for instances where macros replace the `0` and `2` in the `if 0` blocks.

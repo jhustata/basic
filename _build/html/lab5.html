@@ -432,9 +432,12 @@ import sasxport5 <span class="s">&quot;https://wwwn.cdc.gov/Nchs/Nhanes/1999-200
 <p>Let’s start by reading in datasets we may need for demos</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> {
 	<span class="cm">/*</span>
-<span class="cm">	1. Kidney Transplant Recipient Data</span>
-<span class="cm">	2. NHANES 1999-2000 Demographics Data  </span>
-<span class="cm">	3. Homework 1 Textfile Data</span>
+<span class="cm">	1. Kidney Transplant Recipient Data (from GitHub.com)</span>
+<span class="cm">	   - `transplants.dta`</span>
+<span class="cm">	   - `donors.dta`</span>
+<span class="cm">	   - `donors_recipients.dta`</span>
+<span class="cm">	2. NHANES 1999-2000 Demographics Data (from CDC.gov)</span>
+<span class="cm">	   - `DEMO.XPT`</span>
 <span class="cm">	*/</span>
 <span class="k">	if</span> <span class="m">1</span> { <span class="c1">//Activated </span>
 		cls
@@ -443,6 +446,7 @@ import sasxport5 <span class="s">&quot;https://wwwn.cdc.gov/Nchs/Nhanes/1999-200
 <span class="k">		    noi di</span> <span class="s">&quot;What is dataset </span><span class="nv">`i&#39;</span><span class="s">?&quot;</span> _request(data<span class="nv">`i&#39;</span>)
 	    }
 <span class="k">	    global</span> repo <span class="s">&quot;https://github.com/jhustata/basic/raw/main/&quot;</span>
+<span class="k">		global</span> nhanes <span class="s">&quot;https://wwwn.cdc.gov/Nchs/Nhanes/</span>
 	}	
 }
 </pre></div>
@@ -516,11 +520,11 @@ import sasxport5 <span class="s">&quot;https://wwwn.cdc.gov/Nchs/Nhanes/1999-200
 </div>
 <Details>
    <Summary>🥇</Summary>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>set timeout1 1000
-//see too much repetition? then innovate with loops!!
-import sasxport5 &quot;${nhanes}$/1999-2000/DEMO.XPT&quot;, clear
-import sasxport5 &quot;${nhanes}$/2001-2002/DEMO_B.XPT&quot;, clear
-import sasxport5 &quot;${nhanes}$/2003-2004/DEMO_C.XPT&quot;, clear
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">set</span> timeout1 <span class="m">1000</span>
+<span class="c1">//see too much repetition? then innovate with loops!!</span>
+import sasxport5 <span class="s">&quot;</span><span class="vg">${nhanes}</span><span class="s">1999-2000/DEMO.XPT&quot;</span>,<span class="k"> clear</span>
+import sasxport5 <span class="s">&quot;</span><span class="vg">${nhanes}</span><span class="s">2001-2002/DEMO_B.XPT&quot;</span>,<span class="k"> clear</span>
+import sasxport5 <span class="s">&quot;</span><span class="vg">${nhanes}</span><span class="s">2003-2004/DEMO_C.XPT&quot;</span>,<span class="k"> clear</span>
 </pre></div>
 </div>
 <p>Can you write a script that imports NHANES DEMO.XPT (1999-2000) and iteratively <code class="docutils literal notranslate"><span class="pre">appends</span></code> NHANES DEMO.XPT from the next two survey cycles 2001-2002, 2003-2004? Visit the website to see the naming convention for the various years (e.g. <a class="reference external" href="https://wwwn.cdc.gov/nchs/nhanes/search/datapage.aspx?Component=Demographics&amp;CycleBeginYear=2001">NHANES 2001 - 2002</a>)</p>
@@ -744,7 +748,9 @@ putexcel<span class="k"> set</span> lab6,<span class="k"> replace</span>
 <ol class="arabic simple">
 <li><p>We discussed how you can define your own “program”. It’s an awesome tool that allows us to automate a specific task. If you think a specific part of your code will be used multiple times, you might as well put that into a program. In this second half of lab, we will practice customizing our programs.</p></li>
 </ol>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="s">&quot;</span><span class="vg">${repo}${transplants}</span><span class="s">&quot;</span>,<span class="k"> clear</span>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="s">&quot;</span><span class="vg">${repo}${data1}</span><span class="s">&quot;</span>,<span class="k"> clear</span>
+<span class="k">use</span> <span class="s">&quot;</span><span class="vg">${repo}${data2}</span><span class="s">&quot;</span>,<span class="k"> clear</span>
+<span class="k">use</span> <span class="s">&quot;</span><span class="vg">${repo}${data3}</span><span class="s">&quot;</span>,<span class="k"> clear</span>
 </pre></div>
 </div>
 <ol class="arabic simple" start="2">
