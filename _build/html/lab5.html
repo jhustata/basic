@@ -358,9 +358,37 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Lab 5</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#part-i">Part I</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#part-ii">Part II</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lab4">lab4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#part-i-loops-30-min">Part I: Loops (30 min)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-up-the-environment">1. Setting Up the Environment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kinds-of-loops">Kinds of loops</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#foreach-v-of-varlist"><code class="docutils literal notranslate"><span class="pre">foreach</span> <span class="pre">v</span> <span class="pre">of</span> <span class="pre">varlist</span> <span class="pre">{</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#c-alpha"><code class="docutils literal notranslate"><span class="pre">c(ALPHA)</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tokenize"><code class="docutils literal notranslate"><span class="pre">tokenize</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#varlist"><code class="docutils literal notranslate"><span class="pre">varlist</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#foreach-n-of-numlist"><code class="docutils literal notranslate"><span class="pre">foreach</span> <span class="pre">n</span> <span class="pre">of</span> <span class="pre">numlist</span> <span class="pre">{</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#variable-lab"><code class="docutils literal notranslate"><span class="pre">variable</span> <span class="pre">lab</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#value-lab"><code class="docutils literal notranslate"><span class="pre">value</span> <span class="pre">lab</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#label-value-lab"><code class="docutils literal notranslate"><span class="pre">label</span> <span class="pre">value</span> <span class="pre">lab</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#forvalues"><code class="docutils literal notranslate"><span class="pre">forvalues</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#foreach"><code class="docutils literal notranslate"><span class="pre">foreach</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#numlist"><code class="docutils literal notranslate"><span class="pre">numlist</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><code class="docutils literal notranslate"><span class="pre">tokenize</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#putexcel"><code class="docutils literal notranslate"><span class="pre">putexcel</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#part-ii-30-min">Part II (30 min)</a></li>
 </ul>
 
             </nav>
@@ -375,44 +403,349 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="lab-5">
 <h1>Lab 5<a class="headerlink" href="#lab-5" title="Permalink to this heading">#</a></h1>
-<p>This lab is optional; you are NOT required to complete these questions. Please use this lab as an opportunity to review the course material and prepare yourself for the homework questions. Sample responses to the lab questions will be on Friday May 2, 2024.</p>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="part-i">
-<h1>Part I<a class="headerlink" href="#part-i" title="Permalink to this heading">#</a></h1>
+<p>Please use this lab as an opportunity to review the course material and prepare yourself for the homework questions. A sample response to the lab questions will be made available on Friday May 2, 2024. While you are not expected to practice all these examples, you’re also reminded that <em>practice makes perfect</em>!</p>
+<p>Tasks:</p>
 <ol class="arabic simple">
-<li><p>Start Stata, open your do-file editor, write the header, and load <code class="docutils literal notranslate"><span class="pre">transplants.dta</span></code>.</p></li>
+<li><p>Walk through as many examples as you can to appreciate the efficiency loops bring to programming.</p></li>
+<li><p>Make a list of the number of macros that are defined throughout this exercize. How many do you come up with? Compare this with your classmates. Post your “exhaustive” list of macros (inlude the total count) in <a class="reference external" href="https://github.com/jhufena/discussions/discussions">GitHub Discussions</a> and challenges others to identify a longer list.</p></li>
+<li><p>Consider how some of these macros might be used when writing a flexible program. (e.g. <code class="docutils literal notranslate"><span class="pre">syntax</span> <span class="pre">varlist</span></code>). Part II of this lab focuses on flexible programs, all of which employ macro “names” to capture user “values” and inputs (i.e., varlists, numlists, varnames, filepaths, etc).</p></li>
+<li><p>Finally, write a script that imports NHANES DEMO.XPT (1999-2000) and iteratively <code class="docutils literal notranslate"><span class="pre">appends</span></code> NHANES <code class="docutils literal notranslate"><span class="pre">DEMO.XPT</span></code> from the next two survey cycles 2001-2002, 2003-2004. Visit the website to see the naming convention for the various years (e.g. <a class="reference external" href="https://wwwn.cdc.gov/nchs/nhanes/search/datapage.aspx?Component=Demographics&amp;CycleBeginYear=2001">NHANES 2001 - 2002</a>)</p></li>
 </ol>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="s">&quot;https://github.com/jhustata/basic/raw/main/transplants.dta&quot;</span>,<span class="k"> clear</span>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">set</span> timeout1 <span class="m">1000</span>
+import sasxport5 <span class="s">&quot;https://wwwn.cdc.gov/Nchs/Nhanes/1999-2000/DEMO.XPT&quot;</span>,<span class="k"> clear</span>
 </pre></div>
 </div>
-<ol class="arabic" start="2">
-<li><p><code class="docutils literal notranslate"><span class="pre">ctr_id</span></code> indicates the ID of the transplant center where the patient received the transplant. Count the number of recipients at each center, and store in a new variable <code class="docutils literal notranslate"><span class="pre">volume</span></code>.</p></li>
-<li><p>List <code class="docutils literal notranslate"><span class="pre">ctr_id</span></code> and <code class="docutils literal notranslate"><span class="pre">volume</span></code> to see how many patients each center has. Maybe let’s try this:</p>
-<p><code class="docutils literal notranslate"><span class="pre">list</span> <span class="pre">ctr_id</span> <span class="pre">volume</span></code></p>
-</li>
-<li><p>This is not what we wanted. Generate a variable <code class="docutils literal notranslate"><span class="pre">ctr_tag</span></code> that “tags” one observation per center.</p></li>
-<li><p>Now <code class="docutils literal notranslate"><span class="pre">list</span> <span class="pre">ctr_id</span></code> and <code class="docutils literal notranslate"><span class="pre">volume</span></code>, but just for one record per center.</p></li>
-<li><p>Calculate the mean age of the patients at each center, and store in a new variable <code class="docutils literal notranslate"><span class="pre">mean_age</span></code>.</p></li>
-<li><p>For each primary diagnosis subgroup (use variable <code class="docutils literal notranslate"><span class="pre">dx</span></code>), run a regression with age as the predictor and peak PRA (<code class="docutils literal notranslate"><span class="pre">peak_pra</span></code>) as the outcome.</p></li>
-<li><p>Now let’s make the output cleaner. Count the number of cases within each diagnosis group. If there are more than 500 cases, run the regression and display the output. If not, display “There are fewer than 500 cases.”</p></li>
-<li><p>Define a program called <code class="docutils literal notranslate"><span class="pre">reg_pra</span></code>. This program will perform the same tasks as described in Question 8, but the regression will take one or more variables specified by the user as the predictor.</p></li>
-<li><p>You have all your commands in your do file, right? Run your do file from the beginning and make sure your do file does exactly the same thing.</p></li>
+<ol class="arabic simple" start="5">
+<li><p>Convert the above script into a flexible program that can import as many survey cycles as the user wishes. Review the naming conventions for the <code class="docutils literal notranslate"><span class="pre">DEMO.XPT</span></code> files for each cycle.</p></li>
 </ol>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">capture program drop</span> nhanes_demo
+<span class="k">program</span> define nhanes_demo
+   <span class="c1">//code</span>
+<span class="k">end</span>
+</pre></div>
+</div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="part-ii">
-<h1>Part II<a class="headerlink" href="#part-ii" title="Permalink to this heading">#</a></h1>
+<section class="tex2jax_ignore mathjax_ignore" id="part-i-loops-30-min">
+<h1>Part I: Loops (30 min)<a class="headerlink" href="#part-i-loops-30-min" title="Permalink to this heading">#</a></h1>
+<section id="setting-up-the-environment">
+<h2>1. Setting Up the Environment<a class="headerlink" href="#setting-up-the-environment" title="Permalink to this heading">#</a></h2>
+<p>Let’s start by reading in datasets we may need for demos</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> {
+	<span class="cm">/*</span>
+<span class="cm">	1. Kidney Transplant Recipient Data</span>
+<span class="cm">	2. NHANES 1999-2000 Demographics Data  </span>
+<span class="cm">	3. Homework 1 Textfile Data</span>
+<span class="cm">	*/</span>
+<span class="k">	if</span> <span class="m">1</span> { <span class="c1">//Activated </span>
+		cls
+<span class="k">	    noi di</span> <span class="s">&quot;How many datasets are you going to use?&quot;</span> _request(N)
+<span class="k">	    forvalues</span> i=<span class="m">1</span><span class="o">/</span><span class="vg">$N</span> {
+<span class="k">		    noi di</span> <span class="s">&quot;What is dataset </span><span class="nv">`i&#39;</span><span class="s">?&quot;</span> _request(data<span class="nv">`i&#39;</span>)
+	    }
+<span class="k">	    global</span> repo <span class="s">&quot;https://github.com/jhustata/basic/raw/main/&quot;</span>
+	}	
+}
+</pre></div>
+</div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="lab4">
-<h1>lab4<a class="headerlink" href="#lab4" title="Permalink to this heading">#</a></h1>
+<section id="kinds-of-loops">
+<h2>Kinds of loops<a class="headerlink" href="#kinds-of-loops" title="Permalink to this heading">#</a></h2>
+<section id="foreach-v-of-varlist">
+<h3><code class="docutils literal notranslate"><span class="pre">foreach</span> <span class="pre">v</span> <span class="pre">of</span> <span class="pre">varlist</span> <span class="pre">{</span></code><a class="headerlink" href="#foreach-v-of-varlist" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> {
+	<span class="cm">/*</span>
+<span class="cm">	1. Kidney Transplant Recipient Data</span>
+<span class="cm">	2. NHANES 1999-2000 Demographics Data  </span>
+<span class="cm">	3. Homework 1 Textfile Data</span>
+<span class="cm">	*/</span>
+<span class="k">	if</span> <span class="m">0</span> { <span class="c1">//Deactivated  </span>
+		cls
+<span class="k">	    noi di</span> <span class="s">&quot;How many datasets are you going to use?&quot;</span> _request(N)
+<span class="k">	    forvalues</span> i=<span class="m">1</span><span class="o">/</span><span class="vg">$N</span> {
+<span class="k">		    noi di</span> <span class="s">&quot;What is dataset </span><span class="nv">`i&#39;</span><span class="s">?&quot;</span> _request(data<span class="nv">`i&#39;</span>)
+	    }
+<span class="k">	    global</span> repo <span class="s">&quot;https://github.com/jhustata/basic/raw/main/&quot;</span>
+	}	
+<span class="k">	if</span> <span class="vg">$N</span> { <span class="c1">//Import Data</span>
+<span class="k">        use</span> <span class="vg">$repo$data1</span>,<span class="k"> clear</span>
+<span class="k">		ds</span> 
+		<span class="c1">//varlist: string of variable names</span>
+<span class="k">		foreach</span> v of<span class="k"> varlist</span> <span class="nv">`r(varlist)&#39;</span> {
+<span class="k">			noi di</span> <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">&quot;</span>
+		}
+	}
+}
+</pre></div>
+</div>
+<Details>
+   <Summary></Summary>
+<p>The <code class="docutils literal notranslate"><span class="pre">r(varlist)</span></code> can be replaced with a user-defined varlist in a customized program:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">capture program drop</span> myvarlist
+<span class="k">    syntax varlist</span>
+<span class="k">	foreach</span> v of<span class="k"> varlist</span> <span class="nv">`varlist&#39;</span> {
+<span class="k">	    noi di</span> <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">&quot;</span>
+	}
+<span class="k">end</span> 
+</pre></div>
+</div>
+<p>Now the user has flexibility:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>myvarlist age gender race abo bmi
+</pre></div>
+</div>
+</Details>
+<section id="c-alpha">
+<h4><code class="docutils literal notranslate"><span class="pre">c(ALPHA)</span></code><a class="headerlink" href="#c-alpha" title="Permalink to this heading">#</a></h4>
+<p>What if you wish to loop over a list of strings that aren’t variables?</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span> cls 
+ <span class="c1">//di c(ALPHA)</span>
+<span class="k"> foreach</span> v<span class="k"> in</span> <span class="nv">`c(ALPHA)&#39;</span> {
+<span class="k"> 	di</span> <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">&quot;</span>
+ } 
+</pre></div>
+</div>
+</section>
+<section id="tokenize">
+<h4><code class="docutils literal notranslate"><span class="pre">tokenize</span></code><a class="headerlink" href="#tokenize" title="Permalink to this heading">#</a></h4>
+<p>You may be working within a <code class="docutils literal notranslate"><span class="pre">forvalues</span> <span class="pre">i=1/N</span></code> loop and want to loop over some other “list” that is a string:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">tokenize</span> <span class="s">&quot;</span><span class="nv">`c(ALPHA)&#39;</span><span class="s">&quot;</span> 
+<span class="k">forval</span> i = <span class="m">1</span><span class="o">/</span><span class="m">26</span> {        
+<span class="k">    di</span> <span class="s">&quot;</span><span class="nv">``i&#39;&#39;</span><span class="s">&quot;</span>
+}
+</pre></div>
+</div>
+<Details>
+   <Summary></Summary>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">set</span> timeout1 <span class="m">1000</span>
+import sasxport5 <span class="s">&quot;https://wwwn.cdc.gov/Nchs/Nhanes/1999-2000/DEMO.XPT&quot;</span>,<span class="k"> clear</span>
+</pre></div>
+</div>
+<p>Can you write a script that imports NHANES DEMO.XPT (1999-2000) and iteratively <code class="docutils literal notranslate"><span class="pre">appends</span></code> NHANES DEMO.XPT from the next two survey cycles 2001-2002, 2003-2004? Visit the website to see the naming convention for the various years (e.g. <a class="reference external" href="https://wwwn.cdc.gov/nchs/nhanes/search/datapage.aspx?Component=Demographics&amp;CycleBeginYear=2001">NHANES 2001 - 2002</a>)</p>
+</Details>
+<section id="varlist">
+<h5><code class="docutils literal notranslate"><span class="pre">varlist</span></code><a class="headerlink" href="#varlist" title="Permalink to this heading">#</a></h5>
+<p>What if you wish to loop over a list of strings that aren’t variables?</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span> cls 
+<span class="k">local varlist</span> <span class="s">&quot;Egypt Portugal Swaziland Ireland&quot;</span>
+<span class="k"> foreach</span> v<span class="k"> in</span> <span class="nv">`varlist&#39;</span> {
+<span class="k"> 	di</span> <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">&quot;</span>
+ } 
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="foreach-n-of-numlist">
+<h3><code class="docutils literal notranslate"><span class="pre">foreach</span> <span class="pre">n</span> <span class="pre">of</span> <span class="pre">numlist</span> <span class="pre">{</span></code><a class="headerlink" href="#foreach-n-of-numlist" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> {
+	<span class="c1">//earlier code</span>
+<span class="k">	if</span> <span class="vg">$N</span> {
+        <span class="c1">// earlier code</span>
+<span class="k">		levelsof</span> dx,<span class="k"> local</span>(dxcat)
+		<span class="c1">//numlist: list of numbers</span>
+<span class="k">		foreach n</span> of<span class="k"> numlist</span> <span class="nv">`dxcat&#39;</span> {
+<span class="k">			noi di</span> <span class="nv">`n&#39;</span>
+		}
+	}
+}
+</pre></div>
+</div>
+<section id="variable-lab">
+<h4><code class="docutils literal notranslate"><span class="pre">variable</span> <span class="pre">lab</span></code><a class="headerlink" href="#variable-lab" title="Permalink to this heading">#</a></h4>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> {
+	<span class="c1">//earlier code</span>
+	<span class="c1">//levelsof is a &quot;numlist&quot;</span>
+<span class="k">	    levelsof</span> dx,<span class="k"> local</span>(dxcat)
+<span class="k">		local</span> varlab:<span class="k"> var lab</span> dx 
+		<span class="c1">//later code</span>
+}
+</pre></div>
+</div>
+<Details>
+   <Summary></Summary>
+<p>Variable type determines the parameters you report in Table 1:</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Variable Type</p></th>
+<th class="head"><p>Statistic</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Continuous  (Units)</p></td>
+<td><p>Median (IQR)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Binary (One is enough)</p></td>
+<td><p>%</p></td>
+</tr>
+<tr class="row-even"><td><p>Multicategory (Each reported)</p></td>
+<td><p>Variable label</p></td>
+</tr>
+<tr class="row-odd"><td><p>Specific or collapsed</p></td>
+<td><p>%</p></td>
+</tr>
+</tbody>
+</table>
+<p><code class="docutils literal notranslate"><span class="pre">dx</span></code> is a collapsed version of <code class="docutils literal notranslate"><span class="pre">extended_dgn</span></code>. But for the sake of practice, lets further collapse <code class="docutils literal notranslate"><span class="pre">dx</span></code>:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">tab</span> dx 
+<span class="k">recode</span> dx (<span class="m">1</span><span class="o">/</span><span class="m">4</span>=<span class="m">1</span> <span class="s">&quot;Prevalent Overall&quot;</span>)(<span class="m">5</span><span class="o">/</span><span class="m">8</span>=<span class="m">2</span> <span class="s">&quot;Common in subgroups&quot;</span>)(<span class="m">9</span>=<span class="m">3</span> <span class="s">&quot;Miscellaneous&quot;</span>),gen(dx_cat)
+<span class="k">tab</span> dx_cat
+</pre></div>
+</div>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">h ds</span>
+<span class="k">ds</span>, has(type string)
+<span class="k">levelsof</span> extended_dgn
+<span class="k">return list</span>
+<span class="k">ds</span>, not(type string)
+<span class="k">ds</span>, has(type int)
+<span class="k">ds</span>, has(varl <span class="s">&quot;*TX*&quot;</span>)
+<span class="k">ds</span>, has(varl <span class="o">*</span>TX<span class="o">*</span> <span class="o">*</span>transplant<span class="o">*</span>)
+<span class="k">ds</span>, has(format %t<span class="o">*</span>) 
+<span class="k">ds</span>, has(format <span class="o">*</span>f)  
+</pre></div>
+</div>
+<p>Here’s a simple script that classifies each variable:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> {
+	cls
+<span class="k">    ds</span>, not(type string) <span class="c1">//otherwise, extended diagnosis is continuous! </span>
+<span class="k">	global</span> threshold <span class="m">9</span> <span class="c1">//for multicat vs. continuous</span>
+<span class="k">    foreach</span> v of<span class="k"> varlist</span> <span class="nv">`r(varlist)&#39;</span> {
+<span class="k">	    levelsof</span> <span class="nv">`v&#39;</span>,<span class="k"> local</span>(numlevels)
+<span class="k">	    if</span> <span class="nf">r</span>(r) <span class="o">==</span> <span class="m">2</span> {  
+<span class="k">			noi di</span> <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s"> binary&quot;</span>
+	    }
+<span class="k">	    else if</span> <span class="nf">inrange</span>(<span class="nv">`r(r)&#39;</span>, <span class="m">3</span>, <span class="vg">$threshold</span>) {  
+<span class="k">			noi di</span> <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s"> multicat&quot;</span>
+	    }
+<span class="k">	    else</span> {  
+<span class="k">			noi di</span> <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s"> continuous&quot;</span>
+	    }
+    }
+	
+}
+</pre></div>
+</div>
+</Details>
+</section>
+<section id="value-lab">
+<h4><code class="docutils literal notranslate"><span class="pre">value</span> <span class="pre">lab</span></code><a class="headerlink" href="#value-lab" title="Permalink to this heading">#</a></h4>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> {
+	<span class="c1">//earlier code</span>
+		<span class="c1">//earlier code</span>
+<span class="k">		local</span> vallab: value<span class="k"> lab</span> dx
+<span class="k">		foreach n</span> of<span class="k"> numlist</span> <span class="nv">`dxcat&#39;</span> {
+			<span class="c1">//code</span>
+		}
+}
+</pre></div>
+</div>
+</section>
+<section id="label-value-lab">
+<h4><code class="docutils literal notranslate"><span class="pre">label</span> <span class="pre">value</span> <span class="pre">lab</span></code><a class="headerlink" href="#label-value-lab" title="Permalink to this heading">#</a></h4>
+<p>Let’s get familiar with variations on the <code class="docutils literal notranslate"><span class="pre">foreach</span></code> command:</p>
+<section id="forvalues">
+<h5><code class="docutils literal notranslate"><span class="pre">forvalues</span></code><a class="headerlink" href="#forvalues" title="Permalink to this heading">#</a></h5>
+<p>Here we are dealing with a sequence of numbers:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k"> forvalues</span> i=<span class="m">1</span><span class="o">/</span><span class="m">9</span> {
+<span class="k"> 	di</span> <span class="nv">`i&#39;</span> 
+ } 
+</pre></div>
+</div>
+</section>
+<section id="foreach">
+<h5><code class="docutils literal notranslate"><span class="pre">foreach</span></code><a class="headerlink" href="#foreach" title="Permalink to this heading">#</a></h5>
+<p>In this scenario the numbers are arbitrarily arranged:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k"> foreach n</span> of<span class="k"> numlist</span> <span class="m">1</span> <span class="m">2</span> <span class="m">3</span> <span class="m">7</span> <span class="m">9</span> {
+<span class="k"> 	di</span> <span class="nv">`n&#39;</span>
+ } 
+</pre></div>
+</div>
+</section>
+<section id="numlist">
+<h5><code class="docutils literal notranslate"><span class="pre">numlist</span></code><a class="headerlink" href="#numlist" title="Permalink to this heading">#</a></h5>
+<p>You can create a macro, whose value is the <code class="docutils literal notranslate"><span class="pre">numlist</span></code></p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k"> local numlist</span> <span class="s">&quot;1 2 3 7 9&quot;</span>
+<span class="k"> foreach n</span> of<span class="k"> numlist</span> <span class="nv">`numlist&#39;</span> {
+<span class="k"> 	di</span> <span class="nv">`n&#39;</span>
+ } 
+</pre></div>
+</div>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> {
+	<span class="c1">//earlier code</span>
+<span class="k">		foreach n</span> of<span class="k"> numlist</span> <span class="nv">`dxcat&#39;</span> {
+<span class="k">			local</span> dxvarlab:<span class="k"> lab</span> <span class="nv">`vallab&#39;</span> <span class="nv">`n&#39;</span>
+			<span class="c1">//later code</span>
+		}
+}
+</pre></div>
+</div>
+</section>
+<section id="id1">
+<h5><code class="docutils literal notranslate"><span class="pre">tokenize</span></code><a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h5>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">    if</span> <span class="m">2</span> { <span class="c1">//Int 1-26</span>
+<span class="k">        </span>
+<span class="k">        egen</span> lastname = seq(), f(<span class="m">1</span>) <span class="nf">t</span>(<span class="m">26</span>)
+<span class="k">        tostring</span> lastname,<span class="k"> replace</span> 
+<span class="k">        tokenize</span> <span class="s">&quot;</span><span class="nv">`c(ALPHA)&#39;</span><span class="s">&quot;</span> 
+        
+    }
+
+<span class="k">    if</span> <span class="m">3</span> { <span class="c1">//Tokenize</span>
+<span class="k">        </span>
+<span class="k">        forval</span> i = <span class="m">1</span><span class="o">/</span><span class="m">26</span> {
+<span class="k">            </span>
+<span class="k">            replace</span> lastname = <span class="s">&quot;</span><span class="nv">``i&#39;&#39;</span><span class="s">&quot;</span><span class="k"> if</span> lastname <span class="o">==</span> <span class="s">&quot;</span><span class="nv">`i&#39;</span><span class="s">&quot;</span> 
+            
+        }
+        
+    }
+</pre></div>
+</div>
+<section id="putexcel">
+<h6><code class="docutils literal notranslate"><span class="pre">putexcel</span></code><a class="headerlink" href="#putexcel" title="Permalink to this heading">#</a></h6>
+<p>Output a <code class="docutils literal notranslate"><span class="pre">varlist</span></code>, <code class="docutils literal notranslate"><span class="pre">numlist</span></code>, and some other list into <code class="docutils literal notranslate"><span class="pre">.xlsx</span></code></p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">clear</span>  
+putexcel<span class="k"> set</span> lab6,<span class="k"> replace</span> 
+<span class="k">use</span> <span class="vg">$repo$data1</span>,<span class="k"> clear</span>
+<span class="k">qui ds</span>
+<span class="c1">//nested loops</span>
+<span class="k">tokenize</span> <span class="s">&quot;</span><span class="nv">`c(ALPHA)&#39;</span><span class="s">&quot;</span>
+<span class="k">forvalues</span> i = <span class="m">1</span><span class="o">/</span><span class="m">2</span> {
+<span class="k">	local</span> row=<span class="m">2</span>
+<span class="k">	foreach</span> v of<span class="k"> varlist</span> <span class="nv">`r(varlist)&#39;</span> {
+<span class="k">		if</span> <span class="nv">`i&#39;</span> <span class="o">==</span> <span class="m">1</span> {
+<span class="k">			qui</span> putexcel <span class="nv">``i&#39;&#39;`row&#39;</span> = <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">&quot;</span>
+<span class="k">	        local</span> row=<span class="nv">`row&#39;</span><span class="o">+</span> <span class="m">1</span>	
+		}
+<span class="k">		if</span> <span class="nv">`i&#39;</span> <span class="o">==</span> <span class="m">2</span> {
+<span class="k">			qui sum</span> <span class="nv">`v&#39;</span>
+<span class="k">			local mean</span>:<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(mean)
+<span class="k">			qui</span> putexcel <span class="nv">``i&#39;&#39;`row&#39;</span> = <span class="s">&quot;</span><span class="nv">`mean&#39;</span><span class="s">&quot;</span>
+<span class="k">	        local</span> row=<span class="nv">`row&#39;</span>	<span class="o">+</span> <span class="m">1</span>
+		}
+    } 
+} 
+
+<span class="k">ls</span> 
+ 
+</pre></div>
+</div>
+<p>Review the <code class="docutils literal notranslate"><span class="pre">.xlsx</span></code> file you’ve just created</p>
+</section>
+</section>
+</section>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="part-ii-30-min">
+<h1>Part II (30 min)<a class="headerlink" href="#part-ii-30-min" title="Permalink to this heading">#</a></h1>
 <ol class="arabic simple">
-<li><p>We discussed how you can define your own “program”. It’s an awesome tool that allows us to automate a specific task. If you think a specific part of your code will be used multiple times, you might as well put that into a program. In this lab, we will practice customizing our programs.</p></li>
-<li><p>Start Stata, open your do-file editor and consider using conditional code-blocks (<code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">2</span></code> for instance) as you answer each question in this lab. That way each block has some autonomy and you can “silence” it (<code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">0</span></code>) while you run other code-blocks.</p></li>
+<li><p>We discussed how you can define your own “program”. It’s an awesome tool that allows us to automate a specific task. If you think a specific part of your code will be used multiple times, you might as well put that into a program. In this second half of lab, we will practice customizing our programs.</p></li>
+<li><p>Start Stata, open your do-file editor and consider using conditional code-blocks (<code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">2</span></code> for instance) as you answer each question in this lab. That way each block has some autonomy and you can “silence” it (<code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">0</span></code>) while you run other code-blocks. Review Part I for instances where macros replace the <code class="docutils literal notranslate"><span class="pre">0</span></code> and <code class="docutils literal notranslate"><span class="pre">2</span></code> in the <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">0</span></code> blocks.</p></li>
 <li><p>Write a program called <code class="docutils literal notranslate"><span class="pre">mymean</span></code>. This program will take <code class="docutils literal notranslate"><span class="pre">varlist</span></code> as a user input, and calculate the mean value of each variable, and display the values.</p></li>
 <li><p>Modify your program <code class="docutils literal notranslate"><span class="pre">mymean</span></code> so that when an <code class="docutils literal notranslate"><span class="pre">if</span></code> argument is supplied, <code class="docutils literal notranslate"><span class="pre">mymean</span></code> would only include the observations that meet the condition specified by the <code class="docutils literal notranslate"><span class="pre">if</span></code> argument. In other words, if the user types <code class="docutils literal notranslate"><span class="pre">mymean</span> <span class="pre">height</span> <span class="pre">if</span> <span class="pre">age&gt;65</span></code>, the program <code class="docutils literal notranslate"><span class="pre">mymean</span></code> will calculate the mean only among patients older than 65.</p></li>
 <li><p>Further modify your program <code class="docutils literal notranslate"><span class="pre">mymean</span></code> to include the option <code class="docutils literal notranslate"><span class="pre">sd</span></code>. When the option <code class="docutils literal notranslate"><span class="pre">sd</span></code> is supplied, <code class="docutils literal notranslate"><span class="pre">mymean</span></code> will display the standard deviation along with the mean. This version of <code class="docutils literal notranslate"><span class="pre">mymean</span></code> should still be able to accommodate the <code class="docutils literal notranslate"><span class="pre">if</span></code> argument.</p></li>
 <li><p>Further modify your program <code class="docutils literal notranslate"><span class="pre">mymean</span></code> to include the option <code class="docutils literal notranslate"><span class="pre">digits()</span></code>, with a number in the parenthesis. When the option <code class="docutils literal notranslate"><span class="pre">digits()</span></code> is supplied, <code class="docutils literal notranslate"><span class="pre">mymean</span></code> will round up the mean (and the standard deviation, if applicable) in units of <code class="docutils literal notranslate"><span class="pre">digits()</span></code>. If <code class="docutils literal notranslate"><span class="pre">digits()</span></code> is NOT supplied, round in units of 0.001. (Hint: use the Stata function <code class="docutils literal notranslate"><span class="pre">round()</span></code>)</p></li>
 <li><p>Did you make <code class="docutils literal notranslate"><span class="pre">if</span></code>, <code class="docutils literal notranslate"><span class="pre">sd</span></code>, and <code class="docutils literal notranslate"><span class="pre">digits()</span></code> optional arguments? That is, your program should run whether or not these arguments are supplied. To do so, simply surround each argument with brackets. For example, <code class="docutils literal notranslate"><span class="pre">[sd]</span></code></p></li>
-<li><p>I’d like to draw your attention to the merge command. It’s hard to write a question around <code class="docutils literal notranslate"><span class="pre">merge</span></code>, but it’s a really important command in practice. For instance, we used it in the <a class="reference external" href="https://jhustata.github.io/basic/chapter4.html#merging-files">week 4</a>. Reference these notes when necessary in the future.</p></li>
+<li><p>I’d like to draw your attention to the merge command. It’s hard to write a question around <code class="docutils literal notranslate"><span class="pre">merge</span></code>, but it’s a really important command in practice. For instance, we used it in the <a class="reference external" href="https://jhustata.github.io/basic/chapter4.html#merging-files">week 4</a>. Reference these notes when necessary in the future. You should also ask your TA and colleagues about the <code class="docutils literal notranslate"><span class="pre">append</span></code> command. Task 4 (see above) requires you to use it.</p></li>
 <li><p>We want to study if death (<code class="docutils literal notranslate"><span class="pre">died==1</span></code>) is associated with several predictor variables: <code class="docutils literal notranslate"><span class="pre">bmi</span></code>, <code class="docutils literal notranslate"><span class="pre">prev_ki</span></code>, <code class="docutils literal notranslate"><span class="pre">age</span></code>, <code class="docutils literal notranslate"><span class="pre">peak_pra</span></code>, or <code class="docutils literal notranslate"><span class="pre">gender</span></code>. Run logistic regression between <code class="docutils literal notranslate"><span class="pre">died</span></code> and each of the predictor variables using <code class="docutils literal notranslate"><span class="pre">foreach</span></code> loop. At each run, save the name and the regression coefficient of the predictor variable into an external Stata dataset file named <code class="docutils literal notranslate"><span class="pre">output.dta</span></code>.</p></li>
 <li><p>You have all your commands in your do file, right? Run your do file from the beginning and make sure your do file does exactly the same thing.</p></li>
 </ol>
@@ -468,9 +801,37 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Lab 5</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#part-i">Part I</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#part-ii">Part II</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lab4">lab4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#part-i-loops-30-min">Part I: Loops (30 min)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-up-the-environment">1. Setting Up the Environment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kinds-of-loops">Kinds of loops</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#foreach-v-of-varlist"><code class="docutils literal notranslate"><span class="pre">foreach</span> <span class="pre">v</span> <span class="pre">of</span> <span class="pre">varlist</span> <span class="pre">{</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#c-alpha"><code class="docutils literal notranslate"><span class="pre">c(ALPHA)</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tokenize"><code class="docutils literal notranslate"><span class="pre">tokenize</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#varlist"><code class="docutils literal notranslate"><span class="pre">varlist</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#foreach-n-of-numlist"><code class="docutils literal notranslate"><span class="pre">foreach</span> <span class="pre">n</span> <span class="pre">of</span> <span class="pre">numlist</span> <span class="pre">{</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#variable-lab"><code class="docutils literal notranslate"><span class="pre">variable</span> <span class="pre">lab</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#value-lab"><code class="docutils literal notranslate"><span class="pre">value</span> <span class="pre">lab</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#label-value-lab"><code class="docutils literal notranslate"><span class="pre">label</span> <span class="pre">value</span> <span class="pre">lab</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#forvalues"><code class="docutils literal notranslate"><span class="pre">forvalues</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#foreach"><code class="docutils literal notranslate"><span class="pre">foreach</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#numlist"><code class="docutils literal notranslate"><span class="pre">numlist</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><code class="docutils literal notranslate"><span class="pre">tokenize</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#putexcel"><code class="docutils literal notranslate"><span class="pre">putexcel</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#part-ii-30-min">Part II (30 min)</a></li>
 </ul>
 
   </nav></div>
