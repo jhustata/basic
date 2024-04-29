@@ -36,6 +36,7 @@ quietly {
 	clear 
 	foreach v in nh3 adult {
 		capture do ${repo}`v'.do
+		clear 
 		if _rc == 601 {
 			do `v'.do
 		}
