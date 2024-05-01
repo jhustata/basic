@@ -1,0 +1,954 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>HW5 Solution (Advanced) &#8212; Stata Programming</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'hw5_sol_advanced';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="https://brand.jhu.edu/assets/uploads/sites/5/2014/06/university_logo_small_vertical_blue.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="https://brand.jhu.edu/assets/uploads/sites/5/2014/06/university_logo_small_vertical_blue.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Preface
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="chapter1.html">1. Philosophy, overview, commands, syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter2.html">2. Return values, macros, programs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter3.html">3. Loops, Program Syntax, and Miscellany</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter4.html">4. Basic file management, Programming options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter5.html">5. Review of Weeks 1 - 4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter6.html">6. Visualizing data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter7.html">7. Survival Analysis: Non-parametric, Semi-parametric, Parametric</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter8.html">8. Multilevel, Hierarchical Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickrefs.html">Quick References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fhw5_sol_advanced.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/hw5_sol_advanced.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>HW5 Solution (Advanced)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">HW5 Solution (Advanced)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#do-file-with-comments"><code class="docutils literal notranslate"><span class="pre">.do</span></code> file with comments</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gpt-4-annotation">GPT-4 Annotation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-up-the-environment">Setting Up the Environment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#check-and-handle-logging">Check and Handle Logging</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#define-ind-translator-function">Define <code class="docutils literal notranslate"><span class="pre">ind_translator</span></code> Function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#define-question1-function">Define <code class="docutils literal notranslate"><span class="pre">question1</span></code> Function</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#excel-setup-and-header-output">Excel Setup and Header Output</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#counting-and-outputting-gender-specific-data">Counting and Outputting Gender-Specific Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variable-labeling">Variable Labeling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#processing-and-outputting-variable-statistics">Processing and Outputting Variable Statistics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loop-for-summary-statistics">Loop for Summary Statistics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#handling-different-variable-types">Handling Different Variable Types</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="hw5-solution-advanced">
+<h1>HW5 Solution (Advanced)<a class="headerlink" href="#hw5-solution-advanced" title="Permalink to this heading">#</a></h1>
+<section id="do-file-with-comments">
+<h2><code class="docutils literal notranslate"><span class="pre">.do</span></code> file with comments<a class="headerlink" href="#do-file-with-comments" title="Permalink to this heading">#</a></h2>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">do</span> <span class="s">&quot;https://github.com/jhustata/basic/raw/main/hw5_solution.do&quot;</span>
+</pre></div>
+</div>
+<Details> 
+   <Summary> 🔥 </Summary>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> {
+	cls
+<span class="k">	set more</span> off
+<span class="k">	set</span> varabbrev<span class="k"> on</span>
+<span class="k">	</span>
+<span class="k">	if</span> <span class="m">0</span> {
+		this is solutions<span class="k"> for</span> homework <span class="m">5</span>
+	}
+<span class="k">	</span>
+<span class="k">	if</span> <span class="m">1</span> {
+<span class="k">		capture log close</span>
+<span class="k">		log</span> using <span class="s">&quot;hw5.lastname.firstname.log&quot;</span>,<span class="k"> replace</span>
+	}
+<span class="k">	</span>
+<span class="k">	if</span> <span class="m">1</span> {
+		<span class="cm">/*</span>
+<span class="cm">		Question 1. Now you have all the skills to create your first automated Table 1! </span>
+<span class="cm">		Write a program called question1 that prints the following table (including Question 1 in the header). </span>
+<span class="cm">		The XX values should be replaced with correct values found in the dataset, </span>
+<span class="cm">		and should be rounded to the nearest whole number for age and to one decimal place </span>
+<span class="cm">		to the right of the decimal point for other variables. </span>
+<span class="cm">		Make sure the summary statistics are vertically aligned and justified along the left margin. </span>
+<span class="cm">		Run your program and display the table (i.e., in .log file). </span>
+<span class="cm">		Also, output these results to Question1.xlsx</span>
+<span class="cm">		*/</span>
+<span class="k">		capture program drop</span> ind_translator
+<span class="k">		program</span> define ind_translator
+<span class="k">			syntax</span>, row(int) col(int)
+
+			<span class="c1">// tokenize the alphabet</span>
+<span class="k">			local</span> alphabet <span class="s">&quot;</span><span class="nv">`c(ALPHA)&#39;</span><span class="s">&quot;</span>
+<span class="k">			tokenize</span> <span class="nv">`alphabet&#39;</span>
+			<span class="c1">// now translate col</span>
+<span class="k">			local</span> col_helper = <span class="nv">`col&#39;</span>
+<span class="k">			</span>
+<span class="k">			</span>
+<span class="k">			while</span> (<span class="nv">`col_helper&#39;</span> <span class="o">&gt;</span> <span class="m">0</span>) {
+<span class="k">				local</span> temp_helper2 = (<span class="nv">`col_helper&#39;</span> <span class="o">-</span> <span class="m">1</span>)
+<span class="k">				local</span> temp_helper = <span class="nf">mod</span>(<span class="nv">`temp_helper2&#39;</span>, <span class="m">26</span>) <span class="o">+</span> <span class="m">1</span>
+<span class="k">				local</span> col_name :<span class="k"> di</span> <span class="s">&quot;</span><span class="nv">``temp_helper&#39;&#39;</span><span class="s">&quot;</span> <span class="s">&quot;</span><span class="nv">`col_name&#39;</span><span class="s">&quot;</span>
+<span class="k">				local</span> col_helper = (<span class="nv">`col_helper&#39;</span> <span class="o">-</span> <span class="nv">`temp_helper&#39;</span>) <span class="o">/</span> <span class="m">26</span>
+			} 
+			
+			
+			<span class="c1">// generate a global macro that can be used in main program</span>
+<span class="k">			global</span> ul_cell <span class="s">&quot;</span><span class="nv">`col_name&#39;`row&#39;</span><span class="s">&quot;</span>
+<span class="k">			</span>
+<span class="k">		end</span>
+<span class="k">		</span>
+<span class="k">		capture program drop</span> question1
+<span class="k">		program</span> define question1
+<span class="k">			qui</span> {
+<span class="k">				if</span> <span class="m">1</span> { <span class="c1">// load dataset and general settings</span>
+<span class="k">					global</span> repo https:<span class="o">//</span>github<span class="m">.</span>com<span class="o">/</span>jhustata<span class="o">/</span>basic<span class="o">/</span>raw<span class="o">/</span>main<span class="o">/</span>
+					import delimited <span class="s">&quot;</span><span class="vg">${repo}</span><span class="s">hw1.txt&quot;</span>,<span class="k"> clear</span>
+<span class="k">					local</span> c_base = <span class="m">40</span>
+<span class="k">					local</span> c_seq = <span class="m">20</span>
+<span class="k">					local</span> by_var :<span class="k"> di</span> <span class="s">&quot;female&quot;</span>
+<span class="k">					local</span> row = <span class="m">1</span>
+<span class="k">					local</span> del = <span class="s">&quot;=&quot;</span>
+				}
+				
+				<span class="c1">// set up excel file</span>
+				putexcel<span class="k"> set</span> <span class="s">&quot;Question1&quot;</span>,<span class="k"> replace</span>
+				
+				<span class="c1">// First line</span>
+<span class="k">				count if</span> female <span class="o">==</span> <span class="m">0</span>
+<span class="k">				local</span> male_n = <span class="nv">`r(N)&#39;</span>
+<span class="k">				count if</span> female <span class="o">==</span> <span class="m">1</span>
+<span class="k">				local</span> female_n = <span class="nv">`r(N)&#39;</span>
+<span class="k">				local</span> female_col = <span class="nv">`c_base&#39;</span> <span class="o">+</span> <span class="nv">`c_seq&#39;</span>
+<span class="k">				</span>
+<span class="k">				noi di</span> <span class="s">&quot;Question 1&quot;</span> _col(<span class="nv">`c_base&#39;</span>) <span class="s">&quot;Males (N=</span><span class="nv">`male_n&#39;</span><span class="s">)&quot;</span> _col(<span class="nv">`female_col&#39;</span>) <span class="s">&quot;Females (N=</span><span class="nv">`female_n&#39;</span><span class="s">)&quot;</span>
+				putexcel A1 = <span class="s">&quot;Question 1&quot;</span>
+				putexcel B1 = <span class="s">&quot;Males (N=</span><span class="nv">`male_n&#39;</span><span class="s">)&quot;</span>
+				putexcel C1 = <span class="s">&quot;Females (N=</span><span class="nv">`female_n&#39;</span><span class="s">)&quot;</span>
+				
+				<span class="c1">// Label all vars</span>
+<span class="k">				label</span> variable init_age <span class="s">&quot;Age&quot;</span>
+<span class="k">				label</span> variable prev <span class="s">&quot;Previous transplant&quot;</span>
+<span class="k">				label</span> variable dx <span class="s">&quot;Cause of ESRD&quot;</span>
+				
+				<span class="c1">// Run through all vars</span>
+<span class="k">				levelsof</span> <span class="nv">`by_var&#39;</span>,<span class="k"> local</span>(by_val)
+				
+				<span class="c1">// assemble variables for loop</span>
+<span class="k">				local</span> var_list init_age prev dx
+<span class="k">				local</span> var_type <span class="m">0</span> <span class="m">1</span> <span class="m">2</span>
+<span class="k">				</span>
+<span class="k">				local</span> var_pos = <span class="m">0</span>
+<span class="k">				foreach</span> i<span class="k"> in</span> <span class="nv">`var_list&#39;</span> {
+<span class="k">					local</span> var_pos = <span class="nv">`var_pos&#39;</span> <span class="o">+</span> <span class="m">1</span>
+<span class="k">					tokenize</span> <span class="nv">`var_type&#39;</span>
+<span class="k">					local type</span> = <span class="nv">``var_pos&#39;&#39;</span>
+<span class="k">					local</span> row = <span class="nv">`row&#39;</span> <span class="o">+</span> <span class="m">1</span>
+<span class="k">					if</span> (<span class="nv">`type&#39;</span> <span class="o">==</span> <span class="m">0</span>) { <span class="c1">// con</span>
+						<span class="c1">// display the variable label</span>
+<span class="k">						local</span> col = <span class="m">1</span>
+<span class="k">						local</span> var_lab : variable<span class="k"> label</span> <span class="nv">`i&#39;</span>
+<span class="k">						local</span> name :<span class="k"> di</span> <span class="s">&quot;</span><span class="nv">`var_lab&#39;</span><span class="s">&quot;</span> <span class="s">&quot;, median (IQR)&quot;</span>
+						ind_translator, row(<span class="nv">`row&#39;</span>) col(<span class="nv">`col&#39;</span>)
+<span class="k">						noi di</span> <span class="s">&quot;</span><span class="nv">`name&#39;</span><span class="s">&quot;</span>, _continue
+						putexcel <span class="vg">${ul_cell}</span> = <span class="s">&quot;</span><span class="nv">`name&#39;</span><span class="s">&quot;</span>
+<span class="k">						foreach</span> j<span class="k"> in</span> <span class="nv">`by_val&#39;</span> {
+<span class="k">							local</span> col = <span class="nv">`col&#39;</span> <span class="o">+</span> <span class="m">1</span>
+<span class="k">							sum</span> <span class="nv">`i&#39;</span><span class="k"> if</span> <span class="nv">`by_var&#39;</span> <span class="o">==</span> <span class="nv">`j&#39;</span>, detail
+<span class="k">							local</span> med = <span class="nv">`r(p50)&#39;</span>
+<span class="k">							local</span> p25 = <span class="nv">`r(p25)&#39;</span>
+<span class="k">							local</span> p75 = <span class="nv">`r(p75)&#39;</span>
+<span class="k">							local dis</span> :<span class="k"> di</span> <span class="nx">%3.1f</span> <span class="nv">`med&#39;</span> <span class="s">&quot; (&quot;</span> <span class="nx">%3.1f</span> <span class="nv">`p25&#39;</span> <span class="s">&quot;-&quot;</span> <span class="nx">%3.1f</span> <span class="nv">`p75&#39;</span> <span class="s">&quot;)&quot;</span>
+<span class="k">							local</span> sep = <span class="nv">`c_base&#39;</span> <span class="o">+</span> <span class="nv">`c_seq&#39;</span> <span class="o">*</span> (<span class="nv">`col&#39;</span> <span class="o">-</span> <span class="m">2</span>)
+<span class="k">							noi di</span> _col(<span class="nv">`sep&#39;</span>) <span class="s">&quot;</span><span class="nv">`dis&#39;</span><span class="s">&quot;</span>, _continue
+							ind_translator, row(<span class="nv">`row&#39;</span>) col(<span class="nv">`col&#39;</span>)
+							putexcel <span class="vg">${ul_cell}</span> = <span class="s">&quot;</span><span class="nv">`dis&#39;</span><span class="s">&quot;</span>
+						}
+<span class="k">						noi di</span> <span class="s">&quot;&quot;</span>
+					}
+<span class="k">					else if</span> (<span class="nv">`type&#39;</span> <span class="o">==</span> <span class="m">1</span>) {
+<span class="k">						local</span> col = <span class="m">1</span>
+<span class="k">						local</span> var_lab : variable<span class="k"> label</span> <span class="nv">`i&#39;</span>
+<span class="k">						local</span> name :<span class="k"> di</span> <span class="s">&quot;</span><span class="nv">`var_lab&#39;</span><span class="s">&quot;</span> <span class="s">&quot;, %&quot;</span>
+						ind_translator, row(<span class="nv">`row&#39;</span>) col(<span class="nv">`col&#39;</span>)
+						putexcel <span class="vg">${ul_cell}</span> = <span class="s">&quot;</span><span class="nv">`name&#39;</span><span class="s">&quot;</span>
+<span class="k">						noi di</span> <span class="s">&quot;</span><span class="nv">`name&#39;</span><span class="s">&quot;</span>, _continue
+<span class="k">						foreach</span> j<span class="k"> in</span> <span class="nv">`by_val&#39;</span> {
+<span class="k">							local</span> col = <span class="nv">`col&#39;</span> <span class="o">+</span> <span class="m">1</span>
+<span class="k">							sum</span> <span class="nv">`i&#39;</span><span class="k"> if</span> <span class="nv">`by_var&#39;</span> <span class="o">==</span> <span class="nv">`j&#39;</span>
+<span class="k">							local mean</span> = (<span class="nv">`r(mean)&#39;</span> <span class="o">*</span> <span class="m">100</span>)
+<span class="k">							local mean</span> :<span class="k"> di</span> <span class="nx">%3.1f</span> <span class="nv">`mean&#39;</span>
+							ind_translator, row(<span class="nv">`row&#39;</span>) col(<span class="nv">`col&#39;</span>)
+<span class="k">							local</span> col_h = <span class="nv">`col&#39;</span> <span class="o">-</span> <span class="m">2</span>
+<span class="k">							local</span> sep = <span class="nv">`c_base&#39;</span> <span class="o">+</span> <span class="nv">`c_seq&#39;</span> <span class="o">*</span> <span class="nv">`col_h&#39;</span>
+<span class="k">							noi di</span> _col(<span class="nv">`sep&#39;</span>) <span class="s">&quot;</span><span class="nv">`mean&#39;</span><span class="s">&quot;</span>, _continue
+							putexcel <span class="vg">${ul_cell}</span> = <span class="s">&quot;</span><span class="nv">`mean&#39;</span><span class="s">&quot;</span>
+						}
+<span class="k">						noi di</span> <span class="s">&quot;&quot;</span>
+					}
+<span class="k">					else if</span> (<span class="nv">`type&#39;</span> <span class="o">==</span> <span class="m">2</span>) {
+<span class="k">						local</span> col = <span class="m">1</span>
+<span class="k">						local</span> var_lab : variable<span class="k"> label</span> <span class="nv">`i&#39;</span>
+<span class="k">						local</span> name :<span class="k"> di</span> <span class="s">&quot;</span><span class="nv">`var_lab&#39;</span><span class="s">&quot;</span> <span class="s">&quot;: &quot;</span>
+						ind_translator, row(<span class="nv">`row&#39;</span>) col(<span class="nv">`col&#39;</span>)
+						putexcel <span class="vg">${ul_cell}</span> = <span class="s">&quot;</span><span class="nv">`name&#39;</span><span class="s">&quot;</span>
+<span class="k">						noi di</span> <span class="s">&quot;</span><span class="nv">`name&#39;</span><span class="s">&quot;</span>
+<span class="k">						levelsof</span> <span class="nv">`i&#39;</span>,<span class="k"> local</span>(var_val)
+<span class="k">						foreach</span> k<span class="k"> in</span> <span class="nv">`var_val&#39;</span> {
+<span class="k">							local</span> row = <span class="nv">`row&#39;</span> <span class="o">+</span> <span class="m">1</span>
+<span class="k">							local</span> col = <span class="m">1</span>
+							<span class="c1">// get the cat name</span>
+<span class="k">							local</span> del_pos = <span class="nf">strpos</span>(<span class="s">&quot;</span><span class="nv">`k&#39;</span><span class="s">&quot;</span>, <span class="s">&quot;</span><span class="nv">`del&#39;</span><span class="s">&quot;</span>) <span class="o">+</span> <span class="m">1</span>
+<span class="k">							local</span> cat_name :<span class="k"> di</span> <span class="nf">substr</span>(<span class="s">&quot;</span><span class="nv">`k&#39;</span><span class="s">&quot;</span>, <span class="nv">`del_pos&#39;</span>, .)
+<span class="k">							local</span> cat_name :<span class="k"> di</span> <span class="s">&quot;</span><span class="nv">`cat_name&#39;</span><span class="s">&quot;</span> <span class="s">&quot;, %&quot;</span>
+<span class="k">							noi di</span> <span class="s">&quot;</span><span class="nv">`cat_name&#39;</span><span class="s">&quot;</span>, _continue
+							ind_translator, row(<span class="nv">`row&#39;</span>) col(<span class="nv">`col&#39;</span>)
+							putexcel <span class="vg">${ul_cell}</span> = <span class="s">&quot;</span><span class="nv">`cat_name&#39;</span><span class="s">&quot;</span>
+<span class="k">							foreach</span> j<span class="k"> in</span> <span class="nv">`by_val&#39;</span> {
+<span class="k">								local</span> col = <span class="nv">`col&#39;</span> <span class="o">+</span> <span class="m">1</span>
+<span class="k">								count if</span> <span class="nv">`i&#39;</span> <span class="o">==</span> <span class="s">&quot;</span><span class="nv">`k&#39;</span><span class="s">&quot;</span> <span class="o">&amp;</span> <span class="nv">`by_var&#39;</span> <span class="o">==</span> <span class="nv">`j&#39;</span>
+<span class="k">								local</span> k_num = <span class="nv">`r(N)&#39;</span>
+<span class="k">								count if</span> <span class="nv">`by_var&#39;</span> <span class="o">==</span> <span class="nv">`j&#39;</span>
+<span class="k">								local total</span> = <span class="nv">`r(N)&#39;</span>
+<span class="k">								local dis</span> :<span class="k"> di</span> <span class="nx">%3.1f</span> (<span class="nv">`k_num&#39;</span> <span class="o">/</span> <span class="nv">`total&#39;</span> <span class="o">*</span> <span class="m">100</span>)
+<span class="k">								local</span> sep = <span class="nv">`c_base&#39;</span> <span class="o">+</span> <span class="nv">`c_seq&#39;</span> <span class="o">*</span> (<span class="nv">`col&#39;</span> <span class="o">-</span> <span class="m">2</span>)
+<span class="k">								noi di</span> _col(<span class="nv">`sep&#39;</span>) <span class="s">&quot;</span><span class="nv">`dis&#39;</span><span class="s">&quot;</span>, _continue
+								ind_translator, row(<span class="nv">`row&#39;</span>) col(<span class="nv">`col&#39;</span>)
+								putexcel <span class="vg">${ul_cell}</span> = <span class="s">&quot;</span><span class="nv">`dis&#39;</span><span class="s">&quot;</span>
+							}
+<span class="k">							noi di</span> <span class="s">&quot;&quot;</span>
+						}
+					}
+				}
+<span class="k">				noi di</span> <span class="s">&quot; &quot;</span>
+			}
+<span class="k">		end</span>
+<span class="k">		noi</span> question1
+	}
+<span class="k">	</span>
+<span class="k">	if</span> <span class="m">2</span> {
+		<span class="cm">/*</span>
+<span class="cm">		Print a summary table as shown below (this is how it should appear in your .log file), </span>
+<span class="cm">		with odds ratios (OR) and 95% confidence intervals (CI). </span>
+<span class="cm">		The XXXX values should be replaced with the actual values found in the dataset, </span>
+<span class="cm">		and should be displayed with two decimal places to the right of the decimal point. </span>
+<span class="cm">		Also, create a Question2.xlsx with this output properly formatted.</span>
+<span class="cm">		*/</span>
+		putexcel<span class="k"> set</span> <span class="s">&quot;Question2&quot;</span>,<span class="k"> replace</span>
+<span class="k">		noi di</span> <span class="s">&quot;Question2&quot;</span>
+		putexcel A1 = <span class="s">&quot;Question2&quot;</span>
+<span class="k">		noi di</span> <span class="s">&quot;Variable&quot;</span> _col(<span class="m">40</span>) <span class="s">&quot;OR&quot;</span> _col(<span class="m">60</span>) <span class="s">&quot;(95% CI)&quot;</span>
+		putexcel A2 = <span class="s">&quot;Variable&quot;</span>
+		putexcel B2 = <span class="s">&quot;OR&quot;</span>
+		putexcel C2 = <span class="s">&quot;(95% CI)&quot;</span>
+		
+		<span class="c1">// get statistics</span>
+<span class="k">		local</span> vars init_age female
+<span class="k">		label</span> variable init_age <span class="s">&quot;Age&quot;</span>
+<span class="k">		label</span> variable female <span class="s">&quot;Female&quot;</span>
+<span class="k">		logistic</span> received_kt <span class="nv">`vars&#39;</span>
+<span class="k">		local</span> row = <span class="m">2</span>
+<span class="k">		foreach</span> i<span class="k"> in</span> <span class="nv">`vars&#39;</span> {
+<span class="k">			local</span> row = <span class="nv">`row&#39;</span> <span class="o">+</span> <span class="m">1</span>
+<span class="k">			local</span> name : variable<span class="k"> label</span> <span class="nv">`i&#39;</span>
+<span class="k">			noi di</span> <span class="s">&quot;</span><span class="nv">`name&#39;</span><span class="s">&quot;</span>, _continue
+			putexcel A<span class="nv">`row&#39;</span> = <span class="s">&quot;</span><span class="nv">`name&#39;</span><span class="s">&quot;</span>
+<span class="k">			lincom</span> <span class="nv">`i&#39;</span>
+<span class="k">			local</span> or = <span class="nv">`r(estimate)&#39;</span>
+<span class="k">			local</span> or :<span class="k"> di</span> <span class="nx">%4.2f</span> <span class="nv">`or&#39;</span>
+<span class="k">			local</span> lb :<span class="k"> di</span> <span class="nx">%4.2f</span> <span class="nv">`r(lb)&#39;</span>
+<span class="k">			local</span> ub :<span class="k"> di</span> <span class="nx">%4.2f</span> <span class="nv">`r(ub)&#39;</span>
+<span class="k">			local ci</span> :<span class="k"> di</span> <span class="s">&quot;(</span><span class="nv">`lb&#39;</span><span class="s">-</span><span class="nv">`ub&#39;</span><span class="s">)&quot;</span>
+<span class="k">			noi di</span> _col(<span class="m">40</span>) <span class="s">&quot;</span><span class="nv">`or&#39;</span><span class="s">&quot;</span> _col(<span class="m">60</span>) <span class="s">&quot;</span><span class="nv">`ci&#39;</span><span class="s">&quot;</span>
+			putexcel B<span class="nv">`row&#39;</span> = <span class="s">&quot;</span><span class="nv">`or&#39;</span><span class="s">&quot;</span>
+			putexcel C<span class="nv">`row&#39;</span> = <span class="s">&quot;</span><span class="nv">`ci&#39;</span><span class="s">&quot;</span>
+		}
+		
+	}
+<span class="k">	</span>
+<span class="k">	capture log close</span>
+}
+</pre></div>
+</div>
+</Details>
+</section>
+<section id="gpt-4-annotation">
+<h2>GPT-4 Annotation<a class="headerlink" href="#gpt-4-annotation" title="Permalink to this heading">#</a></h2>
+<p><em>This might contain errors since even the most advanced GPT occassionally “hallucinates”</em></p>
+</section>
+<section id="setting-up-the-environment">
+<h2>Setting Up the Environment<a class="headerlink" href="#setting-up-the-environment" title="Permalink to this heading">#</a></h2>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> {
+    cls
+<span class="k">    set more</span> off
+<span class="k">    set</span> varabbrev<span class="k"> on</span>
+}
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">qui</span> <span class="pre">{}</span></code>: Starts a block of commands that run quietly, meaning they won’t show any output in the Stata window.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cls</span></code>: Clears the Stata results window, making it clean for new output.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">more</span> <span class="pre">off</span></code>: Stops Stata from pausing when the output fills the screen.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">varabbrev</span> <span class="pre">on</span></code>: Allows you to use abbreviated names for variables.</p></li>
+</ul>
+</section>
+<section id="check-and-handle-logging">
+<h2>Check and Handle Logging<a class="headerlink" href="#check-and-handle-logging" title="Permalink to this heading">#</a></h2>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="m">1</span> {
+<span class="k">    capture log close</span>
+<span class="k">    log</span> using <span class="s">&quot;hw5.lastname.firstname.log&quot;</span>,<span class="k"> replace</span>
+}
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">1</span> <span class="pre">{</span> <span class="pre">...</span> <span class="pre">}</span></code>: This always executes since <code class="docutils literal notranslate"><span class="pre">1</span></code> is always true. It’s a way to group commands.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">capture</span> <span class="pre">log</span> <span class="pre">close</span></code>: Tries to close any open log file, ignoring any error if no log is open.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">log</span> <span class="pre">using</span> <span class="pre">&quot;hw5.lastname.firstname.log&quot;,</span> <span class="pre">replace</span></code>: Starts a new log file with a specified name, replacing any existing file with the same name.</p></li>
+</ul>
+</section>
+<section id="define-ind-translator-function">
+<h2>Define <code class="docutils literal notranslate"><span class="pre">ind_translator</span></code> Function<a class="headerlink" href="#define-ind-translator-function" title="Permalink to this heading">#</a></h2>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">capture program drop</span> ind_translator
+<span class="k">program</span> define ind_translator
+<span class="k">    syntax</span>, row(int) col(int)
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">capture</span> <span class="pre">program</span> <span class="pre">drop</span> <span class="pre">ind_translator</span></code>: Attempts to delete any existing program named <code class="docutils literal notranslate"><span class="pre">ind_translator</span></code>, ignoring errors if it doesn’t exist.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">program</span> <span class="pre">define</span> <span class="pre">ind_translator</span></code>: Begins definition of a new program called <code class="docutils literal notranslate"><span class="pre">ind_translator</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">syntax,</span> <span class="pre">row(int)</span> <span class="pre">col(int)</span></code>: Specifies that this program requires two integer arguments: <code class="docutils literal notranslate"><span class="pre">row</span></code> and <code class="docutils literal notranslate"><span class="pre">col</span></code>.</p></li>
+</ul>
+<p><strong>Inside <code class="docutils literal notranslate"><span class="pre">ind_translator</span></code></strong></p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">    local</span> alphabet <span class="s">&quot;</span><span class="nv">`c(ALPHA)&#39;</span><span class="s">&quot;</span>
+<span class="k">    tokenize</span> <span class="nv">`alphabet&#39;</span>
+<span class="k">    local</span> col_helper = <span class="nv">`col&#39;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">local</span> <span class="pre">alphabet</span> <span class="pre">&quot;</span></code>c(ALPHA)’”<code class="docutils literal notranslate"><span class="pre">:</span> <span class="pre">Creates</span> <span class="pre">a</span> <span class="pre">local</span> <span class="pre">macro</span> </code>alphabet` that contains all letters A-Z.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tokenize</span> </code>alphabet’<code class="docutils literal notranslate"><span class="pre">:</span> <span class="pre">Splits</span> </code>alphabet<code class="docutils literal notranslate"><span class="pre">into</span> <span class="pre">tokens</span> <span class="pre">accessible</span> <span class="pre">via</span> <span class="pre">numbered</span> <span class="pre">local</span> <span class="pre">macros</span> <span class="pre">(e.g.,</span></code>1<code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">A,</span></code>2` for B, etc.).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">local</span> <span class="pre">col_helper</span> <span class="pre">=</span> </code>col’<code class="docutils literal notranslate"><span class="pre">:</span> <span class="pre">Initializes</span> </code>col_helper<code class="docutils literal notranslate"><span class="pre">with</span> <span class="pre">the</span> <span class="pre">value</span> <span class="pre">of</span></code>col`.</p></li>
+</ul>
+<p><strong>Translating Column Numbers to Excel Columns</strong></p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">    while</span> (<span class="nv">`col_helper&#39;</span> <span class="o">&gt;</span> <span class="m">0</span>) {
+<span class="k">        local</span> temp_helper2 = (<span class="nv">`col_helper&#39;</span> <span class="o">-</span> <span class="m">1</span>)
+<span class="k">        local</span> temp_helper = <span class="nf">mod</span>(<span class="nv">`temp_helper2&#39;</span>, <span class="m">26</span>) <span class="o">+</span> <span class="m">1</span>
+<span class="k">        local</span> col_name :<span class="k"> di</span> <span class="s">&quot;</span><span class="nv">``temp_helper&#39;&#39;</span><span class="s">&quot;</span> <span class="s">&quot;</span><span class="nv">`col_name&#39;</span><span class="s">&quot;</span>
+<span class="k">        local</span> col_helper = (<span class="nv">`col_helper&#39;</span> <span class="o">-</span> <span class="nv">`temp_helper&#39;</span>) <span class="o">/</span> <span class="m">26</span>
+    }
+<span class="k">    global</span> ul_cell <span class="s">&quot;</span><span class="nv">`col_name&#39;`row&#39;</span><span class="s">&quot;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>The loop and calculations inside translate a numeric column index into an Excel column name (e.g., 1 -&gt; A, 28 -&gt; AB).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">global</span> <span class="pre">ul_cell</span> <span class="pre">&quot;</span></code>col_name’<code class="docutils literal notranslate"><span class="pre">row'&quot;</span></code>: Stores the final Excel cell reference in a global macro <code class="docutils literal notranslate"><span class="pre">ul_cell</span></code>.</p></li>
+</ul>
+<p><strong>End of <code class="docutils literal notranslate"><span class="pre">ind_translator</span></code></strong></p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">end</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">end</span></code>: Marks the end of the <code class="docutils literal notranslate"><span class="pre">ind_translator</span></code> program definition.</p></li>
+</ul>
+</section>
+<section id="define-question1-function">
+<h2>Define <code class="docutils literal notranslate"><span class="pre">question1</span></code> Function<a class="headerlink" href="#define-question1-function" title="Permalink to this heading">#</a></h2>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">capture program drop</span> question1
+<span class="k">program</span> define question1
+<span class="k">    qui</span> {
+<span class="k">        if</span> <span class="m">1</span> { <span class="c1">// load dataset and general settings</span>
+<span class="k">            global</span> repo https:<span class="o">//</span>github<span class="m">.</span>com<span class="o">/</span>jhustata<span class="o">/</span>basic<span class="o">/</span>raw<span class="o">/</span>main<span class="o">/</span>
+            import delimited <span class="s">&quot;</span><span class="vg">${repo}</span><span class="s">hw1.txt&quot;</span>,<span class="k"> clear</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">capture</span> <span class="pre">program</span> <span class="pre">drop</span> <span class="pre">question1</span></code>: Deletes <code class="docutils literal notranslate"><span class="pre">question1</span></code> program if it already exists.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">program</span> <span class="pre">define</span> <span class="pre">question1</span></code>: Starts defining a new program <code class="docutils literal notranslate"><span class="pre">question1</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">global</span> <span class="pre">repo</span> <span class="pre">https://github.com/jhustata/basic/raw/main/</span></code>: Sets a global macro <code class="docutils literal notranslate"><span class="pre">repo</span></code> to store the URL base.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">delimited</span> <span class="pre">&quot;${repo}hw1.txt&quot;,</span> <span class="pre">clear</span></code>: Imports data from a <code class="docutils literal notranslate"><span class="pre">.txt</span></code> file located at the URL stored in <code class="docutils literal notranslate"><span class="pre">repo</span></code>, clearing any existing data in memory.</p></li>
+</ul>
+<p><strong>Setting Up Excel File</strong></p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">            local</span> c_base = <span class="m">40</span>
+<span class="k">            local</span> c_seq = <span class="m">20</span>
+<span class="k">            local</span> by_var :<span class="k"> di</span> <span class="s">&quot;female&quot;</span>
+<span class="k">            local</span> row = <span class="m">1</span>
+<span class="k">            local</span> del = <span class="s">&quot;=&quot;</span>
+        }
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">local</span> <span class="pre">c_base</span> <span class="pre">=</span> <span class="pre">40</span></code>, <code class="docutils literal notranslate"><span class="pre">local</span> <span class="pre">c_seq</span> <span class="pre">=</span> <span class="pre">20</span></code>: Set up constants to control column positions in output.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">local</span> <span class="pre">by_var</span> <span class="pre">:</span> <span class="pre">di</span> <span class="pre">&quot;female&quot;</span></code>: Sets a local macro <code class="docutils literal notranslate"><span class="pre">by_var</span></code> to the string “female”, intended for use in categorizing data.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">local</span> <span class="pre">row</span> <span class="pre">=</span> <span class="pre">1</span></code>: Initializes a counter for Excel rows.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">local</span> <span class="pre">del</span> <span class="pre">=</span> <span class="pre">&quot;=&quot;</span></code>: Defines a delimiter used later in text processing.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1><a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h1>
+<section id="excel-setup-and-header-output">
+<h2>Excel Setup and Header Output<a class="headerlink" href="#excel-setup-and-header-output" title="Permalink to this heading">#</a></h2>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>putexcel<span class="k"> set</span> <span class="s">&quot;Question1&quot;</span>,<span class="k"> replace</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">putexcel</span> <span class="pre">set</span> <span class="pre">&quot;Question1&quot;,</span> <span class="pre">replace</span></code>: Prepares a new Excel file named “Question1.xlsx” and replaces any existing file with the same name.</p></li>
+</ul>
+</section>
+<section id="counting-and-outputting-gender-specific-data">
+<h2>Counting and Outputting Gender-Specific Data<a class="headerlink" href="#counting-and-outputting-gender-specific-data" title="Permalink to this heading">#</a></h2>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">count if</span> female <span class="o">==</span> <span class="m">0</span>
+<span class="k">local</span> male_n = <span class="nv">`r(N)&#39;</span>
+<span class="k">count if</span> female <span class="o">==</span> <span class="m">1</span>
+<span class="k">local</span> female_n = <span class="nv">`r(N)&#39;</span>
+putexcel A1 = <span class="s">&quot;Question 1&quot;</span>
+putexcel B1 = <span class="s">&quot;Males (N=</span><span class="nv">`male_n&#39;</span><span class="s">)&quot;</span>
+putexcel C1 = <span class="s">&quot;Females (N=</span><span class="nv">`female_n&#39;</span><span class="s">)&quot;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">count</span> <span class="pre">if</span> <span class="pre">female</span> <span class="pre">==</span> <span class="pre">0</span></code>: Counts the number of records where the gender is male (assuming ‘female’ is 0 for males).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">local</span> <span class="pre">male_n</span> <span class="pre">=</span> </code>r(N)’<code class="docutils literal notranslate"><span class="pre">:</span> <span class="pre">Stores</span> <span class="pre">the</span> <span class="pre">number</span> <span class="pre">of</span> <span class="pre">males</span> <span class="pre">from</span> <span class="pre">the</span> <span class="pre">last</span> </code>count<code class="docutils literal notranslate"><span class="pre">command</span> <span class="pre">into</span> <span class="pre">a</span> <span class="pre">local</span> <span class="pre">macro</span></code>male_n`.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">count</span> <span class="pre">if</span> <span class="pre">female</span> <span class="pre">==</span> <span class="pre">1</span></code>: Similar to above, but counts females.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">local</span> <span class="pre">female_n</span> <span class="pre">=</span> </code>r(N)’`: Stores the number of females.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">putexcel</span> <span class="pre">A1</span> <span class="pre">=</span> <span class="pre">&quot;Question</span> <span class="pre">1&quot;</span></code>: Writes “Question 1” into cell A1 of the Excel file.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">putexcel</span> <span class="pre">B1</span> <span class="pre">=</span> <span class="pre">&quot;Males</span> <span class="pre">(N=</span></code>male_n’)”`: Writes the count of male participants into cell B1.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">putexcel</span> <span class="pre">C1</span> <span class="pre">=</span> <span class="pre">&quot;Females</span> <span class="pre">(N=</span></code>female_n’)”`: Writes the count of female participants into cell C1.</p></li>
+</ul>
+</section>
+<section id="variable-labeling">
+<h2>Variable Labeling<a class="headerlink" href="#variable-labeling" title="Permalink to this heading">#</a></h2>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">label</span> variable init_age <span class="s">&quot;Age&quot;</span>
+<span class="k">label</span> variable prev <span class="s">&quot;Previous transplant&quot;</span>
+<span class="k">label</span> variable dx <span class="s">&quot;Cause of ESRD&quot;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">label</span> <span class="pre">variable</span> <span class="pre">init_age</span> <span class="pre">&quot;Age&quot;</span></code>: Assigns the label “Age” to the variable <code class="docutils literal notranslate"><span class="pre">init_age</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">label</span> <span class="pre">variable</span> <span class="pre">prev</span> <span class="pre">&quot;Previous</span> <span class="pre">transplant&quot;</span></code>: Labels the <code class="docutils literal notranslate"><span class="pre">prev</span></code> variable to indicate it represents previous transplants.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">label</span> <span class="pre">variable</span> <span class="pre">dx</span> <span class="pre">&quot;Cause</span> <span class="pre">of</span> <span class="pre">ESRD&quot;</span></code>: Labels the <code class="docutils literal notranslate"><span class="pre">dx</span></code> variable, indicating it describes the cause of End-Stage Renal Disease (ESRD).</p></li>
+</ul>
+</section>
+<section id="processing-and-outputting-variable-statistics">
+<h2>Processing and Outputting Variable Statistics<a class="headerlink" href="#processing-and-outputting-variable-statistics" title="Permalink to this heading">#</a></h2>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">levelsof</span> <span class="nv">`by_var&#39;</span>,<span class="k"> local</span>(by_val)
+<span class="k">local</span> var_list init_age prev dx
+<span class="k">local</span> var_type <span class="m">0</span> <span class="m">1</span> <span class="m">2</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">levelsof</span> </code>by_var’, local(by_val)<code class="docutils literal notranslate"><span class="pre">:</span> <span class="pre">Identifies</span> <span class="pre">unique</span> <span class="pre">values</span> <span class="pre">in</span> <span class="pre">the</span> </code>by_var<code class="docutils literal notranslate"><span class="pre">variable</span> <span class="pre">(here</span> <span class="pre">&quot;female&quot;)</span> <span class="pre">and</span> <span class="pre">stores</span> <span class="pre">them</span> <span class="pre">in</span> <span class="pre">the</span></code>by_val` local macro.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">local</span> <span class="pre">var_list</span> <span class="pre">init_age</span> <span class="pre">prev</span> <span class="pre">dx</span></code>: Creates a list of variables (<code class="docutils literal notranslate"><span class="pre">init_age</span></code>, <code class="docutils literal notranslate"><span class="pre">prev</span></code>, <code class="docutils literal notranslate"><span class="pre">dx</span></code>) to loop through.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">local</span> <span class="pre">var_type</span> <span class="pre">0</span> <span class="pre">1</span> <span class="pre">2</span></code>: Sets up a list to indicate the type of each variable in <code class="docutils literal notranslate"><span class="pre">var_list</span></code> for processing (0 for continuous, 1 for binary, 2 for categorical).</p></li>
+</ul>
+</section>
+<section id="loop-for-summary-statistics">
+<h2>Loop for Summary Statistics<a class="headerlink" href="#loop-for-summary-statistics" title="Permalink to this heading">#</a></h2>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">local</span> var_pos = <span class="m">0</span>
+<span class="k">foreach</span> i<span class="k"> in</span> <span class="nv">`var_list&#39;</span> {
+<span class="k">    local</span> var_pos = <span class="nv">`var_pos&#39;</span> <span class="o">+</span> <span class="m">1</span>
+<span class="k">    tokenize</span> <span class="nv">`var_type&#39;</span>
+<span class="k">    local type</span> = <span class="nv">``var_pos&#39;&#39;</span>
+<span class="k">    local</span> row = <span class="nv">`row&#39;</span> <span class="o">+</span> <span class="m">1</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">local</span> <span class="pre">var_pos</span> <span class="pre">=</span> <span class="pre">0</span></code>: Initializes a position counter for the variables.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">foreach</span> <span class="pre">i</span> <span class="pre">in</span> </code>var_list’ { … }<code class="docutils literal notranslate"><span class="pre">:</span> <span class="pre">Begins</span> <span class="pre">a</span> <span class="pre">loop</span> <span class="pre">over</span> <span class="pre">the</span> <span class="pre">variables</span> <span class="pre">listed</span> <span class="pre">in</span> </code>var_list`.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">local</span> <span class="pre">var_pos</span> <span class="pre">=</span> </code>var_pos’ + 1`: Increments the position counter.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tokenize</span> </code>var_type’<code class="docutils literal notranslate"><span class="pre">:</span> <span class="pre">Breaks</span> <span class="pre">the</span> <span class="pre">string</span> </code>var_type` into tokens that can be accessed sequentially.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">local</span> <span class="pre">type</span> <span class="pre">=</span> <span class="pre">``var_pos''</span></code>: Gets the type of the current variable using the position counter.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">local</span> <span class="pre">row</span> <span class="pre">=</span> </code>row’ + 1`: Increments the row counter to move to the next row in Excel.</p></li>
+</ul>
+</section>
+<section id="handling-different-variable-types">
+<h2>Handling Different Variable Types<a class="headerlink" href="#handling-different-variable-types" title="Permalink to this heading">#</a></h2>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> (<span class="nv">`type&#39;</span> <span class="o">==</span> <span class="m">0</span>) { <span class="c1">// con</span>
+<span class="k">    local</span> col = <span class="m">1</span>
+<span class="k">    local</span> var_lab : variable<span class="k"> label</span> <span class="nv">`i&#39;</span>
+<span class="k">    local</span> name :<span class="k"> di</span> <span class="s">&quot;</span><span class="nv">`var_lab&#39;</span><span class="s">&quot;</span> <span class="s">&quot;, median (IQR)&quot;</span>
+    ind_translator, row(<span class="nv">`row&#39;</span>) col(<span class="nv">`col&#39;</span>)
+    putexcel <span class="vg">${ul_cell}</span> = <span class="s">&quot;</span><span class="nv">`name&#39;</span><span class="s">&quot;</span>
+    ... [handling of continuous variables] ...
+}
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">(</span></code>type’ == 0) { … }`: Checks if the variable is continuous (type 0).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">local</span> <span class="pre">col</span> <span class="pre">=</span> <span class="pre">1</span></code>: Initializes the column position in Excel for output.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">local</span> <span class="pre">var_lab</span> <span class="pre">:</span> <span class="pre">variable</span> <span class="pre">label</span> </code>i’`: Retrieves the label of the current variable.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">local</span> <span class="pre">name</span> <span class="pre">:</span> <span class="pre">di</span> <span class="pre">&quot;</span></code>var_lab’” “, median (IQR)”`: Prepares the name and statistic type (median and interquartile range) for display.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ind_translator,</span> <span class="pre">row(</span></code>row’) col(<code class="docutils literal notranslate"><span class="pre">col')</span></code>: Calls the <code class="docutils literal notranslate"><span class="pre">ind_translator</span></code> function</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">HW5 Solution (Advanced)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#do-file-with-comments"><code class="docutils literal notranslate"><span class="pre">.do</span></code> file with comments</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gpt-4-annotation">GPT-4 Annotation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-up-the-environment">Setting Up the Environment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#check-and-handle-logging">Check and Handle Logging</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#define-ind-translator-function">Define <code class="docutils literal notranslate"><span class="pre">ind_translator</span></code> Function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#define-question1-function">Define <code class="docutils literal notranslate"><span class="pre">question1</span></code> Function</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#excel-setup-and-header-output">Excel Setup and Header Output</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#counting-and-outputting-gender-specific-data">Counting and Outputting Gender-Specific Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variable-labeling">Variable Labeling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#processing-and-outputting-variable-statistics">Processing and Outputting Variable Statistics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loop-for-summary-statistics">Loop for Summary Statistics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#handling-different-variable-types">Handling Different Variable Types</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Abimereki Muzaale
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

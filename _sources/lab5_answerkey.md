@@ -217,9 +217,7 @@ This revision aligns the commands within loops and conditions, which makes it ea
 
 # Part II
 
-This lab is optional; you are NOT required to complete these questions. Please use this lab as an opportunity to review the course material and prepare yourself for the homework questions. Sample responses to the lab questions will be provided separately.
-
-1. In lectures 3 & 4, we discussed how you can define your own “program”. It’s an awesome tool that allows us to automate a specific task. If you think a specific part of your code will be used multiple times, you might as well put that into a program. In this lab, we will practice customizing our programs.
+1. In the first-half of the course, we discussed how you can define your own “program”. It’s an awesome tool that allows us to automate a specific task. If you think a specific part of your code will be used multiple times, you might as well put that into a program. In this lab, we will practice customizing our programs.
 
 2. Start Stata, open your do-file editor, lay out a template for your basic .do file structure using `qui {`, `if 0 {`, and and `if 1`. Load `transplants.dta`  in your `if 2` block or wherever you feel it fits best.
 
@@ -299,13 +297,13 @@ This lab is optional; you are NOT required to complete these questions. Please u
 
 7. Did you make `if`, `sd`, and `digits()` optional arguments? That is, your program should run whether or not these arguments are supplied. To do so, simply surround each argument with brackets. For example, `[sd]`
 
-8. I’d like to draw your attention to the merge command. It’s hard to write a question around `merge`, but it’s a really important command in practice. For instance, we used it in the `if 4 {` [code-block](https://jhustata.github.io/book/fff.html) of chapter: `r(mean)`
+8. I’d like to draw your attention to the merge command. It’s hard to write a question around `merge`, but it’s a really important command in practice. For instance, we used it in [week 4](https://jhustata.github.io/basic/chapter4.html#merging-files). Contrast `merge` with `append`, something we may not get a chance to demonstrate.
 
    ```stata
    merge 1:1 fake_id using donors_recipients
    ```
    
-   ​        This is the code from the lecture. We are merging `transplants.dta` with `donors_recipients.dta`. We are merging observations with the same `fake_id`, and expect that there will be only one observation per `fake_id` in both datasets.
+   ​ This is the code from the lecture. We are merging `transplants.dta` with `donors_recipients.dta`. We are merging observations with the same `fake_id`, and expect that there will be only one observation per `fake_id` in both datasets.
    
 9. We want to study if death (`died==1`) is associated with several predictor variables: `bmi`, `prev_ki`, `age`, `peak_pra`, or `gender`. Run logistic regression between `died` and each of the predictor variables using `foreach` loop. At each run, save the name and the regression coefficient of the predictor variable into an external Stata dataset file named `output.dta`.
 
@@ -316,6 +314,20 @@ This lab is optional; you are NOT required to complete these questions. Please u
    foreach var in bmi prev_ki age peak_pra gender {
        quietly logistic died `var'
        post output ("`var'") (_b[`var'])
+   }
+   postclose output
+   ```
+
+   OR
+
+     ```stata
+   postfile output str30 name coef using output
+   // you may add ", replace" to allow overwriting output.dta
+   
+   foreach var in bmi prev_ki age peak_pra gender {
+       quietly logistic died `var'
+       quietly lincom `var'
+       post output ("`var'") ("`r(estimate)'")
    }
    postclose output
    ```
