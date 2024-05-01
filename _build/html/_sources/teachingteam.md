@@ -14,7 +14,7 @@
    - [HW 2 Solution](hw2sol.md)
    - [HW 3 Solution](hw3sol.md)  
    - <strike>HW 4 Solution </strike>
-   - [HW 5 Solution](hw5sol.md)  
+   - [HW 5 Solution](hw5sol.md) | Intermediate Solution (Coming Soon..) | [Advanced Solution](hw5_sol_advanced.md) 
       - The Extra Credit section is to be submitted separately
       - We'll create a DropBox for it
       - I'll grade this one

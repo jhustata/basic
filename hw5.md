@@ -10,8 +10,8 @@ import delimited "${repo}hw1.txt", clear
 **Question 1**. Now you have all the skills to create your first automated Table 1! Write a program called `question1` that prints the following table (including `Question 1` in the header). The `XX` values should be replaced with correct values found in the dataset, and should be rounded to the nearest whole number for age and to <u>one decimal place</u> to the right of the decimal point for other variables. Make sure the summary statistics are vertically aligned and justified along the left margin. Run your program and display the table (i.e., in `.log file`). Also, output these results to `Question1.xlsx`
 
 ```stata
-Question 1                Males (N=XX)        Females (N=XX)
-Age, median (IQR)         XX (XX-XX)          XX (XX-XX)
+Question 1                Males (N=XX)       Females (N=XX)
+Age, median (IQR)         XX (XX-XX)         XX (XX-XX)
 Previous transplant, %    XX.X               XX.X
 Cause of ESRD:
 Glomerular, %             XX.X               XX.X
@@ -25,9 +25,23 @@ Neoplasm, %               XX.X               XX.X
 Other, %                  XX.X               XX.X
 ```
 
+**OR** with indentation for categorical variables:
 
-
-
+```stata
+Question 1                Males (N=XX)       Females (N=XX)
+Age, median (IQR)         XX (XX-XX)         XX (XX-XX)
+Previous transplant, %    XX.X               XX.X
+Cause of ESRD, %
+   Glomerular             XX.X               XX.X
+   Diabetes               XX.X               XX.X
+   PKD                    XX.X               XX.X
+   Hypertensive           XX.X               XX.X
+   Renovascular           XX.X               XX.X
+   Congenital             XX.X               XX.X
+   Tubulo                 XX.X               XX.X
+   Neoplasm               XX.X               XX.X
+   Other                  XX.X               XX.X
+```
 
 **Question 2.** Your research group is investigating demographic characteristics associated with receiving a kidney transplant for waitlisted patients. You run a logistic regression using the following command:
 
