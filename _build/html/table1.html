@@ -61,6 +61,8 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'table1';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -367,7 +369,9 @@ document.write(`
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">7</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">8</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">9</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">12</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">10</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">11</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">12</a></li>
 </ul>
 
             </nav>
@@ -479,7 +483,7 @@ document.write(`
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="id9">
 <h1>9<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h1>
-<p>You may have noted some meaningless output such as the <code class="docutils literal notranslate"><span class="pre">median</span> <span class="pre">[IQR]</span></code> of <code class="docutils literal notranslate"><span class="pre">fake_id</span></code>, <code class="docutils literal notranslate"><span class="pre">center_id</span></code>, or even <code class="docutils literal notranslate"><span class="pre">transplant_date</span></code>. Now let’s empower the user to select meaningful variables that will appear in Table.  Also, allow the user have the choice over the order in which they appear</p>
+<p>You may have noted some meaningless output such as the <code class="docutils literal notranslate"><span class="pre">median</span> <span class="pre">[IQR]</span></code> of <code class="docutils literal notranslate"><span class="pre">fake_id</span></code>, <code class="docutils literal notranslate"><span class="pre">center_id</span></code>, or even <code class="docutils literal notranslate"><span class="pre">transplant_date</span></code>. Now let’s empower the user to select meaningful variables that will appear in Table (and in the order requested).</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">capture program drop</span> table1_flexible
 <span class="k">program</span> define table1_flexible
 <span class="k">    syntax varlist</span>
@@ -491,7 +495,7 @@ document.write(`
 <p>Here’s the indented code courtesy of GPT-4:</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">capture program drop</span> table1_flexible
 <span class="k">program</span> define table1_flexible
-<span class="k">    syntax varlist</span> <span class="c1">//user-defined varlist</span>
+<span class="k">    syntax varlist</span> 
 <span class="k">    qui</span> {
 	cls
 	<span class="c1">//use ${repo}transplants, clear //the program should work with any dataset</span>
@@ -513,19 +517,54 @@ document.write(`
 			}	
 	    }
 <span class="k">	    else</span> {  
-			putexcel A<span class="nv">`row&#39;</span> = (<span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">&quot;</span>) B<span class="nv">`row&#39;</span> = (<span class="s">&quot;m_iqr&quot;</span>)
+			putexcel A<span class="nv">`row&#39;</span> = (<span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">&quot;</span>) B<span class="nv">`row&#39;</span> = (<span class="s">&quot;m_iqr&quot;</span>) <span class="c1">//expand to &quot;C`row&#39; = (&quot;pvalue&quot;)</span>
 <span class="k">			local</span> row = <span class="nv">`row&#39;</span> <span class="o">+</span> <span class="m">1</span>
 	    }
 		
     }
 	
 }
-<span class="k">end</span> 
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>How would you adapt this program to create a Table 1 that is stratified by some other variable, say, sex/gender?</p>
+<p>And how would you further adapt it to include a third column with a p-value answering the hypothesis: the statistic in column 1 is significantly different from the one in column 2?</p>
+<p>You may choose the statistic you wish to deploy. A common one is <span class="math notranslate nohighlight">\(\chi^2\)</span>:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="vg">${repo}</span>transplants,<span class="k"> clear</span>
+<span class="k">tab</span> prev gender, chi
+<span class="k">di</span> <span class="nf">r</span>(p) 
+</pre></div>
+</div>
+<p>Or you could use regression:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">regress</span> age gender
+<span class="k">lincom</span> gender
+<span class="k">di</span> <span class="nf">r</span>(p)
+</pre></div>
+</div>
+<p>These p-values could be included in your loops as we only <a class="reference external" href="https://jhustata.github.io/basic/chapter2.html#combining-everything">cursorily mentioned</a> in week 2:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">    if</span> <span class="nf">r</span>(p) <span class="o">&lt;</span> <span class="m">0.01</span> {
+<span class="k">       local</span> p:<span class="k"> di</span> <span class="s">&quot;p &lt; 0.01&quot;</span>
+    }
+<span class="k">    else if</span> <span class="nf">inrange</span>(<span class="nf">r</span>(p),<span class="m">0.01</span>,<span class="m">0.05</span>) {
+<span class="k">       local</span> p:<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(p)
+    }
+<span class="k">    else</span> {
+<span class="k">       local</span> p:<span class="k"> di</span> <span class="nx">%2.1f</span> <span class="nf">r</span>(p)
+    }
+<span class="k">    noi di</span> <span class="s">&quot;p = </span><span class="nv">`p&#39;</span><span class="s">&quot;</span>
+
+putexcel A<span class="nv">`row&#39;</span> = (<span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">&quot;</span>) B<span class="nv">`row&#39;</span> = (<span class="s">&quot;m_iqr&quot;</span>) C<span class="nv">`row&#39;</span> = (<span class="s">&quot;p&quot;</span>)
 </pre></div>
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="id10">
-<h1>12<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h1>
+<h1>10<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h1>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id11">
+<h1>11<a class="headerlink" href="#id11" title="Permalink to this heading">#</a></h1>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id12">
+<h1>12<a class="headerlink" href="#id12" title="Permalink to this heading">#</a></h1>
 <p>The script below is our ultimate destination. But how do we gradually build our script until we get there?</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> {
 	cls
@@ -633,7 +672,9 @@ document.write(`
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">7</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">8</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">9</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">12</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">10</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">11</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">12</a></li>
 </ul>
 
   </nav></div>

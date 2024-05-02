@@ -84,7 +84,7 @@ qui {
 ```
 
 # 9 
-You may have noted some meaningless output such as the `median [IQR]` of `fake_id`, `center_id`, or even `transplant_date`. Now let's empower the user to select meaningful variables that will appear in Table.  Also, allow the user have the choice over the order in which they appear
+You may have noted some meaningless output such as the `median [IQR]` of `fake_id`, `center_id`, or even `transplant_date`. Now let's empower the user to select meaningful variables that will appear in Table (and in the order requested). 
 
 ```stata
 capture program drop table1_flexible
@@ -100,7 +100,7 @@ Here's the indented code courtesy of GPT-4:
 ```stata
 capture program drop table1_flexible
 program define table1_flexible
-    syntax varlist //user-defined varlist
+    syntax varlist 
     qui {
 	cls
 	//use ${repo}transplants, clear //the program should work with any dataset
@@ -122,15 +122,57 @@ program define table1_flexible
 			}	
 	    }
 	    else {  
-			putexcel A`row' = ("`v'") B`row' = ("m_iqr")
+			putexcel A`row' = ("`v'") B`row' = ("m_iqr") //expand to "C`row' = ("pvalue")
 			local row = `row' + 1
 	    }
 		
     }
 	
 }
-end 
+end
 ```
+
+How would you adapt this program to create a Table 1 that is stratified by some other variable, say, sex/gender?
+
+And how would you further adapt it to include a third column with a p-value answering the hypothesis: the statistic in column 1 is significantly different from the one in column 2?
+
+You may choose the statistic you wish to deploy. A common one is $\chi^2$:
+
+```stata
+use ${repo}transplants, clear
+tab prev gender, chi
+di r(p) 
+```
+
+Or you could use regression:
+
+```stata
+regress age gender
+lincom gender
+di r(p)
+```
+
+These p-values could be included in your loops as we only [cursorily mentioned](https://jhustata.github.io/basic/chapter2.html#combining-everything) in week 2:
+
+```stata
+
+    if r(p) < 0.01 {
+       local p: di "p < 0.01"
+    }
+    else if inrange(r(p),0.01,0.05) {
+       local p: di %3.2f r(p)
+    }
+    else {
+       local p: di %2.1f r(p)
+    }
+    noi di "p = `p'"
+
+putexcel A`row' = ("`v'") B`row' = ("m_iqr") C`row' = ("p")
+```
+
+# 10
+
+# 11
 
 # 12
 
