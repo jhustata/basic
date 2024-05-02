@@ -61,6 +61,8 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'chapter6';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -386,23 +388,26 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="nested-hierarchical-multilevel-longitudinal-data">
 <h1>6 Nested, Hierarchical, Multilevel, Longitudinal Data<a class="headerlink" href="#nested-hierarchical-multilevel-longitudinal-data" title="Permalink to this heading">#</a></h1>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">global</span> repo https:<span class="o">//</span>github<span class="m">.</span>com<span class="o">/</span>jhustata<span class="o">/</span>basic<span class="o">/</span>raw<span class="o">/</span>main<span class="o">/</span>
+</pre></div>
+</div>
 <section id="introduction-to-debugging">
 <h2>Introduction to Debugging<a class="headerlink" href="#introduction-to-debugging" title="Permalink to this heading">#</a></h2>
 <details>
 <summary>Click to expand!</summary>
 <p>Before diving into nested data, let’s revisit the concept of debugging with a simple example from Lab 5 last week.</p>
 <p>There’s no perfect time to introduce this topic, but many of you have likely experienced the frustration of encountering an error when running a script—whether it’s your own or one shared with you—and not being able to pinpoint the issue. Understanding debugging early on will aid in handling complex data structures more efficiently.</p>
-<p>Refer to the detailed debugging steps here: <a class="reference external" href="https://jhustata.github.io/basic/lab5.html#settings">Lab 5 Part I Section :. Settings</a></p>
+<p>Refer to the detailed debugging steps here: <a class="reference external" href="https://jhustata.github.io/basic/lab5.html#settings">Lab 5 Part I Section 1: Settings</a> - Click on the token!</p>
 </details>
 </section>
 <section id="revisiting-hardcoding">
 <h2>Revisiting Hardcoding<a class="headerlink" href="#revisiting-hardcoding" title="Permalink to this heading">#</a></h2>
 <details>
 <summary>Click to expand!</summary>
-<p>Last week, we reviewed the basics from Weeks 1 to 4. Let’s look at the script we used and discuss how it can be adapted for different outputs, moving from <code class="docutils literal notranslate"><span class="pre">.log</span></code> files to <code class="docutils literal notranslate"><span class="pre">.xlsx</span></code> files, something you’ve all grapped with over the last few days in answering your HW5.</p>
+<p>Last week, we reviewed the basics from Weeks 1 to 4. Let’s look at the script we used and discuss how it can be adapted for different outputs, moving from <code class="docutils literal notranslate"><span class="pre">.log</span></code> files to <code class="docutils literal notranslate"><span class="pre">.xlsx</span></code> files, something you’ve all grappled with over the last few days in answering your HW5.</p>
 <p>Review the script here: <a class="reference external" href="https://jhustata.github.io/basic/chapter5.html">Week 5 Review</a></p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">cat</span> https:<span class="o">//</span>github<span class="m">.</span>com<span class="o">/</span>jhustata<span class="o">/</span>basic<span class="o">/</span>raw<span class="o">/</span>main<span class="o">/</span>review<span class="m">.</span>do
-<span class="k">do</span> https:<span class="o">//</span>github<span class="m">.</span>com<span class="o">/</span>jhustata<span class="o">/</span>basic<span class="o">/</span>raw<span class="o">/</span>main<span class="o">/</span>review<span class="m">.</span>do
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">cat</span> <span class="vg">${repo}</span>review<span class="m">.</span>do
+<span class="k">do</span> <span class="vg">${repo}</span>review<span class="m">.</span>do
 </pre></div>
 </div>
 <p><a class="reference internal" href="hardcoding.html"><span class="doc std std-doc">Hardcoding</span></a> can be a useful starting point, but it’s essential to evolve your scripts to be dynamic and adaptable to different datasets and requirements. This involves using macros and avoiding fixed variable names or parameters wherever possible.</p>
@@ -422,14 +427,14 @@ document.write(`
 <section id="independently-and-identically-distributed-data-i-i-d">
 <h3>Independently and Identically Distributed Data (i.i.d.)<a class="headerlink" href="#independently-and-identically-distributed-data-i-i-d" title="Permalink to this heading">#</a></h3>
 <p>Classical statistics often assumes each observation is independently and identically distributed (i.i.d.). However, nested and multilevel data often violate this assumption, necessitating different analytical approaches.</p>
-<p>Explore the i.i.d. assumption in detail here: <a class="reference external" href="https://en.wikipedia.org/wiki/Independent_and_identically_distributed_random_variables">i.i.d. in Statistics</a></p>
+<p>Explore the <code class="docutils literal notranslate"><span class="pre">i.i.d.</span></code> assumption in detail here: <a class="reference external" href="https://en.wikipedia.org/wiki/Independent_and_identically_distributed_random_variables">i.i.d. in Statistics</a></p>
 </section>
 </section>
 <section id="the-concept-of-collapse">
 <h2>6.2 The Concept of <code class="docutils literal notranslate"><span class="pre">collapse</span></code><a class="headerlink" href="#the-concept-of-collapse" title="Permalink to this heading">#</a></h2>
 <p>When you describe aggregates like the average age or median blood pressure, you’re reducing the dimensionality of your data. This simplification, while useful, can sometimes obscure the nuances of individual data points or subgroups.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">collapse</span></code> command in Stata helps in reducing data dimensions to essential summaries, but it’s crucial to be aware of the biases this might introduce, especially in hierarchical data settings. (Note: the <code class="docutils literal notranslate"><span class="pre">expand</span></code> command does something that is almost the opposite, but its really a case of “resampling” of the same rather than appreciate variances in real-world data). See week 3 <a class="reference external" href="https://jhustata.github.io/basic/chapter3.html?highlight=collapse#collapse">Section 3.3</a> for an example:</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> transplants,<span class="k"> clear</span>
+<p>The <code class="docutils literal notranslate"><span class="pre">collapse</span></code> command in Stata helps in reducing data dimensions to essential summaries, but it’s crucial to be aware of the biases this might introduce, especially in hierarchical data settings. (Note: the <code class="docutils literal notranslate"><span class="pre">expand</span></code> command <a class="reference external" href="https://jhustata.github.io/basic/chapter3.html?highlight=expand#expand">does something</a> that is almost the opposite, but its really a case of “resampling” of the same rather than an expansion of horizons to appreciate nuances and variances in real-world data). See week 3 <a class="reference external" href="https://jhustata.github.io/basic/chapter3.html?highlight=collapse#collapse">Section 3.3</a> for an example:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="s">&quot;</span><span class="vg">${repo}</span><span class="s">transplants&quot;</span>,<span class="k"> clear</span>
 <span class="k">describe</span> ctr_id
 <span class="k">tab</span> ctr_id,<span class="k"> sum</span>(age)
 <span class="c1">//</span>
@@ -470,9 +475,9 @@ document.write(`
 <section id="combining-data-with-merge">
 <h2>6.5 Combining Data with <code class="docutils literal notranslate"><span class="pre">merge</span></code><a class="headerlink" href="#combining-data-with-merge" title="Permalink to this heading">#</a></h2>
 <p>Merging datasets is a common task in data analysis (see week 4 <a class="reference external" href="https://jhustata.github.io/basic/chapter4.html#merging-files">Section 4.2</a>), especially when dealing with longitudinal or multilevel data. We will cover best practices and common pitfalls in merging datasets from different sources or time points.</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="s">&quot;</span><span class="vg">${url}</span><span class="s">transplants&quot;</span>,<span class="k"> clear</span> 
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="s">&quot;</span><span class="vg">${repo}</span><span class="s">transplants&quot;</span>,<span class="k"> clear</span> 
 <span class="k">merge</span> <span class="m">1</span>:<span class="m">1</span> fake_id <span class="cs">///</span>
-    using <span class="s">&quot;</span><span class="vg">${url}</span><span class="s">donors_recipients&quot;</span>, <span class="cs">///</span>
+    using <span class="s">&quot;</span><span class="vg">${repo}</span><span class="s">donors_recipients&quot;</span>, <span class="cs">///</span>
 <span class="k">    keep</span>(match)
 </pre></div>
 </div>
@@ -480,11 +485,12 @@ document.write(`
 <section id="flexible-data-structures-with-reshape">
 <h2>6.6 Flexible Data Structures with <code class="docutils literal notranslate"><span class="pre">reshape</span></code><a class="headerlink" href="#flexible-data-structures-with-reshape" title="Permalink to this heading">#</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">reshape</span></code> command allows for switching between wide and long formats, which is particularly useful in longitudinal studies where time-point data may need to be restructured for analysis. See week 3 <a class="reference external" href="https://jhustata.github.io/basic/chapter3.html?highlight=collapse#reshape">Section 3.3</a> for an example</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">help reshape</span>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//help reshape</span>
+<span class="k">use</span> <span class="vg">${repo}</span>ctr_yr,<span class="k"> clear</span> 
+
 <span class="c1">//example of reshape wide</span>
 <span class="k">reshape</span> wide<span class="k"> n</span>, i(ctr_id) j(yr)
 <span class="k">list</span> ctr_id n2007<span class="o">-</span>n2010, clean noobs
-
 
 <span class="c1">//go back to long</span>
 <span class="k">reshape</span> long
@@ -514,6 +520,34 @@ document.write(`
 </section>
 <section id="other">
 <h2>6.7 Other<a class="headerlink" href="#other" title="Permalink to this heading">#</a></h2>
+<p>How would you define “exposure” to a drug in the simulation dataset below? (<strong>Note:</strong> Simulation allows us to learn about real-world data without <a class="reference external" href="https://guides.library.jhu.edu/protecting_identifiers/definitions">discolure risks</a>)</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="vg">${repo}</span>strpos<span class="m">.</span>dta,<span class="k"> clear</span> 
+</pre></div>
+</div>
+<p>“Exposure” to a drug typically refers to whether and how subjects in the dataset have been administered or have taken the drug. This can include various aspects:</p>
+<ol class="arabic simple">
+<li><p><strong>Binary Exposure</strong>: Whether the subjects were exposed or not to the drug at any point during the study period. This is often coded as a binary variable (e.g., 1 for exposed, 0 for not exposed). Randomized trials are of this nature. Is this simplistic or true to reality?</p></li>
+<li><p><strong>Dosage</strong>: The amount of the drug given to the subjects. This could be measured in units like mg, ml, etc., depending on the drug’s administration method. Is it cumulative dosage? Or conditional (e.g. cumulative dosage in the last month?)</p></li>
+<li><p><strong>Duration</strong>: How long the subjects have been exposed to the drug. This could be in days, months, or years. And has the compliance been <span class="math notranslate nohighlight">\(100%\)</span> throughout?</p></li>
+<li><p><strong>Frequency</strong>: How often the drug was administered during the period of study (e.g., daily, weekly, monthly).</p></li>
+<li><p><strong>Mode of Administration</strong>: How the drug was administered (e.g., oral, intravenous, topical).</p></li>
+</ol>
+<p><strong>Person-time</strong> might become the unit of analysis in such matters if you wish to capture reality as robustly as possible.</p>
+<p>In this simulation of large national registry data, these variables described were generated based on real-world distributions from the <a class="reference external" href="https://usrds-adr.niddk.nih.gov/2023">United States Renal Data System</a>to mimic actual patient data without the risk of disclosing personal health information. The <code class="docutils literal notranslate"><span class="pre">strpos.dta</span></code> dataset defines aspects of drug exposure, a very complicated kind of nested data.</p>
+<p>How many large national databases have we had some “exposure” to in this class?</p>
+<ol class="arabic simple">
+<li><p><a class="reference external" href="https://www.srtr.org/about-the-data/the-srtr-database/">SRTR</a></p></li>
+<li><p><a class="reference external" href="https://wwwn.cdc.gov/nchs/nhanes/ContinuousNhanes/Default.aspx?BeginYear=1999">NHANES</a></p></li>
+<li><p><a class="reference external" href="https://usrds-adr.niddk.nih.gov/2023">USRDS</a></p></li>
+</ol>
+<p>Those datasets have hierarchical structures in these dimensions:</p>
+<ol class="arabic simple">
+<li><p>Calendar</p></li>
+<li><p>Geography</p></li>
+<li><p>Demography</p></li>
+<li><p>Phenotype</p></li>
+<li><p>Etc.</p></li>
+</ol>
 </section>
 <section id="lab-session">
 <h2>6.8 Lab Session<a class="headerlink" href="#lab-session" title="Permalink to this heading">#</a></h2>
