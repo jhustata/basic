@@ -160,7 +160,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="chapter3.html">3. Loops, Program Syntax, and Miscellany</a></li>
 <li class="toctree-l1"><a class="reference internal" href="chapter4.html">4. Basic file management, Programming options</a></li>
 <li class="toctree-l1"><a class="reference internal" href="chapter5.html">5. Review of Weeks 1 - 4</a></li>
-<li class="toctree-l1"><a class="reference internal" href="chapter6.html">6. Visualizing data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter6.html">6 Nested Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="chapter7.html">7. Survival Analysis: Non-parametric, Semi-parametric, Parametric</a></li>
 <li class="toctree-l1"><a class="reference internal" href="chapter8.html">8. Multilevel, Hierarchical Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quickrefs.html">Quick References</a></li>
@@ -430,6 +430,22 @@ import sasxport5 <span class="s">&quot;https://wwwn.cdc.gov/Nchs/Nhanes/1999-200
 <section id="settings">
 <h2>1. Settings<a class="headerlink" href="#settings" title="Permalink to this heading">#</a></h2>
 <p>Let’s start by reading in datasets we may need for demos</p>
+<Details>
+    <Summary>🌕</Summary>
+<ul class="simple">
+<li><p>There’s a bug in the <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">1</span></code> codeblock below.</p></li>
+<li><p>Let’s leverage this opportunity to practice “debugging.”</p></li>
+<li><p>We’ll use <code class="docutils literal notranslate"><span class="pre">di</span> <span class="pre">as</span> <span class="pre">err</span> <span class="pre">&quot;The</span> <span class="pre">bug</span> <span class="pre">in</span> <span class="pre">the</span> <span class="pre">code</span> <span class="pre">is</span> <span class="pre">below</span> <span class="pre">this</span> <span class="pre">line&quot;</span></code> to pinpoint the error:</p>
+<ul>
+<li><p>Insert this line at the top of your script.</p></li>
+<li><p>Then at the bottom.</p></li>
+<li><p>Next, in the middle.</p></li>
+<li><p>Continue adjusting the position of this line to triangulate until you find the specific section causing the error.</p></li>
+</ul>
+</li>
+</ul>
+<p>This method systematically helps you narrow down the exact point of failure in your Stata code by using error messages strategically. It’s an effective way to debug, especially in scripts where the error might not be immediately apparent.</p>
+</Details>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> {
 	<span class="cm">/*</span>
 <span class="cm">	1. Kidney Transplant Recipient Data (from GitHub.com)</span>

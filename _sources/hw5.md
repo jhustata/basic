@@ -66,7 +66,7 @@ Hint: If you like, you may these expressions below after logistic regression to 
 | --------------------- | ---------------------------------------------------- |
 | Odds ratio            | `r(estimate)`                                        |
 | Lower bound of 95% CI | `r(lb)`                                              |
-| Upper bound of 95% CI | `ub`                                                 |
+| Upper bound of 95% CI | `r(ub)`                                              |
 
 
 ### Additional Credit (Maximum $+5%$)
@@ -85,3 +85,9 @@ Tasks:
    - Welcome to brainstorm with peers in the [GitHub Discussion Forum](https://github.com/jhufena/discussions/discussions)
 2. Then download it and annotate it to explain to yourself and others what it accomplishes
 3. Use the ExtraCredit DropBox to hand in your version of `annotate.do` 
+
+One quick way to visualize the `annotate.do` script is by using a Linux `cat` command:
+
+```stata
+cat ${repo}annotate.do
+```

@@ -29,6 +29,21 @@ end
 
 Let's start by reading in datasets we may need for demos
 
+<Details>
+    <Summary>🌕</Summary>
+
+- There's a bug in the `if 1` codeblock below.
+- Let's leverage this opportunity to practice "debugging."
+- We'll use `di as err "The bug in the code is below this line"` to pinpoint the error:
+   - Insert this line at the top of your script.
+   - Then at the bottom.
+   - Next, in the middle.
+   - Continue adjusting the position of this line to triangulate until you find the specific section causing the error.
+
+This method systematically helps you narrow down the exact point of failure in your Stata code by using error messages strategically. It's an effective way to debug, especially in scripts where the error might not be immediately apparent.
+
+</Details>
+
 ```stata
 qui {
 	/*

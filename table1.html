@@ -1,0 +1,691 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Table 1 tips &#8212; Stata Programming</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'table1';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="https://brand.jhu.edu/assets/uploads/sites/5/2014/06/university_logo_small_vertical_blue.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="https://brand.jhu.edu/assets/uploads/sites/5/2014/06/university_logo_small_vertical_blue.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Preface
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="chapter1.html">1. Philosophy, overview, commands, syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter2.html">2. Return values, macros, programs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter3.html">3. Loops, Program Syntax, and Miscellany</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter4.html">4. Basic file management, Programming options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter5.html">5. Review of Weeks 1 - 4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter6.html">6 Nested Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter7.html">7. Survival Analysis: Non-parametric, Semi-parametric, Parametric</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter8.html">8. Multilevel, Hierarchical Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickrefs.html">Quick References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Ftable1.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/table1.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Table 1 tips</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Table 1 tips</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">8</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">9</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">12</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="table-1-tips">
+<h1>Table 1 tips<a class="headerlink" href="#table-1-tips" title="Permalink to this heading">#</a></h1>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>1<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h1>
+<p>Let’s use datasets from our class repo</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">global</span> repo https:<span class="o">//</span>github<span class="m">.</span>com<span class="o">/</span>jhustata<span class="o">/</span>basic<span class="o">/</span>raw<span class="o">/</span>main
+</pre></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id2">
+<h1>2<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h1>
+<p>Import the data</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="vg">${repo}</span>transplants<span class="m">.</span>dta,<span class="k"> clear</span> 
+</pre></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id3">
+<h1>3<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h1>
+<p>Exclude strings for now, to keep it simple</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">ds</span>, not(type string)  
+</pre></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id4">
+<h1>4<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h1>
+<p>Now loop over all the variables in the dataset, except those with string values:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">    foreach</span> v of<span class="k"> varlist</span> <span class="nv">`r(varlist)&#39;</span> {
+<span class="k">	    levelsof</span> <span class="nv">`v&#39;</span>,<span class="k"> local</span>(numlevels)
+    }	
+</pre></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id5">
+<h1>5<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h1>
+<p>The above loop creates a macro <code class="docutils literal notranslate"><span class="pre">numlevels</span></code> that quantifies the number of levels in variable. For instance, a binary variable in the dataset like gender (0=Male, 1=Female) has two levels</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">levelsof</span> gender
+</pre></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id6">
+<h1>6<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h1>
+<p>You can now compare that to <code class="docutils literal notranslate"><span class="pre">levelsof</span> <span class="pre">bmi</span></code>, or <code class="docutils literal notranslate"><span class="pre">levelsof</span> <span class="pre">wait_yrs</span></code>.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id7">
+<h1>7<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h1>
+<p>In this dataset, <code class="docutils literal notranslate"><span class="pre">levelsof</span> <span class="pre">extended_dgn</span></code> is of interest, if we wish to write an algorith that helps the user classify variables as “continuous”, “binary”, or “multicategory” for the purpose of reporting in Table 1. A trial-and-error process will lead to an optimal threshold:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">	global</span> threshold <span class="m">9</span> <span class="c1">//for multicat vs. continuous</span>
+<span class="k">    foreach</span> v of<span class="k"> varlist</span> <span class="nv">`r(varlist)&#39;</span> {
+<span class="k">	    levelsof</span> <span class="nv">`v&#39;</span>,<span class="k"> local</span>(numlevels)
+<span class="k">	    if</span> <span class="nf">r</span>(r) <span class="o">==</span> <span class="m">2</span> {  
+<span class="k">			noi di</span> <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s"> binary&quot;</span>
+	    }
+<span class="k">	    else if</span> <span class="nf">inrange</span>(<span class="nv">`r(r)&#39;</span>, <span class="m">3</span>, <span class="vg">$threshold</span>) {  
+<span class="k">			noi di</span> <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s"> multicat&quot;</span>
+	    }
+<span class="k">	    else</span> {  
+<span class="k">			noi di</span> <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s"> continuous&quot;</span>
+	    }
+    }
+</pre></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id8">
+<h1>8<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h1>
+<p>Lets “hardcode” into our script some results outputted into an <code class="docutils literal notranslate"><span class="pre">.xlsx</span></code> file. Then gradually we can replace each “hardcoding” with a macro:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> {
+	cls
+<span class="k">	use</span> <span class="vg">${repo}</span>transplants,<span class="k"> clear</span>
+<span class="k">    ds</span>, not(type string)  
+<span class="k">	global</span> threshold <span class="m">9</span>  
+	putexcel<span class="k"> set levelsof</span>,<span class="k"> replace</span> 
+<span class="k">	local</span> row=<span class="m">2</span>
+<span class="k">    foreach</span> v of<span class="k"> varlist</span> <span class="nv">`r(varlist)&#39;</span> {
+<span class="k">	    levelsof</span> <span class="nv">`v&#39;</span>,<span class="k"> local</span>(numlevels)
+<span class="k">	    if</span> <span class="nf">r</span>(r) <span class="o">==</span> <span class="m">2</span> {  
+			putexcel A<span class="nv">`row&#39;</span> = (<span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">&quot;</span>) B<span class="nv">`row&#39;</span> = (<span class="s">&quot;per&quot;</span>)
+<span class="k">			local</span> row = <span class="nv">`row&#39;</span> <span class="o">+</span> <span class="m">1</span>
+	    }
+<span class="k">	    else if</span> <span class="nf">inrange</span>(<span class="nv">`r(r)&#39;</span>, <span class="m">3</span>, <span class="vg">$threshold</span>) {  
+			putexcel A<span class="nv">`row&#39;</span> = (<span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">, %&quot;</span>) B<span class="nv">`row&#39;</span> = (<span class="s">&quot;&quot;</span>)
+<span class="k">			foreach l</span> of<span class="k"> numlist</span> <span class="nv">`numlevels&#39;</span> {
+<span class="k">				local</span> row = <span class="nv">`row&#39;</span> <span class="o">+</span> <span class="m">1</span>
+                putexcel A<span class="nv">`row&#39;</span> = (<span class="s">&quot;    catlab&quot;</span>) B<span class="nv">`row&#39;</span> = (<span class="s">&quot;per&quot;</span>) 
+			}	
+	    }
+<span class="k">	    else</span> {  
+			putexcel A<span class="nv">`row&#39;</span> = (<span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">&quot;</span>) B<span class="nv">`row&#39;</span> = (<span class="s">&quot;m_iqr&quot;</span>)
+<span class="k">			local</span> row = <span class="nv">`row&#39;</span> <span class="o">+</span> <span class="m">1</span>
+	    }
+		
+    }
+	
+}
+</pre></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id9">
+<h1>9<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h1>
+<p>You may have noted some meaningless output such as the <code class="docutils literal notranslate"><span class="pre">median</span> <span class="pre">[IQR]</span></code> of <code class="docutils literal notranslate"><span class="pre">fake_id</span></code>, <code class="docutils literal notranslate"><span class="pre">center_id</span></code>, or even <code class="docutils literal notranslate"><span class="pre">transplant_date</span></code>. Now let’s empower the user to select meaningful variables that will appear in Table.  Also, allow the user have the choice over the order in which they appear</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">capture program drop</span> table1_flexible
+<span class="k">program</span> define table1_flexible
+<span class="k">    syntax varlist</span>
+    <span class="c1">//copy &amp; paste the above here &amp; ask ChatGPT to help indent the code</span>
+	<span class="c1">//or do it yourself</span>
+<span class="k">end</span> 
+</pre></div>
+</div>
+<p>Here’s the indented code courtesy of GPT-4:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">capture program drop</span> table1_flexible
+<span class="k">program</span> define table1_flexible
+<span class="k">    syntax varlist</span> <span class="c1">//user-defined varlist</span>
+<span class="k">    qui</span> {
+	cls
+	<span class="c1">//use ${repo}transplants, clear //the program should work with any dataset</span>
+<span class="k">    ds</span>, not(type string)  
+<span class="k">	global</span> threshold <span class="m">9</span>  
+	putexcel<span class="k"> set levelsof</span>,<span class="k"> replace</span> 
+<span class="k">	local</span> row=<span class="m">2</span>
+<span class="k">    foreach</span> v of<span class="k"> varlist</span> <span class="nv">`varlist&#39;</span> { <span class="c1">//replaced `r(varlist)&#39; with `varlist&#39;</span>
+<span class="k">	    levelsof</span> <span class="nv">`v&#39;</span>,<span class="k"> local</span>(numlevels)
+<span class="k">	    if</span> <span class="nf">r</span>(r) <span class="o">==</span> <span class="m">2</span> {  
+			putexcel A<span class="nv">`row&#39;</span> = (<span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">&quot;</span>) B<span class="nv">`row&#39;</span> = (<span class="s">&quot;per&quot;</span>)
+<span class="k">			local</span> row = <span class="nv">`row&#39;</span> <span class="o">+</span> <span class="m">1</span>
+	    }
+<span class="k">	    else if</span> <span class="nf">inrange</span>(<span class="nv">`r(r)&#39;</span>, <span class="m">3</span>, <span class="vg">$threshold</span>) {  
+			putexcel A<span class="nv">`row&#39;</span> = (<span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">, %&quot;</span>) B<span class="nv">`row&#39;</span> = (<span class="s">&quot;&quot;</span>)
+<span class="k">			foreach l</span> of<span class="k"> numlist</span> <span class="nv">`numlevels&#39;</span> {
+<span class="k">				local</span> row = <span class="nv">`row&#39;</span> <span class="o">+</span> <span class="m">1</span>
+                putexcel A<span class="nv">`row&#39;</span> = (<span class="s">&quot;    catlab&quot;</span>) B<span class="nv">`row&#39;</span> = (<span class="s">&quot;per&quot;</span>) 
+			}	
+	    }
+<span class="k">	    else</span> {  
+			putexcel A<span class="nv">`row&#39;</span> = (<span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">&quot;</span>) B<span class="nv">`row&#39;</span> = (<span class="s">&quot;m_iqr&quot;</span>)
+<span class="k">			local</span> row = <span class="nv">`row&#39;</span> <span class="o">+</span> <span class="m">1</span>
+	    }
+		
+    }
+	
+}
+<span class="k">end</span> 
+</pre></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id10">
+<h1>12<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h1>
+<p>The script below is our ultimate destination. But how do we gradually build our script until we get there?</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> {
+	cls
+<span class="k">	use</span> <span class="vg">${repo}</span>transplants,<span class="k"> clear</span>
+<span class="k">    ds</span>, not(type string) <span class="c1">//otherwise, extended diagnosis is continuous! </span>
+<span class="k">	global</span> threshold <span class="m">9</span> <span class="c1">//for multicat vs. continuous</span>
+	putexcel<span class="k"> set levelsof</span>,<span class="k"> replace</span> 
+<span class="k">	local</span> row=<span class="m">2</span>
+<span class="k">    foreach</span> v of<span class="k"> varlist</span> <span class="nv">`r(varlist)&#39;</span> {
+<span class="k">		local</span> varlab:<span class="k"> var lab</span> <span class="nv">`v&#39;</span>
+<span class="k">		local</span> vallab: value<span class="k"> label</span> <span class="nv">`v&#39;</span>
+<span class="k">	    levelsof</span> <span class="nv">`v&#39;</span>,<span class="k"> local</span>(numlevels)
+<span class="k">	    if</span> <span class="nf">r</span>(r) <span class="o">==</span> <span class="m">2</span> {  
+<span class="k">			noi di</span> <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s"> binary&quot;</span>
+<span class="k">			sum</span> <span class="nv">`v&#39;</span>
+<span class="k">			local</span> per:<span class="k"> di</span> <span class="nx">%3.1f</span> <span class="nf">r</span>(mean)<span class="o">*</span><span class="m">100</span>
+			putexcel A<span class="nv">`row&#39;</span> = (<span class="s">&quot;</span><span class="nv">`varlab&#39;</span><span class="s">&quot;</span>) B<span class="nv">`row&#39;</span> = (<span class="nv">`per&#39;</span>)
+<span class="k">			local</span> row = <span class="nv">`row&#39;</span> <span class="o">+</span> <span class="m">1</span>
+	    }
+<span class="k">	    else if</span> <span class="nf">inrange</span>(<span class="nv">`r(r)&#39;</span>, <span class="m">3</span>, <span class="vg">$threshold</span>) {  
+<span class="k">			noi di</span> <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s"> multicat&quot;</span>
+			putexcel A<span class="nv">`row&#39;</span> = (<span class="s">&quot;</span><span class="nv">`varlab&#39;</span><span class="s">, %&quot;</span>) B<span class="nv">`row&#39;</span> = (<span class="s">&quot;&quot;</span>)
+<span class="k">			foreach l</span> of<span class="k"> numlist</span> <span class="nv">`numlevels&#39;</span> {
+<span class="k">			    local</span> row = <span class="nv">`row&#39;</span> <span class="o">+</span> <span class="m">1</span>
+<span class="k">			    count if</span> <span class="nv">`v&#39;</span> <span class="o">==</span> <span class="nv">`l&#39;</span>
+<span class="k">				local</span> num=<span class="nf">r</span>(N)
+<span class="k">				count if</span> <span class="o">!</span><span class="nf">missing</span>(<span class="nv">`v&#39;</span>)
+<span class="k">				local</span> den=<span class="nf">r</span>(N)
+<span class="k">				local</span> per:<span class="k"> di</span> <span class="nx">%3.1f</span> <span class="nv">`num&#39;</span><span class="o">*</span><span class="m">100</span><span class="o">/</span><span class="nv">`den&#39;</span>
+<span class="k">				local</span> catlab:<span class="k"> lab</span> <span class="nv">`vallab&#39;</span> <span class="nv">`l&#39;</span>
+                putexcel A<span class="nv">`row&#39;</span> = (<span class="s">&quot;    </span><span class="nv">`catlab&#39;</span><span class="s">&quot;</span>) B<span class="nv">`row&#39;</span> = (<span class="nv">`per&#39;</span>)
+			}	
+	    }
+<span class="k">	    else</span> {  
+<span class="k">			noi di</span> <span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s"> continuous&quot;</span>
+<span class="k">			sum</span> <span class="nv">`v&#39;</span>, detail
+<span class="k">			local</span> m_iqr:<span class="k"> di</span> <span class="nx">%2.0f</span> <span class="nf">r</span>(p50) <span class="s">&quot;[&quot;</span><span class="k"> di</span> <span class="nx">%2.0f</span> <span class="nf">r</span>(p25) <span class="s">&quot;-&quot;</span><span class="k"> di</span> <span class="nx">%2.0f</span> <span class="nf">r</span>(p75) <span class="s">&quot;]&quot;</span> 
+			putexcel A<span class="nv">`row&#39;</span> = (<span class="s">&quot;</span><span class="nv">`varlab&#39;</span><span class="s">&quot;</span>) B<span class="nv">`row&#39;</span> = (<span class="s">&quot;</span><span class="nv">`m_iqr&#39;</span><span class="s">&quot;</span>)
+<span class="k">			local</span> row = <span class="nv">`row&#39;</span> <span class="o">+</span> <span class="m">1</span>
+	    }
+		
+    }
+	
+}
+</pre></div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Table 1 tips</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">8</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">9</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">12</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Abimereki Muzaale
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
