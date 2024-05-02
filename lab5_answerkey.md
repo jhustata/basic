@@ -65,6 +65,12 @@ Simple example under `foreach v of varlist {` in Lab 5 Part I Section 2.1:
 do ${repo}loopxpt.do
 ```
 
+Content of `loopsxpt.do`?
+
+```stata
+cat ${repo}loopxpt.do
+```
+
 ### 4.2
 
 You can copy and paste this into **ChatGPT** and ask for notes. Encourage students to do this. Please let them use other AIs as well.
