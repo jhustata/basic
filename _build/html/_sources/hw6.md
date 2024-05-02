@@ -4,7 +4,7 @@ Write a .do file that performs the tasks described below. Your .do file must be 
 `hw2.lastname.firstname.do`. Make sure your script will run on our machines by handling [filepath ambiguity](https://jhustata.github.io/basic/hw3sol.html?highlight=ambiguity#handling-file-path-ambiguity) in your script. Do **not** submit your log files as part of the assignment.
 
 # Part I
-Use the dataset [pra_hist.dta](pra_hist.dta) and [hosp.dta](hosp.dta) to perform the required tasks. 
+Use the dataset `pra_hist.dta` and `hosp.dta` to perform the required tasks. 
 
 ```stata
 global repo https://github.com/jhustata/basic/raw/main/
