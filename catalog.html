@@ -1,0 +1,1061 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Catalog of Commands &#8212; Stata Programming</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'catalog';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="https://brand.jhu.edu/assets/uploads/sites/5/2014/06/university_logo_small_vertical_blue.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="https://brand.jhu.edu/assets/uploads/sites/5/2014/06/university_logo_small_vertical_blue.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Preface
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="chapter1.html">1. Philosophy, overview, commands, syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter2.html">2. Return values, macros, programs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter3.html">3. Loops, Program Syntax, and Miscellany</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter4.html">4. Basic file management, Programming options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter5.html">5. Review of Weeks 1 - 4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter6.html">6 Nested, Hierarchical, Multilevel, Longitudinal Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter7.html">7. Visualizing data in Stata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter8.html">8.Survival Analysis: Non-parametric, Semi-parametric, Parametric</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickrefs.html">Quick References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcatalog.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/catalog.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Catalog of Commands</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#display">display</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quitely">quitely</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#noisily">noisily</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cls">cls</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#if-0">//, /*, if 0 {}, *</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#if">if</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#else-else-if">else/else if</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clear">clear</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#capture-rc">capture, _rc</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#log">log</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set">set</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#local-global-macros">local/global/macros</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#use-import-infile-infix">use/import/infile/infix</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate">generate</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#replace">replace</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#drop">drop</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#keep">keep</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#label">label</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tabulate">tabulate</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#putexcel">putexcel</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#putdocx">putdocx</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loops-for-while">loops - for/while</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#forvalues">forvalues</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#foreach">foreach</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#while">while</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summarize">summarize</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pwd">pwd</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cd">cd</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#split">split</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#destring">destring</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#delimit">delimit</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix">matrix</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#count">count</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preserve">preserve</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#restore">restore</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#program">program</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#syntax">syntax</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tokenize">tokenize</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#postfile">postfile</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section id="catalog-of-commands">
+<h1>Catalog of Commands<a class="headerlink" href="#catalog-of-commands" title="Permalink to this heading">#</a></h1>
+<p><em><strong>Before running any sample codes, please run this line of command in Stata</strong></em></p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span><span class="k">global</span> repo :<span class="k"> di</span> <span class="s">&quot;https://raw.githubusercontent.com/jhustata/basic/main&quot;</span>
+</pre></div>
+</div>
+<section id="display">
+<h2>display<a class="headerlink" href="#display" title="Permalink to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">display</span></code> is a command that let’s Stata to print out a value, a string, and etc. to the result window.</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span><span class="k">di</span> <span class="s">&quot;This is an example&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="quitely">
+<h2>quitely<a class="headerlink" href="#quitely" title="Permalink to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">quitely</span></code> is a command control the output displayed in Stata result window. It can be used as a prefix to other commands to hide it’s results in the result window.
+Use <code class="docutils literal notranslate"><span class="pre">{}</span></code> to create chunks for <code class="docutils literal notranslate"><span class="pre">quitely</span></code>. All results for codes within the chunk will be hide unless otherwise specified.</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span><span class="c1">// display the result</span>
+<span class="k">di</span> <span class="s">&quot;This is an example&quot;</span>
+<span class="c1">// hide with quitely</span>
+<span class="k">qui di</span> <span class="s">&quot;This is an example&quot;</span>
+<span class="c1">// code chunk</span>
+<span class="k">qui</span> {
+<span class="k">    di</span> <span class="s">&quot;This is an example&quot;</span>
+}
+</pre></div>
+</div>
+</section>
+<section id="noisily">
+<h2>noisily<a class="headerlink" href="#noisily" title="Permalink to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">noisily</span></code> is a command control the output displayed in Stata result window. It does exactly the opposite as quitely and forces the output to be displayed in the result window even if within a quitely block.</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> {
+<span class="k">    di</span> <span class="s">&quot;This line will be hidden&quot;</span>
+<span class="k">    noi di</span> <span class="s">&quot;This line will be displayed&quot;</span>
+}
+</pre></div>
+</div>
+</section>
+<section id="cls">
+<h2>cls<a class="headerlink" href="#cls" title="Permalink to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">cls</span></code> is a command clearing up the result window.</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span><span class="k">noi di</span> <span class="s">&quot;Some random staff to be removed from your screen&quot;</span>
+cls
+</pre></div>
+</div>
+</section>
+<section id="if-0">
+<h2>//, /*, if 0 {}, *<a class="headerlink" href="#if-0" title="Permalink to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">//</span></code>, <code class="docutils literal notranslate"><span class="pre">/*</span></code> and <code class="docutils literal notranslate"><span class="pre">*/</span></code>, <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">0</span> <span class="pre">{}</span></code>, <code class="docutils literal notranslate"><span class="pre">*</span></code> are different ways of commenting or annotating in Stata.</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span><span class="c1">// Works in Do-files</span>
+<span class="c1">// This is a comment</span>
+<span class="cm">/* This is a comment chunk, and this is the start of this chunk</span>
+<span class="cm">This is a comment</span>
+<span class="cm">This is the end of this chunk */</span>
+
+<span class="k">if</span> <span class="m">0</span> {
+<span class="k">    if</span> <span class="m">0</span> is a special way of commenting<span class="k"> in</span> Stata
+<span class="k">    if</span> <span class="m">0</span> is a condition that is always being considered<span class="k"> as</span> False<span class="k"> in</span> Stata
+    therefore, codes<span class="k"> in if</span> <span class="m">0</span> will never be<span class="k"> read</span><span class="o">-</span>in<span class="k"> as</span> commands thus never runned
+<span class="k">    so</span> it can act<span class="k"> as</span> a way of commenting
+}
+
+<span class="c1">* This is a very traditional way of commenting</span>
+</pre></div>
+</div>
+</section>
+<section id="if">
+<h2>if<a class="headerlink" href="#if" title="Permalink to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">if</span></code> is the way to tell Stata to execute specific commands when a condition is met
+If a number that is not equal to 0 is being used as condition, Stata will always consider it as <code class="docutils literal notranslate"><span class="pre">True</span></code></p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="m">1</span> {
+<span class="k">    di</span> <span class="s">&quot;This is an example&quot;</span>
+}
+import delimited <span class="s">&quot;</span><span class="vg">${repo}</span><span class="s">/transplants.txt&quot;</span>
+<span class="c1">// summarize age among overall population</span>
+<span class="k">sum</span> age, detail
+<span class="c1">// summarize age among females only</span>
+<span class="k">sum</span> age<span class="k"> if</span> gender <span class="o">==</span> <span class="m">1</span>, detail
+</pre></div>
+</div>
+</section>
+<section id="else-else-if">
+<h2>else/else if<a class="headerlink" href="#else-else-if" title="Permalink to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">else</span></code> and <code class="docutils literal notranslate"><span class="pre">else</span> <span class="pre">if</span></code> are used with <code class="docutils literal notranslate"><span class="pre">if</span></code> to establish more sets of codes if additional conditions needs to be checked other than the original <code class="docutils literal notranslate"><span class="pre">if</span></code> condition.</p>
+<p><code class="docutils literal notranslate"><span class="pre">else</span></code> and <code class="docutils literal notranslate"><span class="pre">else</span> <span class="pre">if</span></code> has to start from a new line and cannot be specified after <code class="docutils literal notranslate"><span class="pre">}</span></code> in the same line.</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span><span class="k">local</span> e1 = <span class="m">1</span>
+<span class="k">local</span> e2 = <span class="m">0</span>
+<span class="k">local</span> e3 = <span class="m">4</span>
+<span class="k">if</span> (<span class="nv">`e1&#39;</span> <span class="o">==</span> <span class="m">0</span>) {
+<span class="k">    noi di</span> <span class="s">&quot;in if condition&quot;</span>
+} 
+<span class="k">else if</span> (<span class="nv">`e2&#39;</span> <span class="o">==</span> <span class="m">0</span>) {
+<span class="k">    noi di</span> <span class="s">&quot;in else if condition&quot;</span>
+}
+<span class="k">else</span> {
+<span class="k">    noi di</span> <span class="s">&quot;in else condition&quot;</span>
+}
+</pre></div>
+</div>
+</section>
+<section id="clear">
+<h2>clear<a class="headerlink" href="#clear" title="Permalink to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">clear</span></code> is a command clear up designated memory. In default, it clears up the dataset in memory.
+If using <code class="docutils literal notranslate"><span class="pre">clear</span> <span class="pre">all</span></code>, it clears up everything (dataset, programs, macros) in memory</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span><span class="k">local test</span> :<span class="k"> di</span> <span class="s">&quot;This is an example&quot;</span>
+import delimited <span class="s">&quot;</span><span class="vg">${repo}</span><span class="s">/transplants.txt&quot;</span>,<span class="k"> clear</span>
+<span class="k">clear</span>
+<span class="k">di</span> <span class="s">&quot;</span><span class="nv">`test&#39;</span><span class="s">&quot;</span>
+import delimited <span class="s">&quot;</span><span class="vg">${repo}</span><span class="s">/transplants.txt&quot;</span>,<span class="k"> clear</span>
+<span class="k">clear</span> all
+<span class="k">di</span> <span class="s">&quot;</span><span class="nv">`test&#39;</span><span class="s">&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="capture-rc">
+<h2>capture, _rc<a class="headerlink" href="#capture-rc" title="Permalink to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">capture</span></code> is a command which lets Stata to continue execution if an error occurs in the command line start with <code class="docutils literal notranslate"><span class="pre">capture</span></code>
+<code class="docutils literal notranslate"><span class="pre">_rc</span></code> is a backstage value that Stata use to store the error code encountered in the command line with <code class="docutils literal notranslate"><span class="pre">capture</span></code></p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span><span class="k">capture</span> this is<span class="k"> an error</span>
+<span class="k">di</span> _rc
+this is<span class="k"> an error</span>
+</pre></div>
+</div>
+</section>
+<section id="log">
+<h2>log<a class="headerlink" href="#log" title="Permalink to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">log</span></code> is a command modifies log file settings</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span><span class="c1">// close up currently opened log file for writing</span>
+<span class="k">capture log close</span>
+<span class="c1">// start a new log file to write on</span>
+<span class="k">log</span> using <span class="s">&quot;log_file_name.txt&quot;</span>, text<span class="k"> replace</span>
+</pre></div>
+</div>
+</section>
+<section id="set">
+<h2>set<a class="headerlink" href="#set" title="Permalink to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">set</span></code> regulates Stata’s systematic settings</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span><span class="c1">// change number of records</span>
+<span class="k">set</span> obs <span class="m">100</span>
+<span class="c1">// allow Stata to use abbreviation of variable names</span>
+<span class="k">set</span> varabbrev<span class="k"> on</span>
+<span class="c1">// turn off the more prmopt when generating long results</span>
+<span class="k">set more</span> off
+<span class="c1">// change timeout setting when connecting to internet resources</span>
+<span class="k">set</span> timeout1 <span class="m">1000</span>
+</pre></div>
+</div>
+</section>
+<section id="local-global-macros">
+<h2>local/global/macros<a class="headerlink" href="#local-global-macros" title="Permalink to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">macros</span></code> are temporary user/command defined scalars that are stored in Stata’s backstage to hold temporary values, strings, files, and etc.</p>
+<p>A <code class="docutils literal notranslate"><span class="pre">local</span> <span class="pre">macro</span></code> means that such a temporary scalar will only remaining functional in this specific do-file/program and will lose information stored in it after running. To call a local macro, use ` and ‘ to wrap the macro name.</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span><span class="c1">// define a local macro called example with a value of 0</span>
+<span class="k">local</span> example = <span class="m">0</span>
+<span class="c1">// define a local macro called example2 with a string</span>
+<span class="k">local</span> example2 :<span class="k"> di</span> <span class="s">&quot;This is an example&quot;</span>
+<span class="c1">// define a local macro with variable names</span>
+<span class="k">local</span> example3 var1 var2 var3
+<span class="c1">// call macros</span>
+<span class="k">di</span> <span class="nv">`example&#39;</span>
+<span class="k">di</span> <span class="s">&quot;</span><span class="nv">`example2&#39;</span><span class="s">&quot;</span>
+<span class="k">di</span> <span class="s">&quot;</span><span class="nv">`example3&#39;</span><span class="s">&quot;</span>
+</pre></div>
+</div>
+<p>A <code class="docutils literal notranslate"><span class="pre">global</span> <span class="pre">macro</span></code> has the same idea as a <code class="docutils literal notranslate"><span class="pre">local</span> <span class="pre">macro</span></code>. Instead, as its name shows, it will remain functional as long as the current running Stata session is not terminated. To call a global macro, use <code class="docutils literal notranslate"><span class="pre">$</span></code> sign before the macro name. To avoid potential error, <code class="docutils literal notranslate"><span class="pre">{}</span></code> can be used to wrap the macro name after <code class="docutils literal notranslate"><span class="pre">$</span></code> sign.</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span><span class="c1">// defining global macro is the same as local macro, just change from local to global</span>
+<span class="k">global</span> example = <span class="m">0</span>
+<span class="c1">// call a global macro</span>
+<span class="k">di</span> <span class="vg">${example}</span>
+</pre></div>
+</div>
+</section>
+<section id="use-import-infile-infix">
+<h2>use/import/infile/infix<a class="headerlink" href="#use-import-infile-infix" title="Permalink to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">use</span></code>, <code class="docutils literal notranslate"><span class="pre">import</span></code>, and <code class="docutils literal notranslate"><span class="pre">infile</span></code> commands are Stata commands that read in dataset files into memory for analysis.</p>
+<p><code class="docutils literal notranslate"><span class="pre">use</span></code> is specifically for <code class="docutils literal notranslate"><span class="pre">.dta</span></code> files
+<code class="docutils literal notranslate"><span class="pre">import</span></code> is for all other file types with different syntax
+<code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">delimited</span></code> - for <code class="docutils literal notranslate"><span class="pre">.csv</span></code> and <code class="docutils literal notranslate"><span class="pre">.txt</span></code>
+<code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">excel</span></code> - for <code class="docutils literal notranslate"><span class="pre">.xls</span></code> and <code class="docutils literal notranslate"><span class="pre">.xlsx</span></code>
+see more with <code class="docutils literal notranslate"><span class="pre">help</span></code> command.</p>
+<p><code class="docutils literal notranslate"><span class="pre">infile</span></code>/<code class="docutils literal notranslate"><span class="pre">infix</span></code> are specific ways to read in text data with a dictionary</p>
+<p><code class="docutils literal notranslate"><span class="pre">,</span> <span class="pre">clear</span></code> is an option that helps clear out the dataset in memory to avoid issues</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span><span class="c1">// read in .dta sets</span>
+<span class="k">use</span> <span class="s">&quot;dataset.dta&quot;</span>,<span class="k"> clear</span>
+<span class="c1">// read in .csv/.txt</span>
+import delimited <span class="s">&quot;dataset.csv&quot;</span>,<span class="k"> clear</span>
+<span class="c1">// read in text file with dictionary</span>
+<span class="k">infile</span> using dictionary, using(dataset)<span class="k"> clear</span>
+<span class="k">infix</span> var1 <span class="m">1-2</span> var2 <span class="m">3-7</span> var3 <span class="m">8-20</span> using <span class="s">&quot;dataset.raw&quot;</span>,<span class="k"> clear</span>
+</pre></div>
+</div>
+</section>
+<section id="generate">
+<h2>generate<a class="headerlink" href="#generate" title="Permalink to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">generate</span></code> is a command to create a new variable in current dataset.</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span><span class="k">clear</span>
+<span class="k">set</span> obs <span class="m">100</span>
+<span class="c1">// generate a variable called example and set all rows to 0</span>
+<span class="k">gen</span> example = <span class="m">0</span>
+</pre></div>
+</div>
+</section>
+<section id="replace">
+<h2>replace<a class="headerlink" href="#replace" title="Permalink to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">replace</span></code> is a command to change values of a specific variable for certain rows.</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span>import delimited <span class="s">&quot;</span><span class="vg">${repo}</span><span class="s">/transplants.txt&quot;</span>,<span class="k"> clear</span>
+<span class="c1">// generate a new variable called example and assign all rows 1</span>
+<span class="k">gen</span> example = <span class="m">1</span>
+<span class="c1">// change example to 0 for rows have age less than 30</span>
+<span class="k">replace</span> example = <span class="m">0</span><span class="k"> if</span> age <span class="o">&lt;</span> <span class="m">30</span>
+</pre></div>
+</div>
+</section>
+<section id="drop">
+<h2>drop<a class="headerlink" href="#drop" title="Permalink to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">drop</span></code> is a command tells Stata to drop certain observations in dataset.</p>
+<p>When using with variable names, <code class="docutils literal notranslate"><span class="pre">drop</span></code> command deletes the variable in the list of variable names.</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span>import delimited <span class="s">&quot;</span><span class="vg">${repo}</span><span class="s">/transplants.txt&quot;</span>,<span class="k"> clear</span>
+<span class="k">drop if</span> gender <span class="o">==</span> <span class="m">1</span>
+<span class="k">drop</span> age gender
+</pre></div>
+</div>
+</section>
+<section id="keep">
+<h2>keep<a class="headerlink" href="#keep" title="Permalink to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">keep</span></code> is a command tells Stata to keep only rows in dataset.</p>
+<p>When using with variable names, <code class="docutils literal notranslate"><span class="pre">keep</span></code> command deletes all variable that are not in the list of variable names.</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span>import delimited <span class="s">&quot;</span><span class="vg">${repo}</span><span class="s">/transplants.txt&quot;</span>,<span class="k"> clear</span>
+<span class="k">keep if</span> gender <span class="o">==</span> <span class="m">1</span>
+<span class="k">keep</span> age gender
+</pre></div>
+</div>
+</section>
+<section id="label">
+<h2>label<a class="headerlink" href="#label" title="Permalink to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">label</span></code> is a command to help labeling the variables or variable values.</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span><span class="k">clear</span>
+<span class="k">set</span> obs <span class="m">100</span>
+<span class="k">gen</span> example = <span class="m">0</span>
+<span class="c1">// to label a variable</span>
+<span class="k">label</span> variable example <span class="s">&quot;Example Variable&quot;</span>
+</pre></div>
+</div>
+<p>To label variable values, a label needs to be defined and then applied to the variable.</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span><span class="k">clear</span>
+<span class="k">set</span> obs <span class="m">100</span>
+<span class="k">gen</span> example = <span class="nf">round</span>(<span class="nf">runiform</span>(<span class="m">0</span>,<span class="m">1</span>))
+<span class="c1">// to label variable values</span>
+<span class="cm">/* label as below:</span>
+<span class="cm">0 - No</span>
+<span class="cm">1 - Yes</span>
+<span class="cm">*/</span>
+<span class="k">capture label drop</span> example_lab
+<span class="k">label</span> define example_lab <span class="m">0</span> <span class="s">&quot;No&quot;</span> <span class="m">1</span> <span class="s">&quot;Yes&quot;</span>
+<span class="k">label</span> values example example_lab
+</pre></div>
+</div>
+</section>
+<section id="tabulate">
+<h2>tabulate<a class="headerlink" href="#tabulate" title="Permalink to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">tabulate</span></code> is a command that quickly tallies the number of each unique values for a variable, or the number of each unique combination among values of two variables.</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span>import delimited <span class="s">&quot;</span><span class="vg">${repo}</span><span class="s">/transplants.txt&quot;</span>,<span class="k"> clear</span>
+<span class="k">tab</span> race
+<span class="k">tab</span> gender race
+</pre></div>
+</div>
+</section>
+<section id="putexcel">
+<h2>putexcel<a class="headerlink" href="#putexcel" title="Permalink to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">putexcel</span></code> is a command that writes contents from Stata into designated excel file cells.</p>
+<p>To use <code class="docutils literal notranslate"><span class="pre">putexcel</span></code>, first need to do <code class="docutils literal notranslate"><span class="pre">set</span></code> to designate file to write in. Then a specific cell can be referred using excel row-column combination (A1, A2, B1, B2, etc.).</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span>putexcel<span class="k"> set</span> example,<span class="k"> replace</span>
+putexcel A1 = <span class="s">&quot;This is an example&quot;</span>
+putexcel B2 = <span class="m">1</span>
+</pre></div>
+</div>
+</section>
+<section id="putdocx">
+<h2>putdocx<a class="headerlink" href="#putdocx" title="Permalink to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">putdocx</span></code> is a command that weites contents from Stata into desginated word documents.</p>
+<p>To use <code class="docutils literal notranslate"><span class="pre">putdocx</span></code>, the process should start with <code class="docutils literal notranslate"><span class="pre">putdocx</span> <span class="pre">begin</span></code> and end with <code class="docutils literal notranslate"><span class="pre">putdocx</span> <span class="pre">save</span></code></p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span>putdocx begin
+putdocx paragraph, style(Title)
+putdocx text (<span class="s">&quot;This Is an Example&quot;</span>)
+putdocx paragraph, style(Heading1)
+putdocx text (<span class="s">&quot;1. Heading&quot;</span>)
+putdocx<span class="k"> save</span> example,<span class="k"> replace</span>
+</pre></div>
+</div>
+</section>
+<section id="loops-for-while">
+<h2>loops - for/while<a class="headerlink" href="#loops-for-while" title="Permalink to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">loops</span></code> in Stata refers to a block, or a set of code, that was executed repeatitively until a certain condition is met. The <code class="docutils literal notranslate"><span class="pre">for</span></code> and <code class="docutils literal notranslate"><span class="pre">while</span></code> commands are different ways of defining such a condition.</p>
+<p>There are two ways of defining <code class="docutils literal notranslate"><span class="pre">for</span></code> loops in Stata.</p>
+<section id="forvalues">
+<h3>forvalues<a class="headerlink" href="#forvalues" title="Permalink to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">forvalues</span></code> is a way of defining a <code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">loop</span></code> in Stata. It will execute a set of codes based on a set of values. In default, the loop will execute from lowest value to the highest value, and everytime the set of code was executed, the value goes up for 1.</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span><span class="k">forvalues</span> i = <span class="m">1</span><span class="o">/</span><span class="m">10</span> {
+<span class="k">    noi di</span> <span class="s">&quot;i value: </span><span class="nv">`i&#39;</span><span class="s">&quot;</span>
+}
+</pre></div>
+</div>
+</section>
+<section id="foreach">
+<h3>foreach<a class="headerlink" href="#foreach" title="Permalink to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">foreach</span></code> is a way of defining a <code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">loop</span></code> in Stata. It will execute a set of codes based on a list of values (can be many things like numbers, variables, strings and etc.). In default, executing the set of codes one time will make the loop proceed to the next element in the list. The loop will finish execution once it finish the execution for the last element in the list.</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span><span class="k">foreach</span> i<span class="k"> in</span> sample1 sample2 sample3 {
+<span class="k">    noi di</span> <span class="s">&quot;This is </span><span class="nv">`i&#39;</span><span class="s">&quot;</span>
+}
+</pre></div>
+</div>
+</section>
+<section id="while">
+<h3>while<a class="headerlink" href="#while" title="Permalink to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">while</span></code> is a way of defining a <code class="docutils literal notranslate"><span class="pre">while</span> <span class="pre">loop</span></code> in Stata. It will continue executing a set of codes until the condition specified in <code class="docutils literal notranslate"><span class="pre">while</span></code> command is not statisfied anymore. In default, elements used in determining the condition for the while loop will not being automatically changed unless the code modifies it. <em><strong>This means if no modification is being done through the code in the loop, the conditions may always remain</strong></em> <code class="docutils literal notranslate"><span class="pre">True</span></code> <em><strong>thus leading to endless iterations of the loop and cause execution issues.</strong></em></p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span><span class="k">local end</span> = <span class="m">0</span>
+<span class="k">local</span> i = <span class="m">0</span>
+<span class="k">while</span> (<span class="nv">`end&#39;</span> <span class="o">==</span> <span class="m">0</span>) {
+<span class="k">    local</span> i = <span class="nv">`i&#39;</span> <span class="o">+</span> <span class="m">1</span>
+<span class="k">    noi di</span> <span class="s">&quot;This is iteration: </span><span class="nv">`i&#39;</span><span class="s">&quot;</span>
+<span class="k">    if</span> (<span class="nv">`i&#39;</span> <span class="o">==</span> <span class="m">10</span>) { <span class="c1">// this is very important!</span>
+        <span class="c1">// this means we are changing our element for determining the condition after 10 iterations</span>
+        <span class="c1">// if we miss this part, the end macro will always equal to 0</span>
+        <span class="c1">// which means the condition is always satisfied thus the loop will always continue executing</span>
+<span class="k">        local end</span> = <span class="m">1</span> 
+    }
+}
+</pre></div>
+</div>
+</section>
+</section>
+<section id="summarize">
+<h2>summarize<a class="headerlink" href="#summarize" title="Permalink to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">sum</span></code> is a command in Stata that quickly gives summary statistics for continuous variables. In default, it will show observation numbers, mean, standard deviation, min, and max of such variable. To get more information like quartiles, medians, use its <code class="docutils literal notranslate"><span class="pre">detail</span></code> option.</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span>import delimited <span class="s">&quot;</span><span class="vg">${repo}</span><span class="s">/transplants.txt&quot;</span>,<span class="k"> clear</span>
+<span class="c1">// summarize age</span>
+<span class="k">sum</span> age
+<span class="c1">// summarize age among females</span>
+<span class="k">sum</span> age<span class="k"> if</span> gender <span class="o">==</span> <span class="m">1</span>
+</pre></div>
+</div>
+</section>
+<section id="pwd">
+<h2>pwd<a class="headerlink" href="#pwd" title="Permalink to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">pwd</span></code> is a command in Stata to ask Stata to print out current working directory.</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span><span class="k">pwd</span>
+</pre></div>
+</div>
+</section>
+<section id="cd">
+<h2>cd<a class="headerlink" href="#cd" title="Permalink to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">cd</span></code> is a command changes the working directory of current running Stata.</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span><span class="k">cd</span> <span class="s">&quot;your_path_here&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="split">
+<h2>split<a class="headerlink" href="#split" title="Permalink to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">split</span></code> is a command that can help parsing one string variable into 2 string variables based on a special delimiter within the string.</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span>import delimited <span class="s">&quot;</span><span class="vg">${repo}</span><span class="s">/transplants.txt&quot;</span>,<span class="k"> clear</span>
+<span class="c1">// we can take a look at the dx variable</span>
+<span class="c1">// it is formatted as x=xxxx</span>
+<span class="c1">// this means it has a very special delimiter of =</span>
+<span class="c1">// therefore, we can split it into two variables by using this special delimiter</span>
+<span class="k">split</span> dx, p(<span class="s">&quot;=&quot;</span>)
+<span class="c1">// now we can see that there are two variables generated, one called dx1 and one called dx2</span>
+<span class="c1">// dx1 refer to all information before =</span>
+<span class="c1">// dx2 refer to all information after =</span>
+</pre></div>
+</div>
+</section>
+<section id="destring">
+<h2>destring<a class="headerlink" href="#destring" title="Permalink to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">destring</span></code> is a command that changes a string variable to numbers like int, float. <code class="docutils literal notranslate"><span class="pre">destring</span></code> can be problematic if the variable has strings containing non-numeric information.
+For new variable created, use <code class="docutils literal notranslate"><span class="pre">replace</span></code> option to make it substitute the original variable, use <code class="docutils literal notranslate"><span class="pre">gen(var_name)</span></code> option to generate a new variable to store numeric version of the original variable.</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span>import delimited <span class="s">&quot;</span><span class="vg">${repo}</span><span class="s">/transplants.txt&quot;</span>,<span class="k"> clear</span>
+<span class="k">split</span> dx, p(<span class="s">&quot;=&quot;</span>)
+
+<span class="k">destring</span> dx1,<span class="k"> replace</span>
+</pre></div>
+</div>
+</section>
+<section id="delimit">
+<h2>delimit<a class="headerlink" href="#delimit" title="Permalink to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">#delimit</span></code> is a special command which changes the symbol that Stata consider as the end of code line. In short, if we set <code class="docutils literal notranslate"><span class="pre">#delimit</span></code> to <code class="docutils literal notranslate"><span class="pre">;</span></code>, Stata will consider everything before a <code class="docutils literal notranslate"><span class="pre">;</span></code> as a whole single long code line.
+In default, <code class="docutils literal notranslate"><span class="pre">#delimit</span></code> is set to cr, which means everytime user hits the enter in do-file, it is the end of that code line unless otherwise specified.</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span>#delimit ;
+<span class="k">noi</span> 
+<span class="k">di</span> 
+<span class="k">as error</span>
+<span class="s">&quot;This is an example&quot;</span>;
+#delimit cr
+</pre></div>
+</div>
+</section>
+<section id="matrix">
+<h2>matrix<a class="headerlink" href="#matrix" title="Permalink to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">matrix</span></code> is a special way of storing information (in matrice) in Stata. <code class="docutils literal notranslate"><span class="pre">matrix</span></code> are special scalars in Stata that are defined, displayed, stored, and called in special ways.</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span><span class="k">mat</span> X = (<span class="m">1+1</span>, <span class="m">2</span><span class="o">*</span><span class="m">3</span><span class="o">/</span><span class="m">4</span> \ <span class="m">5</span><span class="o">/</span><span class="m">2</span>, <span class="m">3</span>)
+<span class="k">mat list</span> X
+<span class="c1">// to call a value in matrix</span>
+<span class="k">di</span> X[<span class="m">1</span>,<span class="m">2</span>]
+<span class="k">mat drop</span> X
+<span class="c1">// to see more</span>
+<span class="k">help mat</span>
+</pre></div>
+</div>
+</section>
+<section id="count">
+<h2>count<a class="headerlink" href="#count" title="Permalink to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">count</span></code> quickly counts the number of observations in the dataset. When using with an <code class="docutils literal notranslate"><span class="pre">if</span></code> condition, it counts the number of observations satisfy the condition.</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span>import delimited <span class="s">&quot;</span><span class="vg">${repo}</span><span class="s">/transplants.txt&quot;</span>,<span class="k"> clear</span>
+<span class="k">count</span>
+<span class="k">count if</span> gender <span class="o">==</span> <span class="m">0</span>
+<span class="k">count if</span> race <span class="o">==</span> <span class="m">1</span>
+</pre></div>
+</div>
+</section>
+<section id="preserve">
+<h2>preserve<a class="headerlink" href="#preserve" title="Permalink to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">preserve</span></code> take a snapshot of the current dataset and store it in memory. When the dataset is being changed by other codes, this snapshot will not change and may be a back-up point if the user would want to recover the dataset.</p>
+<p><code class="docutils literal notranslate"><span class="pre">preserve</span></code> itself only stores the snapshot, and will not recover or update the current dataset. <em><strong>Only 1 snapshot</strong></em> can exist simultaneously. If preserved once, no more <code class="docutils literal notranslate"><span class="pre">preserve</span></code> can be called again unless restored.</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span><span class="k">preserve</span>
+</pre></div>
+</div>
+</section>
+<section id="restore">
+<h2>restore<a class="headerlink" href="#restore" title="Permalink to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">restore</span></code> is the command tells Stata to recover the dataset based on the snapshot taken through <code class="docutils literal notranslate"><span class="pre">preserve</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">restore</span></code> can not act by itself as it does not create any snapshot. It has to be called after <code class="docutils literal notranslate"><span class="pre">preserve</span></code> to recover the dataset in memory. However, to just clear out the snapshot without influencing the real dataset, <code class="docutils literal notranslate"><span class="pre">not</span></code> option may be used.</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span><span class="c1">// these lines can be executed on one-by-one basis to best understand the command results.</span>
+import delimited <span class="s">&quot;</span><span class="vg">${repo}</span><span class="s">/transplants.txt&quot;</span>,<span class="k"> clear</span>
+<span class="k">preserve</span>
+<span class="k">di</span> <span class="s">&quot;</span><span class="nv">`c(N)&#39;</span><span class="s"> observations before modification preserved&quot;</span>
+<span class="k">clear</span>
+<span class="k">di</span> <span class="s">&quot;</span><span class="nv">`c(N)&#39;</span><span class="s"> observations after modification, dataset changed&quot;</span>
+<span class="k">restore</span>
+<span class="k">di</span> <span class="s">&quot;</span><span class="nv">`c(N)&#39;</span><span class="s"> observation after restore, dataset recovered&quot;</span>
+<span class="k">preserve</span>
+<span class="k">di</span> <span class="s">&quot;</span><span class="nv">`c(N)&#39;</span><span class="s"> observations before modification preserved&quot;</span>
+<span class="k">clear</span>
+<span class="k">di</span> <span class="s">&quot;</span><span class="nv">`c(N)&#39;</span><span class="s"> observations after modification, dataset changed&quot;</span>
+<span class="k">restore</span>, not
+<span class="k">di</span> <span class="s">&quot;</span><span class="nv">`c(N)&#39;</span><span class="s"> observation after restore, dataset not recovered if not option is used in restore&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="program">
+<h2>program<a class="headerlink" href="#program" title="Permalink to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">program</span></code> is the command tells Stata that a customized program is being defined or modified.</p>
+<p><code class="docutils literal notranslate"><span class="pre">program</span></code> has to start with <code class="docutils literal notranslate"><span class="pre">program</span> <span class="pre">define</span></code> and end with <code class="docutils literal notranslate"><span class="pre">end</span></code>. Stata cannot have two programs with the same name. To call the program that is defined, just enter the program name.
+To drop a program, use <code class="docutils literal notranslate"><span class="pre">program</span> <span class="pre">drop</span></code>. It may be a good appraoch to drop the program before defining it, which avoids a lot of naming issues.</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span><span class="k">capture program drop</span> example
+<span class="k">program</span> define example
+<span class="k">    noi di</span> <span class="s">&quot;This is an example program&quot;</span>
+<span class="k">end</span>
+example
+</pre></div>
+</div>
+</section>
+<section id="syntax">
+<h2>syntax<a class="headerlink" href="#syntax" title="Permalink to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">syntax</span></code> is a special command which has to be used within the definition of a program (i.e. between <code class="docutils literal notranslate"><span class="pre">program</span> <span class="pre">define</span></code> and <code class="docutils literal notranslate"><span class="pre">end</span></code>).</p>
+<p><code class="docutils literal notranslate"><span class="pre">syntax</span></code> regulates the mandatory and optional customized syntax and options the program can take. Each syntax or option will be store under a local macro with the same name of the syntax/option. All customized syntax/option wrapped by <code class="docutils literal notranslate"><span class="pre">[]</span></code> are optional and otherwise mandatory. Optional syntax/options need a default value, but mandatory syntax/options do not.</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span><span class="k">capture program drop</span> example
+<span class="k">program</span> define example
+
+<span class="k">    syntax</span> [in] [if], opt1(int) [opt2(real <span class="m">0.1</span>)]
+    import delimited <span class="s">&quot;</span><span class="vg">${repo}</span><span class="s">/transplants.txt&quot;</span>,<span class="k"> clear</span>
+<span class="k">    noi di</span> <span class="s">&quot;opt1=&quot;</span> <span class="nv">`opt1&#39;</span>
+<span class="k">    noi di</span> <span class="s">&quot;opt2=&quot;</span> <span class="nv">`opt2&#39;</span>
+
+<span class="k">    keep in</span> <span class="m">1</span><span class="o">/</span><span class="m">50</span>
+<span class="k">    list</span> <span class="nv">`in&#39;</span> <span class="nv">`if&#39;</span>
+
+<span class="k">end</span>
+
+example, opt1(<span class="m">3</span>) opt2(<span class="m">2.45</span>)
+example<span class="k"> in</span> <span class="m">1</span><span class="o">/</span><span class="m">10</span><span class="k"> if</span> gender <span class="o">==</span> <span class="m">0</span>, opt1(<span class="m">20</span>)
+</pre></div>
+</div>
+</section>
+<section id="tokenize">
+<h2>tokenize<a class="headerlink" href="#tokenize" title="Permalink to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">tokenize</span></code> strikes a list of elements into single elements and store them into macros based on their order in the list.</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span><span class="k">local</span> example_list a1 a2 a3 a4 a5 a6
+<span class="k">tokenize</span> <span class="nv">`example_list&#39;</span>
+<span class="k">macro list</span>
+<span class="k">forvalues</span> i = <span class="m">1</span><span class="o">/</span><span class="m">6</span> {
+<span class="k">    noi di</span> <span class="s">&quot;No.</span><span class="nv">`i&#39;</span><span class="s"> element: </span><span class="nv">``i&#39;&#39;</span><span class="s">&quot;</span>
+}
+</pre></div>
+</div>
+</section>
+<section id="postfile">
+<h2>postfile<a class="headerlink" href="#postfile" title="Permalink to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">postfile</span></code> creates a temporary dataset in memory that can be modified by the user to store information.</p>
+<p><code class="docutils literal notranslate"><span class="pre">postfile</span></code> has to have a <code class="docutils literal notranslate"><span class="pre">postfile</span> <span class="pre">close</span></code> to start creating another dataset file.</p>
+<div class="highlight-Stata notranslate"><div class="highlight"><pre><span></span><span class="k">postfile</span> your_file_name var_name1 var_name2 var_name3,<span class="k"> replace</span>
+<span class="k">post</span> your_file_name (var_name1 = <span class="m">1</span>) (var_name2 = <span class="m">2</span>) (var_name3 = <span class="m">3</span>)
+<span class="k">postfile close</span> your_file_name
+</pre></div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#display">display</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quitely">quitely</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#noisily">noisily</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cls">cls</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#if-0">//, /*, if 0 {}, *</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#if">if</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#else-else-if">else/else if</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clear">clear</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#capture-rc">capture, _rc</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#log">log</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set">set</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#local-global-macros">local/global/macros</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#use-import-infile-infix">use/import/infile/infix</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate">generate</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#replace">replace</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#drop">drop</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#keep">keep</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#label">label</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tabulate">tabulate</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#putexcel">putexcel</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#putdocx">putdocx</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loops-for-while">loops - for/while</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#forvalues">forvalues</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#foreach">foreach</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#while">while</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summarize">summarize</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pwd">pwd</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cd">cd</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#split">split</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#destring">destring</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#delimit">delimit</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix">matrix</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#count">count</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preserve">preserve</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#restore">restore</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#program">program</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#syntax">syntax</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tokenize">tokenize</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#postfile">postfile</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Abimereki Muzaale
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
