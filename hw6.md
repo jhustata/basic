@@ -95,3 +95,10 @@ Hint: your `list` command should look like this
 ```stata
 list region px_id peak_pra [insert your code here], sepby(region) noobs
 ```
+
+## Part II                                                             [.]()
+
+
+
+
+
