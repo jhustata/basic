@@ -1,19 +1,18 @@
 ﻿# Question 1 (Detailed)
 
-For quick review of solutions to HW 5 please see:
+For a quick review of solutions to HW 5, please see:
 - [Basic level](hw5sol.md)
 - [Intermediate level](hw5_sol_intermediate.md)
 - [Advanced level](hw5_sol_advanced.md)
 
-But a stepwise discussion of the solution to `Question 1`, lets systemmatically walk through these 20-steps:
+To discuss the solution to `Question 1` step by step, let's systematically walk through these 20 steps:
 
-# 1
-Let's use datasets from our class repo
+1. Let's use datasets from our class repo:
 ```stata
 global repo https://github.com/jhustata/basic/raw/main
 ```
-# 2
-Import the data 
+
+2. Import the data:
 ```stata
 use ${repo}/transplants.dta, clear
 ```
@@ -21,36 +20,30 @@ use ${repo}/transplants.dta, clear
 <Details>
    <Summary>A note on file paths</Summary>
 
-- All URLs use forward slashes `/` for remote directory paths
-- Likewise, all operating systems other than Windows use `/` for local directory paths 
-- Windows OS uses `\` for local directory filepaths
-- This only matters when a macro in your script points to a directory
-   - You datasets of interest might be in a subdirectory that you need to specificy
-   - Embrace both filepath and operating system ambiguity in the context of collaboration
+- All URLs use forward slashes `/` for remote directory paths.
+- Likewise, all operating systems other than Windows use `/` for local directory paths.
+- Windows OS uses `\` for local directory file paths.
+- This only matters when a macro in your script points to a directory.
+   - Your datasets of interest might be in a subdirectory that you need to specify.
+   - Embrace both filepath and operating system ambiguity in the context of collaboration.
 
 ```stata
 qui {
     cls 
     noi di "What is your work directory?"  ///
        _request(workdir)
-
+    cd "${workdir}"
+    capture mkdir data
+    capture mkdir output
+    capture mkdir programs
+    capture log close
     if c(os) == "Windows" { 
-        cd "${workdir}"
-        capture mkdir data
-        capture mkdir output
-        capture mkdir programs
-        capture log close
         log using "output\example2.log", replace
         noi di "You're running Windows OS"
         log close 
 		noi ls output/example2.log 
     }
     else {
-        cd "${workdir}"
-        capture mkdir data
-        capture mkdir output
-        capture mkdir programs
-        capture log close
         log using "output/example2.log", replace 
         noi di "You're running MacOS or Linux"
         log close 
@@ -554,7 +547,7 @@ Here's the table1_hw5 program
 ```stata
 capture program drop table1_hw5
 program define table1_hw5
-syntax varlist, by(varname) threshold(int 9)
+syntax varlist
 qui {
 	cls
 	ds, not(type string)
@@ -564,7 +557,7 @@ qui {
 		local varlab: var lab `v'
 	    levelsof `v', local(numlevels)
 	    if r(r) == 2 { 
-			sum `v' if `by'==0 
+			sum `v' if gender==0 
 			local percent_0: di %3.1f r(mean) 
 			sum `v' if gender==1
 			local percent_1: di %3.1f r(mean) 
@@ -695,8 +688,6 @@ end
 table1_hw5 age prev_ki dx, by(gender) threshold(9)
 
 ```
-
-
 
 # 18
 
