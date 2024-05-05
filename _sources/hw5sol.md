@@ -1,16 +1,9 @@
 ﻿# HW5 Solution
 
 There's no code to output `.xlsx`in the solution below:
-   - But please use the lab 5 code for this
+   - But please use the `intermediate` level solution for this task
       - `putexcel` section [here](https://jhustata.github.io/basic/lab5.html#putexcel)
    - Also references the [HW3 solution](https://jhustata.github.io/basic/hw3sol.html)
-   - Will get an optimal solution ASAP
-   - Never hesitate to copy & paste the solution into GPT and ask for:
-      - Help debugging
-	  - Improved efficiency
-	  - Etc.
-
-GPTs are generally terrible at Stata since its not nearly as widely used as Python & R. So be vigilant when receiving feedback. 
 
 ```stata
 qui {
