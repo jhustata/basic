@@ -1,6 +1,6 @@
 ﻿# HW5 Solution (Intermediate)
 
-The focus here is not on the exact response to the homework question. [This script](https://github.com/jhustata/basic/raw/main/table1.do) offers something more general
+Think about this "hardcoded" script by reviewing the excel file created 
 
 ```stata
 qui {
@@ -46,6 +46,7 @@ qui {
     }
 	
 }
+ls //confirm levelsof.xlsx creation
 ```
 
-[Here](table1.md) are some additional notes that break-down the process of building this script
+Otherwise, lets [delve](table1.md) into a very systematic approach to Question 1
