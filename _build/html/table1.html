@@ -414,16 +414,50 @@ document.write(`
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="vg">${repo}</span><span class="o">/</span>transplants<span class="m">.</span>dta,<span class="k"> clear</span>
 </pre></div>
 </div>
+<Details>
+   <Summary>A note on file paths</Summary>
 <ul class="simple">
-<li><p>All URLs using forward slashes <code class="docutils literal notranslate"><span class="pre">/</span></code> for remote directory paths</p></li>
-<li><p>Operating systems other than Windows also use <code class="docutils literal notranslate"><span class="pre">/</span></code> for local directory paths</p></li>
+<li><p>All URLs use forward slashes <code class="docutils literal notranslate"><span class="pre">/</span></code> for remote directory paths</p></li>
+<li><p>Likewise, all operating systems other than Windows use <code class="docutils literal notranslate"><span class="pre">/</span></code> for local directory paths</p></li>
 <li><p>Windows OS uses <code class="docutils literal notranslate"><span class="pre">\</span></code> for local directory filepaths</p></li>
-<li><p>This matters when a macro in your script only points to a directory</p>
+<li><p>This only matters when a macro in your script points to a directory</p>
 <ul>
 <li><p>You datasets of interest might be in a subdirectory that you need to specificy</p></li>
+<li><p>Embrace both filepath and operating system ambiguity in the context of collaboration</p></li>
 </ul>
 </li>
 </ul>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> {
+    cls 
+<span class="k">    noi di</span> <span class="s">&quot;What is your work directory?&quot;</span>  <span class="cs">///</span>
+       _request(workdir)
+
+<span class="k">    if</span> <span class="nf">c</span>(os) <span class="o">==</span> <span class="s">&quot;Windows&quot;</span> { 
+<span class="k">        cd</span> <span class="s">&quot;</span><span class="vg">${workdir}</span><span class="s">&quot;</span>
+<span class="k">        capture mkdir</span> data
+<span class="k">        capture mkdir</span> output
+<span class="k">        capture mkdir</span> programs
+<span class="k">        capture log close</span>
+<span class="k">        log</span> using <span class="s">&quot;output\example2.log&quot;</span>,<span class="k"> replace</span>
+<span class="k">        noi di</span> <span class="s">&quot;You&#39;re running Windows OS&quot;</span>
+<span class="k">        log close</span> 
+<span class="k">		noi ls</span> output<span class="o">/</span>example2<span class="m">.</span>log 
+    }
+<span class="k">    else</span> {
+<span class="k">        cd</span> <span class="s">&quot;</span><span class="vg">${workdir}</span><span class="s">&quot;</span>
+<span class="k">        capture mkdir</span> data
+<span class="k">        capture mkdir</span> output
+<span class="k">        capture mkdir</span> programs
+<span class="k">        capture log close</span>
+<span class="k">        log</span> using <span class="s">&quot;output/example2.log&quot;</span>,<span class="k"> replace</span> 
+<span class="k">        noi di</span> <span class="s">&quot;You&#39;re running MacOS or Linux&quot;</span>
+<span class="k">        log close</span> 
+<span class="k">		noi ls</span> output<span class="o">/</span>example2<span class="m">.</span>log 
+    }
+}
+</pre></div>
+</div>
+</Details>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="id3">
 <h1>3<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h1>
@@ -916,6 +950,95 @@ document.write(`
 <p>Here’s the table1_hw5 program</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">capture program drop</span> table1_hw5
 <span class="k">program</span> define table1_hw5
+<span class="k">syntax varlist</span>,<span class="k"> by</span>(varname) threshold(int <span class="m">9</span>)
+<span class="k">qui</span> {
+	cls
+<span class="k">	ds</span>, not(type string)
+<span class="k">	global</span> threshold <span class="m">9</span> <span class="c1">//for multicat vs. continuous</span>
+<span class="k">    foreach</span> v of<span class="k"> varlist</span> <span class="nv">`varlist&#39;</span>  { <span class="c1">//`r(varlist)&#39;</span>
+		<span class="cm">/* note where we insert this */</span>
+<span class="k">		local</span> varlab:<span class="k"> var lab</span> <span class="nv">`v&#39;</span>
+<span class="k">	    levelsof</span> <span class="nv">`v&#39;</span>,<span class="k"> local</span>(numlevels)
+<span class="k">	    if</span> <span class="nf">r</span>(r) <span class="o">==</span> <span class="m">2</span> { 
+<span class="k">			sum</span> <span class="nv">`v&#39;</span><span class="k"> if</span> <span class="nv">`by&#39;</span><span class="o">==</span><span class="m">0</span> 
+<span class="k">			local</span> percent_0:<span class="k"> di</span> <span class="nx">%3.1f</span> <span class="nf">r</span>(mean) 
+<span class="k">			sum</span> <span class="nv">`v&#39;</span><span class="k"> if</span> gender<span class="o">==</span><span class="m">1</span>
+<span class="k">			local</span> percent_1:<span class="k"> di</span> <span class="nx">%3.1f</span> <span class="nf">r</span>(mean) 
+<span class="k">			tab</span> 
+<span class="k">			noi di</span> _col(<span class="m">1</span>) <span class="s">&quot;</span><span class="nv">`varlab&#39;</span><span class="s">&quot;</span> _col(<span class="m">50</span>) <span class="s">&quot;</span><span class="nv">`percent_0&#39;</span><span class="s">&quot;</span> _col(<span class="m">70</span>) <span class="s">&quot;</span><span class="nv">`percent_1&#39;</span><span class="s">&quot;</span>
+	    }
+<span class="k">	    else if</span> <span class="nf">inrange</span>(<span class="nv">`r(r)&#39;</span>, <span class="m">3</span>, <span class="vg">$threshold</span>) {  
+<span class="k">			noi di</span> _col(<span class="m">1</span>) <span class="s">&quot;</span><span class="nv">`varlab&#39;</span><span class="s">, %&quot;</span> <span class="c1">//multicat variable name</span>
+<span class="k">			foreach l</span> of<span class="k"> numlist</span> <span class="nv">`numlevels&#39;</span> {
+				<span class="cm">/* two step process for multicat labels</span>
+<span class="cm">				   1. value label, e.g. 0, 1, 2</span>
+<span class="cm">				   2. category label , e.g. white, black, Hispanic</span>
+<span class="cm">				*/</span>
+<span class="k">				local</span> vallab: value<span class="k"> label</span> <span class="nv">`v&#39;</span>
+<span class="k">				local</span> catlab:<span class="k"> lab</span> <span class="nv">`vallab&#39;</span> <span class="nv">`l&#39;</span>
+<span class="k">				count if</span> <span class="o">!</span><span class="nf">missing</span>(<span class="nv">`v&#39;</span>) <span class="o">&amp;</span> gender<span class="o">==</span><span class="m">0</span>
+				<span class="cm">/* manually calculated % for each level:</span>
+<span class="cm">				   1. denominator first</span>
+<span class="cm">				   2. numerator next</span>
+<span class="cm">				   3. and the fraction as perfect, formatted</span>
+<span class="cm">				*/</span>
+<span class="k">				local</span> den_0 = <span class="nf">r</span>(N)
+<span class="k">				count if</span> <span class="nv">`v&#39;</span> <span class="o">==</span> <span class="nv">`l&#39;</span> <span class="o">&amp;</span> gender<span class="o">==</span><span class="m">0</span>
+<span class="k">				local</span> num_0 = <span class="nf">r</span>(N)
+<span class="k">				local</span> percent_0:<span class="k"> di</span> <span class="nx">%2.0f</span> <span class="nv">`num_0&#39;</span><span class="o">*</span><span class="m">100</span><span class="o">/</span><span class="nv">`den_0&#39;</span>
+<span class="k">				count if</span> <span class="o">!</span><span class="nf">missing</span>(<span class="nv">`v&#39;</span>) <span class="o">&amp;</span> gender<span class="o">==</span><span class="m">1</span>
+<span class="k">                local</span> den_1 = <span class="nf">r</span>(N)
+<span class="k">				count if</span> <span class="nv">`v&#39;</span> <span class="o">==</span> <span class="nv">`l&#39;</span> <span class="o">&amp;</span> gender<span class="o">==</span><span class="m">1</span>
+<span class="k">				local</span> num_1 = <span class="nf">r</span>(N)
+<span class="k">				local</span> percent_1:<span class="k"> di</span> <span class="nx">%2.0f</span> <span class="nv">`num_1&#39;</span><span class="o">*</span><span class="m">100</span><span class="o">/</span><span class="nv">`den_1&#39;</span>
+<span class="k">				noi di</span> _col(<span class="m">1</span>) <span class="s">&quot;   </span><span class="nv">`catlab&#39;</span><span class="s">&quot;</span> _col(<span class="m">50</span>) <span class="s">&quot;</span><span class="nv">`percent_0&#39;</span><span class="s">&quot;</span> _col(<span class="m">70</span>) <span class="s">&quot;</span><span class="nv">`percent_1&#39;</span><span class="s">&quot;</span> <span class="c1">//levelsof indentation</span>
+			}	
+	    }
+<span class="k">	    else</span> {  
+<span class="k">			sum</span> <span class="nv">`v&#39;</span><span class="k"> if</span> gender<span class="o">==</span><span class="m">0</span>, detail 
+<span class="k">			local</span> m_iqr_0:<span class="k"> di</span> <span class="nx">%2.1f</span> <span class="nf">r</span>(p50) <span class="s">&quot;[&quot;</span> <span class="nx">%2.1f</span> <span class="nf">r</span>(p25) <span class="s">&quot;-&quot;</span> <span class="nx">%2.1f</span> <span class="nf">r</span>(p75) <span class="s">&quot;]&quot;</span>
+<span class="k">			sum</span> <span class="nv">`v&#39;</span><span class="k"> if</span> gender<span class="o">==</span><span class="m">1</span>, detail 
+<span class="k">			local</span> m_iqr_1:<span class="k"> di</span> <span class="nx">%2.1f</span> <span class="nf">r</span>(p50) <span class="s">&quot;[&quot;</span> <span class="nx">%2.1f</span> <span class="nf">r</span>(p25) <span class="s">&quot;-&quot;</span> <span class="nx">%2.1f</span> <span class="nf">r</span>(p75) <span class="s">&quot;]&quot;</span>
+<span class="k">			noi di</span> _col(<span class="m">1</span>) <span class="s">&quot;</span><span class="nv">`varlab&#39;</span><span class="s">&quot;</span> _col(<span class="m">50</span>) <span class="s">&quot;</span><span class="nv">`m_iqr_0&#39;</span><span class="s">&quot;</span> _col(<span class="m">70</span>) <span class="s">&quot;</span><span class="nv">`m_iqr_1&#39;</span><span class="s">&quot;</span>
+	    }
+		
+    }
+	
+}
+<span class="k">end</span> 
+table1_hw5 age prev dx
+</pre></div>
+</div>
+<p>key points:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">syntax</span> <span class="pre">varlist</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">foreach</span> <span class="pre">v</span> <span class="pre">of</span> <span class="pre">varlist</span></code></p></li>
+</ul>
+<p>How would you further adapt this program to:</p>
+<ul class="simple">
+<li><p>Ask the user what specific variable should be used to stratify?</p>
+<ul>
+<li><p>For now it stratifies by gender</p></li>
+<li><p>Hint: <code class="docutils literal notranslate"><span class="pre">syntax</span> <span class="pre">varlist,</span> <span class="pre">by(varname)</span></code></p></li>
+<li><p>Replace <code class="docutils literal notranslate"><span class="pre">gender</span></code> with the local macro <code class="docutils literal notranslate"><span class="pre">by</span></code> throughout the program; that simple!</p></li>
+</ul>
+</li>
+</ul>
+<p>And how would you adapt the program to:</p>
+<ul>
+<li><p>Allow the user to choose the arbitrary “threshold” to distinguish continuous from multicategory variables?</p>
+<ul class="simple">
+<li><p>It’s been set to “9” throughout the examples</p></li>
+<li><p>Hint: <code class="docutils literal notranslate"><span class="pre">syntax</span> <span class="pre">varlist,</span> <span class="pre">by(name)</span> <span class="pre">threshold(int</span> <span class="pre">9)</span></code></p></li>
+<li><p>Replace <code class="docutils literal notranslate"><span class="pre">global</span> <span class="pre">threshold</span> <span class="pre">9</span></code> with:</p></li>
+</ul>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">global</span> threshold <span class="nv">`threshold&#39;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">capture program drop</span> table1_hw5
+<span class="k">program</span> define table1_hw5
 <span class="k">syntax varlist</span>,<span class="k"> by</span>(varname) threshold(int)
 <span class="k">qui</span> {
 	cls
@@ -975,123 +1098,23 @@ document.write(`
 table1_hw5 age prev_ki dx,<span class="k"> by</span>(gender) threshold(<span class="m">9</span>)
 </pre></div>
 </div>
-<p>key points:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">syntax</span> <span class="pre">varlist</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">foreach</span> <span class="pre">v</span> <span class="pre">of</span> <span class="pre">varlist</span></code></p></li>
-</ul>
-<p>How would you further adapt this program to:</p>
-<ul class="simple">
-<li><p>Ask the user what specific variable should be used to stratify?</p>
-<ul>
-<li><p>For now it stratifies by gender</p></li>
-<li><p>Hint: <code class="docutils literal notranslate"><span class="pre">syntax</span> <span class="pre">varlist,</span> <span class="pre">by(varname)</span></code></p></li>
-<li><p>Replace <code class="docutils literal notranslate"><span class="pre">gender</span></code> with the local macro <code class="docutils literal notranslate"><span class="pre">by</span></code> throughout the program; that simple!</p></li>
-</ul>
-</li>
-</ul>
-<p>And how would you adapt the program to:</p>
-<ul>
-<li><p>Allow the user to choose the arbitrary “threshold” to distinguish continuous from multicategory variables?</p>
-<ul class="simple">
-<li><p>It’s been set to “9” throughout the examples</p></li>
-<li><p>Hint: <code class="docutils literal notranslate"><span class="pre">syntax</span> <span class="pre">varlist,</span> <span class="pre">by(name)</span> <span class="pre">threshold(int</span> <span class="pre">9)</span></code></p></li>
-<li><p>Replace <code class="docutils literal notranslate"><span class="pre">global</span> <span class="pre">threshold</span> <span class="pre">9</span></code> with:</p></li>
-</ul>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">global</span> threshold <span class="nv">`threshold&#39;</span>
-</pre></div>
-</div>
-</li>
-</ul>
-<p>And how would you further adapt it to include a third column with a p-value answering the hypothesis: the statistic in column 1 is significantly different from the one in column 2?</p>
-<p>You may choose the statistic you wish to deploy. A common one is <span class="math notranslate nohighlight">\(\chi^2\)</span>:</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">capture program drop</span> table1_flexible
-<span class="k">program</span> define table1_flexible
-<span class="k">    syntax varlist</span>
-    <span class="c1">//copy &amp; paste the above here &amp; ask ChatGPT to help indent the code</span>
-	<span class="c1">//or do it yourself</span>
-<span class="k">end</span> 
-</pre></div>
-</div>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">capture program drop</span> table1_hw5
-<span class="k">program</span> define table1_hw5
-<span class="k">syntax varlist</span>,<span class="k"> by</span>(varname) threshold(int <span class="m">9</span>)
-<span class="k">qui</span> {
-	cls
-<span class="k">	ds</span>, not(type string)
-<span class="k">	global</span> threshold <span class="m">9</span> <span class="c1">//for multicat vs. continuous</span>
-<span class="k">    foreach</span> v of<span class="k"> varlist</span> <span class="nv">`varlist&#39;</span>  { <span class="c1">//`r(varlist)&#39;</span>
-		<span class="cm">/* note where we insert this */</span>
-<span class="k">		local</span> varlab:<span class="k"> var lab</span> <span class="nv">`v&#39;</span>
-<span class="k">	    levelsof</span> <span class="nv">`v&#39;</span>,<span class="k"> local</span>(numlevels)
-<span class="k">	    if</span> <span class="nf">r</span>(r) <span class="o">==</span> <span class="m">2</span> { 
-<span class="k">			sum</span> <span class="nv">`v&#39;</span><span class="k"> if</span> <span class="nv">`by&#39;</span><span class="o">==</span><span class="m">0</span> 
-<span class="k">			local</span> percent_0:<span class="k"> di</span> <span class="nx">%3.1f</span> <span class="nf">r</span>(mean) 
-<span class="k">			sum</span> <span class="nv">`v&#39;</span><span class="k"> if</span> gender<span class="o">==</span><span class="m">1</span>
-<span class="k">			local</span> percent_1:<span class="k"> di</span> <span class="nx">%3.1f</span> <span class="nf">r</span>(mean) 
-<span class="k">			tab</span> 
-<span class="k">			noi di</span> _col(<span class="m">1</span>) <span class="s">&quot;</span><span class="nv">`varlab&#39;</span><span class="s">&quot;</span> _col(<span class="m">50</span>) <span class="s">&quot;</span><span class="nv">`percent_0&#39;</span><span class="s">&quot;</span> _col(<span class="m">70</span>) <span class="s">&quot;</span><span class="nv">`percent_1&#39;</span><span class="s">&quot;</span>
-	    }
-<span class="k">	    else if</span> <span class="nf">inrange</span>(<span class="nv">`r(r)&#39;</span>, <span class="m">3</span>, <span class="vg">$threshold</span>) {  
-<span class="k">			noi di</span> _col(<span class="m">1</span>) <span class="s">&quot;</span><span class="nv">`varlab&#39;</span><span class="s">, %&quot;</span> <span class="c1">//multicat variable name</span>
-<span class="k">			foreach l</span> of<span class="k"> numlist</span> <span class="nv">`numlevels&#39;</span> {
-				<span class="cm">/* two step process for multicat labels</span>
-<span class="cm">				   1. value label, e.g. 0, 1, 2</span>
-<span class="cm">				   2. category label , e.g. white, black, Hispanic</span>
-<span class="cm">				*/</span>
-<span class="k">				local</span> vallab: value<span class="k"> label</span> <span class="nv">`v&#39;</span>
-<span class="k">				local</span> catlab:<span class="k"> lab</span> <span class="nv">`vallab&#39;</span> <span class="nv">`l&#39;</span>
-<span class="k">				count if</span> <span class="o">!</span><span class="nf">missing</span>(<span class="nv">`v&#39;</span>) <span class="o">&amp;</span> gender<span class="o">==</span><span class="m">0</span>
-				<span class="cm">/* manually calculated % for each level:</span>
-<span class="cm">				   1. denominator first</span>
-<span class="cm">				   2. numerator next</span>
-<span class="cm">				   3. and the fraction as perfect, formatted</span>
-<span class="cm">				*/</span>
-<span class="k">				local</span> den_0 = <span class="nf">r</span>(N)
-<span class="k">				count if</span> <span class="nv">`v&#39;</span> <span class="o">==</span> <span class="nv">`l&#39;</span> <span class="o">&amp;</span> gender<span class="o">==</span><span class="m">0</span>
-<span class="k">				local</span> num_0 = <span class="nf">r</span>(N)
-<span class="k">				local</span> percent_0:<span class="k"> di</span> <span class="nx">%2.0f</span> <span class="nv">`num_0&#39;</span><span class="o">*</span><span class="m">100</span><span class="o">/</span><span class="nv">`den_0&#39;</span>
-<span class="k">				count if</span> <span class="o">!</span><span class="nf">missing</span>(<span class="nv">`v&#39;</span>) <span class="o">&amp;</span> gender<span class="o">==</span><span class="m">1</span>
-<span class="k">                local</span> den_1 = <span class="nf">r</span>(N)
-<span class="k">				count if</span> <span class="nv">`v&#39;</span> <span class="o">==</span> <span class="nv">`l&#39;</span> <span class="o">&amp;</span> gender<span class="o">==</span><span class="m">1</span>
-<span class="k">				local</span> num_1 = <span class="nf">r</span>(N)
-<span class="k">				local</span> percent_1:<span class="k"> di</span> <span class="nx">%2.0f</span> <span class="nv">`num_1&#39;</span><span class="o">*</span><span class="m">100</span><span class="o">/</span><span class="nv">`den_1&#39;</span>
-<span class="k">				noi di</span> _col(<span class="m">1</span>) <span class="s">&quot;   </span><span class="nv">`catlab&#39;</span><span class="s">&quot;</span> _col(<span class="m">50</span>) <span class="s">&quot;</span><span class="nv">`percent_0&#39;</span><span class="s">&quot;</span> _col(<span class="m">70</span>) <span class="s">&quot;</span><span class="nv">`percent_1&#39;</span><span class="s">&quot;</span> <span class="c1">//levelsof indentation</span>
-			}	
-	    }
-<span class="k">	    else</span> {  
-<span class="k">			sum</span> <span class="nv">`v&#39;</span><span class="k"> if</span> gender<span class="o">==</span><span class="m">0</span>, detail 
-<span class="k">			local</span> m_iqr_0:<span class="k"> di</span> <span class="nx">%2.1f</span> <span class="nf">r</span>(p50) <span class="s">&quot;[&quot;</span> <span class="nx">%2.1f</span> <span class="nf">r</span>(p25) <span class="s">&quot;-&quot;</span> <span class="nx">%2.1f</span> <span class="nf">r</span>(p75) <span class="s">&quot;]&quot;</span>
-<span class="k">			sum</span> <span class="nv">`v&#39;</span><span class="k"> if</span> gender<span class="o">==</span><span class="m">1</span>, detail 
-<span class="k">			local</span> m_iqr_1:<span class="k"> di</span> <span class="nx">%2.1f</span> <span class="nf">r</span>(p50) <span class="s">&quot;[&quot;</span> <span class="nx">%2.1f</span> <span class="nf">r</span>(p25) <span class="s">&quot;-&quot;</span> <span class="nx">%2.1f</span> <span class="nf">r</span>(p75) <span class="s">&quot;]&quot;</span>
-<span class="k">			noi di</span> _col(<span class="m">1</span>) <span class="s">&quot;</span><span class="nv">`varlab&#39;</span><span class="s">&quot;</span> _col(<span class="m">50</span>) <span class="s">&quot;</span><span class="nv">`m_iqr_0&#39;</span><span class="s">&quot;</span> _col(<span class="m">70</span>) <span class="s">&quot;</span><span class="nv">`m_iqr_1&#39;</span><span class="s">&quot;</span>
-	    }
-		
-    }
-	
-}
-<span class="k">end</span> 
-table1_hw5 age prev dx
-
-We only [cursorily mentioned](https:<span class="o">//</span>jhustata<span class="m">.</span>github<span class="m">.</span>io<span class="o">/</span>basic<span class="o">/</span>chapter2<span class="m">.</span>html#combining<span class="o">-</span>everything) p<span class="o">-</span>values<span class="k"> in</span> week <span class="m">2</span>:
-
-<span class="nv">```stata</span>
-
-<span class="nv">    if r(p) &lt; 0.01 {</span>
-<span class="nv">       local p: di &quot;p &lt; 0.01&quot;</span>
-<span class="nv">    }</span>
-<span class="nv">    else if inrange(r(p),0.01,0.05) {</span>
-<span class="nv">       local p: di %3.2f r(p)</span>
-<span class="nv">    }</span>
-<span class="nv">    else {</span>
-<span class="nv">       local p: di %2.1f r(p)</span>
-<span class="nv">    }</span>
-<span class="nv">    noi di &quot;p = `p&#39;&quot;</span>
-</pre></div>
-</div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="id17">
 <h1>18<a class="headerlink" href="#id17" title="Permalink to this heading">#</a></h1>
+<p>We only <a class="reference external" href="https://jhustata.github.io/basic/chapter2.html#combining-everything">cursorily mentioned</a> p-values in week 2:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">    if</span> <span class="nf">r</span>(p) <span class="o">&lt;</span> <span class="m">0.01</span> {
+<span class="k">       local</span> p:<span class="k"> di</span> <span class="s">&quot;p &lt; 0.01&quot;</span>
+    }
+<span class="k">    else if</span> <span class="nf">inrange</span>(<span class="nf">r</span>(p),<span class="m">0.01</span>,<span class="m">0.05</span>) {
+<span class="k">       local</span> p:<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(p)
+    }
+<span class="k">    else</span> {
+<span class="k">       local</span> p:<span class="k"> di</span> <span class="nx">%2.1f</span> <span class="nf">r</span>(p)
+    }
+<span class="k">    noi di</span> <span class="s">&quot;p = </span><span class="nv">`p&#39;</span><span class="s">&quot;</span>
+</pre></div>
+</div>
+<p>How would you further adapt it to include a third column with a p-value answering the hypothesis: the statistic in column 1 is statistically significantly different from the one in column 2? You may choose the statistic you wish to deploy. A common one is <span class="math notranslate nohighlight">\(\chi^2\)</span> for the <code class="docutils literal notranslate"><span class="pre">proportion</span></code> statistic, <code class="docutils literal notranslate"><span class="pre">student-t</span></code> for continuous variables, and <code class="docutils literal notranslate"><span class="pre">z</span></code> for logisic regression p-values</p>
 <p>Let’s include a p-value column</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">capture program drop</span> table1_hw5
 <span class="k">program</span> define table1_hw5
@@ -1188,7 +1211,7 @@ table1_hw5 age prev_ki dx,<span class="k"> by</span>(gender) threshold(<span cla
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="id18">
 <h1>19<a class="headerlink" href="#id18" title="Permalink to this heading">#</a></h1>
-<p>We can now export this tidy output to excel</p>
+<p>We can now export this tidy output to excel. <strong>Hint</strong>: align <code class="docutils literal notranslate"><span class="pre">_col(1)</span></code> with <code class="docutils literal notranslate"><span class="pre">putexcel</span> <span class="pre">Arow</span></code>, <code class="docutils literal notranslate"><span class="pre">_col(50)</span></code> with <code class="docutils literal notranslate"><span class="pre">Brow</span></code>, etc. The output statements to your results window, <code class="docutils literal notranslate"><span class="pre">.log</span></code> file, and <code class="docutils literal notranslate"><span class="pre">.xlsx</span></code> should be adjacent. Makes the <code class="docutils literal notranslate"><span class="pre">.log</span></code> output -&gt; <code class="docutils literal notranslate"><span class="pre">.xlsx</span></code> output extension straightfoward</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">capture program drop</span> table1_hw5
 <span class="k">program</span> define table1_hw5
 <span class="k">syntax varlist</span>,<span class="k"> by</span>(varname) threshold(int)
@@ -1226,6 +1249,7 @@ table1_hw5 age prev_ki dx,<span class="k"> by</span>(gender) threshold(<span cla
 <span class="k">            else</span> {
 <span class="k">                local</span> p:<span class="k"> di</span> <span class="nx">%2.1f</span> <span class="nf">r</span>(p)
             }
+			<span class="cm">/* -- output statments for results window, logfile, and excel file -- */</span>
 <span class="k">			noi di</span> _col(<span class="m">1</span>) <span class="s">&quot;</span><span class="nv">`varlab&#39;</span><span class="s">&quot;</span> _col(<span class="m">50</span>) <span class="s">&quot;</span><span class="nv">`percent_0&#39;</span><span class="s">&quot;</span> _col(<span class="m">70</span>) <span class="s">&quot;</span><span class="nv">`percent_1&#39;</span><span class="s">&quot;</span> _col(<span class="m">90</span>) <span class="s">&quot;</span><span class="nv">`p&#39;</span><span class="s">&quot;</span>
 			putexcel A<span class="nv">`row&#39;</span> = <span class="s">&quot;</span><span class="nv">`varlab&#39;</span><span class="s">&quot;</span> B<span class="nv">`row&#39;</span> = <span class="s">&quot;</span><span class="nv">`percent_0&#39;</span><span class="s">&quot;</span> C<span class="nv">`row&#39;</span> = <span class="s">&quot;</span><span class="nv">`percent_1&#39;</span><span class="s">&quot;</span> D<span class="nv">`row&#39;</span> =  <span class="s">&quot;</span><span class="nv">`p&#39;</span><span class="s">&quot;</span>
 <span class="k">			local</span> row = <span class="nv">`row&#39;</span> <span class="o">+</span> <span class="m">1</span>
@@ -1242,6 +1266,7 @@ table1_hw5 age prev_ki dx,<span class="k"> by</span>(gender) threshold(<span cla
 <span class="k">            else</span> {
 <span class="k">                local</span> p:<span class="k"> di</span> <span class="nx">%2.1f</span> <span class="nf">r</span>(p)
             }
+			<span class="cm">/* -- output statments for results window, logfile, and excel file -- */</span>
 <span class="k">			noi di</span> _col(<span class="m">1</span>) <span class="s">&quot;</span><span class="nv">`varlab&#39;</span><span class="s">, %&quot;</span> _col(<span class="m">90</span>) <span class="s">&quot;</span><span class="nv">`p&#39;</span><span class="s">&quot;</span> <span class="c1">//multicat variable name</span>
 			putexcel A<span class="nv">`row&#39;</span> = <span class="s">&quot;</span><span class="nv">`varlab&#39;</span><span class="s">, %&quot;</span> B<span class="nv">`row&#39;</span> = <span class="s">&quot;&quot;</span> C<span class="nv">`row&#39;</span> = <span class="s">&quot;&quot;</span> D<span class="nv">`row&#39;</span> =  <span class="s">&quot;</span><span class="nv">`p&#39;</span><span class="s">&quot;</span>
 <span class="k">			local</span> row = <span class="nv">`row&#39;</span> <span class="o">+</span> <span class="m">1</span>
@@ -1268,6 +1293,7 @@ table1_hw5 age prev_ki dx,<span class="k"> by</span>(gender) threshold(<span cla
 <span class="k">				count if</span> <span class="nv">`v&#39;</span> <span class="o">==</span> <span class="nv">`l&#39;</span> <span class="o">&amp;</span> <span class="nv">`by&#39;</span><span class="o">==</span><span class="m">1</span>
 <span class="k">				local</span> num_1 = <span class="nf">r</span>(N)
 <span class="k">				local</span> percent_1:<span class="k"> di</span> <span class="nx">%2.0f</span> <span class="nv">`num_1&#39;</span><span class="o">*</span><span class="m">100</span><span class="o">/</span><span class="nv">`den_1&#39;</span>	
+				<span class="cm">/* -- output statments for results window, logfile, and excel file -- */</span>
 <span class="k">				noi di</span> _col(<span class="m">1</span>) <span class="s">&quot;   </span><span class="nv">`catlab&#39;</span><span class="s">&quot;</span> _col(<span class="m">50</span>) <span class="s">&quot;</span><span class="nv">`percent_0&#39;</span><span class="s">&quot;</span> _col(<span class="m">70</span>) <span class="s">&quot;</span><span class="nv">`percent_1&#39;</span><span class="s">&quot;</span>
 				putexcel A<span class="nv">`row&#39;</span> = <span class="s">&quot;    </span><span class="nv">`catlab&#39;</span><span class="s">&quot;</span> B<span class="nv">`row&#39;</span> = <span class="s">&quot;</span><span class="nv">`percent_0&#39;</span><span class="s">&quot;</span> C<span class="nv">`row&#39;</span> = <span class="s">&quot;</span><span class="nv">`percent_1&#39;</span><span class="s">&quot;</span>  
 <span class="k">				local</span> row = <span class="nv">`row&#39;</span> <span class="o">+</span> <span class="m">1</span>
@@ -1289,6 +1315,7 @@ table1_hw5 age prev_ki dx,<span class="k"> by</span>(gender) threshold(<span cla
 <span class="k">            else</span> {
 <span class="k">                local</span> p:<span class="k"> di</span> <span class="nx">%2.1f</span> <span class="nf">r</span>(p)
             }
+			<span class="cm">/* -- output statments for results window, logfile, and excel file -- */</span>
 <span class="k">			noi di</span> _col(<span class="m">1</span>) <span class="s">&quot;</span><span class="nv">`varlab&#39;</span><span class="s">&quot;</span> _col(<span class="m">50</span>) <span class="s">&quot;</span><span class="nv">`m_iqr_0&#39;</span><span class="s">&quot;</span> _col(<span class="m">70</span>) <span class="s">&quot;</span><span class="nv">`m_iqr_1&#39;</span><span class="s">&quot;</span> _col(<span class="m">90</span>) <span class="s">&quot;</span><span class="nv">`p&#39;</span><span class="s">&quot;</span>
 			putexcel A<span class="nv">`row&#39;</span> = <span class="s">&quot;</span><span class="nv">`varlab&#39;</span><span class="s">&quot;</span> B<span class="nv">`row&#39;</span> = <span class="s">&quot;</span><span class="nv">`m_iqr_0&#39;</span><span class="s">&quot;</span> C<span class="nv">`row&#39;</span> = <span class="s">&quot;</span><span class="nv">`m_iqr_1&#39;</span><span class="s">&quot;</span> D<span class="nv">`row&#39;</span> =  <span class="s">&quot;</span><span class="nv">`p&#39;</span><span class="s">&quot;</span>
 <span class="k">			local</span> row = <span class="nv">`row&#39;</span> <span class="o">+</span> <span class="m">1</span>
@@ -1305,7 +1332,7 @@ table1_hw5 age prev_ki dx,<span class="k"> by</span>(gender) threshold(<span cla
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="id19">
 <h1>20<a class="headerlink" href="#id19" title="Permalink to this heading">#</a></h1>
-<p>We’re done! Of course you may improve the labels of your variable to achieve the Table 1 output of your interest. You’ll need to label the variables prior to running this program</p>
+<p>We’re done! Of course you may improve the labels of your variable to achieve the Table 1 output of interest. You’ll need to label the variables prior to running this program. As you consider generalizing to more than two strata, you’ll need to incorporate more efficiency into your script.</p>
 </section>
 
     <script type="text/x-thebe-config">

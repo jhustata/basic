@@ -18,11 +18,49 @@ Import the data
 use ${repo}/transplants.dta, clear
 ```
 
-- All URLs using forward slashes `/` for remote directory paths
-- Operating systems other than Windows also use `/` for local directory paths 
+<Details>
+   <Summary>A note on file paths</Summary>
+
+- All URLs use forward slashes `/` for remote directory paths
+- Likewise, all operating systems other than Windows use `/` for local directory paths 
 - Windows OS uses `\` for local directory filepaths
-- This matters when a macro in your script only points to a directory
+- This only matters when a macro in your script points to a directory
    - You datasets of interest might be in a subdirectory that you need to specificy
+   - Embrace both filepath and operating system ambiguity in the context of collaboration
+
+```stata
+qui {
+    cls 
+    noi di "What is your work directory?"  ///
+       _request(workdir)
+
+    if c(os) == "Windows" { 
+        cd "${workdir}"
+        capture mkdir data
+        capture mkdir output
+        capture mkdir programs
+        capture log close
+        log using "output\example2.log", replace
+        noi di "You're running Windows OS"
+        log close 
+		noi ls output/example2.log 
+    }
+    else {
+        cd "${workdir}"
+        capture mkdir data
+        capture mkdir output
+        capture mkdir programs
+        capture log close
+        log using "output/example2.log", replace 
+        noi di "You're running MacOS or Linux"
+        log close 
+		noi ls output/example2.log 
+    }
+}
+
+```
+
+</Details>
 
 # 3
 Exclude strings for now, to keep it simple
@@ -514,6 +552,87 @@ end
 Here's the table1_hw5 program
 
 ```stata
+capture program drop table1_hw5
+program define table1_hw5
+syntax varlist, by(varname) threshold(int 9)
+qui {
+	cls
+	ds, not(type string)
+	global threshold 9 //for multicat vs. continuous
+    foreach v of varlist `varlist'  { //`r(varlist)'
+		/* note where we insert this */
+		local varlab: var lab `v'
+	    levelsof `v', local(numlevels)
+	    if r(r) == 2 { 
+			sum `v' if `by'==0 
+			local percent_0: di %3.1f r(mean) 
+			sum `v' if gender==1
+			local percent_1: di %3.1f r(mean) 
+			tab 
+			noi di _col(1) "`varlab'" _col(50) "`percent_0'" _col(70) "`percent_1'"
+	    }
+	    else if inrange(`r(r)', 3, $threshold) {  
+			noi di _col(1) "`varlab', %" //multicat variable name
+			foreach l of numlist `numlevels' {
+				/* two step process for multicat labels
+				   1. value label, e.g. 0, 1, 2
+				   2. category label , e.g. white, black, Hispanic
+				*/
+				local vallab: value label `v'
+				local catlab: lab `vallab' `l'
+				count if !missing(`v') & gender==0
+				/* manually calculated % for each level:
+				   1. denominator first
+				   2. numerator next
+				   3. and the fraction as perfect, formatted
+				*/
+				local den_0 = r(N)
+				count if `v' == `l' & gender==0
+				local num_0 = r(N)
+				local percent_0: di %2.0f `num_0'*100/`den_0'
+				count if !missing(`v') & gender==1
+                local den_1 = r(N)
+				count if `v' == `l' & gender==1
+				local num_1 = r(N)
+				local percent_1: di %2.0f `num_1'*100/`den_1'
+				noi di _col(1) "   `catlab'" _col(50) "`percent_0'" _col(70) "`percent_1'" //levelsof indentation
+			}	
+	    }
+	    else {  
+			sum `v' if gender==0, detail 
+			local m_iqr_0: di %2.1f r(p50) "[" %2.1f r(p25) "-" %2.1f r(p75) "]"
+			sum `v' if gender==1, detail 
+			local m_iqr_1: di %2.1f r(p50) "[" %2.1f r(p25) "-" %2.1f r(p75) "]"
+			noi di _col(1) "`varlab'" _col(50) "`m_iqr_0'" _col(70) "`m_iqr_1'"
+	    }
+		
+    }
+	
+}
+end 
+table1_hw5 age prev dx
+```
+
+key points:
+- `syntax varlist`
+- `foreach v of varlist`
+
+How would you further adapt this program to:
+- Ask the user what specific variable should be used to stratify?
+   - For now it stratifies by gender
+   - Hint: `syntax varlist, by(varname)`
+   - Replace `gender` with the local macro `by` throughout the program; that simple!
+
+And how would you adapt the program to:
+- Allow the user to choose the arbitrary "threshold" to distinguish continuous from multicategory variables?
+   - It's been set to "9" throughout the examples
+   - Hint: `syntax varlist, by(name) threshold(int 9)`
+   - Replace `global threshold 9` with:
+   ```stata
+   global threshold `threshold'
+   ```
+
+```stata
 
 capture program drop table1_hw5
 program define table1_hw5
@@ -577,100 +696,9 @@ table1_hw5 age prev_ki dx, by(gender) threshold(9)
 
 ```
 
-key points:
-- `syntax varlist`
-- `foreach v of varlist`
-
-How would you further adapt this program to:
-- Ask the user what specific variable should be used to stratify?
-   - For now it stratifies by gender
-   - Hint: `syntax varlist, by(varname)`
-   - Replace `gender` with the local macro `by` throughout the program; that simple!
-
-And how would you adapt the program to:
-- Allow the user to choose the arbitrary "threshold" to distinguish continuous from multicategory variables?
-   - It's been set to "9" throughout the examples
-   - Hint: `syntax varlist, by(name) threshold(int 9)`
-   - Replace `global threshold 9` with:
-   ```stata
-   global threshold `threshold'
-   ```
-
-And how would you further adapt it to include a third column with a p-value answering the hypothesis: the statistic in column 1 is significantly different from the one in column 2?
-
-You may choose the statistic you wish to deploy. A common one is $\chi^2$:
-
-```stata
-capture program drop table1_flexible
-program define table1_flexible
-    syntax varlist
-    //copy & paste the above here & ask ChatGPT to help indent the code
-	//or do it yourself
-end 
-```
 
 
-
-```stata
-capture program drop table1_hw5
-program define table1_hw5
-syntax varlist, by(varname) threshold(int 9)
-qui {
-	cls
-	ds, not(type string)
-	global threshold 9 //for multicat vs. continuous
-    foreach v of varlist `varlist'  { //`r(varlist)'
-		/* note where we insert this */
-		local varlab: var lab `v'
-	    levelsof `v', local(numlevels)
-	    if r(r) == 2 { 
-			sum `v' if `by'==0 
-			local percent_0: di %3.1f r(mean) 
-			sum `v' if gender==1
-			local percent_1: di %3.1f r(mean) 
-			tab 
-			noi di _col(1) "`varlab'" _col(50) "`percent_0'" _col(70) "`percent_1'"
-	    }
-	    else if inrange(`r(r)', 3, $threshold) {  
-			noi di _col(1) "`varlab', %" //multicat variable name
-			foreach l of numlist `numlevels' {
-				/* two step process for multicat labels
-				   1. value label, e.g. 0, 1, 2
-				   2. category label , e.g. white, black, Hispanic
-				*/
-				local vallab: value label `v'
-				local catlab: lab `vallab' `l'
-				count if !missing(`v') & gender==0
-				/* manually calculated % for each level:
-				   1. denominator first
-				   2. numerator next
-				   3. and the fraction as perfect, formatted
-				*/
-				local den_0 = r(N)
-				count if `v' == `l' & gender==0
-				local num_0 = r(N)
-				local percent_0: di %2.0f `num_0'*100/`den_0'
-				count if !missing(`v') & gender==1
-                local den_1 = r(N)
-				count if `v' == `l' & gender==1
-				local num_1 = r(N)
-				local percent_1: di %2.0f `num_1'*100/`den_1'
-				noi di _col(1) "   `catlab'" _col(50) "`percent_0'" _col(70) "`percent_1'" //levelsof indentation
-			}	
-	    }
-	    else {  
-			sum `v' if gender==0, detail 
-			local m_iqr_0: di %2.1f r(p50) "[" %2.1f r(p25) "-" %2.1f r(p75) "]"
-			sum `v' if gender==1, detail 
-			local m_iqr_1: di %2.1f r(p50) "[" %2.1f r(p25) "-" %2.1f r(p75) "]"
-			noi di _col(1) "`varlab'" _col(50) "`m_iqr_0'" _col(70) "`m_iqr_1'"
-	    }
-		
-    }
-	
-}
-end 
-table1_hw5 age prev dx
+# 18
 
 We only [cursorily mentioned](https://jhustata.github.io/basic/chapter2.html#combining-everything) p-values in week 2:
 
@@ -688,8 +716,7 @@ We only [cursorily mentioned](https://jhustata.github.io/basic/chapter2.html#com
     noi di "p = `p'"
 
 ```
-
-# 18
+How would you further adapt it to include a third column with a p-value answering the hypothesis: the statistic in column 1 is statistically significantly different from the one in column 2? You may choose the statistic you wish to deploy. A common one is $\chi^2$ for the `proportion` statistic, `student-t` for continuous variables, and `z` for logisic regression p-values
 
 Let's include a p-value column
 
@@ -789,7 +816,7 @@ table1_hw5 age prev_ki dx, by(gender) threshold(9)
 
 # 19
 
-We can now export this tidy output to excel
+We can now export this tidy output to excel. **Hint**: align `_col(1)` with `putexcel Arow`, `_col(50)` with `Brow`, etc. The output statements to your results window, `.log` file, and `.xlsx` should be adjacent. Makes the `.log` output -> `.xlsx` output extension straightfoward
 
 ```stata
 
@@ -830,6 +857,7 @@ qui {
             else {
                 local p: di %2.1f r(p)
             }
+			/* -- output statments for results window, logfile, and excel file -- */
 			noi di _col(1) "`varlab'" _col(50) "`percent_0'" _col(70) "`percent_1'" _col(90) "`p'"
 			putexcel A`row' = "`varlab'" B`row' = "`percent_0'" C`row' = "`percent_1'" D`row' =  "`p'"
 			local row = `row' + 1
@@ -846,6 +874,7 @@ qui {
             else {
                 local p: di %2.1f r(p)
             }
+			/* -- output statments for results window, logfile, and excel file -- */
 			noi di _col(1) "`varlab', %" _col(90) "`p'" //multicat variable name
 			putexcel A`row' = "`varlab', %" B`row' = "" C`row' = "" D`row' =  "`p'"
 			local row = `row' + 1
@@ -872,6 +901,7 @@ qui {
 				count if `v' == `l' & `by'==1
 				local num_1 = r(N)
 				local percent_1: di %2.0f `num_1'*100/`den_1'	
+				/* -- output statments for results window, logfile, and excel file -- */
 				noi di _col(1) "   `catlab'" _col(50) "`percent_0'" _col(70) "`percent_1'"
 				putexcel A`row' = "    `catlab'" B`row' = "`percent_0'" C`row' = "`percent_1'"  
 				local row = `row' + 1
@@ -893,6 +923,7 @@ qui {
             else {
                 local p: di %2.1f r(p)
             }
+			/* -- output statments for results window, logfile, and excel file -- */
 			noi di _col(1) "`varlab'" _col(50) "`m_iqr_0'" _col(70) "`m_iqr_1'" _col(90) "`p'"
 			putexcel A`row' = "`varlab'" B`row' = "`m_iqr_0'" C`row' = "`m_iqr_1'" D`row' =  "`p'"
 			local row = `row' + 1
@@ -908,4 +939,4 @@ ls //confirm that your .xlsx file has been formed
  
 # 20
 
-We're done! Of course you may improve the labels of your variable to achieve the Table 1 output of your interest. You'll need to label the variables prior to running this program
+We're done! Of course you may improve the labels of your variable to achieve the Table 1 output of interest. You'll need to label the variables prior to running this program. As you consider generalizing to more than two strata, you'll need to incorporate more efficiency into your script.
