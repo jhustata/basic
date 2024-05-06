@@ -18,7 +18,7 @@
       - The Extra Credit section is to be submitted separately
       - We'll create a DropBox for it
       - I'll grade this one
-   - HW 6 Solution (pending)
+   - [HW 6 Solution](hw6sol.md)  
    - HW 7 Solution (pending)
 
 ## 3. Quick References
