@@ -7,7 +7,7 @@
    - [Lab 3 Solution](lab3sol.md)
    - <strike>Lab 4 Solution</strike>
    - [Lab 5 Solution](lab5_answerkey.md)  
-   - Lab 6 Solution
+   - [Lab 6 Solution](lab6part1sol.md)
 
 ## 2. Homework Solutions
    - [HW 1 Solution](hw1sol.md)
