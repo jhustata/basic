@@ -361,7 +361,15 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="hw5-solution-intermediate">
 <h1>HW5 Solution (Intermediate)<a class="headerlink" href="#hw5-solution-intermediate" title="Permalink to this heading">#</a></h1>
-<p>Think about this “hardcoded” script by reviewing the excel file created</p>
+<p>Think is a succint solution to a more general question than Question 1:</p>
+<ul class="simple">
+<li><p>Descriptive statistics for <strong>all</strong> the variables in any dataset</p></li>
+<li><p><strong>Key task:</strong> Classify all variables as either binary, multicategory, or continuous</p></li>
+<li><p>Then use conditional code-blocks to tailor the <code class="docutils literal notranslate"><span class="pre">.xlsx</span></code> output to the nature of the variable</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">r(varlist)</span></code> is available after the <code class="docutils literal notranslate"><span class="pre">ds</span></code> (i.e., dataset) command</p></li>
+<li><p>You can replace <code class="docutils literal notranslate"><span class="pre">r(varlist)</span></code> with <code class="docutils literal notranslate"><span class="pre">varlist</span></code> from a <code class="docutils literal notranslate"><span class="pre">syntax</span> <span class="pre">varlist</span></code> in a flexible program</p></li>
+<li><p>End-user preferences must always guide your work!</p></li>
+</ul>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> {
 	cls
 <span class="k">	use</span> <span class="vg">${repo}</span>transplants,<span class="k"> clear</span>

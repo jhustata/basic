@@ -2,9 +2,18 @@
 
 ### `.do` file with comments
 
+- Visualize the script your going to run. Review the code to figure out why its "advanced"
+- **Note:**: Solution to Question 2 is "Basic", so don't feel intimidated
+```stata
+cat "https://github.com/jhustata/basic/raw/main/hw5_solution.do"
+```
+
+Run this remote script to generate the output for HW5:
 ```stata
 do "https://github.com/jhustata/basic/raw/main/hw5_solution.do"
 ```
+
+Seamless, isn't it?
 
 <Details> 
    <Summary> 🔥 </Summary>

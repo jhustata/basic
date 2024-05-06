@@ -1,9 +1,8 @@
 ﻿# HW5 Solution (Basic)
 
-There's no code to output `.xlsx`in the solution below:
-   - But please use the `intermediate` level solution for this task
-      - `putexcel` section [here](https://jhustata.github.io/basic/lab5.html#putexcel)
-   - Also references the [HW3 solution](https://jhustata.github.io/basic/hw3sol.html)
+- This "Basic" script focuses on Question 1s `.log` output
+- For the `.xlsx` output look no further than the "Intermediate" approach
+- As for Question 2, the "Advanced" solution qualifies as "Basic" and so you should reference it
 
 ```stata
 qui {

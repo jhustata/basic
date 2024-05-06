@@ -1,6 +1,12 @@
 ﻿# HW5 Solution (Intermediate)
 
-Think about this "hardcoded" script by reviewing the excel file created 
+Think is a succint solution to a more general question than Question 1:
+- Descriptive statistics for **all** the variables in any dataset
+- **Key task:** Classify all variables as either binary, multicategory, or continuous
+- Then use conditional code-blocks to tailor the `.xlsx` output to the nature of the variable
+- `r(varlist)` is available after the `ds` (i.e., dataset) command
+- You can replace `r(varlist)` with `varlist` from a `syntax varlist` in a flexible program
+- End-user preferences must always guide your work!
 
 ```stata
 qui {
