@@ -7,12 +7,14 @@ For a quick review of solutions to HW 5, please see:
 
 To discuss the solution to `Question 1` step by step, let's systematically walk through these 20 steps:
 
-# 1. Let's use datasets from our class repo:
+# 1 
+Let's use datasets from our class repo:
 ```stata
 global repo https://github.com/jhustata/basic/raw/main
 ```
 
-# 2. Import the data:
+# 2
+Import the data:
 ```stata
 use ${repo}/transplants.dta, clear
 ```
