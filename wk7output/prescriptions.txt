@@ -1,0 +1,38 @@
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/d/Documents/GitHub/stataone/wk7output/prescriptions.log
+  log type:  text
+ opened on:   9 May 2024, 11:15:11
+
+. sort usrds_id srvc_dt
+
+. list usrds_id gnn srvc_dt in 1/15
+
+     +------------------------------------------------------+
+     | usrds_id                             gnn     srvc_dt |
+     |------------------------------------------------------|
+  1. |        0                      FEBUXOSTAT   11oct2024 |
+  2. |        1             CYCLOBENZAPRINE HCL   15jun2024 |
+  3. |        7            LEVOTHYROXINE SODIUM   18feb2024 |
+  4. |       12                  INSULIN ASPART   17nov2024 |
+  5. |       15       HYDROCODONE/ACETAMINOPHEN   14jan2024 |
+     |------------------------------------------------------|
+  6. |       23                      CARVEDILOL   28apr2024 |
+  7. |       28                  FLUOXETINE HCL   17aug2024 |
+  8. |       40                 WARFARIN SODIUM   03apr2024 |
+  9. |       47                      PREDNISONE   04oct2024 |
+ 10. |       47                      GABAPENTIN   14jul2024 |
+     |------------------------------------------------------|
+ 11. |       47                   SEVELAMER HCL   24aug2024 |
+ 12. |       49                     SIMVASTATIN   24jul2024 |
+ 13. |       50            LEVOTHYROXINE SODIUM   17apr2024 |
+ 14. |       60   SULFAMETHOXAZOLE/TRIMETHOPRIM   09may2024 |
+ 15. |       64                  TAMSULOSIN HCL   04aug2024 |
+     +------------------------------------------------------+
+
+. log close
+      name:  <unnamed>
+       log:  /Users/d/Documents/GitHub/stataone/wk7output/prescriptions.log
+  log type:  text
+ closed on:   9 May 2024, 11:15:11
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
