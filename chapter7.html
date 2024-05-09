@@ -367,9 +367,13 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multicategory">Multicategory</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bivariable">7.2 Bivariable</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bivariable">7.2 Bivariable</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linearity-assumption">Linearity assumption</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#no-assumption">No assumption</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multivariable">7.3 Multivariable</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-regression">Linear Regression</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-linear-regression">Simple Linear Regression</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#generalized-linear-regression">Generalized Linear Regression</a></li>
 </ul>
 </li>
@@ -398,7 +402,7 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="visualizing-data-in-stata">
 <h1>7. Visualizing data in Stata<a class="headerlink" href="#visualizing-data-in-stata" title="Permalink to this heading">#</a></h1>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">global</span> repo https:<span class="o">//</span>github<span class="m">.</span>com<span class="o">/</span>jhustata<span class="o">/</span>basic<span class="o">/</span>raw<span class="o">/</span>main<span class="o">/</span>
-<span class="k">global</span> workdir <span class="s">&quot;~/documents/github/stataone&quot;</span>
+<span class="k">di</span> <span class="s">&quot;What is your work directory?&quot;</span> _request(workdir)
 </pre></div>
 </div>
 <p>Our course catalog has several examples to help you visualize data:</p>
@@ -427,11 +431,10 @@ document.write(`
 <p>May questions in science take the above form. We often seek to “accurately” predict <span class="math notranslate nohighlight">\(Y_i\)</span> (absolute estimate) or test a hypothesis <span class="math notranslate nohighlight">\(\beta_i=0\)</span> (relative estimate)</p>
 <section id="univariable">
 <h2>7.1 Univariable<a class="headerlink" href="#univariable" title="Permalink to this heading">#</a></h2>
-<p>But, first, we tend to “explore” the variables one at a time
+<p>We tend to “explore” the variables one at a time
 <span class="math notranslate nohighlight">\(Y_i = \beta_0 + \epsilon_{i.i.d.\sim\mathcal{N}(\mu=0,\sigma=1)}\)</span></p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">cd</span> <span class="vg">$workdir</span>
-<span class="k">mkdir</span> wk7output <span class="c1">//lots of output!</span>
-<span class="k">ls</span> 
+<span class="k">mkdir</span> wk7output
 <span class="k">ls</span> wk7output
 <span class="k">use</span> <span class="s">&quot;</span><span class="vg">${repo}</span><span class="s">transplants.dta&quot;</span>,<span class="k"> clear</span>
 </pre></div>
@@ -475,7 +478,7 @@ document.write(`
 <p><img alt="" src="_images/gender_bin.png" /></p>
 <ul class="simple">
 <li><p>Is this worth the trouble? or is a simple <code class="docutils literal notranslate"><span class="pre">tab</span> <span class="pre">gender</span></code> sufficient?</p></li>
-<li><p>Notice there’s no “error” or <span class="math notranslate nohighlight">\(\epsilon_{i.i.d.\sim\mathcal{N}(\mu=0,\sigma=1)} with binary variables\)</span></p></li>
+<li><p>Notice there’s no “error” or <span class="math notranslate nohighlight">\(\epsilon_{i.i.d.\sim\mathcal{N}(\mu=0,\sigma=1)}\)</span> with binary variables</p></li>
 <li><p>And so we also don’t have an “error” with logistic regression</p></li>
 <li><p>Scatter plots are mostly useful with continuous variables to help visualize <span class="math notranslate nohighlight">\(\epsilon_{i.i.d.\sim\mathcal{N}(\mu=0,\sigma=1)}\)</span></p></li>
 </ul>
@@ -488,7 +491,6 @@ document.write(`
 </div>
 <p><img alt="" src="_images/dx_cat.png" /></p>
 <p>We can improve the visual appeal and “impact” of this graph by putting in a little more effort</p>
-<p>See</p>
 </section>
 </section>
 <section id="bivariable">
@@ -502,22 +504,51 @@ document.write(`
 </div>
 <p><img alt="" src="_images/age_bmi.png" /></p>
 <p>You may even stratify your analysis:</p>
+<section id="linearity-assumption">
+<h3>Linearity assumption<a class="headerlink" href="#linearity-assumption" title="Permalink to this heading">#</a></h3>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="vg">${repo}</span>transplants,<span class="k"> clear</span>
-<span class="k">twoway scatter</span> age bmi<span class="k"> if</span> prev<span class="o">==</span><span class="m">1</span> <span class="cs">///</span>
-    ||<span class="k"> scatter</span> age bmi<span class="k"> if</span> prev<span class="o">==</span><span class="m">0</span>  <span class="cs">///</span>
-	||<span class="k"> lowess</span> age bmi<span class="k"> if</span> prev<span class="o">==</span><span class="m">1</span> <span class="cs">///</span>
-	||<span class="k"> lowess</span> age bmi<span class="k"> if</span> prev<span class="o">==</span><span class="m">0</span>  
-<span class="k">graph</span> export wk7output<span class="o">/</span>age_bmi_prev<span class="m">.</span>png,<span class="k"> replace</span> 
+<span class="k">twoway scatter</span> age bmi<span class="k"> if</span> prev<span class="o">==</span><span class="m">0</span>, <span class="cs">///</span>
+    ||<span class="k"> scatter</span> age bmi<span class="k"> if</span> prev<span class="o">==</span><span class="m">1</span>,  <span class="cs">///</span>
+    ||<span class="k"> lfit</span> age bmi<span class="k"> if</span> prev<span class="o">==</span><span class="m">0</span>, <span class="cs">///</span>
+    ||<span class="k"> lfit</span> age bmi<span class="k"> if</span> prev<span class="o">==</span><span class="m">1</span>
+<span class="k">graph</span> export wk7output<span class="o">/</span>age_bmi_prev_linear<span class="m">.</span>png,<span class="k"> replace</span>
 </pre></div>
 </div>
-<p><img alt="" src="_images/age_bmi_prev.png" /></p>
+<p><img alt="" src="wk7output/age_bmi_prev_linear.png" /></p>
+</section>
+<section id="no-assumption">
+<h3>No assumption<a class="headerlink" href="#no-assumption" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="vg">${repo}</span>transplants,<span class="k"> clear</span>
+<span class="k">twoway scatter</span> age bmi<span class="k"> if</span> prev<span class="o">==</span><span class="m">0</span> <span class="cs">///</span>
+    ||<span class="k"> scatter</span> age bmi<span class="k"> if</span> prev<span class="o">==</span><span class="m">1</span>  <span class="cs">///</span>
+	||<span class="k"> lowess</span> age bmi<span class="k"> if</span> prev<span class="o">==</span><span class="m">0</span> <span class="cs">///</span>
+	||<span class="k"> lowess</span> age bmi<span class="k"> if</span> prev<span class="o">==</span><span class="m">1</span>  
+<span class="k">graph</span> export wk7output<span class="o">/</span>age_bmi_prev_lowess<span class="m">.</span>png,<span class="k"> replace</span> 
+</pre></div>
+</div>
+<p><img alt="" src="wk7output/age_bmi_prev_lowess.png" /></p>
+<p>How do you address the ambiguity in this figure?</p>
+</section>
 </section>
 <section id="multivariable">
 <h2>7.3 Multivariable<a class="headerlink" href="#multivariable" title="Permalink to this heading">#</a></h2>
 <p>How would we visualize the real-world scenario below?
 <span class="math notranslate nohighlight">\(Y_i = \beta_0 + \beta_1X_1 + \beta_2X_2 + \cdots + \beta_NX_N + \epsilon_{i.i.d.\sim\mathcal{N}(\mu=0,\sigma=1)}\)</span></p>
-<section id="linear-regression">
-<h3>Linear Regression<a class="headerlink" href="#linear-regression" title="Permalink to this heading">#</a></h3>
+<section id="simple-linear-regression">
+<h3>Simple Linear Regression<a class="headerlink" href="#simple-linear-regression" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="vg">${repo}</span>transplants,<span class="k"> clear</span>
+<span class="k">regress</span> age gender i<span class="m">.</span>race bmi don_ecd wait_yrs peak_pra
+<span class="k">local cons</span> = _b[_cons]
+<span class="k">lincom</span> _cons <span class="o">+</span> _b[peak_pra]<span class="o">*</span><span class="m">5</span> <span class="o">+</span> _b[wait_yrs]<span class="o">*</span><span class="m">3</span> <span class="o">+</span> _b[don_ecd]<span class="o">*</span><span class="m">1</span> <span class="o">+</span> _b[bmi]<span class="o">*</span><span class="m">29</span> <span class="o">+</span> _b[<span class="m">4.</span>race] <span class="o">+</span> _b[gender]<span class="o">*</span><span class="m">1</span> 
+<span class="k">twoway scatter</span> age bmi<span class="k"> if</span> prev<span class="o">==</span><span class="m">0</span>, <span class="cs">///</span>
+    ||<span class="k"> scatter</span> age bmi<span class="k"> if</span> prev<span class="o">==</span><span class="m">1</span>,  <span class="cs">///</span>
+    ||<span class="k"> lowess</span> age bmi  <span class="k"> if</span> prev<span class="o">==</span><span class="m">0</span>, <span class="cs">///</span>
+    ||<span class="k"> lowess</span> age bmi <span class="k"> if</span> prev<span class="o">==</span><span class="m">1</span> <span class="cs">///</span>
+	|| function y = _b[bmi]<span class="o">*</span>x <span class="o">+</span> <span class="nv">`cons&#39;</span>,<span class="k"> range</span>(<span class="m">18</span> <span class="m">40</span>)
+<span class="k">graph</span> export wk7output<span class="o">/</span>age_bmi_prev_adj<span class="m">.</span>png,<span class="k"> replace</span>
+</pre></div>
+</div>
+<p><img alt="" src="_images/age_bmi_prev_adj.png" /></p>
 </section>
 <section id="generalized-linear-regression">
 <h3>Generalized Linear Regression<a class="headerlink" href="#generalized-linear-regression" title="Permalink to this heading">#</a></h3>
@@ -671,6 +702,34 @@ document.write(`
 </pre></div>
 </div>
 <p><img alt="" src="_images/student_pressure_perweek_notiid.png" /></p>
+<Details>
+   <Summary>mlabel</Summary>
+<p>Scatterplot with <a class="reference external" href="https://www.stata.com/support/faqs/graphics/gph/graphdocs/scatterplot-with-marker-labels/">marker labels</a></p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//from week 1</span>
+<span class="c1">//code snippet from https://www.stata.com/support/faqs/ </span>
+<span class="c1">//click link above for details</span>
+<span class="k">webuse</span> lifeexp,<span class="k"> clear</span> 
+<span class="k">encode</span> country,<span class="k"> gen</span>(Country)
+<span class="k">twoway scatter</span> lexp Country, xscale(off) mlabel(Country) 
+<span class="k">graph</span> export wk7output<span class="o">/</span>wk1fig_mlabel<span class="m">.</span>png,<span class="k"> replace</span> 
+</pre></div>
+</div>
+<p><img alt="" src="_images/wk1fig_mlabel.png" /></p>
+</Details>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">// Line plot of SBP for each student over the 8-week period</span>
+
+<span class="k">use</span> wk7output<span class="o">/</span>student_pressure<span class="m">.</span>dta,<span class="k"> clear</span> 
+<span class="k">twoway</span> (connected sbp session_date<span class="k"> if</span> student_id<span class="o">==</span><span class="m">1</span>, msymbol(circle) mcolor(blue) mlab(student_id)) <span class="cs">///</span>
+    (connected sbp session_date<span class="k"> if</span> student_id<span class="o">==</span><span class="m">2</span>, msymbol(circle) mcolor(red) mlab(student_id)) <span class="cs">///</span>
+    (connected sbp session_date<span class="k"> if</span> student_id<span class="o">==</span><span class="m">100</span>, msymbol(circle) mcolor(magenta) mlab(student_id)) <span class="cs">///</span>
+    , xtitle(<span class="s">&quot;Session Date&quot;</span>) ytitle(<span class="s">&quot;Systolic Blood Pressure&quot;</span>) <span class="cs">///</span>
+    title(<span class="s">&quot;Individual Trajectories of Systolic Blood Pressure Over 8 Weeks&quot;</span>) <span class="cs">///</span>
+    legend(off<span class="k"> order</span>(<span class="m">1</span> <span class="s">&quot;Student 1&quot;</span> <span class="m">2</span> <span class="s">&quot;Student 2&quot;</span> <span class="m">100</span> <span class="s">&quot;Student 100&quot;</span>)) <span class="cs">///</span>
+    yline(<span class="m">120</span>, lcolor(black) lpattern(dash)) 
+<span class="k">graph</span> export wk7output<span class="o">/</span>student_pressure_perweek_notiid_mlabel<span class="m">.</span>png,<span class="k"> replace</span> 
+</pre></div>
+</div>
+<p><img alt="" src="_images/student_pressure_perweek_notiid_mlabel.png" /></p>
 </section>
 <section id="effects">
 <h2>7.7 Effects<a class="headerlink" href="#effects" title="Permalink to this heading">#</a></h2>
@@ -701,6 +760,14 @@ document.write(`
 <span class="k">di</span> <span class="s">&quot;Regression Coefficients for Each Student:&quot;</span>
 <span class="k">forvalues</span> i = <span class="m">1</span><span class="o">/</span><span class="m">100</span> {
 <span class="k">    di</span> <span class="s">&quot;Student </span><span class="nv">`i&#39;</span><span class="s">: &quot;</span><span class="k"> scalar</span>(beta<span class="nv">`i&#39;</span>)
+}
+</pre></div>
+</div>
+<p>Let’s improve the informativeness of this figure:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">local</span> nstudents = _N
+<span class="k">forvalues</span> i = <span class="m">1</span><span class="o">/</span><span class="nv">`nstudents&#39;</span> {
+<span class="k">    label</span> define student_id_labels <span class="nv">`i&#39;</span> <span class="s">&quot;student_id</span><span class="nv">`i&#39;</span><span class="s">&quot;</span>, modify
+<span class="k">    label</span> values student_id student_id_labels
 }
 </pre></div>
 </div>
@@ -866,7 +933,6 @@ import delimited <span class="s">&quot;https://github.com/jhustata/lab6.md/raw/m
 <section id="homework">
 <h2>7.9 Homework<a class="headerlink" href="#homework" title="Permalink to this heading">#</a></h2>
 <p>Your final homework is <a class="reference internal" href="hw7.html"><span class="doc std std-doc">here</span></a></p>
-<p>()</p>
 </section>
 </section>
 
@@ -943,9 +1009,13 @@ import delimited <span class="s">&quot;https://github.com/jhustata/lab6.md/raw/m
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multicategory">Multicategory</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bivariable">7.2 Bivariable</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bivariable">7.2 Bivariable</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linearity-assumption">Linearity assumption</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#no-assumption">No assumption</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multivariable">7.3 Multivariable</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-regression">Linear Regression</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-linear-regression">Simple Linear Regression</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#generalized-linear-regression">Generalized Linear Regression</a></li>
 </ul>
 </li>
