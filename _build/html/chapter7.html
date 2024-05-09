@@ -383,6 +383,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#effects">7.7 Effects</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fixed">Fixed</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mixed">Mixed</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simplify">Simplify</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prescriptions">Prescriptions</a></li>
 </ul>
 </li>
@@ -716,6 +717,7 @@ document.write(`
 </div>
 <p><img alt="" src="_images/wk1fig_mlabel.png" /></p>
 </Details>
+<p>Let’s improve the informativeness of this figure:</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">// Line plot of SBP for each student over the 8-week period</span>
 
 <span class="k">use</span> wk7output<span class="o">/</span>student_pressure<span class="m">.</span>dta,<span class="k"> clear</span> 
@@ -734,6 +736,10 @@ document.write(`
 <section id="effects">
 <h2>7.7 Effects<a class="headerlink" href="#effects" title="Permalink to this heading">#</a></h2>
 <p>So what is the “effect” of time on SBP?</p>
+<ul class="simple">
+<li><p>Intercept: <code class="docutils literal notranslate"><span class="pre">_cons</span></code> or <span class="math notranslate nohighlight">\(\beta_0\)</span></p></li>
+<li><p>Slope: <code class="docutils literal notranslate"><span class="pre">_beta[var]</span></code> or <span class="math notranslate nohighlight">\(beta_i\)</span></p></li>
+</ul>
 <section id="fixed">
 <h3>Fixed<a class="headerlink" href="#fixed" title="Permalink to this heading">#</a></h3>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">regress</span> sbp session_date
@@ -763,7 +769,6 @@ document.write(`
 }
 </pre></div>
 </div>
-<p>Let’s improve the informativeness of this figure:</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">local</span> nstudents = _N
 <span class="k">forvalues</span> i = <span class="m">1</span><span class="o">/</span><span class="nv">`nstudents&#39;</span> {
 <span class="k">    label</span> define student_id_labels <span class="nv">`i&#39;</span> <span class="s">&quot;student_id</span><span class="nv">`i&#39;</span><span class="s">&quot;</span>, modify
@@ -771,6 +776,31 @@ document.write(`
 }
 </pre></div>
 </div>
+</section>
+<section id="simplify">
+<h3>Simplify<a class="headerlink" href="#simplify" title="Permalink to this heading">#</a></h3>
+<p>Let’s neglect the hierarchical data in a sophisticated way, but retaining some aspects of it:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> wk7output<span class="o">/</span>student_pressure,<span class="k"> clear</span> 
+<span class="k">set</span> seed <span class="m">340600</span>
+<span class="k">g</span> withdraw = <span class="nf">rbinomial</span>(<span class="m">1</span>, .<span class="m">1</span>)
+<span class="k">sort</span> student_id session_date
+<span class="k">list if</span> student_id<span class="o">==</span><span class="m">1</span>
+<span class="k">g</span> withdraw_dt = session_date<span class="k"> if</span> withdraw<span class="o">==</span><span class="m">1</span>
+<span class="k">format</span> withdraw_dt <span class="nx">%td</span>
+<span class="k">list if</span> student<span class="o">==</span><span class="m">1</span>
+<span class="k">by</span> student_id:<span class="k"> egen end</span> = <span class="nf">min</span>(withdraw_dt)
+<span class="k">format end</span> <span class="nx">%td</span>
+<span class="k">by</span> student_id:<span class="k"> egen</span> begin = <span class="nf">min</span>(session_date)
+<span class="k">format</span> begin <span class="nx">%td</span>
+<span class="k">list if</span> student<span class="o">==</span><span class="m">1</span>
+<span class="k">by</span> student_id:<span class="k"> replace</span> withdraw = <span class="m">1</span><span class="k"> if</span> withdraw[_n<span class="m">-1</span>]<span class="o">==</span><span class="m">1</span>  
+<span class="k">list if</span> student_id<span class="o">==</span><span class="m">1</span>
+<span class="k">stset end</span>, fail(withdraw) enter(begin) origin(begin)
+<span class="k">sts graph</span>, fail per(<span class="m">100</span>)  
+<span class="k">graph</span> export wk7output<span class="o">/</span>class_attrition<span class="m">.</span>png,<span class="k"> replace</span>  
+</pre></div>
+</div>
+<p><img alt="" src="_images/class_attrition.png" /></p>
 </section>
 <section id="prescriptions">
 <h3>Prescriptions<a class="headerlink" href="#prescriptions" title="Permalink to this heading">#</a></h3>
@@ -1025,6 +1055,7 @@ import delimited <span class="s">&quot;https://github.com/jhustata/lab6.md/raw/m
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#effects">7.7 Effects</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fixed">Fixed</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mixed">Mixed</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simplify">Simplify</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prescriptions">Prescriptions</a></li>
 </ul>
 </li>
