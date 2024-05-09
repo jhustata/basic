@@ -1,0 +1,646 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>lab6 (including solutions) &#8212; Stata Programming</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'lab7';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="https://brand.jhu.edu/assets/uploads/sites/5/2014/06/university_logo_small_vertical_blue.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="https://brand.jhu.edu/assets/uploads/sites/5/2014/06/university_logo_small_vertical_blue.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Preface
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="chapter1.html">1. Philosophy, overview, commands, syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter2.html">2. Return values, macros, programs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter3.html">3. Loops, Program Syntax, and Miscellany</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter4.html">4. Basic file management, Programming options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter5.html">5. Review of Weeks 1 - 4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter6.html">6 Nested, Hierarchical, Multilevel, Longitudinal Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter7.html">7. Visualizing data in Stata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter8.html">8.Survival Analysis: Non-parametric, Semi-parametric, Parametric</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickrefs.html">Quick References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Flab7.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/lab7.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>lab6 (including solutions)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="lab6-including-solutions">
+<h1>lab6 (including solutions)<a class="headerlink" href="#lab6-including-solutions" title="Permalink to this heading">#</a></h1>
+<p>lab5: <a class="reference internal" href="lab5.html"><span class="doc std std-doc">solutions</span></a></p>
+<p>data: <a class="reference download internal" download="" href="_downloads/34a8255f06036b44354b3c36c5583d7e/transplants.dta"><span class="xref download myst">transplants.dta</span></a> <a class="reference download internal" download="" href="_downloads/f246ffb8c3fc8aad08fcc8b4d75aa2fb/donors_recipients.dta"><span class="xref download myst">donors_recipients.dta</span></a> <a class="reference download internal" download="" href="_downloads/1dbcfe5183401a542fa4f336f624de75/donors.dta"><span class="xref download myst">donors.dta</span></a></p>
+<p>zoom: <a class="reference external" href="https://JHUBlueJays.zoom.us/j/96760923747">M</a> <a class="reference external" href="https://JHUBlueJays.zoom.us/j/99476415268">T</a> <a class="reference external" href="https://jhubluejays.zoom.us/j/98628544091?pwd=ZGx5NTN1RHNzNDUrQ3c3Uys0RVYrUT09">W</a> <a class="reference external" href="https://JHUBlueJays.zoom.us/j/3393703103">Th</a> <a class="reference external" href="https://JHUBlueJays.zoom.us/j/8581993134">F</a></p>
+<p>stata18: updated <a class="reference external" href="https://www.stata.com/new-in-stata/graph-colors-by-variable/">color</a> <a class="reference external" href="https://repec.sowi.unibe.ch/stata/palettes/getting-started.html#r-returns">palatte</a></p>
+<p>You’ll find that the content of <a class="reference external" href="https://jhustata.github.io/book/jjj.html">chapter: twoway</a> and <code class="docutils literal notranslate"><span class="pre">lab6</span></code> complement each other!</p>
+<p>Please use this lab as an opportunity to review the course material and prepare yourself for <code class="docutils literal notranslate"><span class="pre">hw3</span></code>. Sample responses to the lab questions are provided below.</p>
+<ol class="arabic simple">
+<li><p>Start Stata, open your do-file editor, write the header, and load <code class="docutils literal notranslate"><span class="pre">transplants.dta</span></code>.</p></li>
+</ol>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> transplants,<span class="k"> clear</span>
+</pre></div>
+</div>
+<ol class="arabic" start="2">
+<li><p>Get a 10% random sample of the dataset. Specifically, follow these steps. (1) Set a seed number. (2) Generate a variable that includes a random number between 0 and 1 following a uniform distribution. An example was included in the first-ever <a class="reference external" href="https://jhustata.github.io/book/aaa.html.">.do file</a> script you saw in this class from chapter: <code class="docutils literal notranslate"><span class="pre">tokenize</span></code>.  (3) Sort by the random variable. (4) Keep the first 10% observations and drop the rest. (5) Drop the random variable.</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">count</span>
+<span class="k">set</span> seed <span class="m">2021</span>
+<span class="k">gen</span> rdm=<span class="nf">runiform</span>()
+<span class="k">sort</span> rdm
+<span class="k">keep if</span> _n<span class="o">&lt;=</span>_N<span class="o">/</span><span class="m">10</span>
+<span class="k">drop</span> rdm
+<span class="k">count</span>
+
+<span class="c1">//alternative</span>
+<span class="k">use</span> transplants,<span class="k"> clear</span>
+<span class="k">count</span>
+<span class="k">sample</span> <span class="m">10</span>
+<span class="k">count</span>
+</pre></div>
+</div>
+</li>
+<li><p>Clear and reload <code class="docutils literal notranslate"><span class="pre">transplants.dta</span></code>.</p></li>
+</ol>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> transplants,<span class="k"> clear</span>
+</pre></div>
+</div>
+<ol class="arabic" start="4">
+<li><p>Generate a variable called <code class="docutils literal notranslate"><span class="pre">fake_age</span></code> which is a normally distributed random variable with mean and standard deviation equal to the mean and standard deviation of the actual age variable.</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">sum</span> age
+<span class="k">gen</span> fake_age=<span class="nf">rnormal</span>(<span class="nf">r</span>(mean), <span class="nf">r</span>(sd))
+<span class="k">sum</span> age fake_age
+<span class="k">compare</span> age fake_age
+<span class="k">kdensity</span> age, addplot(kdensity fake_age)
+<span class="k">list</span> fake_id age fake_age<span class="k"> in</span> <span class="m">1</span><span class="o">/</span><span class="m">10</span>
+<span class="k">graph</span> export<span class="k"> kdensity</span><span class="m">.</span>png,<span class="k"> replace</span> 
+</pre></div>
+</div>
+<p><img alt="kdensity.png" src="_images/kdensity.png" /></p>
+</li>
+<li><p>Make a scatter plot of peak PRA by age in transplant recipients. Does it look like there’s a relationship between peak PRA and age, and if so, what is the relationship?</p></li>
+</ol>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">   use</span> transplants,<span class="k"> clear</span> 
+<span class="k">   graph twoway scatter</span> peak_pra age    <span class="c1">//full syntax</span>
+<span class="k">   tw sc</span> peak_pra age                 <span class="c1">//abbreviated syntax</span>
+   
+<span class="c1">//explore other twoway options!!  </span>
+#delimit ;
+<span class="k">forval</span> f=<span class="m">0</span><span class="o">/</span><span class="m">1</span> { ;
+<span class="k">	sum</span> peak_pra<span class="k"> if</span> gender<span class="o">==</span><span class="nv">`f&#39;</span>,<span class="k"> d</span> ;
+<span class="k">	local</span> m_iqr_<span class="nv">`f&#39;</span>:<span class="k"> di</span> 
+       <span class="s">&quot;Median&quot;</span> <span class="nx">%2.0f</span> <span class="nf">r</span>(p50)
+       <span class="s">&quot; (IQR,&quot;</span> <span class="nx">%2.0f</span> <span class="nf">r</span>(p25)
+            <span class="s">&quot;-&quot;</span> <span class="nx">%2.0f</span> <span class="nf">r</span>(p75)
+            <span class="s">&quot;)&quot;</span>
+			;
+} ;
+<span class="k">tw</span> (sc peak_pra age<span class="k"> if</span> gender<span class="o">==</span><span class="m">0</span>)
+   (sc peak_pra age<span class="k"> if</span> gender<span class="o">==</span><span class="m">1</span>,
+       legend(
+<span class="k">           on</span>
+           ring(<span class="m">0</span>)
+           pos(<span class="m">11</span>)
+<span class="k">           lab</span>(<span class="m">1</span> <span class="s">&quot;Male&quot;</span>)
+<span class="k">           lab</span>(<span class="m">2</span> <span class="s">&quot;Female&quot;</span>)
+       )
+       ti(<span class="s">&quot;Most Recent Serum PRA&quot;</span>,pos(<span class="m">11</span>))
+       yti(<span class="s">&quot;%&quot;</span>, orientation(horizontal))
+   text(<span class="m">50</span> <span class="m">10</span> <span class="s">&quot;</span><span class="nv">`m_iqr_0&#39;</span><span class="s">&quot;</span>,col(midblue))
+   text(<span class="m">45</span> <span class="m">10</span> <span class="s">&quot;</span><span class="nv">`m_iqr_1&#39;</span><span class="s">&quot;</span>,col(cranberry))
+   )
+   ;
+   #delimit cr
+<span class="k">   graph</span> export lab6q5<span class="m">.</span>png,<span class="k"> replace</span> 
+</pre></div>
+</div>
+<p><img alt="lab6q5.png" src="_images/lab6q5.png" /></p>
+<ol class="arabic simple" start="6">
+<li><p>The graph of proportion of ECD transplants by age from the lecture was a little messy. Remake the graph with the age rounded to the nearest ten years.</p>
+<ul class="simple">
+<li><p>From the chapter: <code class="docutils literal notranslate"><span class="pre">twoway</span></code></p></li>
+</ul>
+</li>
+</ol>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">     use</span> transplants,<span class="k"> clear</span>
+<span class="k">     collapse</span> (mean) don_ecd,<span class="k"> by</span>(age)
+<span class="k">     graph twoway line</span> don_ecd age, text(.<span class="m">5</span> <span class="m">40</span> <span class="s">&quot;obs: </span><span class="nv">`c(N)&#39;</span><span class="s">, vars: </span><span class="nv">`c(k)&#39;</span><span class="s">&quot;</span>)
+<span class="k">     graph</span> export collpasebyage<span class="m">.</span>png,replace
+<span class="k">     count</span> 
+     
+<span class="c1">//alternative, without messing up the data</span>
+<span class="k">if</span> <span class="nf">c</span>(N) <span class="o">==</span> <span class="nf">r</span>(N) | <span class="nf">c</span>(N) <span class="o">==</span> <span class="m">6000</span> {
+<span class="k">	</span>
+<span class="k">use</span> transplants,<span class="k"> clear</span>
+<span class="k">egen</span> m_don_ecd=mean(don_ecd),<span class="k"> by</span>(age)
+<span class="k">egen</span> agetag=tag(age)
+#delimit ;
+<span class="k">line</span> m_don_ecd age<span class="k"> if</span> agetag, 
+    text(
+    .<span class="m">5</span> <span class="m">40</span> 
+    <span class="s">&quot;obs: </span><span class="nv">`c(N)&#39;</span><span class="s">, vars: </span><span class="nv">`c(k)&#39;</span><span class="s">&quot;</span>
+    ) 
+<span class="k">    sort</span> ;
+#delimi cr
+<span class="k">count</span>
+<span class="k">graph</span> export lab6q6<span class="m">.</span>png,replace 
+
+}
+</pre></div>
+</div>
+<p><img alt="Picture1" src="_images/collpasebyage.png" />
+<img alt="lab6q5.png" src="lab6q6.png" /></p>
+<ul class="simple">
+<li><p>After rounding</p></li>
+</ul>
+<p><img alt="Picture2" src="_images/collpasebyage10.png" /></p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">     use</span> transplants,<span class="k"> clear</span>
+<span class="k">     gen</span> age10 = <span class="nf">round</span>(age, <span class="m">10</span>)
+     <span class="c1">//one way to restore data after messing it up</span>
+<span class="k">     preserve</span> 
+<span class="k">         collapse</span> (mean) don_ecd,<span class="k"> by</span>(age10)
+<span class="k">         graph twoway line</span> don_ecd age10
+<span class="k">         graph</span> export collpasebyage10<span class="m">.</span>png,replace
+<span class="k">     restore</span> 
+<span class="k">     count</span> 
+ 
+</pre></div>
+</div>
+<ol class="arabic simple" start="7">
+<li><p>You have all your commands in your do file, right? Run your do file from the beginning and make sure your do file does exactly the same thing. Also, in the spirit of <code class="docutils literal notranslate"><span class="pre">hw1</span></code>, and the spirit of the last 7  weeks, your .do file should look like this if you’ve adhered to the guidelines:</p></li>
+</ol>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//you&#39;re welcome to flout</span>
+<span class="c1">//   these guidelines after May 19</span>
+<span class="c1">//but please don&#39;t flaunt your disregard </span>
+<span class="c1">//   for the didactic value before then</span>
+
+<span class="c1">//collapse [-] at qui</span>
+<span class="k">qui</span> {
+
+<span class="c1">//collapse [-] at if X {</span>
+<span class="k">qui</span> {
+<span class="k">	if</span> <span class="m">0</span> { <span class="c1">//lab6 dofile</span>
+<span class="k">	if</span> <span class="m">1</span> { <span class="c1">//transplants.dta</span>
+<span class="k">	if</span> <span class="m">2</span> { <span class="c1">//runiform(),two methods</span>
+<span class="k">	if</span> <span class="m">3</span> { <span class="c1">//transplants reload</span>
+<span class="k">	if</span> <span class="m">4</span> { <span class="c1">//r(normal),kdensity</span>
+<span class="k">	if</span> <span class="m">5</span> { <span class="c1">//embed macro in text then graph</span>
+<span class="k">	if</span> <span class="m">6</span> { <span class="c1">//collpase &amp; egen equivalence!!!!!!</span>
+<span class="k">	if</span> <span class="m">7</span> { <span class="c1">//aesthetical .do file structure :)</span>
+<span class="k">       timer list</span>  
+<span class="k">       log close</span> 
+}
+
+<span class="c1">//alternative</span>
+<span class="c1">//`if c(N) xxx {` merely placebolder</span>
+<span class="c1">//but may become functional condition as </span>
+<span class="c1">//do file grows in complexity</span>
+<span class="c1">//and accommodates more general stance</span>
+<span class="c1">//e.g., due regard to c(os), c(version)</span>
+<span class="c1">//or even to c(N), e(N), and r(N)</span>
+<span class="c1">//suppose you have a rule of thumb:</span>
+<span class="c1">//never to run a regression when c(N)&lt;30?</span>
+<span class="c1">//maybe ok to run, but not to report output when e(df)&lt;30?</span>
+<span class="c1">//well, maybe ok to do all above, but with a proviso in reported output?</span>
+<span class="c1">//you are in position to incorporate any of the above into your .do files!!!</span>
+
+<span class="c1">//collapse [-] at if `condition&#39; {</span>
+<span class="k">qui</span> {
+<span class="k">    clear</span> 
+    cls
+<span class="k">	if</span> <span class="nf">c</span>(N) { <span class="c1">//lab6 dofile</span>
+<span class="k">	if</span> <span class="nf">c</span>(N)<span class="o">&lt;</span><span class="m">1</span> { <span class="c1">//transplants.dta</span>
+<span class="k">	if</span> <span class="nf">c</span>(N)<span class="o">&lt;</span><span class="m">2</span> { <span class="c1">//runiform(),two methods</span>
+<span class="k">	if</span> <span class="nf">c</span>(N)<span class="o">&gt;</span><span class="m">3</span> { <span class="c1">//transplants reload</span>
+<span class="k">	if</span> <span class="nf">c</span>(N)<span class="o">&gt;</span><span class="m">4</span> { <span class="c1">//r(normal),kdensity</span>
+<span class="k">	if</span> <span class="nf">c</span>(N)<span class="o">&gt;</span><span class="m">5</span> { <span class="c1">//embed macro in text then graph</span>
+<span class="k">	if</span> <span class="nf">c</span>(N)<span class="o">&gt;</span><span class="m">6</span> { <span class="c1">//collpase &amp; egen equivalence!!!!!!</span>
+<span class="k">	if</span> <span class="nf">c</span>(N)<span class="o">==</span><span class="nf">r</span>(N) | <span class="nf">c</span>(N)<span class="o">==</span><span class="m">6000</span> { <span class="c1">//aesthetical .do file structure </span>
+<span class="k">       timer list</span>  
+<span class="k">       log close</span> 
+}
+</pre></div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Abimereki Muzaale & Vincent Jin
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

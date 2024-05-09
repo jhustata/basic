@@ -8,6 +8,7 @@
    - <strike>Lab 4 Solution</strike>
    - [Lab 5 Solution](lab5_answerkey.md)  
    - [Lab 6 Solution](lab6part1sol.md)
+   - [Lab 7 solution](lab7sol.md)
 
 ## 2. Homework Solutions
    - [HW 1 Solution](hw1sol.md)
@@ -19,13 +20,13 @@
       - We'll create a DropBox for it
       - I'll grade this one
    - [HW 6 Solution](hw6sol.md)  
-   - HW 7 Solution (pending)
+   - [HW 7 Solution](hw7sol.md)
 
 ## 3. Quick References
    - [Stata Commands Quick Reference](https://jhustata.github.io/basic/chapter3.html#commands-that-run-without-additional-syntax)
 
 ## 4. GitHub Discussions
-   - Link to discussions (pending)
+   - [Link to discussions](https://github.com/jhufena/discussions/discussions)  
 
 ## 5. TA-Student Match
    - [TA-Student Matching for HW5 Grading](tastudentmatch.md)
