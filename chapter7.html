@@ -376,9 +376,10 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hierarchical">7.4 Hierarchical</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#time">7.5 Time</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nested">7.6 Nested</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#effects-mixed-effects-of-time-on-sbp">7.7 Effects Mixed “Effects” of Time on SBP</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#effects">7.7 Effects</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fixed">Fixed</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mixed">Mixed</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prescriptions">Prescriptions</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab">7.8 Lab</a></li>
@@ -397,6 +398,7 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="visualizing-data-in-stata">
 <h1>7. Visualizing data in Stata<a class="headerlink" href="#visualizing-data-in-stata" title="Permalink to this heading">#</a></h1>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">global</span> repo https:<span class="o">//</span>github<span class="m">.</span>com<span class="o">/</span>jhustata<span class="o">/</span>basic<span class="o">/</span>raw<span class="o">/</span>main<span class="o">/</span>
+<span class="k">global</span> workdir <span class="s">&quot;~/documents/github/stataone&quot;</span>
 </pre></div>
 </div>
 <p>Our course catalog has several examples to help you visualize data:</p>
@@ -427,7 +429,11 @@ document.write(`
 <h2>7.1 Univariable<a class="headerlink" href="#univariable" title="Permalink to this heading">#</a></h2>
 <p>But, first, we tend to “explore” the variables one at a time
 <span class="math notranslate nohighlight">\(Y_i = \beta_0 + \epsilon_{i.i.d.\sim\mathcal{N}(\mu=0,\sigma=1)}\)</span></p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="s">&quot;</span><span class="vg">${repo}</span><span class="s">transplants.dta&quot;</span>,<span class="k"> clear</span>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">cd</span> <span class="vg">$workdir</span>
+<span class="k">mkdir</span> wk7output <span class="c1">//lots of output!</span>
+<span class="k">ls</span> 
+<span class="k">ls</span> wk7output
+<span class="k">use</span> <span class="s">&quot;</span><span class="vg">${repo}</span><span class="s">transplants.dta&quot;</span>,<span class="k"> clear</span>
 </pre></div>
 </div>
 <section id="continuous">
@@ -435,13 +441,18 @@ document.write(`
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">hist</span> age
 <span class="k">sum</span> age
 <span class="k">regress</span> age 
+<span class="k">graph</span> export wk7output<span class="o">/</span>age_tx<span class="m">.</span>png,<span class="k"> replace</span>
+<span class="k">ls</span>  wk7output
 </pre></div>
 </div>
+<p><img alt="" src="_images/age_tx.png" /></p>
 <p>Let’s get fancy:</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">gen</span> x=<span class="m">1</span> <span class="c1">//dummy or meaningless variable</span>
 <span class="k">twoway scatter</span> age x, jitter(<span class="m">15</span>)
+<span class="k">graph</span> export wk7output<span class="o">/</span>age_tx_scatter<span class="m">.</span>png,<span class="k"> replace</span> 
 </pre></div>
 </div>
+<p><img alt="" src="_images/age_tx_scatter.png" /></p>
 <p>Even fancier!!</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="s">&quot;</span><span class="vg">${repo}</span><span class="s">transplants&quot;</span>,<span class="k"> clear</span>
 <span class="k">g</span> x=<span class="m">1</span>
@@ -449,37 +460,57 @@ document.write(`
 <span class="k">g mean</span> = <span class="nf">r</span>(mean)
 <span class="k">g</span> lb = <span class="nf">r</span>(mean) <span class="o">-</span> <span class="m">1.96</span><span class="o">*</span><span class="nf">r</span>(sd)
 <span class="k">g</span> ub = <span class="nf">r</span>(mean) <span class="o">+</span> <span class="m">1.96</span><span class="o">*</span><span class="nf">r</span>(sd)
-<span class="k">twoway scatter</span> age x, jitter(<span class="m">15</span>) ||<span class="k"> scatter mean</span> x || rcap ub lb x 
+<span class="k">twoway scatter</span> age x, jitter(<span class="m">15</span>) ||<span class="k"> scatter mean</span> x || rcap ub lb x
+<span class="k">graph</span> export wk7output<span class="o">/</span>age_tx_para<span class="m">.</span>png,<span class="k"> replace</span>  
 </pre></div>
 </div>
+<p><img alt="" src="_images/age_tx_para.png" /></p>
 </section>
 <section id="binary">
 <h3>Binary<a class="headerlink" href="#binary" title="Permalink to this heading">#</a></h3>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">hist</span> gender
+<span class="k">graph</span> export wk7output<span class="o">/</span>gender_bin<span class="m">.</span>png,<span class="k"> replace</span> 
 </pre></div>
 </div>
-</section>
-<section id="multicategory">
-<h3>Multicategory<a class="headerlink" href="#multicategory" title="Permalink to this heading">#</a></h3>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">hist</span> dx
-</pre></div>
-</div>
+<p><img alt="" src="_images/gender_bin.png" /></p>
 <ul class="simple">
 <li><p>Is this worth the trouble? or is a simple <code class="docutils literal notranslate"><span class="pre">tab</span> <span class="pre">gender</span></code> sufficient?</p></li>
 <li><p>Notice there’s no “error” or <span class="math notranslate nohighlight">\(\epsilon_{i.i.d.\sim\mathcal{N}(\mu=0,\sigma=1)} with binary variables\)</span></p></li>
 <li><p>And so we also don’t have an “error” with logistic regression</p></li>
+<li><p>Scatter plots are mostly useful with continuous variables to help visualize <span class="math notranslate nohighlight">\(\epsilon_{i.i.d.\sim\mathcal{N}(\mu=0,\sigma=1)}\)</span></p></li>
 </ul>
+</section>
+<section id="multicategory">
+<h3>Multicategory<a class="headerlink" href="#multicategory" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">hist</span> dx
+<span class="k">graph</span> export wk7output<span class="o">/</span>dx_cat<span class="m">.</span>png,<span class="k"> replace</span> 
+</pre></div>
+</div>
+<p><img alt="" src="_images/dx_cat.png" /></p>
+<p>We can improve the visual appeal and “impact” of this graph by putting in a little more effort</p>
+<p>See</p>
 </section>
 </section>
 <section id="bivariable">
 <h2>7.2 Bivariable<a class="headerlink" href="#bivariable" title="Permalink to this heading">#</a></h2>
 <p>We may then investigate correlations between two variables:</p>
 <p><span class="math notranslate nohighlight">\(Y_i = \beta_0 + \beta_1X_1 + \epsilon_{i.i.d.\sim\mathcal{N}(\mu=0,\sigma=1)}\)</span></p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">twoway scatter</span> age bmi ||<span class="k"> lowess</span> age bmi
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="vg">${repo}</span>transplants,<span class="k"> clear</span>
+<span class="k">twoway scatter</span> age bmi ||<span class="k"> lowess</span> age bmi
+<span class="k">graph</span> export wk7output<span class="o">/</span>age_bmi<span class="m">.</span>png,<span class="k"> replace</span> 
 </pre></div>
 </div>
+<p><img alt="" src="_images/age_bmi.png" /></p>
 <p>You may even stratify your analysis:</p>
-<p><span class="math notranslate nohighlight">\(Y_i = \beta_0 + \beta_1X_1 + \epsilon_{i.i.d.\sim\mathcal{N}(\mu=0,\sigma=1)}\)</span></p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="vg">${repo}</span>transplants,<span class="k"> clear</span>
+<span class="k">twoway scatter</span> age bmi<span class="k"> if</span> prev<span class="o">==</span><span class="m">1</span> <span class="cs">///</span>
+    ||<span class="k"> scatter</span> age bmi<span class="k"> if</span> prev<span class="o">==</span><span class="m">0</span>  <span class="cs">///</span>
+	||<span class="k"> lowess</span> age bmi<span class="k"> if</span> prev<span class="o">==</span><span class="m">1</span> <span class="cs">///</span>
+	||<span class="k"> lowess</span> age bmi<span class="k"> if</span> prev<span class="o">==</span><span class="m">0</span>  
+<span class="k">graph</span> export wk7output<span class="o">/</span>age_bmi_prev<span class="m">.</span>png,<span class="k"> replace</span> 
+</pre></div>
+</div>
+<p><img alt="" src="_images/age_bmi_prev.png" /></p>
 </section>
 <section id="multivariable">
 <h2>7.3 Multivariable<a class="headerlink" href="#multivariable" title="Permalink to this heading">#</a></h2>
@@ -543,6 +574,7 @@ document.write(`
 <span class="k">graph</span> export<span class="k"> logistic</span><span class="m">.</span>png,replace 
 </pre></div>
 </div>
+<p><img alt="" src="_images/logistic.png" /></p>
 </section>
 </section>
 <section id="hierarchical">
@@ -580,12 +612,12 @@ document.write(`
         <span class="c1">// Append data for the current session to the dataset</span>
         <span class="c1">//append</span>
     }
-<span class="k">	save</span> student<span class="nv">`i&#39;</span>,<span class="k"> replace</span> <span class="c1">//edit in class after seeing the mess it causes!!</span>
+<span class="k">	save</span> wk7output<span class="o">/</span>student<span class="nv">`i&#39;</span>,<span class="k"> replace</span> <span class="c1">//edit in class after seeing the mess it causes!!</span>
 }
 
-<span class="k">forvalues</span> i=<span class="m">1</span><span class="o">/</span><span class="m">99</span> {
+<span class="k">forvalues</span> i=<span class="m">1</span><span class="o">/</span><span class="m">100</span> {
 <span class="k">	</span>
-<span class="k">	append</span> using student<span class="nv">`i&#39;</span>.dta
+<span class="k">	append</span> using wk7output<span class="o">/</span>student<span class="nv">`i&#39;</span>.dta
 }
 
 <span class="c1">// Sort the dataset</span>
@@ -606,8 +638,11 @@ document.write(`
 <span class="k">format</span> session_date <span class="nx">%td</span>
 <span class="k">codebook</span> 
 <span class="k">replace</span> sbp=<span class="nf">round</span>(sbp)
+<span class="k">save</span> wk7output<span class="o">/</span>student_pressure,<span class="k"> replace</span> 
+<span class="k">ls</span> wk7output<span class="o">/</span>
 </pre></div>
 </div>
+<p>Let’s edit our script in light of …</p>
 </section>
 <section id="time">
 <h2>7.5 Time<a class="headerlink" href="#time" title="Permalink to this heading">#</a></h2>
@@ -616,8 +651,10 @@ document.write(`
 <span class="k">twoway</span> (scatter sbp session_date,<span class="k"> sort</span> jitter(<span class="m">9</span>)) <span class="cs">///</span>
     , xtitle(<span class="s">&quot;Session Date&quot;</span>) ytitle(<span class="s">&quot;Systolic Blood Pressure&quot;</span>) <span class="cs">///</span>
     title(<span class="s">&quot;Systolic Blood Pressure Over 8 Weeks&quot;</span>) legend(off)
+<span class="k">graph</span> export wk7output<span class="o">/</span>student_pressure_perweek<span class="m">.</span>png,<span class="k"> replace</span> 
 </pre></div>
 </div>
+<p><img alt="" src="_images/student_pressure_perweek.png" /></p>
 <p>This only tells us about the class average over time. But says nothing about individual students. Each might have their unique tragectory</p>
 </section>
 <section id="nested">
@@ -630,11 +667,14 @@ document.write(`
     title(<span class="s">&quot;Individual Trajectories of Systolic Blood Pressure Over 8 Weeks&quot;</span>) <span class="cs">///</span>
     legend(order(<span class="m">1</span> <span class="s">&quot;Student 1&quot;</span> <span class="m">2</span> <span class="s">&quot;Student 2&quot;</span> ... <span class="m">100</span> <span class="s">&quot;Student 100&quot;</span>)) <span class="cs">///</span>
     yline(<span class="m">120</span>, lcolor(black) lpattern(dash))
+<span class="k">graph</span> export wk7output<span class="o">/</span>student_pressure_perweek_notiid<span class="m">.</span>png,<span class="k"> replace</span> 
 </pre></div>
 </div>
+<p><img alt="" src="_images/student_pressure_perweek_notiid.png" /></p>
 </section>
-<section id="effects-mixed-effects-of-time-on-sbp">
-<h2>7.7 Effects Mixed “Effects” of Time on SBP<a class="headerlink" href="#effects-mixed-effects-of-time-on-sbp" title="Permalink to this heading">#</a></h2>
+<section id="effects">
+<h2>7.7 Effects<a class="headerlink" href="#effects" title="Permalink to this heading">#</a></h2>
+<p>So what is the “effect” of time on SBP?</p>
 <section id="fixed">
 <h3>Fixed<a class="headerlink" href="#fixed" title="Permalink to this heading">#</a></h3>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">regress</span> sbp session_date
@@ -665,6 +705,159 @@ document.write(`
 </pre></div>
 </div>
 </section>
+<section id="prescriptions">
+<h3>Prescriptions<a class="headerlink" href="#prescriptions" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">* Import data from URL</span>
+import delimited <span class="s">&quot;https://github.com/jhustata/lab6.md/raw/main/stsrpos.csv&quot;</span>,<span class="k"> clear</span>
+
+<span class="c1">* Convert srvc_dt to date format</span>
+<span class="k">gen</span> srvc_dt_date = <span class="nf">date</span>(srvc_dt, <span class="s">&quot;DMY&quot;</span>)
+
+<span class="c1">* Create year_month variable</span>
+<span class="k">format</span> srvc_dt_date <span class="nx">%tm</span>
+<span class="k">gen</span> year_month = <span class="nf">month</span>(srvc_dt_date)
+
+<span class="c1">* Count prescriptions by month</span>
+<span class="k">table</span> year_month,
+
+<span class="c1">* Create bar chart for number of prescriptions by month</span>
+<span class="k">graph</span> bar (count), over(year_month) title(<span class="s">&quot;Number of Prescriptions by Month&quot;</span>) <span class="cs">///</span>
+	ytitle(<span class="s">&quot;Number of Prescriptions&quot;</span>) <span class="c1">//xtitle(&quot;Year-Month&quot;)</span>
+
+<span class="c1">* Calculate the top 10 most prescribed medications</span>
+<span class="k">preserve</span> 
+<span class="k">bys</span> gnn:<span class="k"> g</span> top_meds=_N
+<span class="k">egen</span> grouptag=tag(gnn)
+<span class="k">keep if</span> grouptag<span class="o">==</span><span class="m">1</span>
+<span class="k">gsort</span> <span class="o">-</span>top_meds
+<span class="k">l in</span> <span class="m">1</span><span class="o">/</span><span class="m">10</span>
+
+<span class="c1">* Create bar chart for top 10 most prescribed medications</span>
+<span class="k">encode</span> gnn,<span class="k"> gen</span>(Gnn)
+<span class="k">keep in</span> <span class="m">1</span><span class="o">/</span><span class="m">10</span>
+<span class="k">g</span> x=_n
+<span class="k">levelsof</span> Gnn
+<span class="k">list</span> Gnn
+<span class="k">local</span> varlab:<span class="k"> var lab</span> Gnn
+<span class="k">local</span> vallab: value<span class="k"> label</span> Gnn
+<span class="k">levelsof</span> Gnn,<span class="k"> local</span>(numlevels)
+<span class="k">local</span> i=<span class="m">1</span>
+<span class="k">foreach l</span> of<span class="k"> numlist</span> <span class="nv">`numlevels&#39;</span> {
+<span class="k">    local</span> vallab: value<span class="k"> label</span> Gnn
+<span class="k">	local</span> catlab:<span class="k"> lab</span> <span class="nv">`vallab&#39;</span> <span class="nv">`l&#39;</span>
+<span class="k">	global</span> xlab<span class="nv">`i&#39;</span> = <span class="s">&quot;</span><span class="nv">`catlab&#39;</span><span class="s">&quot;</span>
+<span class="k">	local</span> i= <span class="nv">`i&#39;</span> <span class="o">+</span> <span class="m">1</span>
+}
+<span class="k">global</span> ylab 
+<span class="k">twoway</span> bar top_meds x, <span class="cs">/// </span>
+    horizontal <span class="cs">///</span>
+    ytitle(<span class="s">&quot;Number of Prescriptions&quot;</span>) <span class="cs">///</span>
+	xtitle(<span class="s">&quot;Medication&quot;</span>) <span class="cs">///</span>
+	title(<span class="s">&quot;Top 10 Most Prescribed Medications&quot;</span>) <span class="cs">///</span>
+	ylab(<span class="m">0</span>(<span class="m">1</span>)<span class="m">10</span> <span class="cs">///</span>
+	    <span class="m">1</span> <span class="s">&quot;</span><span class="vg">$xlab1</span><span class="s">&quot;</span> <span class="cs">///</span>
+		<span class="m">2</span> <span class="s">&quot;</span><span class="vg">$xlab2</span><span class="s">&quot;</span> <span class="cs">///</span>
+		<span class="m">3</span> <span class="s">&quot;</span><span class="vg">$xlab3</span><span class="s">&quot;</span> <span class="cs">///</span>
+		<span class="m">4</span> <span class="s">&quot;</span><span class="vg">$xlab4</span><span class="s">&quot;</span> <span class="cs">///</span>
+		<span class="m">5</span> <span class="s">&quot;</span><span class="vg">$xlab5</span><span class="s">&quot;</span> <span class="cs">///</span>
+		<span class="m">6</span> <span class="s">&quot;</span><span class="vg">$xlab6</span><span class="s">&quot;</span> <span class="cs">///</span>
+		<span class="m">7</span> <span class="s">&quot;</span><span class="vg">$xlab7</span><span class="s">&quot;</span> <span class="cs">///</span>
+		<span class="m">8</span> <span class="s">&quot;</span><span class="vg">$xlab8</span><span class="s">&quot;</span> <span class="cs">///</span>
+		<span class="m">9</span> <span class="s">&quot;</span><span class="vg">$xlab9</span><span class="s">&quot;</span> <span class="cs">///</span>
+		<span class="m">10</span> <span class="s">&quot;</span><span class="vg">$xlab10</span><span class="s">&quot;</span>)
+<span class="k">graph</span> export wk7output<span class="o">/</span>prescriptions<span class="m">.</span>png,<span class="k"> replace</span> 
+<span class="k">restore</span> 
+<span class="c1">* Calculate number of unique patients and number of prescriptions</span>
+<span class="k">egen</span> idtag=tag(usrds_id)
+<span class="k">count if</span> idtag 
+<span class="k">egen</span> gnntag = tag(gnn)
+<span class="k">count if</span> gnntag 
+
+<span class="c1">* Descriptive statistics for prescriptions per patient</span>
+<span class="k">bys</span> usrds_id:<span class="k"> g</span> pillcount=_N
+<span class="k">hist</span> pillcount
+<span class="k">sum</span> pillcount,<span class="k"> de</span>
+<span class="k">gen</span> polypharm=pillcount<span class="o">&gt;=</span><span class="m">3</span>
+
+<span class="c1">* Identify patients with 3 or more prescriptions</span>
+<span class="k">egen</span> prescriptions_per_patient =<span class="k"> count</span>(usrds_id),<span class="k"> by</span>(usrds_id)
+<span class="k">compare</span> pillcount prescriptions_per_patient
+<span class="k">gen</span> patients_with_3_plus = prescriptions_per_patient <span class="o">&gt;=</span> <span class="m">3</span>
+<span class="k">compare</span> polypharm patients_with_3_plus
+
+<span class="c1">* Subset dataset for patients with 3 or more prescriptions</span>
+<span class="cm">/*</span>
+<span class="cm">keep if patients_with_3_plus</span>
+
+<span class="cm">* Identify and display prescriptions over time for selected patients</span>
+
+<span class="cm">levelsof usrds_id, local(selected_patients)</span>
+<span class="cm">foreach patient_id in `selected_patients&#39; {</span>
+<span class="cm">    keep if usrds_id == `patient_id&#39;</span>
+<span class="cm">	count </span>
+<span class="cm">	local count=r(N)</span>
+<span class="cm">	twoway bar `count&#39; year_month </span>
+<span class="cm">    graph bar (`count&#39;), over(year_month) title(&quot;Patient `patient_id&#39;: Prescriptions Over Time&quot;) ///</span>
+<span class="cm">	    ytitle(&quot;Number of Prescriptions&quot;) xtitle(&quot;Year-Month&quot;)</span>
+<span class="cm">}</span>
+<span class="cm">*/</span>
+
+<span class="cm">* Fit the mixed-effects model</span>
+<span class="k">xtmixed</span> usrds_id i<span class="m">.</span>year_month, mle
+</pre></div>
+</div>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">capture log close</span>
+<span class="k">log</span> using wk7output<span class="o">/</span>prescriptions<span class="m">.</span>log,<span class="k"> replace</span> 
+<span class="k">sort sort</span> usrds_id srvc_dt
+<span class="k">list in</span> <span class="m">1</span><span class="o">/</span><span class="m">10</span>
+<span class="k">log close</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="https://github.com/jhustata/basic/raw/main/prescriptions.log">prescriptions.log</a></p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>      name:  <span class="o">&lt;</span>unnamed<span class="o">&gt;</span>
+<span class="k">       log</span>:  <span class="o">/</span>Users<span class="o">/</span>d<span class="o">/</span>Documents<span class="o">/</span>GitHub<span class="o">/</span>stataone<span class="o">/</span>wk7output<span class="o">/</span>prescriptions<span class="m">.</span>log
+<span class="k">  log type</span>:  text
+ opened<span class="k"> on</span>:   <span class="m">9</span> May <span class="m">2024</span>, <span class="m">11</span>:<span class="m">15</span>:<span class="m">11</span>
+
+.<span class="k"> sort</span> usrds_id srvc_dt
+
+.<span class="k"> list</span> usrds_id gnn srvc_dt<span class="k"> in</span> <span class="m">1</span><span class="o">/</span><span class="m">15</span>
+
+     <span class="o">+------------------------------------------------------+</span>
+     | usrds_id                             gnn     srvc_dt |
+     |<span class="o">------------------------------------------------------</span>|
+  <span class="m">1</span>. |        <span class="m">0</span>                      FEBUXOSTAT   11oct2024 |
+  <span class="m">2</span>. |        <span class="m">1</span>             CYCLOBENZAPRINE HCL   15jun2024 |
+  <span class="m">3</span>. |        <span class="m">7</span>            LEVOTHYROXINE SODIUM   18feb2024 |
+  <span class="m">4</span>. |       <span class="m">12</span>                  INSULIN ASPART   17nov2024 |
+  <span class="m">5</span>. |       <span class="m">15</span>       HYDROCODONE<span class="o">/</span>ACETAMINOPHEN   14jan2024 |
+     |<span class="o">------------------------------------------------------</span>|
+  <span class="m">6</span>. |       <span class="m">23</span>                      CARVEDILOL   28apr2024 |
+  <span class="m">7</span>. |       <span class="m">28</span>                  FLUOXETINE HCL   17aug2024 |
+  <span class="m">8</span>. |       <span class="m">40</span>                 WARFARIN SODIUM   03apr2024 |
+  <span class="m">9</span>. |       <span class="m">47</span>                      PREDNISONE   04oct2024 |
+ <span class="m">10</span>. |       <span class="m">47</span>                      GABAPENTIN   14jul2024 |
+     |<span class="o">------------------------------------------------------</span>|
+ <span class="m">11</span>. |       <span class="m">47</span>                   SEVELAMER HCL   24aug2024 |
+ <span class="m">12</span>. |       <span class="m">49</span>                     SIMVASTATIN   24jul2024 |
+ <span class="m">13</span>. |       <span class="m">50</span>            LEVOTHYROXINE SODIUM   17apr2024 |
+ <span class="m">14</span>. |       <span class="m">60</span>   SULFAMETHOXAZOLE<span class="o">/</span>TRIMETHOPRIM   09may2024 |
+ <span class="m">15</span>. |       <span class="m">64</span>                  TAMSULOSIN HCL   04aug2024 |
+     <span class="o">+------------------------------------------------------+</span>
+
+.<span class="k"> log close</span>
+      name:  <span class="o">&lt;</span>unnamed<span class="o">&gt;</span>
+<span class="k">       log</span>:  <span class="o">/</span>Users<span class="o">/</span>d<span class="o">/</span>Documents<span class="o">/</span>GitHub<span class="o">/</span>stataone<span class="o">/</span>wk7output<span class="o">/</span>prescriptions<span class="m">.</span>log
+<span class="k">  log type</span>:  text
+ closed<span class="k"> on</span>:   <span class="m">9</span> May <span class="m">2024</span>, <span class="m">11</span>:<span class="m">15</span>:<span class="m">11</span>
+</pre></div>
+</div>
+<p><img alt="" src="_images/prescriptions.png" /></p>
+<p>The above can be thought of us being nested within diagnostic groups. If you reproduced the above figure for each diagnostic group (e.g. end-stage renal disease, stroke, diabetes), the relative rankings by frequency of usage are likely to change.</p>
+<p>It’s a simple reminder that data are always nested or hierarchical, but that we often overlook these multilevels in our models and inferencesl It’s a reflectoin, not on your rigor, but on the dominance of epidemiology in the curriculum (i.e., the obsession with bias and controlling for it).</p>
+<p>But when you wish to look at reality in the truest way, the concern then is variance <code class="docutils literal notranslate"><span class="pre">within</span></code> a level (e.g. a person or patient) as compared with variance <code class="docutils literal notranslate"><span class="pre">between</span></code> levels (e.g. persons or groups). The intra-class correlation coefficient (ICC) captures this and is a powerful way to “explain” variation in data rather than “control” variation in estimates.</p>
+<p>As mentioned last week, these matters are way beyond the scope of this class and perhaps even beyond the scope of your degree program. Our purpose here is to equip you with some basic Stata queries that help you describe groups (e.g. a person) as well as individuals nested within those groups (e.g. person-time)</p>
+</section>
 </section>
 <section id="lab">
 <h2>7.8 Lab<a class="headerlink" href="#lab" title="Permalink to this heading">#</a></h2>
@@ -673,6 +866,7 @@ document.write(`
 <section id="homework">
 <h2>7.9 Homework<a class="headerlink" href="#homework" title="Permalink to this heading">#</a></h2>
 <p>Your final homework is <a class="reference internal" href="hw7.html"><span class="doc std std-doc">here</span></a></p>
+<p>()</p>
 </section>
 </section>
 
@@ -758,9 +952,10 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hierarchical">7.4 Hierarchical</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#time">7.5 Time</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nested">7.6 Nested</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#effects-mixed-effects-of-time-on-sbp">7.7 Effects Mixed “Effects” of Time on SBP</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#effects">7.7 Effects</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fixed">Fixed</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mixed">Mixed</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prescriptions">Prescriptions</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab">7.8 Lab</a></li>
