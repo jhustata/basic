@@ -119,11 +119,10 @@ graph export lab6q6.png,replace
 ```
 
 ![Picture1](collpasebyage.png)
+
 ![lab6q5.png](lab6q6.png)
 
-   + After rounding
-
-![Picture2](collpasebyage10.png)
+![Picture2](collpasebyage10.)
      
 ```stata
 use "${repo}transplants", clear

@@ -1,4 +1,17 @@
-# hw3
+# Homework 7 (Solution Pending)
+
+```stata
+global repo https://github.com/jhustata/basic/raw/main/
+
+//This allows you to recreate the exact figures and color schemes
+//You'll lose 1pt overall if you're color schemes are the default from Stata 18
+if c(version)>17 { //tip 4 hw3
+    set scheme s2color
+}
+else { //stcolor is default in v18
+    di "you're good to go!"
+}
+```
 
 (late assignments will not be accepted for graduating students)
 
@@ -18,10 +31,16 @@ Write a .do file which performs the tasks described below. Your .do file should 
 
 ### Question 1
 
-Clear the memory and load `transplants.dta` in your `if 2 {` code-block or whereever you think if fits best. <u>Drop all observations</u> with missing values on `transplant_date`. Reproduce the following graph as precisely as possible.
+Clear the memory and load `transplants.dta`. <u>Drop all observations</u> with missing values on `transplant_date`. Reproduce the following graph as precisely as possible.
 
 This graph shows a line plot of the number of cases performed in each calendar year. Be mindful about
 the thickness of the line, the main title, and the axis labels and titles.
+
+```stata
+use ${repo}transplants, clear
+gen year = year(transplant_date)
+
+```
 
 Save the graph as `q1_[yourname].png`  
 
@@ -52,22 +71,9 @@ Save the graph as `q3 _[yourname].png`
 
 ![](q3_yourname.png)  
 
-### Question 4
+### Additional Credit (Maximum $+5$)
 
-Print the following text: `Question 4 : I estimate that it took me xxxx hours to complete this assignment.` For example, if it took you six hours, your .do file
-will contain the line
-
-```stata
-disp "Question 4 : I estimate that it took me 6 hours to complete this assignment."
-```
-
-Give an honest answer; this is just for our data collection purposes. Do not include time spent on the
-Extra Credit Challenge (see below). Everyone who answers question 4 will receive full credit for this
-question. <u>However, this question is worth some points, so don't skip it.</u>
-
-## extra credit challenge
-
-### Question 5
+##### Use the Extra credit challenge DropBox
 
 Write a program called `sampmean` to plot random data drawn from a normal distribution. `sampmean` takes a list of numbers representing different sample sizes. It also takes (optionally) a mean and standard deviation for the normal distribution. If we run
 
@@ -109,10 +115,4 @@ Hints:
 **Note: this problem is pretty hard!** We expect that few people will solve the whole thing, but we will
 give partial credit for a partial (working) solution. If your program only works partly, then explain in the
 comments, like this:
-
-```stata
-//NOTE: my program does not display the means in the graph. //instead it prints them to the screen.
-//Also "uniform" doesn't work,
-//and my program runs for only one number (not a list)
-```
-
+ 
