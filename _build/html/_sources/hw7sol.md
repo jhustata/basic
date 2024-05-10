@@ -1,5 +1,19 @@
 # Homework 7 (Solution Pending)
 
+- **Key Points**:
+   - Code that replicates the images is correct
+   - But its a little nuanced:
+      - If your machine runs anything before Stata 18, the format will be correct
+      - So you have to look for the conditional `if c(version)` statament
+      - Less reason to be vigilant if you're running Stata 18
+   - Replicating the image but without the "Classic" Stata look is ok
+      - But some points have to be dropped based on the Rubric
+   - The core idea of this class is that Stata code should anticipate variation in operating systems (`c(os)`), filepaths (`/` vs. `\`), Stata versions (`c(version)`), and so much more
+      - A script that runs on one computer may not successfully run on another
+      - Scripts that embrace such ambiguity must be awareded credit as per the rubric
+      - Conditional statements that creatively invoke system or user-defined macros are the best evidence
+         - e.g. `if _rc !=0 {`
+
 ```stata
 global repo https://github.com/jhustata/basic/raw/main/
 
@@ -22,7 +36,7 @@ Write a .do file which performs the tasks described below. Your .do file should 
 
 | Variable            | Description                                          | **Values**          |
 | ------------------- | ---------------------------------------------------- | ------------------- |
-| **transplants.dta** |                                                      |                     |
+| **tx.dta** |                                                      |                     |
 | `ctr_id`            | Center ID                                            | Integer             |
 | `transplant_date`   | Date of transplant                                   | Date                |
 | `prev_ki`           | Recipient has history of previous kidney transplant? | Binary (1=Yes/0=No) |
@@ -31,13 +45,13 @@ Write a .do file which performs the tasks described below. Your .do file should 
 
 ### Question 1
 
-Clear the memory and load `transplants.dta`. <u>Drop all observations</u> with missing values on `transplant_date`. Reproduce the following graph as precisely as possible.
+Clear the memory and load `tx.dta`. <u>Drop all observations</u> with missing values on `transplant_date`. Reproduce the following graph as precisely as possible.
 
 This graph shows a line plot of the number of cases performed in each calendar year. Be mindful about
 the thickness of the line, the main title, and the axis labels and titles.
 
 ```stata
-use ${repo}transplants, clear
+use ${repo}tx, clear
 gen year = year(transplant_date)
 
 ```
@@ -48,7 +62,7 @@ Save the graph as `q1_[yourname].png`
 
 ### Question 2
 
-Clear the memory and load `transplants.dta`. <u>Drop all observations</u> with missing values on `peak_pra`. Reproduce the following graph as precisely as possible.
+Clear the memory and load `tx.dta`. <u>Drop all observations</u> with missing values on `peak_pra`. Reproduce the following graph as precisely as possible.
 
 This graph shows a scatter plot of `peak_pra` and `age`, stratified by `prev_ki`. Observations with
 `prev_ki == 1` are shown in red. Be mindful about the color (“blue” and “red” in Stata color codes) and
@@ -60,7 +74,7 @@ Save the graph as `q2 _[yourname].png`
 
 ### Question 3
 
-Clear the memory and load `transplants.dta`. <u>Drop all observations</u> with missing values for `peak_pra`. Reproduce the following graph as precisely as possible.
+Clear the memory and load `tx.dta`. <u>Drop all observations</u> with missing values for `peak_pra`. Reproduce the following graph as precisely as possible.
 
 Calculate the average of `peak_pra` at each transplant center (`ctr_id`). Display the average value of
 `peak_pra` after sorting. The location of the text label “National Average” can be hardcoded (i.e.

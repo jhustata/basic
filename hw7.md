@@ -23,7 +23,7 @@ Write a .do file which performs the tasks described below. Your .do file should 
 
 | Variable            | Description                                          | **Values**          |
 | ------------------- | ---------------------------------------------------- | ------------------- |
-| **transplants.dta** |                                                      |                     |
+| **tx.dta** |                                                      |                     |
 | `ctr_id`            | Center ID                                            | Integer             |
 | `transplant_date`   | Date of transplant                                   | Date                |
 | `prev_ki`           | Recipient has history of previous kidney transplant? | Binary (1=Yes/0=No) |
