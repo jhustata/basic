@@ -380,6 +380,36 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="homework-7-solution-pending">
 <h1>Homework 7 (Solution Pending)<a class="headerlink" href="#homework-7-solution-pending" title="Permalink to this heading">#</a></h1>
+<ul class="simple">
+<li><p><strong>Key Points</strong>:</p>
+<ul>
+<li><p>Code that replicates the images is correct</p></li>
+<li><p>But its a little nuanced:</p>
+<ul>
+<li><p>If your machine runs anything before Stata 18, the format will be correct</p></li>
+<li><p>So you have to look for the conditional <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">c(version)</span></code> statament</p></li>
+<li><p>Less reason to be vigilant if you’re running Stata 18</p></li>
+</ul>
+</li>
+<li><p>Replicating the image but without the “Classic” Stata look is ok</p>
+<ul>
+<li><p>But some points have to be dropped based on the Rubric</p></li>
+</ul>
+</li>
+<li><p>The core idea of this class is that Stata code should anticipate variation in operating systems (<code class="docutils literal notranslate"><span class="pre">c(os)</span></code>), filepaths (<code class="docutils literal notranslate"><span class="pre">/</span></code> vs. <code class="docutils literal notranslate"><span class="pre">\</span></code>), Stata versions (<code class="docutils literal notranslate"><span class="pre">c(version)</span></code>), and so much more</p>
+<ul>
+<li><p>A script that runs on one computer may not successfully run on another</p></li>
+<li><p>Scripts that embrace such ambiguity must be awareded credit as per the rubric</p></li>
+<li><p>Conditional statements that creatively invoke system or user-defined macros are the best evidence</p>
+<ul>
+<li><p>e.g. <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">_rc</span> <span class="pre">!=0</span> <span class="pre">{</span></code></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">global</span> repo https:<span class="o">//</span>github<span class="m">.</span>com<span class="o">/</span>jhustata<span class="o">/</span>basic<span class="o">/</span>raw<span class="o">/</span>main<span class="o">/</span>
 
 <span class="c1">//This allows you to recreate the exact figures and color schemes</span>
@@ -405,7 +435,7 @@ document.write(`
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><strong>transplants.dta</strong></p></td>
+<tr class="row-even"><td><p><strong>tx.dta</strong></p></td>
 <td><p></p></td>
 <td><p></p></td>
 </tr>
@@ -434,10 +464,10 @@ document.write(`
 </section>
 <section id="question-1">
 <h2>Question 1<a class="headerlink" href="#question-1" title="Permalink to this heading">#</a></h2>
-<p>Clear the memory and load <code class="docutils literal notranslate"><span class="pre">transplants.dta</span></code>. <u>Drop all observations</u> with missing values on <code class="docutils literal notranslate"><span class="pre">transplant_date</span></code>. Reproduce the following graph as precisely as possible.</p>
+<p>Clear the memory and load <code class="docutils literal notranslate"><span class="pre">tx.dta</span></code>. <u>Drop all observations</u> with missing values on <code class="docutils literal notranslate"><span class="pre">transplant_date</span></code>. Reproduce the following graph as precisely as possible.</p>
 <p>This graph shows a line plot of the number of cases performed in each calendar year. Be mindful about
 the thickness of the line, the main title, and the axis labels and titles.</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="vg">${repo}</span>transplants,<span class="k"> clear</span>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="vg">${repo}</span>tx,<span class="k"> clear</span>
 <span class="k">gen</span> year = <span class="nf">year</span>(transplant_date)
 </pre></div>
 </div>
@@ -446,7 +476,7 @@ the thickness of the line, the main title, and the axis labels and titles.</p>
 </section>
 <section id="question-2">
 <h2>Question 2<a class="headerlink" href="#question-2" title="Permalink to this heading">#</a></h2>
-<p>Clear the memory and load <code class="docutils literal notranslate"><span class="pre">transplants.dta</span></code>. <u>Drop all observations</u> with missing values on <code class="docutils literal notranslate"><span class="pre">peak_pra</span></code>. Reproduce the following graph as precisely as possible.</p>
+<p>Clear the memory and load <code class="docutils literal notranslate"><span class="pre">tx.dta</span></code>. <u>Drop all observations</u> with missing values on <code class="docutils literal notranslate"><span class="pre">peak_pra</span></code>. Reproduce the following graph as precisely as possible.</p>
 <p>This graph shows a scatter plot of <code class="docutils literal notranslate"><span class="pre">peak_pra</span></code> and <code class="docutils literal notranslate"><span class="pre">age</span></code>, stratified by <code class="docutils literal notranslate"><span class="pre">prev_ki</span></code>. Observations with
 <code class="docutils literal notranslate"><span class="pre">prev_ki</span> <span class="pre">==</span> <span class="pre">1</span></code> are shown in red. Be mindful about the color (“blue” and “red” in Stata color codes) and
 size of the markers, the axis titles, and the legend.</p>
@@ -455,7 +485,7 @@ size of the markers, the axis titles, and the legend.</p>
 </section>
 <section id="question-3">
 <h2>Question 3<a class="headerlink" href="#question-3" title="Permalink to this heading">#</a></h2>
-<p>Clear the memory and load <code class="docutils literal notranslate"><span class="pre">transplants.dta</span></code>. <u>Drop all observations</u> with missing values for <code class="docutils literal notranslate"><span class="pre">peak_pra</span></code>. Reproduce the following graph as precisely as possible.</p>
+<p>Clear the memory and load <code class="docutils literal notranslate"><span class="pre">tx.dta</span></code>. <u>Drop all observations</u> with missing values for <code class="docutils literal notranslate"><span class="pre">peak_pra</span></code>. Reproduce the following graph as precisely as possible.</p>
 <p>Calculate the average of <code class="docutils literal notranslate"><span class="pre">peak_pra</span></code> at each transplant center (<code class="docutils literal notranslate"><span class="pre">ctr_id</span></code>). Display the average value of
 <code class="docutils literal notranslate"><span class="pre">peak_pra</span></code> after sorting. The location of the text label “National Average” can be hardcoded (i.e.
 manually specify the location; about x=7 and y=17). Other markers and lines should NOT be hardcoded
