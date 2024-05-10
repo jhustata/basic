@@ -1,6 +1,6 @@
 # Homework 7
 
-**NOTE:** The figures you are going to "replicate" have a "Classic" Stata look. However, Stata made some drastic changes in the Spring of 2023 with the release of Stata 18. You'll get full points if your `.do` file script reproduces these color formats regardless of the Stata version running on our computers. Embrace Stata version, `c(os)`, ambiguity! **See below**
+**NOTE:** The figures you are going to "replicate" have a "Classic" Stata look. However, Stata made some drastic changes in the Spring of 2023 with the release of Stata 18. You'll get full points if your `.do` file script reproduces these color formats regardless of the Stata version running on our computers. Embrace Stata version, `c(version)`, ambiguity! **See below**
 
 ```stata
 global repo https://github.com/jhustata/basic/raw/main/
