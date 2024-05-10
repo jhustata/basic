@@ -429,7 +429,7 @@ document.write(`
 </ul>
 <p>But let’s kickoff with some basics:</p>
 <p><span class="math notranslate nohighlight">\(Y_i = \beta_0 + \beta_1X_1 + \beta_2X_2 + \cdots + \beta_NX_N + \epsilon_{i.i.d.\sim\mathcal{N}(\mu=0,\sigma=1)}\)</span></p>
-<p>May questions in science take the above form. We often seek to “accurately” predict <span class="math notranslate nohighlight">\(Y_i\)</span> (absolute estimate) or test a hypothesis <span class="math notranslate nohighlight">\(\beta_i=0\)</span> (relative estimate)</p>
+<p>Many questions in science take the above form. We often seek to “accurately” predict <span class="math notranslate nohighlight">\(Y_i\)</span> (absolute estimate) or test a hypothesis <span class="math notranslate nohighlight">\(\beta_i=0\)</span> (relative estimate)</p>
 <section id="univariable">
 <h2>7.1 Univariable<a class="headerlink" href="#univariable" title="Permalink to this heading">#</a></h2>
 <p>We tend to “explore” the variables one at a time
@@ -538,7 +538,7 @@ document.write(`
 <section id="simple-linear-regression">
 <h3>Simple Linear Regression<a class="headerlink" href="#simple-linear-regression" title="Permalink to this heading">#</a></h3>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="vg">${repo}</span>transplants,<span class="k"> clear</span>
-<span class="k">regress</span> age bmi gender i<span class="m">.</span>race bmi don_ecd wait_yrs peak_pra
+<span class="k">regress</span> age bmi gender i<span class="m">.</span>race don_ecd wait_yrs peak_pra
 <span class="k">local</span> b_0 = _b[_cons]
 <span class="k">ereturn list</span>
 <span class="k">di e</span>(rmse) <span class="c1">//standard error of the multivariable prediction</span>
@@ -548,7 +548,7 @@ document.write(`
 <span class="k">g</span> ub = <span class="nf">r</span>(mean) <span class="o">+</span> <span class="m">1.96</span><span class="o">*</span>se
 <span class="k">sum</span> bmi
 <span class="k">g</span> mean_bmi = <span class="nf">r</span>(mean)
-<span class="k">lincom</span> _cons <span class="o">+</span> _b[peak_pra]<span class="o">*</span><span class="m">5</span> <span class="o">+</span> _b[wait_yrs]<span class="o">*</span><span class="m">3</span> <span class="o">+</span> _b[don_ecd]<span class="o">*</span><span class="m">1</span> <span class="o">+</span> _b[bmi]<span class="o">*</span><span class="m">29</span> <span class="o">+</span> _b[<span class="m">4.</span>race] <span class="o">+</span> _b[gender]<span class="o">*</span><span class="m">1</span> 
+<span class="k">lincom</span> _cons <span class="o">+</span> _b[bmi]<span class="o">*</span><span class="m">29</span> <span class="o">+</span> _b[gender]<span class="o">*</span><span class="m">1</span> <span class="o">+</span> _b[<span class="m">4.</span>race] <span class="o">+</span> _b[don_ecd]<span class="o">*</span><span class="m">1</span>  <span class="o">+</span> _b[wait_yrs]<span class="o">*</span><span class="m">3</span> <span class="o">+</span> _b[peak_pra]<span class="o">*</span><span class="m">5</span> 
 <span class="k">twoway scatter</span> age bmi<span class="k"> if</span> prev<span class="o">==</span><span class="m">0</span>, <span class="cs">///</span>
     ||<span class="k"> scatter</span> age bmi<span class="k"> if</span> prev<span class="o">==</span><span class="m">1</span>,  <span class="cs">///</span>
     ||<span class="k"> lowess</span> age bmi  <span class="k"> if</span> prev<span class="o">==</span><span class="m">0</span>, <span class="cs">///</span>
@@ -559,7 +559,9 @@ document.write(`
 </pre></div>
 </div>
 <p><img alt="" src="_images/age_bmi_prev_adj.png" /></p>
-<p>How good (or how bad) is our ability to “predict” age with our multivariable model?</p>
+<p>In the above figure the “y” function plots the “predicted” age for the scenario bmi = 29, gender = 1, race =4, don_ecd = 1, wait_yrs = 3, and peak_pra =5 (This is a “linear combination” or <code class="docutils literal notranslate"><span class="pre">lincom</span></code> in Stata syntax). The 95%CI of our linear combination is visualized using a vertical bar with capped upper and lower limits.</p>
+<p>How good (or bad) is our ability to “predict” age with this multivariable model? This isn’t a question of “bias” but rather one of “variance” (i.e., the square of <code class="docutils literal notranslate"><span class="pre">e(rmse)</span></code>).</p>
+<p>While some scenarios consider a bias-variance tradeoff as inevitable, in fact, successful attempts to “explain” variability between and within groups may reduce <strong>both</strong> bias and variance. These matters are beyond the scope of most of the courses you may study. But if at all we’ve piqued your interest, consider enrolling in the courses we <a class="reference external" href="https://jhustata.github.io/basic/chapter6.html#other">recommended last week</a>.</p>
 </section>
 <section id="generalized-linear-regression">
 <h3>Generalized Linear Regression<a class="headerlink" href="#generalized-linear-regression" title="Permalink to this heading">#</a></h3>
@@ -685,7 +687,7 @@ document.write(`
 <span class="k">graph</span> export logistic_logscale<span class="m">.</span>png,replace 
 </pre></div>
 </div>
-<p><img alt="" src="_images/wk7output" /></p>
+<p><img alt="" src="_images/logistic_logscale.png" /></p>
 </Details>
 </section>
 </section>
