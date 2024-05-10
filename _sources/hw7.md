@@ -1,6 +1,6 @@
 # Homework 7
 
-**NOTE:** The figures you are going to "replicate" may have been produced using a different dataset and version of Stata. As such, it is ok to have different `calender years` in your figures or different `peak_PRA` national averages. However, you can make your Stata 18 behave like earlier versions by embracing Stata version ambiguity using the `c(os)` system macro. **See below**
+**NOTE:** The figures you are going to "replicate" have a "Classic" Stata look. However, Stata made some drastic changes in the Spring of 2023 with the release of Stata 18. You'll get full points if your `.do` file script reproduces these color formats regardless of the Stata version running on our computers. Embrace Stata version, `c(os)`, ambiguity! **See below**
 
 ```stata
 global repo https://github.com/jhustata/basic/raw/main/
@@ -32,13 +32,13 @@ Write a .do file which performs the tasks described below. Your .do file should 
 
 ### Question 1
 
-Clear the memory and load `transplants.dta`. <u>Drop all observations</u> with missing values on `transplant_date`. Reproduce the following graph as precisely as possible.
+Clear the memory and load `tx.dta`. <u>Drop all observations</u> with missing values on `transplant_date`. Reproduce the following graph as precisely as possible.
 
 This graph shows a line plot of the number of cases performed in each calendar year. Be mindful about
 the thickness of the line, the main title, and the axis labels and titles.
 
 ```stata
-use ${repo}transplants, clear
+use ${repo}tx, clear
 gen year = year(transplant_date)
 
 ```
@@ -49,7 +49,7 @@ Save the graph as `q1_[yourname].png`
 
 ### Question 2
 
-Clear the memory and load `transplants.dta`. <u>Drop all observations</u> with missing values on `peak_pra`. Reproduce the following graph as precisely as possible.
+Clear the memory and load `tx.dta`. <u>Drop all observations</u> with missing values on `peak_pra`. Reproduce the following graph as precisely as possible.
 
 This graph shows a scatter plot of `peak_pra` and `age`, stratified by `prev_ki`. Observations with
 `prev_ki == 1` are shown in red. Be mindful about the color (“blue” and “red” in Stata color codes) and
@@ -61,7 +61,7 @@ Save the graph as `q2 _[yourname].png`
 
 ### Question 3
 
-Clear the memory and load `transplants.dta`. <u>Drop all observations</u> with missing values for `peak_pra`. Reproduce the following graph as precisely as possible.
+Clear the memory and load `tx.dta`. <u>Drop all observations</u> with missing values for `peak_pra`. Reproduce the following graph as precisely as possible.
 
 Calculate the average of `peak_pra` at each transplant center (`ctr_id`). Display the average value of
 `peak_pra` after sorting. The location of the text label “National Average” can be hardcoded (i.e.
