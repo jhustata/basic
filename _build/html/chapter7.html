@@ -548,6 +548,10 @@ document.write(`
 <span class="k">g</span> ub = <span class="nf">r</span>(mean) <span class="o">+</span> <span class="m">1.96</span><span class="o">*</span>se
 <span class="k">sum</span> bmi
 <span class="k">g</span> mean_bmi = <span class="nf">r</span>(mean)
+<span class="cm">/*the linear combination below yields an absolute estimate (i.e. prediction) of age given that we know the other demographic</span>
+<span class="cm">&amp; health characteristics: i.e., Hispanic female with BMI=29, who received an ECD organ,</span>
+<span class="cm">after being on the waitlist for 3 years. Her Peak PRA during the wait was 5</span>
+<span class="cm">*/</span>
 <span class="k">lincom</span> _cons <span class="o">+</span> _b[bmi]<span class="o">*</span><span class="m">29</span> <span class="o">+</span> _b[gender]<span class="o">*</span><span class="m">1</span> <span class="o">+</span> _b[<span class="m">4.</span>race] <span class="o">+</span> _b[don_ecd]<span class="o">*</span><span class="m">1</span>  <span class="o">+</span> _b[wait_yrs]<span class="o">*</span><span class="m">3</span> <span class="o">+</span> _b[peak_pra]<span class="o">*</span><span class="m">5</span> 
 <span class="k">twoway scatter</span> age bmi<span class="k"> if</span> prev<span class="o">==</span><span class="m">0</span>, <span class="cs">///</span>
     ||<span class="k"> scatter</span> age bmi<span class="k"> if</span> prev<span class="o">==</span><span class="m">1</span>,  <span class="cs">///</span>
@@ -559,7 +563,7 @@ document.write(`
 </pre></div>
 </div>
 <p><img alt="" src="_images/age_bmi_prev_adj.png" /></p>
-<p>In the above figure the “y” function plots the “predicted” age for the scenario bmi = 29, gender = 1, race =4, don_ecd = 1, wait_yrs = 3, and peak_pra =5 (This is a “linear combination” or <code class="docutils literal notranslate"><span class="pre">lincom</span></code> in Stata syntax). The 95%CI of our linear combination is visualized using a vertical bar with capped upper and lower limits.</p>
+<p>In the above figure the “y” function plots the “predicted” age for the scenario given any BMI between 18-40, accounting for gender, race, don_ecd, wait_yrs, and peak_pra. The 95%CI of this linear combination is visualized using a vertical bar with capped upper and lower limits. Strictly speaking, this interval applies only to the mean BMI scenario. A confidence band across all BMIs would be the correct way to display this. (Note: these methods assume a constant 95%CI regardless of BMI)</p>
 <p>How good (or bad) is our ability to “predict” age with this multivariable model? This isn’t a question of “bias” but rather one of “variance” (i.e., the square of <code class="docutils literal notranslate"><span class="pre">e(rmse)</span></code>).</p>
 <p>While some scenarios consider a bias-variance tradeoff as inevitable, in fact, successful attempts to “explain” variability between and within groups may reduce <strong>both</strong> bias and variance. These matters are beyond the scope of most of the courses you may study. But if at all we’ve piqued your interest, consider enrolling in the courses we <a class="reference external" href="https://jhustata.github.io/basic/chapter6.html#other">recommended last week</a>.</p>
 </section>
