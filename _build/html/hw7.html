@@ -380,7 +380,7 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="homework-7">
 <h1>Homework 7<a class="headerlink" href="#homework-7" title="Permalink to this heading">#</a></h1>
-<p><strong>NOTE:</strong> The figures you are going to “replicate” may have been produced using a different dataset and version of Stata. As such, it is ok to have different <code class="docutils literal notranslate"><span class="pre">calender</span> <span class="pre">years</span></code> in your figures or different <code class="docutils literal notranslate"><span class="pre">peak_PRA</span></code> national averages. However, you can make your Stata 18 behave like earlier versions by embracing Stata version ambiguity using the <code class="docutils literal notranslate"><span class="pre">c(os)</span></code> system macro. <strong>See below</strong></p>
+<p><strong>NOTE:</strong> The figures you are going to “replicate” have a “Classic” Stata look. However, Stata made some drastic changes in the Spring of 2023 with the release of Stata 18. You’ll get full points if your <code class="docutils literal notranslate"><span class="pre">.do</span></code> file script reproduces these color formats regardless of the Stata version running on our computers. Embrace Stata version, <code class="docutils literal notranslate"><span class="pre">c(os)</span></code>, ambiguity! <strong>See below</strong></p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">global</span> repo https:<span class="o">//</span>github<span class="m">.</span>com<span class="o">/</span>jhustata<span class="o">/</span>basic<span class="o">/</span>raw<span class="o">/</span>main<span class="o">/</span>
 
 <span class="c1">//Let us pay homage to &quot;Classic&quot; Stata color schemes in our final homework!</span>
@@ -434,10 +434,10 @@ document.write(`
 </section>
 <section id="question-1">
 <h2>Question 1<a class="headerlink" href="#question-1" title="Permalink to this heading">#</a></h2>
-<p>Clear the memory and load <code class="docutils literal notranslate"><span class="pre">transplants.dta</span></code>. <u>Drop all observations</u> with missing values on <code class="docutils literal notranslate"><span class="pre">transplant_date</span></code>. Reproduce the following graph as precisely as possible.</p>
+<p>Clear the memory and load <code class="docutils literal notranslate"><span class="pre">tx.dta</span></code>. <u>Drop all observations</u> with missing values on <code class="docutils literal notranslate"><span class="pre">transplant_date</span></code>. Reproduce the following graph as precisely as possible.</p>
 <p>This graph shows a line plot of the number of cases performed in each calendar year. Be mindful about
 the thickness of the line, the main title, and the axis labels and titles.</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="vg">${repo}</span>transplants,<span class="k"> clear</span>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="vg">${repo}</span>tx,<span class="k"> clear</span>
 <span class="k">gen</span> year = <span class="nf">year</span>(transplant_date)
 </pre></div>
 </div>
@@ -446,7 +446,7 @@ the thickness of the line, the main title, and the axis labels and titles.</p>
 </section>
 <section id="question-2">
 <h2>Question 2<a class="headerlink" href="#question-2" title="Permalink to this heading">#</a></h2>
-<p>Clear the memory and load <code class="docutils literal notranslate"><span class="pre">transplants.dta</span></code>. <u>Drop all observations</u> with missing values on <code class="docutils literal notranslate"><span class="pre">peak_pra</span></code>. Reproduce the following graph as precisely as possible.</p>
+<p>Clear the memory and load <code class="docutils literal notranslate"><span class="pre">tx.dta</span></code>. <u>Drop all observations</u> with missing values on <code class="docutils literal notranslate"><span class="pre">peak_pra</span></code>. Reproduce the following graph as precisely as possible.</p>
 <p>This graph shows a scatter plot of <code class="docutils literal notranslate"><span class="pre">peak_pra</span></code> and <code class="docutils literal notranslate"><span class="pre">age</span></code>, stratified by <code class="docutils literal notranslate"><span class="pre">prev_ki</span></code>. Observations with
 <code class="docutils literal notranslate"><span class="pre">prev_ki</span> <span class="pre">==</span> <span class="pre">1</span></code> are shown in red. Be mindful about the color (“blue” and “red” in Stata color codes) and
 size of the markers, the axis titles, and the legend.</p>
@@ -455,7 +455,7 @@ size of the markers, the axis titles, and the legend.</p>
 </section>
 <section id="question-3">
 <h2>Question 3<a class="headerlink" href="#question-3" title="Permalink to this heading">#</a></h2>
-<p>Clear the memory and load <code class="docutils literal notranslate"><span class="pre">transplants.dta</span></code>. <u>Drop all observations</u> with missing values for <code class="docutils literal notranslate"><span class="pre">peak_pra</span></code>. Reproduce the following graph as precisely as possible.</p>
+<p>Clear the memory and load <code class="docutils literal notranslate"><span class="pre">tx.dta</span></code>. <u>Drop all observations</u> with missing values for <code class="docutils literal notranslate"><span class="pre">peak_pra</span></code>. Reproduce the following graph as precisely as possible.</p>
 <p>Calculate the average of <code class="docutils literal notranslate"><span class="pre">peak_pra</span></code> at each transplant center (<code class="docutils literal notranslate"><span class="pre">ctr_id</span></code>). Display the average value of
 <code class="docutils literal notranslate"><span class="pre">peak_pra</span></code> after sorting. The location of the text label “National Average” can be hardcoded (i.e.
 manually specify the location; about x=7 and y=17). Other markers and lines should NOT be hardcoded
