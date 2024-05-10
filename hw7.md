@@ -1,16 +1,15 @@
 # Homework 7
 
-`Note`: The figures you are going to "replicate" may have been produced using a different dataset and version of Stata. It is thus ok to have different number of years in your figure. However, you can make your Stata 18 behave like earlier versions by embracing Stata version ambiguity using the `c(os)` system macro. **See below**
+**NOTE:** The figures you are going to "replicate" may have been produced using a different dataset and version of Stata. As such, it is ok to have different `calender years` in your figures or different `peak_PRA` national averages. However, you can make your Stata 18 behave like earlier versions by embracing Stata version ambiguity using the `c(os)` system macro. **See below**
 
 ```stata
 global repo https://github.com/jhustata/basic/raw/main/
 
-//This allows you to recreate the exact figures and color schemes
-//You'll lose 1pt overall if you're color schemes are the default from Stata 18
-if c(version)>17 { //tip 4 hw3
-    set scheme s2color
+//Let us pay homage to "Classic" Stata color schemes in our final homework!
+if c(version)>17 {  
+    set scheme s2color //stcolor is the default in Stata 18
 }
-else { //stcolor is default in v18
+else { 
     di "you're good to go!"
 }
 ```
