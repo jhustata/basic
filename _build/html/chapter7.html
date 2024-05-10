@@ -538,18 +538,28 @@ document.write(`
 <section id="simple-linear-regression">
 <h3>Simple Linear Regression<a class="headerlink" href="#simple-linear-regression" title="Permalink to this heading">#</a></h3>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="vg">${repo}</span>transplants,<span class="k"> clear</span>
-<span class="k">regress</span> age gender i<span class="m">.</span>race bmi don_ecd wait_yrs peak_pra
-<span class="k">local cons</span> = _b[_cons]
+<span class="k">regress</span> age bmi gender i<span class="m">.</span>race bmi don_ecd wait_yrs peak_pra
+<span class="k">local</span> b_0 = _b[_cons]
+<span class="k">ereturn list</span>
+<span class="k">di e</span>(rmse) <span class="c1">//standard error of the multivariable prediction</span>
+<span class="k">g se</span> =<span class="k"> e</span>(rmse)
+<span class="k">sum</span> age 
+<span class="k">g</span> lb = <span class="nf">r</span>(mean) <span class="o">-</span> <span class="m">1.96</span><span class="o">*</span>se
+<span class="k">g</span> ub = <span class="nf">r</span>(mean) <span class="o">+</span> <span class="m">1.96</span><span class="o">*</span>se
+<span class="k">sum</span> bmi
+<span class="k">g</span> mean_bmi = <span class="nf">r</span>(mean)
 <span class="k">lincom</span> _cons <span class="o">+</span> _b[peak_pra]<span class="o">*</span><span class="m">5</span> <span class="o">+</span> _b[wait_yrs]<span class="o">*</span><span class="m">3</span> <span class="o">+</span> _b[don_ecd]<span class="o">*</span><span class="m">1</span> <span class="o">+</span> _b[bmi]<span class="o">*</span><span class="m">29</span> <span class="o">+</span> _b[<span class="m">4.</span>race] <span class="o">+</span> _b[gender]<span class="o">*</span><span class="m">1</span> 
 <span class="k">twoway scatter</span> age bmi<span class="k"> if</span> prev<span class="o">==</span><span class="m">0</span>, <span class="cs">///</span>
     ||<span class="k"> scatter</span> age bmi<span class="k"> if</span> prev<span class="o">==</span><span class="m">1</span>,  <span class="cs">///</span>
     ||<span class="k"> lowess</span> age bmi  <span class="k"> if</span> prev<span class="o">==</span><span class="m">0</span>, <span class="cs">///</span>
     ||<span class="k"> lowess</span> age bmi <span class="k"> if</span> prev<span class="o">==</span><span class="m">1</span> <span class="cs">///</span>
-	|| function y = _b[bmi]<span class="o">*</span>x <span class="o">+</span> <span class="nv">`cons&#39;</span>,<span class="k"> range</span>(<span class="m">18</span> <span class="m">40</span>)
+	|| function y = <span class="nv">`b_0&#39;</span> <span class="o">+</span> _b[bmi]<span class="o">*</span>x ,<span class="k"> range</span>(<span class="m">18</span> <span class="m">40</span>) <span class="cs">///</span>
+	|| rcap lb ub mean_bmi
 <span class="k">graph</span> export wk7output<span class="o">/</span>age_bmi_prev_adj<span class="m">.</span>png,<span class="k"> replace</span>
 </pre></div>
 </div>
 <p><img alt="" src="_images/age_bmi_prev_adj.png" /></p>
+<p>How good (or how bad) is our ability to “predict” age with our multivariable model?</p>
 </section>
 <section id="generalized-linear-regression">
 <h3>Generalized Linear Regression<a class="headerlink" href="#generalized-linear-regression" title="Permalink to this heading">#</a></h3>
@@ -607,13 +617,87 @@ document.write(`
 </pre></div>
 </div>
 <p><img alt="" src="_images/logistic.png" /></p>
+<Details>
+   <Summary>Spot the Difference!</Summary>
+<p>The log scale is true to the data with equal distances from <span class="math notranslate nohighlight">\(2\)</span> to <span class="math notranslate nohighlight">\(\frac{1}{2}\)</span>, <span class="math notranslate nohighlight">\(4\)</span> to <span class="math notranslate nohighlight">\(\frac{1}{4}\)</span>, <span class="math notranslate nohighlight">\(8\)</span> to <span class="math notranslate nohighlight">\(\frac{1}{8}\)</span>. Otherwise, the scale between <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(1\)</span> is artificially “compressed”</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="vg">${repo}</span>transplants,<span class="k"> clear</span>
+<span class="k">sum</span> peak_pra,d
+<span class="k">g</span> highpra=peak_pra<span class="o">&gt;</span><span class="nf">r</span>(p90)
+<span class="k">sum</span> wait_yrs,d
+<span class="k">g</span> longwait=wait_yrs<span class="o">&gt;</span><span class="nf">r</span>(p50)
+<span class="k">postutil clear</span> 
+<span class="k">postfile</span> pp xaxis str80 coef double(result lb ub pvalue) using betas<span class="m">.</span>dta,<span class="k"> replace</span> 
+<span class="k">logistic</span> highpra gender prev_ki bmi age wait_yrs don_ecd
+<span class="k">local</span> xaxis=<span class="m">1</span>
+<span class="k">qui foreach</span> v of<span class="k"> varlist</span> gender prev_ki bmi age wait_yrs don_ecd {  
+<span class="k">	lincom</span> <span class="nv">`v&#39;</span>
+<span class="k">	return list</span> 
+<span class="k">	local est</span>:<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(estimate)
+<span class="k">	local</span> lb:<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(lb)
+<span class="k">	local</span> ub:<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(ub)
+<span class="k">	local</span> pval:<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(p)
+<span class="k">    post</span> pp (<span class="nv">`xaxis&#39;</span>) (<span class="s">&quot;</span><span class="nv">`v&#39;</span><span class="s">&quot;</span>) (<span class="nv">`est&#39;</span>) (<span class="nv">`lb&#39;</span>) (<span class="nv">`ub&#39;</span>) (<span class="nv">`pval&#39;</span>)
+<span class="k">	local</span> xaxis=<span class="nv">`xaxis&#39;</span> <span class="o">+</span> <span class="m">1</span>
+}
+
+<span class="k">postclose</span> pp
+
+<span class="k">ls</span> <span class="o">-</span>l
+<span class="k">use</span> betas,clear
+<span class="k">foreach</span> v of<span class="k"> varlist</span> result lb ub {
+<span class="k">	replace</span> <span class="nv">`v&#39;</span> =<span class="k"> log</span>(<span class="nv">`v&#39;</span>)
+}
+<span class="k">list</span> 
+#delimit ;
+<span class="k">twoway</span> (scatter result xaxis)
+       (rcap lb ub xaxis, 
+	       scale(log)
+	       yline(<span class="m">0</span>, 
+	            lc(lime) 
+			    lp(dash)
+	            )
+	       legend(off)
+	       xlab(
+	           <span class="m">1</span> <span class="s">&quot;Gender&quot;</span> 
+	           <span class="m">2</span> <span class="s">&quot;Previous Tx&quot;</span>
+	           <span class="m">3</span> <span class="s">&quot;BMI&quot;</span>
+		       <span class="m">4</span> <span class="s">&quot;Age&quot;</span>
+		       <span class="m">5</span> <span class="s">&quot;Wait y&quot;</span>
+	           <span class="m">6</span> <span class="s">&quot;ECD&quot;</span>
+	           )
+		   ylab(
+		       <span class="o">-</span><span class="m">2.08</span> <span class="s">&quot;0.125&quot;</span>
+		       <span class="o">-</span><span class="m">1.39</span> <span class="s">&quot;0.25&quot;</span>
+			   <span class="o">-</span><span class="m">0.69</span> <span class="s">&quot;0.5&quot;</span>
+			    <span class="m">0</span>    <span class="s">&quot;1&quot;</span>
+				<span class="m">0.69</span> <span class="s">&quot;2&quot;</span>
+				<span class="m">1.39</span> <span class="s">&quot;4&quot;</span>
+				<span class="m">2.08</span> <span class="s">&quot;8&quot;</span>
+		   )
+	       ti(<span class="s">&quot;Association between High PRA and select risk factors&quot;</span>, pos(<span class="m">11</span>))
+	       yti(<span class="s">&quot;OR&quot;</span>, 
+	           orientation(horizontal)
+		      )
+	       xti(<span class="s">&quot;&quot;</span>)
+	      )
+        ;
+#delimit cr
+<span class="k">graph</span> export logistic_logscale<span class="m">.</span>png,replace 
+</pre></div>
+</div>
+<p><img alt="" src="_images/wk7output" /></p>
+</Details>
 </section>
 </section>
 <section id="hierarchical">
 <h2>7.4 Hierarchical<a class="headerlink" href="#hierarchical" title="Permalink to this heading">#</a></h2>
 <p>Last week we briefly talked about <a class="reference external" href="https://jhustata.github.io/basic/chapter6.html">nested data</a>. In these data the <span class="math notranslate nohighlight">\(\epsilon_{i.i.d.\sim\mathcal{N}(\mu=0,\sigma=1)}\)</span> in the expressions is “violated”</p>
 <p>We assess blood pressure in each one of you during each session of the Stata I (Basic) class:</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">clear</span>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//ChatGPT wrote this script following a few instructions from me</span>
+<span class="c1">* I&#39;ll indicate with `*` the points I edited for it to work</span>
+<span class="c1">//Very impressive since this was a first iteration</span>
+
+<span class="k">clear</span>
 
 <span class="c1">// Set the number of students and sessions</span>
 <span class="k">local</span> nstudents <span class="m">100</span>
@@ -642,26 +726,32 @@ document.write(`
 <span class="k">        replace</span> sbp = <span class="nf">rnormal</span>(<span class="m">120</span>, <span class="m">10</span>)
         
         <span class="c1">// Append data for the current session to the dataset</span>
-        <span class="c1">//append</span>
+<span class="c1">		*append</span>
+<span class="c1">		*ChatGPT included the &quot;append&quot; command with no additional syntax</span>
     }
-<span class="k">	save</span> wk7output<span class="o">/</span>student<span class="nv">`i&#39;</span>,<span class="k"> replace</span> <span class="c1">//edit in class after seeing the mess it causes!!</span>
+<span class="c1">	*I inserted this line of code</span>
+<span class="k">	save</span> wk7output<span class="o">/</span>student<span class="nv">`i&#39;</span>,<span class="k"> replace</span>  
 }
 
-<span class="k">forvalues</span> i=<span class="m">1</span><span class="o">/</span><span class="m">100</span> {
-<span class="k">	</span>
+<span class="c1">* ChatGPTs contribution ends at this point</span>
+
+<span class="k">clear</span> 
+<span class="k">forvalues</span> i=<span class="m">1</span><span class="o">/</span><span class="nv">`nstudents&#39;</span> {
 <span class="k">	append</span> using wk7output<span class="o">/</span>student<span class="nv">`i&#39;</span>.dta
+<span class="c1">	*Please understand what mess is wrought by blocking this &quot;rm&quot; line of code</span>
+<span class="c1">	*rm wk7output/student`i&#39;.dta  </span>
 }
 
-<span class="c1">// Sort the dataset</span>
+<span class="c1">* Sort the dataset</span>
 <span class="k">sort</span> student_id session
 
-<span class="c1">// Display the first few observations</span>
+<span class="c1">* Display the first few observations</span>
 <span class="k">list</span> student_id session sbp<span class="k"> in</span> <span class="m">1</span><span class="o">/</span><span class="m">10</span>
 
-<span class="c1">// Not what we wanted</span>
+<span class="c1">* Not what we wanted</span>
 <span class="k">bys</span> student_id:<span class="k"> replace</span> session=_n
 
-<span class="c1">// Let&#39;s include the dates</span>
+<span class="c1">* Let&#39;s include the dates</span>
 <span class="k">local</span> session_date=d(28mar2024)
 <span class="k">forvalues</span> i=<span class="m">1</span><span class="o">/</span><span class="m">8</span> {
 <span class="k">	replace</span> session_date=<span class="nv">`session_date&#39;</span><span class="k"> if</span> session<span class="o">==</span><span class="nv">`i&#39;</span>
@@ -672,13 +762,21 @@ document.write(`
 <span class="k">replace</span> sbp=<span class="nf">round</span>(sbp)
 <span class="k">save</span> wk7output<span class="o">/</span>student_pressure,<span class="k"> replace</span> 
 <span class="k">ls</span> wk7output<span class="o">/</span>
+<span class="k">count</span>
+<span class="k">capture isid</span> student_id
+<span class="k">if</span> _rc <span class="o">!=</span><span class="m">0</span> {
+<span class="k">	di</span> <span class="s">`&quot;Observations are nested within &quot;student_id&quot; &quot;&#39;</span>
+}
+<span class="k">else</span> {
+<span class="k">	di</span> <span class="s">`&quot;student_id&quot; uniquely identifies observations&quot;&#39;</span>
+}
 </pre></div>
 </div>
-<p>Let’s edit our script in light of …</p>
+<p>Let’s edit our script in light of the 100 studentN.dta created by the script</p>
 </section>
 <section id="time">
 <h2>7.5 Time<a class="headerlink" href="#time" title="Permalink to this heading">#</a></h2>
-<p>How may we visualize the change (if any) in blood pressure over the course of Stata I?</p>
+<p>How may we visualize the change (if any) in blood pressure over <strong>time</strong> (i.e., the eight-week Stata)?</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">// Line plot of SBP over the 8-week period</span>
 <span class="k">twoway</span> (scatter sbp session_date,<span class="k"> sort</span> jitter(<span class="m">9</span>)) <span class="cs">///</span>
     , xtitle(<span class="s">&quot;Session Date&quot;</span>) ytitle(<span class="s">&quot;Systolic Blood Pressure&quot;</span>) <span class="cs">///</span>
@@ -697,7 +795,8 @@ document.write(`
     (connected sbp session_date<span class="k"> if</span> student_id<span class="o">==</span><span class="m">100</span>, msymbol(circle) mcolor(magenta)) <span class="cs">///</span>
     , xtitle(<span class="s">&quot;Session Date&quot;</span>) ytitle(<span class="s">&quot;Systolic Blood Pressure&quot;</span>) <span class="cs">///</span>
     title(<span class="s">&quot;Individual Trajectories of Systolic Blood Pressure Over 8 Weeks&quot;</span>) <span class="cs">///</span>
-    legend(order(<span class="m">1</span> <span class="s">&quot;Student 1&quot;</span> <span class="m">2</span> <span class="s">&quot;Student 2&quot;</span> ... <span class="m">100</span> <span class="s">&quot;Student 100&quot;</span>)) <span class="cs">///</span>
+    subti(<span class="s">&quot;Student Trajectories Identifiable in Legend&quot;</span>) <span class="cs">///</span>
+    legend(order(<span class="m">1</span> <span class="s">&quot;Student 1&quot;</span> <span class="m">2</span> <span class="s">&quot;Student 2&quot;</span> <span class="m">100</span> <span class="s">&quot;Student 100&quot;</span>)) <span class="cs">///</span>
     yline(<span class="m">120</span>, lcolor(black) lpattern(dash))
 <span class="k">graph</span> export wk7output<span class="o">/</span>student_pressure_perweek_notiid<span class="m">.</span>png,<span class="k"> replace</span> 
 </pre></div>
@@ -719,13 +818,13 @@ document.write(`
 </Details>
 <p>Let’s improve the informativeness of this figure:</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">// Line plot of SBP for each student over the 8-week period</span>
-
 <span class="k">use</span> wk7output<span class="o">/</span>student_pressure<span class="m">.</span>dta,<span class="k"> clear</span> 
 <span class="k">twoway</span> (connected sbp session_date<span class="k"> if</span> student_id<span class="o">==</span><span class="m">1</span>, msymbol(circle) mcolor(blue) mlab(student_id)) <span class="cs">///</span>
     (connected sbp session_date<span class="k"> if</span> student_id<span class="o">==</span><span class="m">2</span>, msymbol(circle) mcolor(red) mlab(student_id)) <span class="cs">///</span>
     (connected sbp session_date<span class="k"> if</span> student_id<span class="o">==</span><span class="m">100</span>, msymbol(circle) mcolor(magenta) mlab(student_id)) <span class="cs">///</span>
     , xtitle(<span class="s">&quot;Session Date&quot;</span>) ytitle(<span class="s">&quot;Systolic Blood Pressure&quot;</span>) <span class="cs">///</span>
     title(<span class="s">&quot;Individual Trajectories of Systolic Blood Pressure Over 8 Weeks&quot;</span>) <span class="cs">///</span>
+    subti(<span class="s">&quot;Student Trajectories Identifiable By Marker Labels&quot;</span>) <span class="cs">///</span>
     legend(off<span class="k"> order</span>(<span class="m">1</span> <span class="s">&quot;Student 1&quot;</span> <span class="m">2</span> <span class="s">&quot;Student 2&quot;</span> <span class="m">100</span> <span class="s">&quot;Student 100&quot;</span>)) <span class="cs">///</span>
     yline(<span class="m">120</span>, lcolor(black) lpattern(dash)) 
 <span class="k">graph</span> export wk7output<span class="o">/</span>student_pressure_perweek_notiid_mlabel<span class="m">.</span>png,<span class="k"> replace</span> 
@@ -874,8 +973,8 @@ import delimited <span class="s">&quot;https://github.com/jhustata/lab6.md/raw/m
 <span class="k">global</span> ylab 
 <span class="k">twoway</span> bar top_meds x, <span class="cs">/// </span>
     horizontal <span class="cs">///</span>
-    ytitle(<span class="s">&quot;Number of Prescriptions&quot;</span>) <span class="cs">///</span>
-	xtitle(<span class="s">&quot;Medication&quot;</span>) <span class="cs">///</span>
+    ytitle(<span class="s">&quot;Medication&quot;</span>) <span class="cs">///</span>
+	xtitle(<span class="s">&quot;Number of Prescriptions&quot;</span>) <span class="cs">///</span>
 	title(<span class="s">&quot;Top 10 Most Prescribed Medications&quot;</span>) <span class="cs">///</span>
 	ylab(<span class="m">0</span>(<span class="m">1</span>)<span class="m">10</span> <span class="cs">///</span>
 	    <span class="m">1</span> <span class="s">&quot;</span><span class="vg">$xlab1</span><span class="s">&quot;</span> <span class="cs">///</span>
@@ -890,26 +989,26 @@ import delimited <span class="s">&quot;https://github.com/jhustata/lab6.md/raw/m
 		<span class="m">10</span> <span class="s">&quot;</span><span class="vg">$xlab10</span><span class="s">&quot;</span>)
 <span class="k">graph</span> export wk7output<span class="o">/</span>prescriptions<span class="m">.</span>png,<span class="k"> replace</span> 
 <span class="k">restore</span> 
-<span class="c1">* Calculate number of unique patients and number of prescriptions</span>
-<span class="k">egen</span> idtag=tag(usrds_id)
-<span class="k">count if</span> idtag 
-<span class="k">egen</span> gnntag = tag(gnn)
-<span class="k">count if</span> gnntag 
-
-<span class="c1">* Descriptive statistics for prescriptions per patient</span>
-<span class="k">bys</span> usrds_id:<span class="k"> g</span> pillcount=_N
-<span class="k">hist</span> pillcount
-<span class="k">sum</span> pillcount,<span class="k"> de</span>
-<span class="k">gen</span> polypharm=pillcount<span class="o">&gt;=</span><span class="m">3</span>
-
-<span class="c1">* Identify patients with 3 or more prescriptions</span>
-<span class="k">egen</span> prescriptions_per_patient =<span class="k"> count</span>(usrds_id),<span class="k"> by</span>(usrds_id)
-<span class="k">compare</span> pillcount prescriptions_per_patient
-<span class="k">gen</span> patients_with_3_plus = prescriptions_per_patient <span class="o">&gt;=</span> <span class="m">3</span>
-<span class="k">compare</span> polypharm patients_with_3_plus
-
-<span class="c1">* Subset dataset for patients with 3 or more prescriptions</span>
 <span class="cm">/*</span>
+<span class="cm">* Calculate number of unique patients and number of prescriptions</span>
+<span class="cm">egen idtag=tag(usrds_id)</span>
+<span class="cm">count if idtag </span>
+<span class="cm">egen gnntag = tag(gnn)</span>
+<span class="cm">count if gnntag </span>
+
+<span class="cm">* Descriptive statistics for prescriptions per patient</span>
+<span class="cm">bys usrds_id: g pillcount=_N</span>
+<span class="cm">hist pillcount</span>
+<span class="cm">sum pillcount, de</span>
+<span class="cm">gen polypharm=pillcount&gt;=3</span>
+
+<span class="cm">* Identify patients with 3 or more prescriptions</span>
+<span class="cm">egen prescriptions_per_patient = count(usrds_id), by(usrds_id)</span>
+<span class="cm">compare pillcount prescriptions_per_patient</span>
+<span class="cm">gen patients_with_3_plus = prescriptions_per_patient &gt;= 3</span>
+<span class="cm">compare polypharm patients_with_3_plus</span>
+
+<span class="cm">* Subset dataset for patients with 3 or more prescriptions</span>
 <span class="cm">keep if patients_with_3_plus</span>
 
 <span class="cm">* Identify and display prescriptions over time for selected patients</span>
@@ -920,13 +1019,14 @@ import delimited <span class="s">&quot;https://github.com/jhustata/lab6.md/raw/m
 <span class="cm">	count </span>
 <span class="cm">	local count=r(N)</span>
 <span class="cm">	twoway bar `count&#39; year_month </span>
-<span class="cm">    graph bar (`count&#39;), over(year_month) title(&quot;Patient `patient_id&#39;: Prescriptions Over Time&quot;) ///</span>
+<span class="cm">    graph bar (`count&#39;), over(year_month) ///</span>
+<span class="cm">	    title(&quot;Patient `patient_id&#39;: Prescriptions Over Time&quot;) ///</span>
 <span class="cm">	    ytitle(&quot;Number of Prescriptions&quot;) xtitle(&quot;Year-Month&quot;)</span>
-<span class="cm">}</span>
-<span class="cm">*/</span>
+
 
 <span class="cm">* Fit the mixed-effects model</span>
-<span class="k">xtmixed</span> usrds_id i<span class="m">.</span>year_month, mle
+<span class="cm">xtmixed usrds_id i.year_month, mle</span>
+<span class="cm">*/</span>
 </pre></div>
 </div>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">capture log close</span>
