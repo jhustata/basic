@@ -1,5 +1,7 @@
 # Homework 7
 
+`Note`: The figures you are going to "replicate" may have been produced using a different dataset and version of Stata. It is thus ok to have different number of years in your figure. However, you can make your Stata 18 behave like earlier versions by embracing Stata version ambiguity using the `c(os)` system macro. **See below**
+
 ```stata
 global repo https://github.com/jhustata/basic/raw/main/
 
