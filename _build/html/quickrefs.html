@@ -365,7 +365,10 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#homework-assignments">Homework Assignments</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#datasets-and-supplementary-materials">Datasets and Supplementary Materials</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-resources-and-evaluation">Additional Resources and Evaluation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weekly-insights-updates-announcements-and-solutions">Weekly Insights: Updates, Announcements, and Solutions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weekly-insights-updates-announcements-and-solutions">Weekly Insights: Updates, Announcements, and Solutions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#operating-system-ambiguity">Operating system ambiguity</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rubric-for-all-your-homeworks">Rubric for all Your Homeworks</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#total-points-100-no-student-will-lose-more-than-20-points-some-students-may-score-as-many-as-105-points">Total Points: 100 (no student will lose more than 20 points; some students may score as many as 105 points)</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-considerations">Additional Considerations:</a></li>
@@ -535,11 +538,27 @@ document.write(`
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <ul class="simple">
-<li><p><strong>Updated as of 05/11/2024 at 2:24PM</strong></p></li>
+<li><p><strong>Updated as of 05/12/2024 at 10:54AM</strong></p></li>
 <li><p>Lab7 &amp; HW7 questions are available</p></li>
 <li><p>Lab6 &amp; HW6 solutions are posted</p></li>
+<li><p>Session 7 notes edited to reflect operating system ambiguity</p></li>
 </ul>
 </div>
+<section id="operating-system-ambiguity">
+<h3>Operating system ambiguity<a class="headerlink" href="#operating-system-ambiguity" title="Permalink to this heading">#</a></h3>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">hist</span> age
+<span class="k">sum</span> age
+<span class="k">regress</span> age 
+<span class="k">if</span> <span class="nf">c</span>(os) <span class="o">==</span> <span class="s">&quot;MacOSX&quot;</span> { <span class="c1">//forward slash</span>
+<span class="k">    graph</span> export wk7output<span class="o">/</span>age_tx<span class="m">.</span>png,<span class="k"> replace</span>
+}
+<span class="k">else</span> { <span class="c1">//backslash</span>
+<span class="k">	graph</span> export wk7output\age_tx<span class="m">.</span>png,<span class="k"> replace</span>
+}
+<span class="k">ls</span>  wk7output
+</pre></div>
+</div>
+</section>
 </section>
 <section id="rubric-for-all-your-homeworks">
 <h2>Rubric for all Your Homeworks<a class="headerlink" href="#rubric-for-all-your-homeworks" title="Permalink to this heading">#</a></h2>
@@ -665,7 +684,10 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#homework-assignments">Homework Assignments</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#datasets-and-supplementary-materials">Datasets and Supplementary Materials</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-resources-and-evaluation">Additional Resources and Evaluation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weekly-insights-updates-announcements-and-solutions">Weekly Insights: Updates, Announcements, and Solutions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weekly-insights-updates-announcements-and-solutions">Weekly Insights: Updates, Announcements, and Solutions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#operating-system-ambiguity">Operating system ambiguity</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rubric-for-all-your-homeworks">Rubric for all Your Homeworks</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#total-points-100-no-student-will-lose-more-than-20-points-some-students-may-score-as-many-as-105-points">Total Points: 100 (no student will lose more than 20 points; some students may score as many as 105 points)</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-considerations">Additional Considerations:</a></li>

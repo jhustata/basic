@@ -445,7 +445,12 @@ document.write(`
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">hist</span> age
 <span class="k">sum</span> age
 <span class="k">regress</span> age 
-<span class="k">graph</span> export wk7output<span class="o">/</span>age_tx<span class="m">.</span>png,<span class="k"> replace</span>
+<span class="k">if</span> <span class="nf">c</span>(os) <span class="o">==</span> <span class="s">&quot;MacOSX&quot;</span> {
+<span class="k">    graph</span> export wk7output<span class="o">/</span>age_tx<span class="m">.</span>png,<span class="k"> replace</span>
+}
+<span class="k">else</span> {
+<span class="k">	graph</span> export wk7output\age_tx<span class="m">.</span>png,<span class="k"> replace</span>
+}
 <span class="k">ls</span>  wk7output
 </pre></div>
 </div>
@@ -453,7 +458,12 @@ document.write(`
 <p>Let’s get fancy:</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">gen</span> x=<span class="m">1</span> <span class="c1">//dummy or meaningless variable</span>
 <span class="k">twoway scatter</span> age x, jitter(<span class="m">15</span>)
-<span class="k">graph</span> export wk7output<span class="o">/</span>age_tx_scatter<span class="m">.</span>png,<span class="k"> replace</span> 
+<span class="k">if</span> <span class="nf">c</span>(os) <span class="o">==</span> <span class="s">&quot;MacOSX&quot;</span> {
+<span class="k">    graph</span> export wk7output<span class="o">/</span>age_tx_scatter<span class="m">.</span>png,<span class="k"> replace</span>
+}
+<span class="k">else</span> {
+<span class="k">	graph</span> export wk7output\age_tx_scatter<span class="m">.</span>png,<span class="k"> replace</span>
+} 
 </pre></div>
 </div>
 <p><img alt="" src="_images/age_tx_scatter.png" /></p>
@@ -465,7 +475,12 @@ document.write(`
 <span class="k">g</span> lb = <span class="nf">r</span>(mean) <span class="o">-</span> <span class="m">1.96</span><span class="o">*</span><span class="nf">r</span>(sd)
 <span class="k">g</span> ub = <span class="nf">r</span>(mean) <span class="o">+</span> <span class="m">1.96</span><span class="o">*</span><span class="nf">r</span>(sd)
 <span class="k">twoway scatter</span> age x, jitter(<span class="m">15</span>) ||<span class="k"> scatter mean</span> x || rcap ub lb x
-<span class="k">graph</span> export wk7output<span class="o">/</span>age_tx_para<span class="m">.</span>png,<span class="k"> replace</span>  
+<span class="k">if</span> <span class="nf">c</span>(os) <span class="o">==</span> <span class="s">&quot;MacOSX&quot;</span> {
+<span class="k">    graph</span> export wk7output<span class="o">/</span>age_tx_para<span class="m">.</span>png,<span class="k"> replace</span> 
+}
+<span class="k">else</span> {
+<span class="k">	graph</span> export wk7output\age_tx_para<span class="m">.</span>png,<span class="k"> replace</span> 
+} 
 </pre></div>
 </div>
 <p><img alt="" src="_images/age_tx_para.png" /></p>
@@ -473,7 +488,12 @@ document.write(`
 <section id="binary">
 <h3>Binary<a class="headerlink" href="#binary" title="Permalink to this heading">#</a></h3>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">hist</span> gender
-<span class="k">graph</span> export wk7output<span class="o">/</span>gender_bin<span class="m">.</span>png,<span class="k"> replace</span> 
+<span class="k">if</span> <span class="nf">c</span>(os) <span class="o">==</span> <span class="s">&quot;MacOSX&quot;</span> {
+<span class="k">    graph</span> export wk7output<span class="o">/</span>gender_bin<span class="m">.</span>png,<span class="k"> replace</span>  
+}
+<span class="k">else</span> {
+<span class="k">	graph</span> export wk7output<span class="o">/</span>gender_bin<span class="m">.</span>png,<span class="k"> replace</span>  
+} 
 </pre></div>
 </div>
 <p><img alt="" src="_images/gender_bin.png" /></p>
@@ -487,7 +507,12 @@ document.write(`
 <section id="multicategory">
 <h3>Multicategory<a class="headerlink" href="#multicategory" title="Permalink to this heading">#</a></h3>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">hist</span> dx
-<span class="k">graph</span> export wk7output<span class="o">/</span>dx_cat<span class="m">.</span>png,<span class="k"> replace</span> 
+<span class="k">if</span> <span class="nf">c</span>(os) <span class="o">==</span> <span class="s">&quot;MacOSX&quot;</span> {
+<span class="k">    graph</span> export wk7output<span class="o">/</span>dx_cat<span class="m">.</span>png,<span class="k"> replace</span>  
+}
+<span class="k">else</span> {
+<span class="k">	graph</span> export wk7output\dx_cat<span class="m">.</span>png,<span class="k"> replace</span>  
+} 
 </pre></div>
 </div>
 <p><img alt="" src="_images/dx_cat.png" /></p>
@@ -500,7 +525,12 @@ document.write(`
 <p><span class="math notranslate nohighlight">\(Y_i = \beta_0 + \beta_1X_1 + \epsilon_{i.i.d.\sim\mathcal{N}(\mu=0,\sigma=1)}\)</span></p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="vg">${repo}</span>transplants,<span class="k"> clear</span>
 <span class="k">twoway scatter</span> age bmi ||<span class="k"> lowess</span> age bmi
-<span class="k">graph</span> export wk7output<span class="o">/</span>age_bmi<span class="m">.</span>png,<span class="k"> replace</span> 
+<span class="k">if</span> <span class="nf">c</span>(os) <span class="o">==</span> <span class="s">&quot;MacOSX&quot;</span> {
+<span class="k">    graph</span> export wk7output<span class="o">/</span>age_bmi<span class="m">.</span>png,<span class="k"> replace</span> 
+}
+<span class="k">else</span> {
+<span class="k">	graph</span> export wk7output\age_bmi<span class="m">.</span>png,<span class="k"> replace</span> 
+} 
 </pre></div>
 </div>
 <p><img alt="" src="_images/age_bmi.png" /></p>
@@ -512,7 +542,12 @@ document.write(`
     ||<span class="k"> scatter</span> age bmi<span class="k"> if</span> prev<span class="o">==</span><span class="m">1</span>,  <span class="cs">///</span>
     ||<span class="k"> lfit</span> age bmi<span class="k"> if</span> prev<span class="o">==</span><span class="m">0</span>, <span class="cs">///</span>
     ||<span class="k"> lfit</span> age bmi<span class="k"> if</span> prev<span class="o">==</span><span class="m">1</span>
-<span class="k">graph</span> export wk7output<span class="o">/</span>age_bmi_prev_linear<span class="m">.</span>png,<span class="k"> replace</span>
+<span class="k">if</span> <span class="nf">c</span>(os) <span class="o">==</span> <span class="s">&quot;MacOSX&quot;</span> {
+<span class="k">    graph</span> export wk7output<span class="o">/</span>age_bmi_prev_linear<span class="m">.</span>png,<span class="k"> replace</span>
+}
+<span class="k">else</span> {
+<span class="k">	graph</span> export wk7output\age_bmi_prev_linear<span class="m">.</span>png,<span class="k"> replace</span>
+} 
 </pre></div>
 </div>
 <p><img alt="" src="wk7output/age_bmi_prev_linear.png" /></p>
@@ -524,7 +559,12 @@ document.write(`
     ||<span class="k"> scatter</span> age bmi<span class="k"> if</span> prev<span class="o">==</span><span class="m">1</span>  <span class="cs">///</span>
 	||<span class="k"> lowess</span> age bmi<span class="k"> if</span> prev<span class="o">==</span><span class="m">0</span> <span class="cs">///</span>
 	||<span class="k"> lowess</span> age bmi<span class="k"> if</span> prev<span class="o">==</span><span class="m">1</span>  
-<span class="k">graph</span> export wk7output<span class="o">/</span>age_bmi_prev_lowess<span class="m">.</span>png,<span class="k"> replace</span> 
+<span class="k">if</span> <span class="nf">c</span>(os) <span class="o">==</span> <span class="s">&quot;MacOSX&quot;</span> {
+<span class="k">    graph</span> export wk7output<span class="o">/</span>age_bmi_prev_lowess<span class="m">.</span>png,<span class="k"> replace</span> 
+}
+<span class="k">else</span> {
+<span class="k">	graph</span> export wk7output\age_bmi_prev_lowess<span class="m">.</span>png,<span class="k"> replace</span> 
+} 
 </pre></div>
 </div>
 <p><img alt="" src="wk7output/age_bmi_prev_lowess.png" /></p>
@@ -559,7 +599,12 @@ document.write(`
     ||<span class="k"> lowess</span> age bmi <span class="k"> if</span> prev<span class="o">==</span><span class="m">1</span> <span class="cs">///</span>
 	|| function y = <span class="nv">`b_0&#39;</span> <span class="o">+</span> _b[bmi]<span class="o">*</span>x ,<span class="k"> range</span>(<span class="m">18</span> <span class="m">40</span>) <span class="cs">///</span>
 	|| rcap lb ub mean_bmi
-<span class="k">graph</span> export wk7output<span class="o">/</span>age_bmi_prev_adj<span class="m">.</span>png,<span class="k"> replace</span>
+<span class="k">if</span> <span class="nf">c</span>(os) <span class="o">==</span> <span class="s">&quot;MacOSX&quot;</span> {
+<span class="k">    graph</span> export wk7output<span class="o">/</span>age_bmi_prev_adj<span class="m">.</span>png,<span class="k"> replace</span>
+}
+<span class="k">else</span> {
+<span class="k">	graph</span> export wk7output\age_bmi_prev_adj<span class="m">.</span>png,<span class="k"> replace</span>
+} 
 </pre></div>
 </div>
 <p><img alt="" src="_images/age_bmi_prev_adj.png" /></p>
@@ -619,7 +664,12 @@ document.write(`
 	      )
         ;
 #delimit cr
-<span class="k">graph</span> export<span class="k"> logistic</span><span class="m">.</span>png,replace 
+<span class="k">if</span> <span class="nf">c</span>(os) <span class="o">==</span> <span class="s">&quot;MacOSX&quot;</span> {
+<span class="k">    graph</span> export wk7output<span class="o">/</span>logistic<span class="m">.</span>png,replace 
+}
+<span class="k">else</span> {
+<span class="k">	graph</span> export wk7output\logistic<span class="m">.</span>png,replace 
+} 
 </pre></div>
 </div>
 <p><img alt="" src="_images/logistic.png" /></p>
@@ -688,7 +738,12 @@ document.write(`
 	      )
         ;
 #delimit cr
-<span class="k">graph</span> export logistic_logscale<span class="m">.</span>png,replace 
+<span class="k">if</span> <span class="nf">c</span>(os) <span class="o">==</span> <span class="s">&quot;MacOSX&quot;</span> {
+<span class="k">    graph</span> export wk7output<span class="o">/</span>logistic_logscale<span class="m">.</span>png,replace 
+}
+<span class="k">else</span> {
+<span class="k">	graph</span> export wk7output\logistic_logscale<span class="m">.</span>png,replace 
+} 
 </pre></div>
 </div>
 <p><img alt="" src="_images/logistic_logscale.png" /></p>
@@ -736,7 +791,12 @@ document.write(`
 <span class="c1">		*ChatGPT included the &quot;append&quot; command with no additional syntax</span>
     }
 <span class="c1">	*I inserted this line of code</span>
-<span class="k">	save</span> wk7output<span class="o">/</span>student<span class="nv">`i&#39;</span>,<span class="k"> replace</span>  
+<span class="k">	if</span> <span class="nf">c</span>(os) <span class="o">==</span> <span class="s">&quot;MacOSX&quot;</span> {
+<span class="k">        save</span> wk7output<span class="o">/</span>student<span class="nv">`i&#39;</span>,<span class="k"> replace</span>  
+    }
+<span class="k">    else</span> {
+<span class="k">	    save</span> wk7output\student<span class="nv">`i&#39;</span>,<span class="k"> replace</span>  
+    } 	
 }
 
 <span class="c1">* ChatGPTs contribution ends at this point</span>
@@ -745,7 +805,8 @@ document.write(`
 <span class="k">forvalues</span> i=<span class="m">1</span><span class="o">/</span><span class="nv">`nstudents&#39;</span> {
 <span class="k">	append</span> using wk7output<span class="o">/</span>student<span class="nv">`i&#39;</span>.dta
 <span class="c1">	*Please understand what mess is wrought by blocking this &quot;rm&quot; line of code</span>
-<span class="c1">	*rm wk7output/student`i&#39;.dta  </span>
+<span class="c1">	*rm wk7output/student`i&#39;.dta //MacOSX</span>
+<span class="c1">	*rm wk7output\student`i&#39;.dta //Windows</span>
 }
 
 <span class="c1">* Sort the dataset</span>
@@ -766,8 +827,14 @@ document.write(`
 <span class="k">format</span> session_date <span class="nx">%td</span>
 <span class="k">codebook</span> 
 <span class="k">replace</span> sbp=<span class="nf">round</span>(sbp)
-<span class="k">save</span> wk7output<span class="o">/</span>student_pressure,<span class="k"> replace</span> 
-<span class="k">ls</span> wk7output<span class="o">/</span>
+<span class="k">if</span> <span class="nf">c</span>(os) <span class="o">==</span> <span class="s">&quot;MacOSX&quot;</span> {
+<span class="k">    save</span> wk7output<span class="o">/</span>student_pressure,<span class="k"> replace</span>
+}
+<span class="k">else</span> {
+<span class="k">	save</span> wk7output\student_pressure,<span class="k"> replace</span>
+} 
+<span class="k">ls</span> wk7output
+
 <span class="k">count</span>
 <span class="k">capture isid</span> student_id
 <span class="k">if</span> _rc <span class="o">!=</span><span class="m">0</span> {
@@ -817,7 +884,12 @@ document.write(`
 <span class="k">webuse</span> lifeexp,<span class="k"> clear</span> 
 <span class="k">encode</span> country,<span class="k"> gen</span>(Country)
 <span class="k">twoway scatter</span> lexp Country, xscale(off) mlabel(Country) 
-<span class="k">graph</span> export wk7output<span class="o">/</span>wk1fig_mlabel<span class="m">.</span>png,<span class="k"> replace</span> 
+<span class="k">if</span> <span class="nf">c</span>(os) <span class="o">==</span> <span class="s">&quot;MacOSX&quot;</span> {
+<span class="k">    graph</span> export wk7output<span class="o">/</span>wk1fig_mlabel<span class="m">.</span>png,<span class="k"> replace</span> 
+}
+<span class="k">else</span> {
+<span class="k">	graph</span> export wk7output\wk1fig_mlabel<span class="m">.</span>png,<span class="k"> replace</span> 
+} 
 </pre></div>
 </div>
 <p><img alt="" src="_images/wk1fig_mlabel.png" /></p>
@@ -885,7 +957,12 @@ document.write(`
 <section id="simplify">
 <h3>Simplify<a class="headerlink" href="#simplify" title="Permalink to this heading">#</a></h3>
 <p>Let’s neglect the hierarchical data in a sophisticated way, but retaining some aspects of it:</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> wk7output<span class="o">/</span>student_pressure,<span class="k"> clear</span> 
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="nf">c</span>(os) <span class="o">==</span> <span class="s">&quot;MacOSX&quot;</span> {
+<span class="k">    use</span> wk7output<span class="o">/</span>student_pressure,<span class="k"> clear</span>  
+}
+<span class="k">else</span> {
+<span class="k">	use</span> wk7output\student_pressure,<span class="k"> clear</span> 
+} 
 <span class="k">set</span> seed <span class="m">340600</span>
 <span class="k">g</span> withdraw = <span class="nf">rbinomial</span>(<span class="m">1</span>, .<span class="m">1</span>)
 <span class="k">sort</span> student_id session_date
