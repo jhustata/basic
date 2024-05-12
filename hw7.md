@@ -1,8 +1,12 @@
 # Homework 7
 
-**NOTE:** The figures you are going to "replicate" have a "Classic" Stata look. However, Stata made some drastic changes in the Spring of 2023 with the release of Stata 18. You'll get full points if your `.do` file script reproduces these color formats regardless of the Stata version running on our computers. Embrace Stata version, `c(version)`, ambiguity! **See below**
+**NOTE:** The figures you are going to replicate have a "Classic" Stata look. However, Stata made some drastic changes in the Spring of 2023 with the release of Stata 18. You'll get full points if your `.do` file script reproduces these color formats regardless of the Stata version running on our computers. Embrace Stata version, `c(version)`, ambiguity! **See below**
 
 ```stata
+
+
+//macros, settings
+
 global repo https://github.com/jhustata/basic/raw/main/
 
 //Let us pay homage to "Classic" Stata color schemes in our final homework!
@@ -12,6 +16,14 @@ if c(version)>17 {
 else { 
     di "you're good to go!"
 }
+
+/* --- your homework --- */
+
+//return to original settings
+if c(version)>17 {  
+    set scheme stcolor
+}
+
 ```
 
 (late assignments will not be accepted for graduating students)
