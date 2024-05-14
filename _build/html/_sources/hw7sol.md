@@ -32,7 +32,7 @@ else { //stcolor is default in v18
 (late assignments will not be accepted for graduating students)
 
 Write a .do file which performs the tasks described below. Your .do file should be called
-`hw3.lastname.firstname.do`. Do **not** submit your log files as part of the assignment.
+`hw7.lastname.firstname.do`. Do **not** submit your log files as part of the assignment.
 
 ### Codebook
 
