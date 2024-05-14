@@ -1,4 +1,6 @@
-# Homework 7 (Solution Pending)
+# HW7 Solution
+
+Here's a [.do](hw7sol.do) file you may use
 
 - **Key Points**:
    - Code that replicates the images is correct
