@@ -1,6 +1,6 @@
 # HW7 Solution
 
-Here's a [.do](hw7sol.do) file you may use
+Here's a [.do](https://github.com/jhustata/basic/raw/main/hw7sol.do) file you may use
 
 - **Key Points**:
    - Code that replicates the images is correct
