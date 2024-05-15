@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>HW6 &#8212; Stata Programming</title>
+    <title>HW6 (Supplement) &#8212; Stata Programming</title>
   
   
   
@@ -61,7 +61,7 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'hw6';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'hw6sup';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -235,7 +235,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fhw6.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fhw6sup.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -265,7 +265,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="_sources/hw6.md" target="_blank"
+      <li><a href="_sources/hw6sup.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -347,7 +347,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>HW6</h1>
+    <h1>HW6 (Supplement)</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -357,9 +357,8 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">HW6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">HW6 (Supplement)</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"></a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id2"></a></li>
 </ul>
 
             </nav>
@@ -372,24 +371,38 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="hw6">
-<h1>HW6<a class="headerlink" href="#hw6" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="hw6-supplement">
+<h1>HW6 (Supplement)<a class="headerlink" href="#hw6-supplement" title="Permalink to this heading">#</a></h1>
 <p>Write a .do file that performs the tasks described below. Your .do file must be called
-<code class="docutils literal notranslate"><span class="pre">hw2.lastname.firstname.do</span></code>. Make sure your script will run on our machines by handling <a class="reference external" href="https://jhustata.github.io/basic/hw3sol.html?highlight=ambiguity#handling-file-path-ambiguity">filepath ambiguity</a> in your script. Do <strong>not</strong> submit your log files as part of the assignment.</p>
+<code class="docutils literal notranslate"><span class="pre">hw6sup.lastname.firstname.do</span></code>. Make sure your script will run on our machines by handling <a class="reference external" href="https://jhustata.github.io/basic/hw3sol.html?highlight=ambiguity#handling-file-path-ambiguity">filepath ambiguity</a> in your script. Do <strong>not</strong> submit your log files as part of the assignment.</p>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="id1">
 <h1><a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h1>
-<p>Use the dataset <code class="docutils literal notranslate"><span class="pre">pra_hist.dta</span></code> and <code class="docutils literal notranslate"><span class="pre">hosp.dta</span></code> to perform the required tasks.</p>
+<p>Use the dataset <code class="docutils literal notranslate"><span class="pre">pra_hist.dta</span></code> and <code class="docutils literal notranslate"><span class="pre">student_pressure.dta</span></code> to perform the required tasks.</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">global</span> repo https:<span class="o">//</span>github<span class="m">.</span>com<span class="o">/</span>jhustata<span class="o">/</span>basic<span class="o">/</span>raw<span class="o">/</span>main<span class="o">/</span>
 </pre></div>
 </div>
-<p><a class="reference internal" href="hw6sup.html"><span class="doc std std-doc">Questions</span></a></p>
-<p><strong>Context</strong> : You are conducting a study that examines the regional variation in the distribution of panel-
+<p>Questions</p>
+<p><strong>Context</strong>: Two students discuss HW6 and comeup with the following solution to <strong>Q1</strong>:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="vg">${repo}</span>pra_hist<span class="m">.</span>dta,<span class="k"> clear</span>  
+<span class="k">l in</span> <span class="m">1</span><span class="o">/</span><span class="m">10</span>
+<span class="k">g count</span>=<span class="m">1</span>
+<span class="k">bys</span> visit_id:<span class="k"> egen</span> Count=<span class="nf">sum</span>(count)  
+<span class="k">l in</span> <span class="m">1</span><span class="o">/</span><span class="m">10</span>
+<span class="k">egen</span> tagvisit = tag(visit)
+<span class="k">l</span> visit_id Count<span class="k"> if</span> tag<span class="o">==</span><span class="m">1</span>
+</pre></div>
+</div>
+<p>Focusing on the output rather than the code, you compare this solution with the that posted by the teaching team and find slight differences in output. You then analyze the code and find that the teaching team used the “collapse” command whereas the students used the “egen” and “tag” commands. How would you help these students to remain true to their unique approach, but with accurate output? In other words, modify their code.</p>
+<p>The original question is included below for your convenience:</p>
+<blockquote>
+<div><p>You are conducting a study that examines the regional variation in the distribution of panel-
 reactive antibody (PRA). You recruited 73 patients (<code class="docutils literal notranslate"><span class="pre">px_id</span></code> = 1, …., 73 ) from 10 hospitals (<code class="docutils literal notranslate"><span class="pre">hosp_id</span></code>=1, …,10)
 in 3 regions (<code class="docutils literal notranslate"><span class="pre">region</span></code>=A, B, C, … ), and measured PRA 3 times: visit 1, visit 2, and visit 3. You hear that the
 organization that funds your research plans to extend the funding for several more visits (visit 4, visit 5,
 …, visit N). Since you do not know how many more visits there will be, you decide to write a .do file that
 can work regardless of how many visits the dataset has.</p>
+</div></blockquote>
 <p><strong>Codebook</strong></p>
 <table class="colwidths-auto table">
 <thead>
@@ -419,17 +432,25 @@ can work regardless of how many visits the dataset has.</p>
 <td><p>PRA value at the visit</p></td>
 <td><p>Integers: 0 – 100</p></td>
 </tr>
-<tr class="row-odd"><td><p><strong>hosp.dta</strong></p></td>
+<tr class="row-odd"><td><p><strong>student_pressure.dta</strong></p></td>
 <td><p></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hosp_id</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">student_id</span></code></p></td>
 <td><p>Hospital ID</p></td>
-<td><p>Integers: 1 – 10</p></td>
+<td><p>Integers: 1 – 100</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Region</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">session</span></code></p></td>
 <td><p>Region</p></td>
-<td><p>Alphabets</p></td>
+<td><p>Integers: 1 - 8</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sbp</span></code></p></td>
+<td><p>Region</p></td>
+<td><p>Intergers:  “within biological limits”</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">session_date</span></code></p></td>
+<td><p>Region</p></td>
+<td><p>Dates: 28mar2024 - 16may2024</p></td>
 </tr>
 </tbody>
 </table>
@@ -451,44 +472,11 @@ Visit 	Count
 N 			XX
 </pre></div>
 </div>
-<p><strong>ii)</strong> Create a new variable <code class="docutils literal notranslate"><span class="pre">peak_pra</span></code>, which contains the maximum value of PRA within each
-participant. Print the median (IQR) of <code class="docutils literal notranslate"><span class="pre">peak_pra</span></code> across the patients as shown below. <code class="docutils literal notranslate"><span class="pre">XX.X</span></code>
-should be replaced with the correct values from the dataset and formatted with one digit after
-the decimal point (e.g., 12.0 ). (Hint: each patient must be counted only once when calculating
-the median and IQR.)</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>Question <span class="m">1.</span>ii): The<span class="k"> median</span> (IQR) of peak_pra is xx<span class="m">.</span>x (xx<span class="m">.</span>x<span class="o">-</span>xx<span class="m">.</span>x).
+<p><strong>ii)</strong> An eccentric instructor measured the blood pressure of students over an eight week period. Blood pressure was measured before each one of eight weekly sessions, and a record for each student was kept. After analyzing these records, can you print out the following statement, substituting the XXXs with appropriate macros?</p>
+<p>“student_id XXX has the highest blood pressure on record, SBP=XXX for session X”</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="vg">${repo}</span>student_pressure,<span class="k"> clear</span>
 </pre></div>
 </div>
-<p><strong>iii)</strong> Another dataset provided to you, <code class="docutils literal notranslate"><span class="pre">hosp.dta</span></code>, has information on which region each
-hospital is located in. Use the <code class="docutils literal notranslate"><span class="pre">merge</span></code> command to merge the current dataset in memory with <code class="docutils literal notranslate"><span class="pre">hosp.dta</span></code> without
-altering the number of observations in memory (see week 3 <a class="reference external" href="https://jhustata.github.io/basic/chapter3.html?highlight=merge#merge">Section 3.3</a> for syntax or week 4 Section <a class="reference external" href="https://jhustata.github.io/basic/chapter4.html#merging-files">4.2</a> for notes during a lecture session). Use the command <code class="docutils literal notranslate"><span class="pre">list</span></code> to list the ID of the
-patient with the highest peak_pra value for each region as shown below.</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="s">&quot;</span><span class="vg">${repo}</span><span class="s">hosp&quot;</span>,<span class="k"> clear</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">XX</span></code> should be replaced with the correct values from the dataset. If there are ties (i.e., multiple
-patients with the highest value), print all tied patients. If region C has ties (while A and B does
-not), the table will look like below.</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="o">+------------------------------------+</span>
-| region 	px_id 	peak_pra     |
-|<span class="o">------------------------------------</span>|
-| A  	        XXXX    XXXX         |
-|<span class="o">------------------------------------</span>|
-| B  	        XXXX    XXXX         |
-|<span class="o">------------------------------------</span>|
-| C 	        XXXX    XXXX         |
-| C  	        XXXX    XXXX         |
-<span class="o">+------------------------------------+</span>
-</pre></div>
-</div>
-<p>Hint: your <code class="docutils literal notranslate"><span class="pre">list</span></code> command should look like this</p>
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">list</span> region px_id peak_pra [insert your code here], sepby(region) noobs
-</pre></div>
-</div>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="id2">
-<h1><a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h1>
-<p><a class="reference external" href="https://abikesa.github.io/flow/abikesa_python.html">.</a></p>
 </section>
 
     <script type="text/x-thebe-config">
@@ -540,9 +528,8 @@ not), the table will look like below.</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">HW6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">HW6 (Supplement)</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"></a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id2"></a></li>
 </ul>
 
   </nav></div>
