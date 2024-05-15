@@ -10,7 +10,7 @@ Use the dataset `pra_hist.dta` and `hosp.dta` to perform the required tasks.
 global repo https://github.com/jhustata/basic/raw/main/
 ```
 
-Questions
+[Questions](hw6sup.md)
 
 **Context** : You are conducting a study that examines the regional variation in the distribution of panel-
 reactive antibody (PRA). You recruited 73 patients (`px_id` = 1, ...., 73 ) from 10 hospitals (`hosp_id`=1, ...,10)
