@@ -360,15 +360,20 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nonparametric">8.1 Nonparametric</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#chatgpt-annotation">ChatGPT annotation:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gpt-4o-annotation">GPT-4o annotation:</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#semiparametric">8.2 Semiparametric</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">ChatGPT annotation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">GPT-4o annotation:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#explanation-of-key-components">Explanation of Key Components:</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#explanation-of-key-components">Explanation of Key Components:</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parametric">8.3 Parametric</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parametric">8.3 Parametric</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">GPT-4o annotation:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Explanation of Key Components:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#script-flow-summary">Script Flow Summary:</a></li>
 </ul>
             </nav>
         </div>
@@ -382,130 +387,280 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="survival-analysis-non-parametric-semi-parametric-parametric">
 <h1>8.Survival Analysis: Non-parametric, Semi-parametric, Parametric<a class="headerlink" href="#survival-analysis-non-parametric-semi-parametric-parametric" title="Permalink to this heading">#</a></h1>
-<div class="cell tag_hide-input docutils container">
+<div class="cell tag_hide-input tag_hide-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
 <span class="collapsed">Show code cell source</span>
 <span class="expanded">Hide code cell source</span>
 </summary>
-<div class="cell_input docutils container">
-<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="nf">c</span>(os) <span class="o">==</span> <span class="s">&quot;MacOSX&quot;</span> {
+<div class="cell_input above-output-prompt docutils container">
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">// Comments and Indentation by GPT-4o</span>
+<span class="c1">// Load the dataset based on the operating system</span>
+<span class="k">if</span> <span class="nf">c</span>(os) <span class="o">==</span> <span class="s">&quot;MacOSX&quot;</span> {
 <span class="k">    use</span> wk7output<span class="o">/</span>student_pressure,<span class="k"> clear</span>  
 }
 <span class="k">else</span> {
-<span class="k">	use</span> wk7output\student_pressure,<span class="k"> clear</span> 
+<span class="k">    use</span> wk7output\student_pressure,<span class="k"> clear</span> 
 } 
+
+<span class="c1">// Set the seed for reproducibility</span>
 <span class="k">set</span> seed <span class="m">340600</span>
+
+<span class="c1">// Generate a withdrawal variable with a 10% probability</span>
 <span class="k">g</span> withdraw = <span class="nf">rbinomial</span>(<span class="m">1</span>, .<span class="m">1</span>)
+
+<span class="c1">// Sort the dataset by student_id and session_date</span>
 <span class="k">sort</span> student_id session_date
+
+<span class="c1">// List records for student_ids 2 to 5</span>
 <span class="k">list if</span> <span class="nf">inrange</span>(student_id, <span class="m">2</span>, <span class="m">5</span>)
+
+<span class="c1">// Generate a withdrawal date variable</span>
 <span class="k">g</span> withdraw_dt = session_date<span class="k"> if</span> withdraw<span class="o">==</span><span class="m">1</span>
+
+<span class="c1">// Summarize session_date</span>
 <span class="k">sum</span> session_date
-<span class="c1">*replace withdraw_dt = r(max)</span>
+
+<span class="c1">// Format withdraw_dt as a date</span>
 <span class="k">format</span> withdraw_dt <span class="nx">%td</span>
+
+<span class="c1">// List records for student_ids 2 to 5</span>
 <span class="k">list if</span> <span class="nf">inrange</span>(student_id, <span class="m">2</span>, <span class="m">5</span>)
+
+<span class="c1">// Generate an end date as the minimum withdrawal date by student_id</span>
 <span class="k">by</span> student_id:<span class="k"> egen end</span> = <span class="nf">min</span>(withdraw_dt)
+
+<span class="c1">// Format end date</span>
 <span class="k">format end</span> <span class="nx">%td</span>
+
+<span class="c1">// List records for student_ids 2 to 5</span>
 <span class="k">list if</span> <span class="nf">inrange</span>(student_id, <span class="m">2</span>, <span class="m">5</span>)
+
+<span class="c1">// Tabulate the end date with missing values</span>
 <span class="k">tab end</span>, mi
+
+<span class="c1">// Summarize session_date</span>
 <span class="k">sum</span> session_date 
+
+<span class="c1">// List records for student_ids 2 to 5</span>
 <span class="k">list if</span> <span class="nf">inrange</span>(student_id, <span class="m">2</span>, <span class="m">5</span>)
+
+<span class="c1">// Replace missing end dates with the maximum date</span>
 <span class="k">replace end</span>=<span class="nf">r</span>(max)<span class="k"> if</span> <span class="nf">missing</span>(end)
+
+<span class="c1">// Tabulate the end date with missing values</span>
 <span class="k">tab end</span>, mi
+
+<span class="c1">// Generate a begin date as the minimum session date by student_id</span>
 <span class="k">by</span> student_id:<span class="k"> egen</span> begin = <span class="nf">min</span>(session_date)
+
+<span class="c1">// Format begin date</span>
 <span class="k">format</span> begin <span class="nx">%td</span>
+
+<span class="c1">// List records for student_ids 2 to 5</span>
 <span class="k">list if</span> <span class="nf">inrange</span>(student_id, <span class="m">2</span>, <span class="m">5</span>)
+
+<span class="c1">// Ensure withdrawal continuity by replacing the next record&#39;s withdrawal status</span>
 <span class="k">by</span> student_id:<span class="k"> replace</span> withdraw = <span class="m">1</span><span class="k"> if</span> withdraw[_n<span class="m">-1</span>]<span class="o">==</span><span class="m">1</span>  
+
+<span class="c1">// List records for student_ids 2 to 5</span>
 <span class="k">list if</span> <span class="nf">inrange</span>(student_id, <span class="m">2</span>, <span class="m">5</span>)
+
 <span class="cm">/* --- insertion ---*/</span>
+<span class="c1">// Generate ineligibility indicator</span>
 <span class="k">bys</span> student_id:<span class="k"> egen</span> inelig=<span class="nf">min</span>(withdraw)
+
+<span class="c1">// List ineligible students</span>
 <span class="k">l if</span> inelig<span class="o">==</span><span class="m">1</span>
+
+<span class="c1">// Drop ineligible students</span>
 <span class="k">drop if</span> inelig<span class="o">==</span><span class="m">1</span> 
+
+<span class="c1">// Show the codebook for student_id</span>
 <span class="k">codebook</span> student_id 
+
+<span class="c1">// Keep selected variables</span>
 <span class="k">keep</span> student_id session sbp withdraw<span class="k"> end</span> begin 
+
+<span class="c1">// Order the variables</span>
 <span class="k">order</span> student_id session begin<span class="k"> end</span> withdraw sbp 
 <span class="cm">/* --- continue ---*/</span>
+
+<span class="c1">// Set the survival time settings</span>
 <span class="k">stset end</span>, fail(withdraw) enter(begin) origin(begin) scale(<span class="m">7.0242308</span>)
+
+<span class="c1">// Generate a stressed variable based on systolic blood pressure</span>
 <span class="k">g</span> stressed = sbp<span class="o">&gt;</span><span class="m">140</span>
+
 #delimit ;   
+<span class="c1">// Plot survival curves</span>
 <span class="k">sts graph</span>, 
     fail per(<span class="m">100</span>)
-	ylab(,format(<span class="nx">%2.0f</span>))
-<span class="k">	by</span>(stressed)
-	tmax(<span class="m">7</span>)
-	xlab(<span class="m">0</span>(<span class="m">1</span>)<span class="m">7</span>)
-	xti(<span class="s">&quot;Week&quot;</span>)
-	ti(<span class="s">&quot;Stata I dropout rate, %&quot;</span>)
-	<span class="cm">/*</span>
-<span class="cm">	legend(</span>
-<span class="cm">	    order(1 2)</span>
-<span class="cm">		lab(1 &quot;SBP&gt;140mmHg&quot;)</span>
-<span class="cm">		lab(2 &quot;SBP&lt;140mmHg&quot;)</span>
-<span class="cm">		ring(0)</span>
-<span class="cm">		pos(11)</span>
-<span class="cm">	)</span>
-<span class="cm">	*/</span>
-	risktable
-<span class="k">	note</span>(<span class="s">&quot;Source: From Simulated Data&quot;</span>,
-	    pos(<span class="m">7</span>)
-	)
+    ylab(,format(<span class="nx">%2.0f</span>))
+<span class="k">    by</span>(stressed)
+    tmax(<span class="m">7</span>)
+    xlab(<span class="m">0</span>(<span class="m">1</span>)<span class="m">7</span>)
+    xti(<span class="s">&quot;Week&quot;</span>)
+    ti(<span class="s">&quot;Stata I dropout rate, %&quot;</span>)
+    <span class="cm">/*</span>
+<span class="cm">    legend(</span>
+<span class="cm">        order(1 2)</span>
+<span class="cm">        lab(1 &quot;SBP&gt;140mmHg&quot;)</span>
+<span class="cm">        lab(2 &quot;SBP&lt;140mmHg&quot;)</span>
+<span class="cm">        ring(0)</span>
+<span class="cm">        pos(11)</span>
+<span class="cm">    )</span>
+<span class="cm">    */</span>
+    risktable
+<span class="k">    note</span>(<span class="s">&quot;Source: From Simulated Data&quot;</span>,
+        pos(<span class="m">7</span>)
+    )
 ; 
 #delimit cr 
-<span class="k">graph</span> export wk7output<span class="o">/</span>class_attrition_wk8<span class="m">.</span>png,<span class="k"> replace</span> 
-<span class="k">list in</span> <span class="m">1</span>
-<span class="k">capture isid</span> student_id
-<span class="k">if</span> _rc <span class="o">!=</span><span class="m">0</span> {
-<span class="k">    di</span> <span class="s">&quot;These data are nested and each student has several records&quot;</span>	
+
+<span class="c1">// Export the graph based on the operating system</span>
+<span class="k">if</span> <span class="nf">c</span>(os) <span class="o">==</span> <span class="s">&quot;MacOSX&quot;</span> {
+<span class="k">    graph</span> export wk7output<span class="o">/</span>class_attrition_wk8<span class="m">.</span>png,<span class="k"> replace</span>  
 }
 <span class="k">else</span> {
-<span class="k">	di</span> <span class="s">&quot;There&#39;s only a single record per student&quot;</span>
-}
-<span class="k">stcox</span> stressed
-<span class="c1">//creturn list</span>
-<span class="k">ereturn list</span> 
-<span class="k">return list</span>
-<span class="k">matrix m</span> = <span class="nf">r</span>(table)
-<span class="k">matrix list m</span>
-<span class="k">lincom</span> stressed 
-<span class="k">return list</span>
-<span class="k">qui</span> {  
-<span class="k">	local</span> p = <span class="nf">r</span>(p)
-<span class="k">	local</span> hr :<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nf">exp</span>(<span class="nf">r</span>(estimate))
-<span class="k">	local</span> lb :<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nf">exp</span>(<span class="nf">r</span>(lb))
-<span class="k">	local</span> ub :<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nf">exp</span>(<span class="nf">r</span>(ub))
-<span class="k">    if</span> <span class="nf">r</span>(p) <span class="o">&lt;</span> <span class="m">0.01</span> {
-<span class="k">       local</span> p:<span class="k"> di</span> <span class="s">&quot;p &lt; 0.01&quot;</span>
+<span class="k">    graph</span> export wk7output\class_attrition_wk8<span class="m">.</span>png,<span class="k"> replace</span> 
+} 
+
+<span class="c1">// Calculate absolute risks</span>
+<span class="k">sts list</span>, fail<span class="k"> by</span>(stressed) at(<span class="m">2</span> <span class="m">4</span> <span class="m">6</span>) saving(km,<span class="k"> replace</span> ) 
+<span class="k">preserve</span>  
+<span class="k">    use</span> km,<span class="k"> clear</span>  
+<span class="k">    replace</span> failure=failure<span class="o">*</span><span class="m">100</span>
+    
+    <span class="c1">// Calculate mean failure rates at different time points for non-stressed students</span>
+<span class="k">    sum</span> failure<span class="k"> if</span> stressed<span class="o">==</span><span class="m">0</span> <span class="o">&amp;</span> time<span class="o">==</span><span class="m">2</span>
+<span class="k">    local</span> wk2:<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(mean)
+<span class="k">    sum</span> failure<span class="k"> if</span> stressed<span class="o">==</span><span class="m">0</span> <span class="o">&amp;</span> time<span class="o">==</span><span class="m">4</span>
+<span class="k">    local</span> wk4:<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(mean)
+<span class="k">    sum</span> failure<span class="k"> if</span> stressed<span class="o">==</span><span class="m">0</span> <span class="o">&amp;</span> time<span class="o">==</span><span class="m">6</span>
+<span class="k">    local</span> wk6:<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(mean)
+    
+    <span class="c1">// Calculate mean failure rates at different time points for stressed students</span>
+<span class="k">    sum</span> failure<span class="k"> if</span> stressed<span class="o">==</span><span class="m">1</span> <span class="o">&amp;</span> time<span class="o">==</span><span class="m">2</span>
+<span class="k">    local</span> swk2:<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(mean)
+<span class="k">    sum</span> failure<span class="k"> if</span> stressed<span class="o">==</span><span class="m">1</span> <span class="o">&amp;</span> time<span class="o">==</span><span class="m">4</span>
+<span class="k">    local</span> swk4:<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(mean)
+<span class="k">    sum</span> failure<span class="k"> if</span> stressed<span class="o">==</span><span class="m">1</span> <span class="o">&amp;</span> time<span class="o">==</span><span class="m">6</span> 
+<span class="k">    local</span> swk6:<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(mean)
+<span class="k">restore</span> 
+
+<span class="c1">// Perform log-rank test for nonparametric hypothesis testing</span>
+<span class="k">sts test</span> stressed,<span class="k"> logrank</span> 
+
+<span class="c1">// Capture the chi-squared value and degrees of freedom</span>
+<span class="k">local</span> chi2_value = <span class="nf">r</span>(chi2)
+<span class="k">local</span> df = <span class="nf">r</span>(df)
+
+<span class="c1">// Calculate the p-value</span>
+<span class="k">local</span> p = <span class="nf">chi2tail</span>(<span class="nv">`df&#39;</span>, <span class="nv">`chi2_value&#39;</span>)
+<span class="k">di</span> <span class="nv">`p&#39;</span>
+
+<span class="k">qui</span> {    
+<span class="k">    if</span> <span class="nv">`p&#39;</span> <span class="o">&lt;</span> <span class="m">0.01</span> {
+<span class="k">        local</span> p:<span class="k"> di</span> <span class="s">&quot;p &lt; 0.01&quot;</span>
     }
-<span class="k">    else if</span> <span class="nf">inrange</span>(<span class="nf">r</span>(p),<span class="m">0.01</span>,<span class="m">0.05</span>) {
-<span class="k">       local</span> p:<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(p)
+<span class="k">    else if</span> <span class="nf">inrange</span>(<span class="nv">`p&#39;</span>,<span class="m">0.01</span>,<span class="m">0.05</span>) {
+<span class="k">        local</span> p:<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nv">`p&#39;</span>
     }
 <span class="k">    else</span> {
-<span class="k">       local</span> p:<span class="k"> di</span> <span class="nx">%2.1f</span> <span class="nf">r</span>(p)
+<span class="k">        local</span> p:<span class="k"> di</span> <span class="nx">%2.1f</span> <span class="nv">`p&#39;</span>
     }
+<span class="k">    </span>
 <span class="k">    if</span> <span class="nv">`p&#39;</span> <span class="o">&lt;</span> .<span class="m">05</span> {
-<span class="k">		noi di</span> <span class="s">&quot;There&#39;s an association between SBP&gt;140mmHg and withrawal from Stata I: HR=</span><span class="nv">`hr&#39;</span><span class="s">, 95%CI: </span><span class="nv">`lb&#39;</span><span class="s">-</span><span class="nv">`ub&#39;</span><span class="s">, p=</span><span class="nv">`p&#39;</span><span class="s">&quot;</span>
-	}
-<span class="k">	else</span> {
-<span class="k">		noi di</span> <span class="s">&quot;There&#39;s no association between SBP&gt;140mmHg and withrawal from Stata I: HR=</span><span class="nv">`hr&#39;</span><span class="s">, 95%CI: </span><span class="nv">`lb&#39;</span><span class="s">-</span><span class="nv">`ub&#39;</span><span class="s">, p=</span><span class="nv">`p&#39;</span><span class="s">&quot;</span>
-	}
+<span class="k">        noi di</span> <span class="s">&quot;Withdraw rates for Stata I at weeks 2, 4 and 6 were </span><span class="nv">`wk2&#39;</span><span class="s">%, </span><span class="nv">`wk4&#39;</span><span class="s">%, </span><span class="nv">`wk6&#39;</span><span class="s">% for students with SBP&lt;140mmHg &quot;</span>
+<span class="k">        noi di</span> <span class="s">&quot;For students with SBP&gt;140mmHg, the rates were </span><span class="nv">`swk2&#39;</span><span class="s">%, </span><span class="nv">`swk4&#39;</span><span class="s">%, </span><span class="nv">`swk6&#39;</span><span class="s">%&quot;</span>
+<span class="k">        noi di</span> <span class="s">&quot;There&#39;s an association between SBP&gt;140mmHg and withdrawal from Stata I: p=</span><span class="nv">`p&#39;</span><span class="s">&quot;</span>
+    }
+<span class="k">    else</span> {
+<span class="k">        noi di</span> <span class="s">&quot;Withdraw rates for Stata I at weeks 2, 4 and 6 were </span><span class="nv">`wk2&#39;</span><span class="s">%, </span><span class="nv">`wk4&#39;</span><span class="s">%, </span><span class="nv">`wk6&#39;</span><span class="s">% for students with SBP&lt;140mmHg &quot;</span>
+<span class="k">        noi di</span> <span class="s">&quot;For students with SBP&gt;140mmHg, the rates were </span><span class="nv">`swk2&#39;</span><span class="s">%, </span><span class="nv">`swk4&#39;</span><span class="s">%, </span><span class="nv">`swk6&#39;</span><span class="s">%&quot;</span>
+<span class="k">        noi di</span> <span class="s">&quot;There&#39;s no association between SBP&gt;140mmHg and withdrawal from Stata I: p=</span><span class="nv">`p&#39;</span><span class="s">&quot;</span>
+    }
 } 
-<span class="k"> </span>
-<span class="k">egen</span> representation = tag(student_id)
-<span class="k">l in</span> <span class="m">1</span><span class="o">/</span><span class="m">10</span> 
-<span class="k">keep if</span> representation<span class="o">==</span><span class="m">1</span>
-<span class="k">count</span>
+
+<span class="c1">// List the first record</span>
+<span class="k">list in</span> <span class="m">1</span>
+
+<span class="c1">// Check if the data is nested</span>
 <span class="k">capture isid</span> student_id
 <span class="k">if</span> _rc <span class="o">!=</span><span class="m">0</span> {
-<span class="k">    di</span> <span class="s">&quot;These data are nested and each student has several records&quot;</span>	
+<span class="k">    di</span> <span class="s">&quot;These data are nested and each student has several records&quot;</span>    
 }
 <span class="k">else</span> {
-<span class="k">	di</span> <span class="s">&quot;There&#39;s only a single record per student&quot;</span>
+<span class="k">    di</span> <span class="s">&quot;There&#39;s only a single record per student&quot;</span>
 }
- 
+
+<span class="c1">// Perform Cox regression analysis</span>
+<span class="k">stcox</span> stressed
+
+<span class="c1">// List results</span>
+<span class="k">ereturn list</span> 
+<span class="k">return list</span>
+
+<span class="c1">// Store the results matrix</span>
+<span class="k">matrix m</span> = <span class="nf">r</span>(table)
+<span class="k">matrix list m</span>
+
+<span class="c1">// Perform linear combination of coefficients</span>
+<span class="k">lincom</span> stressed 
+<span class="k">return list</span>
+
+<span class="k">qui</span> {  
+<span class="k">    local</span> p = <span class="nf">r</span>(p)
+<span class="k">    local</span> hr :<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nf">exp</span>(<span class="nf">r</span>(estimate))
+<span class="k">    local</span> lb :<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nf">exp</span>(<span class="nf">r</span>(lb))
+<span class="k">    local</span> ub :<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nf">exp</span>(<span class="nf">r</span>(ub))
+<span class="k">    if</span> <span class="nf">r</span>(p) <span class="o">&lt;</span> <span class="m">0.01</span> {
+<span class="k">        local</span> p:<span class="k"> di</span> <span class="s">&quot;p &lt; 0.01&quot;</span>
+    }
+<span class="k">    else if</span> <span class="nf">inrange</span>(<span class="nf">r</span>(p),<span class="m">0.01</span>,<span class="m">0.05</span>) {
+<span class="k">        local</span> p:<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(p)
+    }
+<span class="k">    else</span> {
+<span class="k">        local</span> p:<span class="k"> di</span> <span class="nx">%2.1f</span> <span class="nf">r</span>(p)
+    }
+<span class="k">    if</span> <span class="nv">`p&#39;</span> <span class="o">&lt;</span> .<span class="m">05</span> {
+<span class="k">        noi di</span> <span class="s">&quot;There&#39;s an association between SBP&gt;140mmHg and withrawal from Stata I: HR=</span><span class="nv">`hr&#39;</span><span class="s">, 95%CI: </span><span class="nv">`lb&#39;</span><span class="s">-</span><span class="nv">`ub&#39;</span><span class="s">, p=</span><span class="nv">`p&#39;</span><span class="s">&quot;</span>
+    }
+<span class="k">    else</span> {
+<span class="k">        noi di</span> <span class="s">&quot;There&#39;s no association between SBP&gt;140mmHg and withrawal from Stata I: HR=</span><span class="nv">`hr&#39;</span><span class="s">, 95%CI: </span><span class="nv">`lb&#39;</span><span class="s">-</span><span class="nv">`ub&#39;</span><span class="s">, p=</span><span class="nv">`p&#39;</span><span class="s">&quot;</span>
+    }
+} 
+
+<span class="c1">// Generate a representation tag for each student</span>
+<span class="k">egen</span> representation = tag(student_id)
+
+<span class="c1">// List the first 10 records</span>
+<span class="k">l in</span> <span class="m">1</span><span class="o">/</span><span class="m">10</span> 
+
+<span class="c1">// Keep only unique records for each student</span>
+<span class="k">keep if</span> representation<span class="o">==</span><span class="m">1</span>
+
+<span class="c1">// Count the number of unique records</span>
+<span class="k">count</span>
+
+<span class="c1">// Check if the data is nested</span>
+<span class="k">capture isid</span> student_id
+<span class="k">if</span> _rc <span class="o">!=</span><span class="m">0</span> {
+<span class="k">    di</span> <span class="s">&quot;These data are nested and each student has several records&quot;</span>    
+}
+<span class="k">else</span> {
+<span class="k">    di</span> <span class="s">&quot;There&#39;s only a single record per student&quot;</span>
+}
 </pre></div>
 </div>
 </div>
 </details>
+<details class="hide below-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell output</span>
+<span class="expanded">Hide code cell output</span>
+</summary>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>file wk7output\student_pressure.dta not found
 </pre></div>
@@ -523,13 +678,14 @@ document.write(`
 </pre></div>
 </div>
 </div>
+</details>
 </div>
 <p><img alt="" src="_images/class_attrition_wk8.png" /></p>
 <section id="nonparametric">
 <h2>8.1 Nonparametric<a class="headerlink" href="#nonparametric" title="Permalink to this heading">#</a></h2>
-<section id="chatgpt-annotation">
-<h3>ChatGPT annotation:<a class="headerlink" href="#chatgpt-annotation" title="Permalink to this heading">#</a></h3>
-<p>This Stata script processes student data for an analysis of dropout rates and generates a survival graph. Below is a detailed explanation of each step in the script:</p>
+<section id="gpt-4o-annotation">
+<h3>GPT-4o annotation:<a class="headerlink" href="#gpt-4o-annotation" title="Permalink to this heading">#</a></h3>
+<p>This Stata script analyzes student data for dropout rates and survival analysis, including nonparametric hypothesis testing. Here’s a breakdown of each part of the script:</p>
 <ol class="arabic">
 <li><p><strong>Loading Data Based on OS</strong>:</p>
 <ul>
@@ -687,6 +843,7 @@ document.write(`
 ; 
 #delimit cr 
 <span class="k">graph</span> export wk7output<span class="o">/</span>class_attrition_wk8<span class="m">.</span>png,<span class="k"> replace</span> 
+<span class="k">sts test</span>
 </pre></div>
 </div>
 </li>
@@ -708,14 +865,59 @@ document.write(`
 </li>
 </ul>
 </li>
+<li><p><strong>Calculating Absolute Risks</strong>:</p>
+<ul>
+<li><p>Calculates absolute risks at specific time points for stressed and non-stressed students:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">sts list</span>, ...
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p><strong>Performing Hypothesis Testing</strong>:</p>
+<ul>
+<li><p>Performs a log-rank test for nonparametric hypothesis testing:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">sts test</span> stressed,<span class="k"> logrank</span> 
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p><strong>Calculating p-value and Displaying Results</strong>:</p>
+<ul>
+<li><p>Calculates the p-value and displays results based on significance level:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">local</span> p = <span class="nf">chi2tail</span>(<span class="nv">`df&#39;</span>, <span class="nv">`chi2_value&#39;</span>)
+<span class="k">if</span> <span class="nv">`p&#39;</span> <span class="o">&lt;</span> .<span class="m">05</span> {
+    ...
+}
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p><strong>Checking Data Structure</strong>:</p>
+<ul>
+<li><p>Checks if the data is nested by student and displays a message accordingly:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">capture isid</span> student_id
+<span class="k">if</span> _rc <span class="o">!=</span><span class="m">0</span> {
+<span class="k">    di</span> <span class="s">&quot;These data are nested and each student has several records&quot;</span>    
+}
+<span class="k">else</span> {
+<span class="k">    di</span> <span class="s">&quot;There&#39;s only a single record per student&quot;</span>
+}
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
 </ol>
-<p>This script performs a thorough analysis of student withdrawal patterns, generates meaningful variables, and produces a clear and informative survival graph.</p>
+<p>This Stata script demonstrates a thorough analysis process for examining dropout rates and survival in a student population, including data preparation, hypothesis testing, and regression analysis.</p>
 </section>
 </section>
 <section id="semiparametric">
 <h2>8.2 Semiparametric<a class="headerlink" href="#semiparametric" title="Permalink to this heading">#</a></h2>
 <section id="id1">
-<h3>ChatGPT annotation<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<h3>GPT-4o annotation:<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
 <p>This Stata script performs a Cox proportional hazards regression, extracts results, and formats the output. Here’s an annotated breakdown of the script:</p>
 <ol class="arabic">
 <li><p><strong>Cox Proportional Hazards Model</strong>:</p>
@@ -791,9 +993,8 @@ document.write(`
 </li>
 </ol>
 </section>
-</section>
 <section id="explanation-of-key-components">
-<h2>Explanation of Key Components:<a class="headerlink" href="#explanation-of-key-components" title="Permalink to this heading">#</a></h2>
+<h3>Explanation of Key Components:<a class="headerlink" href="#explanation-of-key-components" title="Permalink to this heading">#</a></h3>
 <ol class="arabic simple">
 <li><p><strong>Fitting the Cox Model</strong>:</p>
 <ul class="simple">
@@ -826,8 +1027,118 @@ document.write(`
 </ol>
 <p>This script is comprehensive for fitting a Cox model, extracting results, and providing a clear interpretation based on statistical significance.</p>
 </section>
+</section>
 <section id="parametric">
 <h2>8.3 Parametric<a class="headerlink" href="#parametric" title="Permalink to this heading">#</a></h2>
+<section id="id2">
+<h3>GPT-4o annotation:<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
+<p>This Stata script uses a parametric survival regression model to analyze the relationship between high systolic blood pressure (SBP &gt; 140 mmHg) and student withdrawal from a class. The script then extracts, formats, and interprets the results. Here’s an annotated breakdown:</p>
+<ol class="arabic">
+<li><p><strong>Fitting a Parametric Survival Regression Model</strong>:</p>
+<ul>
+<li><p>The script fits a parametric survival regression model with <code class="docutils literal notranslate"><span class="pre">stressed</span></code> as the predictor:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">streg</span> stressed
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p><strong>Linear Combination of Estimates</strong>:</p>
+<ul>
+<li><p>Calculates a linear combination of the <code class="docutils literal notranslate"><span class="pre">stressed</span></code> coefficient:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">lincom</span> stressed 
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p><strong>Listing Stored Results</strong>:</p>
+<ul>
+<li><p>Lists the stored results from the linear combination:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">return list</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p><strong>Extracting and Formatting Results</strong>:</p>
+<ul>
+<li><p>Quietly extracts the p-value, hazard ratio (HR), and its 95% confidence interval (CI), formats them, and prints a message based on the significance of the association:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> {  
+<span class="k">    local</span> p = <span class="nf">r</span>(p)
+<span class="k">    local</span> hr :<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nf">exp</span>(<span class="nf">r</span>(estimate))
+<span class="k">    local</span> lb :<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nf">exp</span>(<span class="nf">r</span>(lb))
+<span class="k">    local</span> ub :<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nf">exp</span>(<span class="nf">r</span>(ub))
+<span class="k">    </span>
+<span class="k">    if</span> <span class="nf">r</span>(p) <span class="o">&lt;</span> <span class="m">0.01</span> {
+<span class="k">        local</span> p:<span class="k"> di</span> <span class="s">&quot;p &lt; 0.01&quot;</span>
+    }
+<span class="k">    else if</span> <span class="nf">inrange</span>(<span class="nf">r</span>(p),<span class="m">0.01</span>,<span class="m">0.05</span>) {
+<span class="k">        local</span> p:<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(p)
+    }
+<span class="k">    else</span> {
+<span class="k">        local</span> p:<span class="k"> di</span> <span class="nx">%2.1f</span> <span class="nf">r</span>(p)
+    }
+<span class="k">    </span>
+<span class="k">    if</span> <span class="nv">`p&#39;</span> <span class="o">&lt;</span> .<span class="m">05</span> {
+<span class="k">        noi di</span> <span class="s">&quot;There&#39;s an association between SBP&gt;140mmHg and withdrawal from Stata I: HR=</span><span class="nv">`hr&#39;</span><span class="s">, 95%CI: </span><span class="nv">`lb&#39;</span><span class="s">-</span><span class="nv">`ub&#39;</span><span class="s">, p=</span><span class="nv">`p&#39;</span><span class="s">&quot;</span>
+    }
+<span class="k">    else</span> {
+<span class="k">        noi di</span> <span class="s">&quot;There&#39;s no association between SBP&gt;140mmHg and withdrawal from Stata I: HR=</span><span class="nv">`hr&#39;</span><span class="s">, 95%CI: </span><span class="nv">`lb&#39;</span><span class="s">-</span><span class="nv">`ub&#39;</span><span class="s">, p=</span><span class="nv">`p&#39;</span><span class="s">&quot;</span>
+    }
+} 
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+</ol>
+</section>
+</section>
+<section id="id3">
+<h2>Explanation of Key Components:<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Fitting the Model</strong>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">streg</span> <span class="pre">stressed</span></code> fits a parametric survival regression model using the <code class="docutils literal notranslate"><span class="pre">stressed</span></code> variable (indicating SBP &gt; 140 mmHg) as the predictor.</p></li>
+</ul>
+</li>
+<li><p><strong>Calculating Linear Combinations</strong>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">lincom</span> <span class="pre">stressed</span></code> calculates the linear combination of estimates for the <code class="docutils literal notranslate"><span class="pre">stressed</span></code> variable, with <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">list</span></code> listing the results.</p></li>
+</ul>
+</li>
+<li><p><strong>Quiet Block for Extracting and Formatting</strong>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">qui</span></code> (quietly) suppresses output while extracting and formatting results.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">local</span></code> commands assign results (p-value, HR, lower and upper bounds of the 95% CI) to local macros.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">di</span></code> (display) command formats these values.</p></li>
+<li><p>The script checks the significance of the p-value and prints a message indicating whether there is a statistically significant association between high SBP and withdrawal from the Stata I class.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="script-flow-summary">
+<h2>Script Flow Summary:<a class="headerlink" href="#script-flow-summary" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Model Fitting</strong>:</p>
+<ul class="simple">
+<li><p>Fit the parametric survival model with <code class="docutils literal notranslate"><span class="pre">stressed</span></code> as the predictor.</p></li>
+</ul>
+</li>
+<li><p><strong>Linear Combination and Results Extraction</strong>:</p>
+<ul class="simple">
+<li><p>Compute the linear combination of the predictor, list the results, and store relevant statistics in local macros.</p></li>
+</ul>
+</li>
+<li><p><strong>Formatting and Displaying Results</strong>:</p>
+<ul class="simple">
+<li><p>Format the HR and CI values.</p></li>
+<li><p>Determine the significance of the p-value and display an appropriate message indicating the presence or absence of a significant association between high SBP and class withdrawal.</p></li>
+</ul>
+</li>
+</ol>
+<p>This script effectively combines parametric survival regression with robust result extraction and interpretation, providing clear and informative output.</p>
 </section>
 </section>
 
@@ -899,15 +1210,20 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nonparametric">8.1 Nonparametric</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#chatgpt-annotation">ChatGPT annotation:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gpt-4o-annotation">GPT-4o annotation:</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#semiparametric">8.2 Semiparametric</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">ChatGPT annotation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">GPT-4o annotation:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#explanation-of-key-components">Explanation of Key Components:</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#explanation-of-key-components">Explanation of Key Components:</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parametric">8.3 Parametric</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parametric">8.3 Parametric</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">GPT-4o annotation:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Explanation of Key Components:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#script-flow-summary">Script Flow Summary:</a></li>
 </ul>
   </nav></div>
 
