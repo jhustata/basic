@@ -336,7 +336,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -352,6 +354,23 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nonparametric">8.1 Nonparametric</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#chatgpt-annotation">ChatGPT annotation:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#semiparametric">8.2 Semiparametric</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">ChatGPT annotation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#explanation-of-key-components">Explanation of Key Components:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parametric">8.3 Parametric</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -363,6 +382,453 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="survival-analysis-non-parametric-semi-parametric-parametric">
 <h1>8.Survival Analysis: Non-parametric, Semi-parametric, Parametric<a class="headerlink" href="#survival-analysis-non-parametric-semi-parametric-parametric" title="Permalink to this heading">#</a></h1>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="nf">c</span>(os) <span class="o">==</span> <span class="s">&quot;MacOSX&quot;</span> {
+<span class="k">    use</span> wk7output<span class="o">/</span>student_pressure,<span class="k"> clear</span>  
+}
+<span class="k">else</span> {
+<span class="k">	use</span> wk7output\student_pressure,<span class="k"> clear</span> 
+} 
+<span class="k">set</span> seed <span class="m">340600</span>
+<span class="k">g</span> withdraw = <span class="nf">rbinomial</span>(<span class="m">1</span>, .<span class="m">1</span>)
+<span class="k">sort</span> student_id session_date
+<span class="k">list if</span> <span class="nf">inrange</span>(student_id, <span class="m">2</span>, <span class="m">5</span>)
+<span class="k">g</span> withdraw_dt = session_date<span class="k"> if</span> withdraw<span class="o">==</span><span class="m">1</span>
+<span class="k">sum</span> session_date
+<span class="c1">*replace withdraw_dt = r(max)</span>
+<span class="k">format</span> withdraw_dt <span class="nx">%td</span>
+<span class="k">list if</span> <span class="nf">inrange</span>(student_id, <span class="m">2</span>, <span class="m">5</span>)
+<span class="k">by</span> student_id:<span class="k"> egen end</span> = <span class="nf">min</span>(withdraw_dt)
+<span class="k">format end</span> <span class="nx">%td</span>
+<span class="k">list if</span> <span class="nf">inrange</span>(student_id, <span class="m">2</span>, <span class="m">5</span>)
+<span class="k">tab end</span>, mi
+<span class="k">sum</span> session_date 
+<span class="k">list if</span> <span class="nf">inrange</span>(student_id, <span class="m">2</span>, <span class="m">5</span>)
+<span class="k">replace end</span>=<span class="nf">r</span>(max)<span class="k"> if</span> <span class="nf">missing</span>(end)
+<span class="k">tab end</span>, mi
+<span class="k">by</span> student_id:<span class="k"> egen</span> begin = <span class="nf">min</span>(session_date)
+<span class="k">format</span> begin <span class="nx">%td</span>
+<span class="k">list if</span> <span class="nf">inrange</span>(student_id, <span class="m">2</span>, <span class="m">5</span>)
+<span class="k">by</span> student_id:<span class="k"> replace</span> withdraw = <span class="m">1</span><span class="k"> if</span> withdraw[_n<span class="m">-1</span>]<span class="o">==</span><span class="m">1</span>  
+<span class="k">list if</span> <span class="nf">inrange</span>(student_id, <span class="m">2</span>, <span class="m">5</span>)
+<span class="cm">/* --- insertion ---*/</span>
+<span class="k">bys</span> student_id:<span class="k"> egen</span> inelig=<span class="nf">min</span>(withdraw)
+<span class="k">l if</span> inelig<span class="o">==</span><span class="m">1</span>
+<span class="k">drop if</span> inelig<span class="o">==</span><span class="m">1</span> 
+<span class="k">codebook</span> student_id 
+<span class="k">keep</span> student_id session sbp withdraw<span class="k"> end</span> begin 
+<span class="k">order</span> student_id session begin<span class="k"> end</span> withdraw sbp 
+<span class="cm">/* --- continue ---*/</span>
+<span class="k">stset end</span>, fail(withdraw) enter(begin) origin(begin) scale(<span class="m">7.0242308</span>)
+<span class="k">g</span> stressed = sbp<span class="o">&gt;</span><span class="m">140</span>
+#delimit ;   
+<span class="k">sts graph</span>, 
+    fail per(<span class="m">100</span>)
+	ylab(,format(<span class="nx">%2.0f</span>))
+<span class="k">	by</span>(stressed)
+	tmax(<span class="m">7</span>)
+	xlab(<span class="m">0</span>(<span class="m">1</span>)<span class="m">7</span>)
+	xti(<span class="s">&quot;Week&quot;</span>)
+	ti(<span class="s">&quot;Stata I dropout rate, %&quot;</span>)
+	<span class="cm">/*</span>
+<span class="cm">	legend(</span>
+<span class="cm">	    order(1 2)</span>
+<span class="cm">		lab(1 &quot;SBP&gt;140mmHg&quot;)</span>
+<span class="cm">		lab(2 &quot;SBP&lt;140mmHg&quot;)</span>
+<span class="cm">		ring(0)</span>
+<span class="cm">		pos(11)</span>
+<span class="cm">	)</span>
+<span class="cm">	*/</span>
+	risktable
+<span class="k">	note</span>(<span class="s">&quot;Source: From Simulated Data&quot;</span>,
+	    pos(<span class="m">7</span>)
+	)
+; 
+#delimit cr 
+<span class="k">graph</span> export wk7output<span class="o">/</span>class_attrition_wk8<span class="m">.</span>png,<span class="k"> replace</span> 
+<span class="k">list in</span> <span class="m">1</span>
+<span class="k">capture isid</span> student_id
+<span class="k">if</span> _rc <span class="o">!=</span><span class="m">0</span> {
+<span class="k">    di</span> <span class="s">&quot;These data are nested and each student has several records&quot;</span>	
+}
+<span class="k">else</span> {
+<span class="k">	di</span> <span class="s">&quot;There&#39;s only a single record per student&quot;</span>
+}
+<span class="k">stcox</span> stressed
+<span class="c1">//creturn list</span>
+<span class="k">ereturn list</span> 
+<span class="k">return list</span>
+<span class="k">matrix m</span> = <span class="nf">r</span>(table)
+<span class="k">matrix list m</span>
+<span class="k">lincom</span> stressed 
+<span class="k">return list</span>
+<span class="k">qui</span> {  
+<span class="k">	local</span> p = <span class="nf">r</span>(p)
+<span class="k">	local</span> hr :<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nf">exp</span>(<span class="nf">r</span>(estimate))
+<span class="k">	local</span> lb :<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nf">exp</span>(<span class="nf">r</span>(lb))
+<span class="k">	local</span> ub :<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nf">exp</span>(<span class="nf">r</span>(ub))
+<span class="k">    if</span> <span class="nf">r</span>(p) <span class="o">&lt;</span> <span class="m">0.01</span> {
+<span class="k">       local</span> p:<span class="k"> di</span> <span class="s">&quot;p &lt; 0.01&quot;</span>
+    }
+<span class="k">    else if</span> <span class="nf">inrange</span>(<span class="nf">r</span>(p),<span class="m">0.01</span>,<span class="m">0.05</span>) {
+<span class="k">       local</span> p:<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(p)
+    }
+<span class="k">    else</span> {
+<span class="k">       local</span> p:<span class="k"> di</span> <span class="nx">%2.1f</span> <span class="nf">r</span>(p)
+    }
+<span class="k">    if</span> <span class="nv">`p&#39;</span> <span class="o">&lt;</span> .<span class="m">05</span> {
+<span class="k">		noi di</span> <span class="s">&quot;There&#39;s an association between SBP&gt;140mmHg and withrawal from Stata I: HR=</span><span class="nv">`hr&#39;</span><span class="s">, 95%CI: </span><span class="nv">`lb&#39;</span><span class="s">-</span><span class="nv">`ub&#39;</span><span class="s">, p=</span><span class="nv">`p&#39;</span><span class="s">&quot;</span>
+	}
+<span class="k">	else</span> {
+<span class="k">		noi di</span> <span class="s">&quot;There&#39;s no association between SBP&gt;140mmHg and withrawal from Stata I: HR=</span><span class="nv">`hr&#39;</span><span class="s">, 95%CI: </span><span class="nv">`lb&#39;</span><span class="s">-</span><span class="nv">`ub&#39;</span><span class="s">, p=</span><span class="nv">`p&#39;</span><span class="s">&quot;</span>
+	}
+} 
+<span class="k"> </span>
+<span class="k">egen</span> representation = tag(student_id)
+<span class="k">l in</span> <span class="m">1</span><span class="o">/</span><span class="m">10</span> 
+<span class="k">keep if</span> representation<span class="o">==</span><span class="m">1</span>
+<span class="k">count</span>
+<span class="k">capture isid</span> student_id
+<span class="k">if</span> _rc <span class="o">!=</span><span class="m">0</span> {
+<span class="k">    di</span> <span class="s">&quot;These data are nested and each student has several records&quot;</span>	
+}
+<span class="k">else</span> {
+<span class="k">	di</span> <span class="s">&quot;There&#39;s only a single record per student&quot;</span>
+}
+ 
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>file wk7output\student_pressure.dta not found
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>r(601);
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>r(601);
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>r(601);
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><img alt="" src="_images/class_attrition_wk8.png" /></p>
+<section id="nonparametric">
+<h2>8.1 Nonparametric<a class="headerlink" href="#nonparametric" title="Permalink to this heading">#</a></h2>
+<section id="chatgpt-annotation">
+<h3>ChatGPT annotation:<a class="headerlink" href="#chatgpt-annotation" title="Permalink to this heading">#</a></h3>
+<p>This Stata script processes student data for an analysis of dropout rates and generates a survival graph. Below is a detailed explanation of each step in the script:</p>
+<ol class="arabic">
+<li><p><strong>Loading Data Based on OS</strong>:</p>
+<ul>
+<li><p>The script first checks the operating system (OS) and loads the appropriate dataset:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="nf">c</span>(os) <span class="o">==</span> <span class="s">&quot;MacOSX&quot;</span> {
+<span class="k">    use</span> wk7output<span class="o">/</span>student_pressure,<span class="k"> clear</span>  
+}
+<span class="k">else</span> {
+<span class="k">    use</span> wk7output\student_pressure,<span class="k"> clear</span> 
+} 
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p><strong>Setting Seed and Creating Withdrawal Variable</strong>:</p>
+<ul>
+<li><p>Sets a seed for reproducibility and creates a binary variable <code class="docutils literal notranslate"><span class="pre">withdraw</span></code> to indicate whether a student withdraws:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">set</span> seed <span class="m">340600</span>
+<span class="k">g</span> withdraw = <span class="nf">rbinomial</span>(<span class="m">1</span>, .<span class="m">1</span>)
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p><strong>Sorting and Listing Data</strong>:</p>
+<ul>
+<li><p>Sorts the data by <code class="docutils literal notranslate"><span class="pre">student_id</span></code> and <code class="docutils literal notranslate"><span class="pre">session_date</span></code> and lists a subset of the data:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">sort</span> student_id session_date
+<span class="k">list if</span> <span class="nf">inrange</span>(student_id, <span class="m">2</span>, <span class="m">5</span>)
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p><strong>Generating Withdrawal Date and Summary Statistics</strong>:</p>
+<ul>
+<li><p>Creates a variable <code class="docutils literal notranslate"><span class="pre">withdraw_dt</span></code> to record the session date if the student withdraws and provides summary statistics:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">g</span> withdraw_dt = session_date<span class="k"> if</span> withdraw<span class="o">==</span><span class="m">1</span>
+<span class="k">sum</span> session_date
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p><strong>Formatting and Listing Data</strong>:</p>
+<ul>
+<li><p>Formats the <code class="docutils literal notranslate"><span class="pre">withdraw_dt</span></code> variable and lists the data again:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">format</span> withdraw_dt <span class="nx">%td</span>
+<span class="k">list if</span> <span class="nf">inrange</span>(student_id, <span class="m">2</span>, <span class="m">5</span>)
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p><strong>Generating and Formatting End Date</strong>:</p>
+<ul>
+<li><p>Creates an <code class="docutils literal notranslate"><span class="pre">end</span></code> variable to record the earliest withdrawal date for each student and formats it:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">by</span> student_id:<span class="k"> egen end</span> = <span class="nf">min</span>(withdraw_dt)
+<span class="k">format end</span> <span class="nx">%td</span>
+<span class="k">list if</span> <span class="nf">inrange</span>(student_id, <span class="m">2</span>, <span class="m">5</span>)
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p><strong>Handling Missing End Dates</strong>:</p>
+<ul>
+<li><p>Replaces missing <code class="docutils literal notranslate"><span class="pre">end</span></code> dates with the maximum session date and tabulates the <code class="docutils literal notranslate"><span class="pre">end</span></code> variable:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">replace end</span>=<span class="nf">r</span>(max)<span class="k"> if</span> <span class="nf">missing</span>(end)
+<span class="k">tab end</span>, mi
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p><strong>Generating and Formatting Begin Date</strong>:</p>
+<ul>
+<li><p>Creates a <code class="docutils literal notranslate"><span class="pre">begin</span></code> variable for the earliest session date for each student and formats it:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">by</span> student_id:<span class="k"> egen</span> begin = <span class="nf">min</span>(session_date)
+<span class="k">format</span> begin <span class="nx">%td</span>
+<span class="k">list if</span> <span class="nf">inrange</span>(student_id, <span class="m">2</span>, <span class="m">5</span>)
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p><strong>Ensuring Sequential Withdrawals</strong>:</p>
+<ul>
+<li><p>Ensures that once a student withdraws, they are marked as withdrawn in subsequent records:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">by</span> student_id:<span class="k"> replace</span> withdraw = <span class="m">1</span><span class="k"> if</span> withdraw[_n<span class="m">-1</span>]<span class="o">==</span><span class="m">1</span>  
+<span class="k">list if</span> <span class="nf">inrange</span>(student_id, <span class="m">2</span>, <span class="m">5</span>)
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p><strong>Marking and Dropping Ineligible Students</strong>:</p>
+<ul>
+<li><p>Marks ineligible students (those who withdraw) and drops them from the dataset:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">bys</span> student_id:<span class="k"> egen</span> inelig=<span class="nf">min</span>(withdraw)
+<span class="k">l if</span> inelig<span class="o">==</span><span class="m">1</span>
+<span class="k">drop if</span> inelig<span class="o">==</span><span class="m">1</span> 
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p><strong>Preparing for Survival Analysis</strong>:</p>
+<ul>
+<li><p>Keeps relevant variables and orders them, then sets up the survival data structure:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">codebook</span> student_id 
+<span class="k">keep</span> student_id session sbp withdraw<span class="k"> end</span> begin 
+<span class="k">order</span> student_id session begin<span class="k"> end</span> withdraw sbp 
+<span class="k">stset end</span>, fail(withdraw) enter(begin) origin(begin) scale(<span class="m">7.0242308</span>)
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p><strong>Creating a Stress Indicator</strong>:</p>
+<ul>
+<li><p>Creates a <code class="docutils literal notranslate"><span class="pre">stressed</span></code> variable indicating high systolic blood pressure (SBP):</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">g</span> stressed = sbp<span class="o">&gt;</span><span class="m">140</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p><strong>Generating Survival Graph</strong>:</p>
+<ul>
+<li><p>Generates a survival graph with failure percentages, stratified by the <code class="docutils literal notranslate"><span class="pre">stressed</span></code> variable, and exports the graph as a PNG file:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>#delimit ;   
+<span class="k">sts graph</span>, 
+    fail per(<span class="m">100</span>)
+    ylab(,format(<span class="nx">%2.0f</span>))
+<span class="k">    by</span>(stressed)
+    tmax(<span class="m">7</span>)
+    xlab(<span class="m">0</span>(<span class="m">1</span>)<span class="m">7</span>)
+    xti(<span class="s">&quot;Week&quot;</span>)
+    ti(<span class="s">&quot;Stata I dropout rate, %&quot;</span>)
+    <span class="cm">/*</span>
+<span class="cm">    legend(</span>
+<span class="cm">        order(1 2)</span>
+<span class="cm">        lab(1 &quot;SBP&gt;140mmHg&quot;)</span>
+<span class="cm">        lab(2 &quot;SBP&lt;140mmHg&quot;)</span>
+<span class="cm">        ring(0)</span>
+<span class="cm">        pos(11)</span>
+<span class="cm">    )</span>
+<span class="cm">    */</span>
+    risktable
+<span class="k">    note</span>(<span class="s">&quot;Source: From Simulated Data&quot;</span>,
+        pos(<span class="m">7</span>)
+    )
+; 
+#delimit cr 
+<span class="k">graph</span> export wk7output<span class="o">/</span>class_attrition_wk8<span class="m">.</span>png,<span class="k"> replace</span> 
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p><strong>Checking Data Structure</strong>:</p>
+<ul>
+<li><p>Checks if the data is nested by student and displays a message accordingly:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">list in</span> <span class="m">1</span>
+<span class="k">capture isid</span> student_id
+<span class="k">if</span> _rc <span class="o">!=</span><span class="m">0</span> {
+<span class="k">    di</span> <span class="s">&quot;These data are nested and each student has several records&quot;</span>    
+}
+<span class="k">else</span> {
+<span class="k">    di</span> <span class="s">&quot;There&#39;s only a single record per student&quot;</span>
+}
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+</ol>
+<p>This script performs a thorough analysis of student withdrawal patterns, generates meaningful variables, and produces a clear and informative survival graph.</p>
+</section>
+</section>
+<section id="semiparametric">
+<h2>8.2 Semiparametric<a class="headerlink" href="#semiparametric" title="Permalink to this heading">#</a></h2>
+<section id="id1">
+<h3>ChatGPT annotation<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<p>This Stata script performs a Cox proportional hazards regression, extracts results, and formats the output. Here’s an annotated breakdown of the script:</p>
+<ol class="arabic">
+<li><p><strong>Cox Proportional Hazards Model</strong>:</p>
+<ul>
+<li><p>The script fits a Cox model with <code class="docutils literal notranslate"><span class="pre">stressed</span></code> as the predictor:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">stcox</span> stressed
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p><strong>Listing Stored Results</strong>:</p>
+<ul>
+<li><p>Lists estimation results and other stored results:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="c1">//creturn list</span>
+<span class="k">ereturn list</span> 
+<span class="k">return list</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p><strong>Storing Results in a Matrix</strong>:</p>
+<ul>
+<li><p>Stores the results of the Cox model in a matrix <code class="docutils literal notranslate"><span class="pre">m</span></code> and lists the matrix:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">matrix m</span> = <span class="nf">r</span>(table)
+<span class="k">matrix list m</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p><strong>Linear Combination of Estimates</strong>:</p>
+<ul>
+<li><p>Calculates a linear combination of the <code class="docutils literal notranslate"><span class="pre">stressed</span></code> coefficient:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">lincom</span> stressed 
+<span class="k">return list</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p><strong>Extracting and Formatting Results</strong>:</p>
+<ul>
+<li><p>Quietly extracts the p-value, hazard ratio (HR), and its 95% confidence interval (CI), formats them, and prints a message based on the significance of the association:</p>
+<div class="highlight-stata notranslate"><div class="highlight"><pre><span></span><span class="k">qui</span> {  
+<span class="k">    local</span> p = <span class="nf">r</span>(p)
+<span class="k">    local</span> hr :<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nf">exp</span>(<span class="nf">r</span>(estimate))
+<span class="k">    local</span> lb :<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nf">exp</span>(<span class="nf">r</span>(lb))
+<span class="k">    local</span> ub :<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nf">exp</span>(<span class="nf">r</span>(ub))
+<span class="k">    </span>
+<span class="k">    if</span> <span class="nf">r</span>(p) <span class="o">&lt;</span> <span class="m">0.01</span> {
+<span class="k">        local</span> p:<span class="k"> di</span> <span class="s">&quot;p &lt; 0.01&quot;</span>
+    }
+<span class="k">    else if</span> <span class="nf">inrange</span>(<span class="nf">r</span>(p),<span class="m">0.01</span>,<span class="m">0.05</span>) {
+<span class="k">        local</span> p:<span class="k"> di</span> <span class="nx">%3.2f</span> <span class="nf">r</span>(p)
+    }
+<span class="k">    else</span> {
+<span class="k">        local</span> p:<span class="k"> di</span> <span class="nx">%2.1f</span> <span class="nf">r</span>(p)
+    }
+<span class="k">    </span>
+<span class="k">    if</span> <span class="nv">`p&#39;</span> <span class="o">&lt;</span> .<span class="m">05</span> {
+<span class="k">        noi di</span> <span class="s">&quot;There&#39;s an association between SBP&gt;140mmHg and withdrawal from Stata I: HR=</span><span class="nv">`hr&#39;</span><span class="s">, 95%CI: </span><span class="nv">`lb&#39;</span><span class="s">-</span><span class="nv">`ub&#39;</span><span class="s">, p=</span><span class="nv">`p&#39;</span><span class="s">&quot;</span>
+    }
+<span class="k">    else</span> {
+<span class="k">        noi di</span> <span class="s">&quot;There&#39;s no association between SBP&gt;140mmHg and withdrawal from Stata I: HR=</span><span class="nv">`hr&#39;</span><span class="s">, 95%CI: </span><span class="nv">`lb&#39;</span><span class="s">-</span><span class="nv">`ub&#39;</span><span class="s">, p=</span><span class="nv">`p&#39;</span><span class="s">&quot;</span>
+    }
+} 
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+</ol>
+</section>
+</section>
+<section id="explanation-of-key-components">
+<h2>Explanation of Key Components:<a class="headerlink" href="#explanation-of-key-components" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Fitting the Cox Model</strong>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">stcox</span> <span class="pre">stressed</span></code> fits a Cox proportional hazards model with the variable <code class="docutils literal notranslate"><span class="pre">stressed</span></code> (indicating SBP &gt; 140 mmHg) as the predictor.</p></li>
+</ul>
+</li>
+<li><p><strong>Listing Results</strong>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ereturn</span> <span class="pre">list</span></code> and <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">list</span></code> display the estimation results and stored results from the last estimation command.</p></li>
+</ul>
+</li>
+<li><p><strong>Extracting Results into a Matrix</strong>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">matrix</span> <span class="pre">m</span> <span class="pre">=</span> <span class="pre">r(table)</span></code> stores the results of the Cox model in a matrix named <code class="docutils literal notranslate"><span class="pre">m</span></code>, which is then listed using <code class="docutils literal notranslate"><span class="pre">matrix</span> <span class="pre">list</span> <span class="pre">m</span></code>.</p></li>
+</ul>
+</li>
+<li><p><strong>Calculating Linear Combinations</strong>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">lincom</span> <span class="pre">stressed</span></code> calculates the linear combination of estimates for the <code class="docutils literal notranslate"><span class="pre">stressed</span></code> variable, with <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">list</span></code> listing the results.</p></li>
+</ul>
+</li>
+<li><p><strong>Quiet Block for Extracting and Formatting</strong>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">qui</span></code> (quietly) suppresses output while extracting and formatting results.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">local</span></code> commands assign results (p-value, HR, lower and upper bounds of the 95% CI) to local macros.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">di</span></code> (display) command formats these values.</p></li>
+<li><p>The script checks the significance of the p-value and prints a message indicating whether there is a statistically significant association between high SBP and withdrawal from the Stata I class.</p></li>
+</ul>
+</li>
+</ol>
+<p>This script is comprehensive for fitting a Cox model, extracting results, and providing a clear interpretation based on statistical significance.</p>
+</section>
+<section id="parametric">
+<h2>8.3 Parametric<a class="headerlink" href="#parametric" title="Permalink to this heading">#</a></h2>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -374,16 +840,16 @@ document.write(`
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "python"
+            mode: "stata"
         },
         kernelOptions: {
-            name: "python3",
+            name: "stata",
             path: "./."
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python3'</script>
+    <script>kernelName = 'stata'</script>
 
                 </article>
               
@@ -423,6 +889,29 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nonparametric">8.1 Nonparametric</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#chatgpt-annotation">ChatGPT annotation:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#semiparametric">8.2 Semiparametric</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">ChatGPT annotation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#explanation-of-key-components">Explanation of Key Components:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parametric">8.3 Parametric</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
