@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 
 
-<html lang="en" >
+<html lang="en" data-content_root="" >
 
   <head>
     <meta charset="utf-8" />
@@ -15,51 +15,49 @@
   
   <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
   
-  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.5ea377869091fd0449014c60fc090103.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="_static/scripts/sphinx-book-theme.js"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="_static/design-tabs.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'quickrefs';</script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -74,19 +72,23 @@ const thebe_selector_output = ".output, .cell_output"
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__primary"
-          id="__primary"/>
-  <label class="overlay overlay-primary" for="__primary"></label>
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__secondary"
-          id="__secondary"/>
-  <label class="overlay overlay-secondary" for="__secondary"></label>
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
   
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
@@ -108,12 +110,20 @@ const thebe_selector_output = ".output, .cell_output"
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
   
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
+      
+      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -128,9 +138,13 @@ const thebe_selector_output = ".output, .cell_output"
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
+
+  
+    
   
 
 <a class="navbar-brand logo" href="intro.html">
+  
   
   
   
@@ -140,12 +154,23 @@ const thebe_selector_output = ".output, .cell_output"
       
     
     
-    <img src="https://brand.jhu.edu/assets/uploads/sites/5/2014/06/university_logo_small_vertical_blue.png" class="logo__image only-light" alt="Logo image"/>
-    <script>document.write(`<img src="https://brand.jhu.edu/assets/uploads/sites/5/2014/06/university_logo_small_vertical_blue.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+    <img src="https://brand.jhu.edu/wp-content/uploads/2024/07/logos-vertical-1024x683.jpg" class="logo__image only-light" alt="Stata Programming - Home"/>
+    <script>document.write(`<img src="https://brand.jhu.edu/wp-content/uploads/2024/07/logos-vertical-1024x683.jpg" class="logo__image only-dark" alt="Stata Programming - Home"/>`);</script>
   
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
@@ -180,7 +205,7 @@ const thebe_selector_output = ".output, .cell_output"
 
       </div>
       
-      <main id="main-content" class="bd-main">
+      <main id="main-content" class="bd-main" role="main">
         
         
 
@@ -189,14 +214,14 @@ const thebe_selector_output = ".output, .cell_output"
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article">
+              <div class="bd-header-article d-print-none">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
       
-        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
   <span class="fa-solid fa-bars"></span>
-</label></div>
+</button></div>
       
     </div>
   
@@ -318,26 +343,28 @@ const thebe_selector_output = ".output, .cell_output"
 </button>
 
 
+
 <script>
 document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
   </button>
 `);
 </script>
 
+
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
-</label>
+</button>
 </div></div>
       
     </div>
@@ -384,7 +411,7 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <blockquote>
 <div><p><em>The foundational pillars of this Spring term course were laid by my esteemed mentors and colleagues in the Department of Surgery at Hopkins, <a class="reference external" href="https://nyulangone.org/doctors/1326071945/dorry-l-segev">Dorry Segev</a> and <a class="reference external" href="https://med.nyu.edu/faculty/allan-b-massie">Allan Massie</a>.</em></p>
@@ -394,7 +421,7 @@ document.write(`
 <section id="classroom-and-virtual-attendance-information">
 <h2>Classroom and Virtual Attendance Information<a class="headerlink" href="#classroom-and-virtual-attendance-information" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
-<li><p><strong>Location</strong>: Wolfe <strong>W1214</strong> (Sheldon Hall), East Baltimore Campus. You’re encouraged to join the in-person experience for enriched learning<span class="xref myst">.</span></p></li>
+<li><p><strong>Location</strong>: Wolfe <strong>W1214</strong> (Sheldon Hall), East Baltimore Campus. You’re encouraged to join the in-person experience for enriched learning<a class="reference internal" href="#./quickrefs2.ipynb"><span class="xref myst">.</span></a></p></li>
 <li><p><strong>Zoom Online Classroom</strong>: <a class="reference external" href="https://jhjhm.zoom.us/j/97089503585">Join Zoom Meeting</a>. Active participation in Zoom sessions is highly encouraged. Ask questions, share your screen when troubleshooting, and engage with your peers to mimic the in-person classroom environment as closely as possible.</p>
 <ul>
 <li><p>Sessions <strike>and labs</strike> will be recorded and stored in the cloud for 180 days for review and reference. <strong>Passcodes for the recordings can be accessed</strong> via the <code class="docutils literal notranslate"><span class="pre">CoursePlus</span> <span class="pre">&gt;</span> <span class="pre">Online</span> <span class="pre">Library</span> <span class="pre">&gt;</span> <span class="pre">Session</span></code></p>
@@ -430,7 +457,7 @@ document.write(`
 <ul class="simple">
 <li><p><strong>Instructor</strong>:</p>
 <ul>
-<li><p>Abimereki Muzaale<a class="reference internal" href="teachingteam.html"><span class="doc std std-doc">,</span></a> Email: <a class="reference external" href="mailto:muzaale&#37;&#52;&#48;jhmi&#46;edu">muzaale<span>&#64;</span>jhmi<span>&#46;</span>edu</a></p></li>
+<li><p>Abimereki Muzaale<a class="reference internal" href="teachingteam.html"><span class="std std-doc">,</span></a> Email: <a class="reference external" href="mailto:muzaale&#37;&#52;&#48;jhmi&#46;edu">muzaale<span>&#64;</span>jhmi<span>&#46;</span>edu</a></p></li>
 </ul>
 </li>
 <li><p><strong>Analytic Mentor</strong>:</p>
@@ -438,7 +465,7 @@ document.write(`
 <li><p>Vincent Jin, Email: <a class="reference external" href="mailto:zjin26&#37;&#52;&#48;jhmi&#46;edu">zjin26<span>&#64;</span>jhmi<span>&#46;</span>edu</a></p></li>
 </ul>
 </li>
-<li><p><strong>Teaching Assistants</strong><a class="reference internal" href="tastudentmatch.html"><span class="doc std std-doc">:</span></a></p>
+<li><p><strong>Teaching Assistants</strong><a class="reference internal" href="tastudentmatch.html"><span class="std std-doc">:</span></a></p>
 <ul>
 <li><p>Ning Meng, Email: <a class="reference external" href="mailto:nmeng2&#37;&#52;&#48;jh&#46;edu">nmeng2<span>&#64;</span>jh<span>&#46;</span>edu</a> (Lead TA)</p></li>
 <li><p>Natalie Daya Malek, Email: <a class="reference external" href="mailto:ndaya1&#37;&#52;&#48;jhu&#46;edu">ndaya1<span>&#64;</span>jhu<span>&#46;</span>edu</a></p></li>
@@ -461,13 +488,13 @@ document.write(`
 </ul>
 <p><strong>Lab instructions/solutions</strong>:</p>
 <ul class="simple">
-<li><p><strong>Lab 1/Week 2</strong>: <a class="reference external" href="https://jhustata.github.io/basic/chapter1.html#lab">Lab 1 Instructions</a>  (04/01 - 04/05) | <a class="reference internal" href="lab1sol.html"><span class="doc std std-doc">Solution</span></a></p></li>
-<li><p><strong>Lab 2/Week 3</strong>: <a class="reference internal" href="lab1.html"><span class="doc std std-doc">Lab 2 Instructions</span></a>  (04/08 - 04/12) | <a class="reference internal" href="lab1sol.html"><span class="doc std std-doc">Solution</span></a></p></li>
-<li><p><strong>Lab 3/Week 4</strong>: <a class="reference internal" href="lab3.html"><span class="doc std std-doc">Lab 3 Instructions</span></a>  (04/15 - 04/19) | <a class="reference internal" href="lab3sol.html"><span class="doc std std-doc">Solution</span></a></p></li>
+<li><p><strong>Lab 1/Week 2</strong>: <a class="reference external" href="https://jhustata.github.io/basic/chapter1.html#lab">Lab 1 Instructions</a>  (04/01 - 04/05) | <a class="reference internal" href="lab1sol.html"><span class="std std-doc">Solution</span></a></p></li>
+<li><p><strong>Lab 2/Week 3</strong>: <a class="reference internal" href="lab1.html"><span class="std std-doc">Lab 2 Instructions</span></a>  (04/08 - 04/12) | <a class="reference internal" href="lab1sol.html"><span class="std std-doc">Solution</span></a></p></li>
+<li><p><strong>Lab 3/Week 4</strong>: <a class="reference internal" href="lab3.html"><span class="std std-doc">Lab 3 Instructions</span></a>  (04/15 - 04/19) | <a class="reference internal" href="lab3sol.html"><span class="std std-doc">Solution</span></a></p></li>
 <li><p><strike><strong>Lab 4/Week 5</strong>: Lab 4 Instructions  (04/22 - 04/26) | Solution</strike></p></li>
-<li><p><strong>Lab 5/Week 6</strong>: <a class="reference internal" href="lab5.html"><span class="doc std std-doc">Lab 5 Instructions</span></a>  (04/29 - 05/02) | <a class="reference internal" href="lab5sol.html"><span class="doc std std-doc">Solution</span></a></p></li>
-<li><p><strong>Lab 6/Week 7</strong>: <a class="reference internal" href="lab6.html"><span class="doc std std-doc">Lab 6 Instructions</span></a>  (05/06 - 05/10) | <a class="reference internal" href="lab6sol.html"><span class="doc std std-doc">Solution</span></a></p></li>
-<li><p><strong>Lab 7/Week 8</strong>: <a class="reference internal" href="lab7.html"><span class="doc std std-doc">Lab 7 Instructions</span></a>   (05/13 - 05/16) | Solution</p></li>
+<li><p><strong>Lab 5/Week 6</strong>: <a class="reference internal" href="lab5.html"><span class="std std-doc">Lab 5 Instructions</span></a>  (04/29 - 05/02) | <a class="reference internal" href="lab5sol.html"><span class="std std-doc">Solution</span></a></p></li>
+<li><p><strong>Lab 6/Week 7</strong>: <a class="reference internal" href="lab6.html"><span class="std std-doc">Lab 6 Instructions</span></a>  (05/06 - 05/10) | <a class="reference internal" href="lab6sol.html"><span class="std std-doc">Solution</span></a></p></li>
+<li><p><strong>Lab 7/Week 8</strong>: <a class="reference internal" href="lab7.html"><span class="std std-doc">Lab 7 Instructions</span></a>   (05/13 - 05/16) | Solution</p></li>
 <li><p>Ensure to check the specific dates and access the provided solutions for self-review.</p></li>
 </ul>
 </section>
@@ -475,13 +502,13 @@ document.write(`
 <h2>Homework Assignments<a class="headerlink" href="#homework-assignments" title="Permalink to this heading">#</a></h2>
 <p>Assignments are a crucial part of the coursework, allowing you to apply what you’ve learned:</p>
 <ul class="simple">
-<li><p><strong>HW 1</strong>: <a class="reference external" href="https://jhustata.github.io/basic/chapter1.html#homework">Assignment 1</a> Due 04/04 | <a class="reference internal" href="hw1sol.html"><span class="doc std std-doc">Solution</span></a></p></li>
-<li><p><strong>HW 2</strong>: <a class="reference external" href="https://jhustata.github.io/basic/chapter2.html#homework">Assignment 2</a> Due 04/11 | <a class="reference internal" href="hw2sol.html"><span class="doc std std-doc">Solution</span></a></p></li>
-<li><p><strong>HW 3</strong>: <a class="reference internal" href="hw3.html"><span class="doc std std-doc">Assignment 3</span></a> Due 04/18 | <a class="reference internal" href="hw3sol.html"><span class="doc std std-doc">Solution</span></a></p></li>
+<li><p><strong>HW 1</strong>: <a class="reference external" href="https://jhustata.github.io/basic/chapter1.html#homework">Assignment 1</a> Due 04/04 | <a class="reference internal" href="hw1sol.html"><span class="std std-doc">Solution</span></a></p></li>
+<li><p><strong>HW 2</strong>: <a class="reference external" href="https://jhustata.github.io/basic/chapter2.html#homework">Assignment 2</a> Due 04/11 | <a class="reference internal" href="hw2sol.html"><span class="std std-doc">Solution</span></a></p></li>
+<li><p><strong>HW 3</strong>: <a class="reference internal" href="hw3.html"><span class="std std-doc">Assignment 3</span></a> Due 04/18 | <a class="reference internal" href="hw3sol.html"><span class="std std-doc">Solution</span></a></p></li>
 <li><p><strike><strong>HW 4</strong>: Assignment 4 Due 04/25 | Solution </strike></p></li>
-<li><p><strong>HW 5</strong>: <a class="reference internal" href="hw5.html"><span class="doc std std-doc">Assignment 5</span></a> Due 05/02 <a class="reference internal" href="hw5sup.html"><span class="doc std std-doc">|</span></a> <a class="reference internal" href="table1.html"><span class="doc std std-doc">Solution</span></a></p></li>
-<li><p><strong>HW 6</strong>: <a class="reference internal" href="hw6.html"><span class="doc std std-doc">Assignment 6</span></a> Due 05/09 <a class="reference internal" href="hw5sup.html"><span class="doc std std-doc">|</span></a> <a class="reference internal" href="hw6sol.html"><span class="doc std std-doc">Solution</span></a></p></li>
-<li><p><strong>HW 7</strong>: <a class="reference internal" href="hw7.html"><span class="doc std std-doc">Assignment 7</span></a> Due 05/16 | Solution (🎓<strong>strict deadline</strong> for graduating students)</p></li>
+<li><p><strong>HW 5</strong>: <a class="reference internal" href="hw5.html"><span class="std std-doc">Assignment 5</span></a> Due 05/02 <a class="reference internal" href="hw5sup.html"><span class="std std-doc">|</span></a> <a class="reference internal" href="table1.html"><span class="std std-doc">Solution</span></a></p></li>
+<li><p><strong>HW 6</strong>: <a class="reference internal" href="hw6.html"><span class="std std-doc">Assignment 6</span></a> Due 05/09 <a class="reference internal" href="hw5sup.html"><span class="std std-doc">|</span></a> <a class="reference internal" href="hw6sol.html"><span class="std std-doc">Solution</span></a></p></li>
+<li><p><strong>HW 7</strong>: <a class="reference internal" href="hw7.html"><span class="std std-doc">Assignment 7</span></a> Due 05/16 | Solution (🎓<strong>strict deadline</strong> for graduating students)</p></li>
 <li><p>Make sure to submit by the due dates and refer to the solutions for feedback.</p></li>
 </ul>
 </section>
@@ -518,7 +545,7 @@ document.write(`
 <li><p><a class="reference external" href="https://raw.githubusercontent.com/jhustata/basic/main/lecture7.do">lecture7.do</a></p></li>
 <li><p><a class="reference external" href="https://raw.githubusercontent.com/jhustata/basic/main/lecture8.do">lecture8.do</a></p>
 <ul>
-<li><p><a class="reference internal" href="dofile.html"><span class="doc std std-doc">unique</span></a> <code class="docutils literal notranslate"><span class="pre">.do</span></code> file structure</p></li>
+<li><p><a class="reference internal" href="dofile.html"><span class="std std-doc">unique</span></a> <code class="docutils literal notranslate"><span class="pre">.do</span></code> file structure</p></li>
 </ul>
 </li>
 </ul>
@@ -528,7 +555,7 @@ document.write(`
 <section id="additional-resources-and-evaluation">
 <h2>Additional Resources and Evaluation<a class="headerlink" href="#additional-resources-and-evaluation" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
-<li><p><strong>Stata Version Note</strong>: A specific note on Stata 13 usage and compatibility issues is available <a class="reference internal" href="pvalue.html"><span class="doc std std-doc">here</span></a>.</p></li>
+<li><p><strong>Stata Version Note</strong>: A specific note on Stata 13 usage and compatibility issues is available <a class="reference internal" href="pvalue.html"><span class="std std-doc">here</span></a>.</p></li>
 <li><p><strong>Course Evaluation</strong>: Your honest <a class="reference external" href="https://courseevalsystem.publichealth.jhu.edu/User">feedback</a> is not just appreciated; it’s a cornerstone of how this course evolves. Please don’t miss out on the chance to shape future iterations in week 8.</p></li>
 <li><p><strong>Stata-focused Discussion Community on GitHub</strong>: An opportunity to engage with a <a class="reference external" href="https://github.com/jhufena/discussions/discussions">broader Hopkins community</a> interested in Stata programming. Requires a GitHub account and a willingness to learn and share.</p></li>
 </ul>
@@ -653,11 +680,10 @@ document.write(`
 
               
               
-                <footer class="bd-footer-article">
+              
+              
+                <footer class="prev-next-footer d-print-none">
                   
-<div class="footer-article-items footer-article__inner">
-  
-    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="chapter8.html"
@@ -668,10 +694,7 @@ document.write(`
         <p class="prev-next-title">8.Survival Analysis: Non-parametric, Semi-parametric, Parametric</p>
       </div>
     </a>
-</div></div>
-  
 </div>
-
                 </footer>
               
             </div>
@@ -679,6 +702,7 @@ document.write(`
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -724,6 +748,7 @@ By Abimereki Muzaale & Vincent Jin
   
   <div class="footer-item">
     
+
   <p class="copyright">
     
       © Copyright 2024.
@@ -750,8 +775,8 @@ By Abimereki Muzaale & Vincent Jin
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>
