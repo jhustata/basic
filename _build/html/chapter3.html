@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 
 
-<html lang="en" >
+<html lang="en" data-content_root="" >
 
   <head>
     <meta charset="utf-8" />
@@ -15,51 +15,49 @@
   
   <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
   
-  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.5ea377869091fd0449014c60fc090103.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="_static/scripts/sphinx-book-theme.js"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="_static/design-tabs.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'chapter3';</script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -75,19 +73,23 @@ const thebe_selector_output = ".output, .cell_output"
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__primary"
-          id="__primary"/>
-  <label class="overlay overlay-primary" for="__primary"></label>
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__secondary"
-          id="__secondary"/>
-  <label class="overlay overlay-secondary" for="__secondary"></label>
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
   
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
@@ -109,12 +111,20 @@ const thebe_selector_output = ".output, .cell_output"
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
   
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
+      
+      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -129,9 +139,13 @@ const thebe_selector_output = ".output, .cell_output"
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
+
+  
+    
   
 
 <a class="navbar-brand logo" href="intro.html">
+  
   
   
   
@@ -141,12 +155,23 @@ const thebe_selector_output = ".output, .cell_output"
       
     
     
-    <img src="https://brand.jhu.edu/assets/uploads/sites/5/2014/06/university_logo_small_vertical_blue.png" class="logo__image only-light" alt="Logo image"/>
-    <script>document.write(`<img src="https://brand.jhu.edu/assets/uploads/sites/5/2014/06/university_logo_small_vertical_blue.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+    <img src="https://bioannualreport2022.engr.ucr.edu/sites/default/files/styles/form_preview/public/338-3387747_johns-hopkins-university-logo-johns-hopkins-university-logo.png?itok=Ktn3WG5r" class="logo__image only-light" alt="Stata Programming - Home"/>
+    <script>document.write(`<img src="https://bioannualreport2022.engr.ucr.edu/sites/default/files/styles/form_preview/public/338-3387747_johns-hopkins-university-logo-johns-hopkins-university-logo.png?itok=Ktn3WG5r" class="logo__image only-dark" alt="Stata Programming - Home"/>`);</script>
   
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
@@ -181,7 +206,7 @@ const thebe_selector_output = ".output, .cell_output"
 
       </div>
       
-      <main id="main-content" class="bd-main">
+      <main id="main-content" class="bd-main" role="main">
         
         
 
@@ -190,14 +215,14 @@ const thebe_selector_output = ".output, .cell_output"
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article">
+              <div class="bd-header-article d-print-none">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
       
-        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
   <span class="fa-solid fa-bars"></span>
-</label></div>
+</button></div>
       
     </div>
   
@@ -319,26 +344,28 @@ const thebe_selector_output = ".output, .cell_output"
 </button>
 
 
+
 <script>
 document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
   </button>
 `);
 </script>
 
+
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
-</label>
+</button>
 </div></div>
       
     </div>
@@ -485,7 +512,7 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="loops-program-syntax-and-miscellany">
 <h1>3. Loops, Program Syntax, and Miscellany<a class="headerlink" href="#loops-program-syntax-and-miscellany" title="Permalink to this heading">#</a></h1>
@@ -541,7 +568,7 @@ document.write(`
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="_images/68b0bc74161d7710f53566e5ee9be406db910130ddbc8f918781f1977ed8e80e.png" src="_images/68b0bc74161d7710f53566e5ee9be406db910130ddbc8f918781f1977ed8e80e.png" />
+<img alt="_images/9798b8054ac6e9f6f94e249240b51692c2cef47b931bb49c2d95fcbbd262df2e.png" src="_images/9798b8054ac6e9f6f94e249240b51692c2cef47b931bb49c2d95fcbbd262df2e.png" />
 </div>
 </div>
 <p>By now you should be aware that our key ambitions are to:</p>
@@ -554,7 +581,7 @@ document.write(`
 </ol>
 <p>Today we are going to focus on commands and syntax that exponentially increase our efficiency in coding, a key step towards automation. One way to achieve this is by learning about loops. The other is by writing flexible programs that are driven by user-defined inputs. We’ll also include miscellaneous code-snippets that you’ll incorporate into your loops and programs. Please look out for the <code class="docutils literal notranslate"><span class="pre">macros</span></code> that emerge when you define a loop (e.g. <code class="docutils literal notranslate"><span class="pre">i</span></code>) or program (e.g. <code class="docutils literal notranslate"><span class="pre">varname</span></code>)</p>
 <section id="loops">
-<h2>3<a class="reference internal" href="loops.html"><span class="doc std std-doc">.</span></a>1 Loops<a class="headerlink" href="#loops" title="Permalink to this heading">#</a></h2>
+<h2>3<a class="reference internal" href="loops.html"><span class="std std-doc">.</span></a>1 Loops<a class="headerlink" href="#loops" title="Permalink to this heading">#</a></h2>
 <section id="forvalues">
 <h3>3.1.1 <code class="docutils literal notranslate"><span class="pre">forvalues</span></code><a class="headerlink" href="#forvalues" title="Permalink to this heading">#</a></h3>
 <p>In the realm of data analysis, especially when dealing with repetitive tasks, loops are your steadfast allies. They save time, reduce errors, and make your code cleaner. Consider the following Stata code snippet:</p>
@@ -655,7 +682,7 @@ document.write(`
 </section>
 <section id="miscellany">
 <h2>3.3 Miscellany<a class="headerlink" href="#miscellany" title="Permalink to this heading">#</a></h2>
-<p>In this section, we continue what was began in <code class="docutils literal notranslate"><span class="pre">lab</span> <span class="pre">1</span> <span class="pre">&amp;</span> <span class="pre">2</span></code>: expanding our Stata vocubulary. As we master Program syntax, we’ll need to write programs that give the end-user power, efficiency, and flexibility. And there is no end to this journey. Keep learning something new, and please do share anything interesting you learn with peers and colleagues. We’ll update this section each week, so remain vigillant! Ultimately, there’ll be a course Stata syntax <a class="reference internal" href="catalog.html"><span class="doc std std-doc">catalog</span></a></p>
+<p>In this section, we continue what was began in <code class="docutils literal notranslate"><span class="pre">lab</span> <span class="pre">1</span> <span class="pre">&amp;</span> <span class="pre">2</span></code>: expanding our Stata vocubulary. As we master Program syntax, we’ll need to write programs that give the end-user power, efficiency, and flexibility. And there is no end to this journey. Keep learning something new, and please do share anything interesting you learn with peers and colleagues. We’ll update this section each week, so remain vigillant! Ultimately, there’ll be a course Stata syntax <a class="reference internal" href="catalog.html"><span class="std std-doc">catalog</span></a></p>
 <section id="import">
 <h3>3.3.0 <code class="docutils literal notranslate"><span class="pre">import</span></code><a class="headerlink" href="#import" title="Permalink to this heading">#</a></h3>
 <p>You might find comfort in the familiar <code class="docutils literal notranslate"><span class="pre">.dta</span></code> format presented to you during your Epidemiology and Biostatistics classes. However, when you collaborate with other researchers within or outside your institution, there is no guarantee that <code class="docutils literal notranslate"><span class="pre">.dta</span></code> will be the format of datasets available to you. So use this as a resource to quickly reference the syntax you may need. The choices here are based on the Stata dropdown menu: <code class="docutils literal notranslate"><span class="pre">file</span> <span class="pre">&gt;</span> <span class="pre">import</span></code>. Here’s a <a class="reference external" href="https://jhustata.github.io/basic/import_data.html">resource</a> you may use. Otherwise, this section will be updated each week to offer more examples for your practice.</p>
@@ -3497,7 +3524,7 @@ putdocx<span class="k"> save</span> doc3<span class="m">.</span>docx,<span class
 <h2>3.4 Lab<a class="headerlink" href="#lab" title="Permalink to this heading">#</a></h2>
 <p>Use the <code class="docutils literal notranslate"><span class="pre">transplants.dta</span></code> dataset with these practice questions:</p>
 <ol class="arabic simple">
-<li><p>Calculate the standard deviation of age among patients with blood type O (<code class="docutils literal notranslate"><span class="pre">abo==4</span></code>). Print the following sentence: <code class="docutils literal notranslate"><span class="pre">The</span> <span class="pre">SD</span> <span class="pre">of</span> <span class="pre">age</span> <span class="pre">among</span> <span class="pre">patients</span> <span class="pre">with</span> <span class="pre">blood</span> <span class="pre">type</span> <span class="pre">O</span> <span class="pre">is</span> <span class="pre">XX.X</span></code>. Replace <code class="docutils literal notranslate"><span class="pre">XX</span></code> with correct values. Round to tenths (e.g. 8.2)<a class="reference internal" href="lab3sol.html"><span class="doc std std-doc">.</span></a></p></li>
+<li><p>Calculate the standard deviation of age among patients with blood type O (<code class="docutils literal notranslate"><span class="pre">abo==4</span></code>). Print the following sentence: <code class="docutils literal notranslate"><span class="pre">The</span> <span class="pre">SD</span> <span class="pre">of</span> <span class="pre">age</span> <span class="pre">among</span> <span class="pre">patients</span> <span class="pre">with</span> <span class="pre">blood</span> <span class="pre">type</span> <span class="pre">O</span> <span class="pre">is</span> <span class="pre">XX.X</span></code>. Replace <code class="docutils literal notranslate"><span class="pre">XX</span></code> with correct values. Round to tenths (e.g. 8.2)<a class="reference internal" href="lab3sol.html"><span class="std std-doc">.</span></a></p></li>
 <li><p>Regress BMI on age and sex (using <code class="docutils literal notranslate"><span class="pre">regress</span> <span class="pre">bmi</span> <span class="pre">age</span> <span class="pre">gender</span></code>) without displaying the regression output. Print the following sentence: <code class="docutils literal notranslate"><span class="pre">Per</span> <span class="pre">1-year</span> <span class="pre">increase</span> <span class="pre">in</span> <span class="pre">age,</span> <span class="pre">BMI</span> <span class="pre">increases</span> <span class="pre">by</span> <span class="pre">X.XX</span></code>. Replace <code class="docutils literal notranslate"><span class="pre">XX</span></code> with the regression coefficient of age. Round to hundredths (e.g. 0.74). Review week 3.3 Miscellany: <a class="reference external" href="https://jhustata.github.io/basic/chapter3.html#more-on-return-values">3.3.22 More on return values</a> on how to extract <code class="docutils literal notranslate"><span class="pre">r()</span></code> class return values following a regression.</p></li>
 <li><p>Now we will do the same thing, but using a program. Define a program named <code class="docutils literal notranslate"><span class="pre">bmi_age</span></code>. This program will regress BMI on age and sex without displaying the regression output, and print: <code class="docutils literal notranslate"><span class="pre">Per</span> <span class="pre">1-year</span> <span class="pre">increase</span> <span class="pre">in</span> <span class="pre">age,</span> <span class="pre">BMI</span> <span class="pre">increases</span> <span class="pre">by</span> <span class="pre">X.XX</span></code>. Replace <code class="docutils literal notranslate"><span class="pre">XX</span></code> with the regression coefficient of <code class="docutils literal notranslate"><span class="pre">age</span></code>. Round to hundredths (e.g. 0.74).</p></li>
 <li><p>Let’s consider how you may allow the user of <code class="docutils literal notranslate"><span class="pre">bmi_age</span></code> to utilize this program on a dataset with any variable name</p></li>
@@ -3510,7 +3537,7 @@ putdocx<span class="k"> save</span> doc3<span class="m">.</span>docx,<span class
 <p>Write a <code class="docutils literal notranslate"><span class="pre">.do</span> <span class="pre">file</span></code> which imports data from <a class="reference external" href="https://jhustata.github.io/book/_downloads/884b9e06eb29f89b1b87da4eab39775d/hw1.txt">hw1.txt</a> and performs the tasks described below. Name it <code class="docutils literal notranslate"><span class="pre">hw3.lastname.firstname.do</span></code> and it should create a log file called <code class="docutils literal notranslate"><span class="pre">hw1.lastname.firstname.log</span></code>. Please avoid some of the common mistakes we observed in your HW1. While you didn’t drop points for those mistakes as beginners, you’ll drop some points in HW3 if you repeat these mistakes. Make sure your log file displays only the output of interest. But do not submit your log files as part of the assignment.</p>
 <p>Evaluation will be based on the log file produced when we run your script on our machines.</p>
 <p>Codebook</p>
-<table class="colwidths-auto table">
+<div class="pst-scrollable-table-container"><table class="colwidths-auto table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Variable</p></th>
 <th class="head"><p>Description</p></th>
@@ -3556,6 +3583,7 @@ putdocx<span class="k"> save</span> doc3<span class="m">.</span>docx,<span class
 </tr>
 </tbody>
 </table>
+</div>
 <p>This dataset contains simulated data on registrants for the deceased donor kidney waitlist.</p>
 <p><strong>Question 1.</strong> Create a new numeric variable named <code class="docutils literal notranslate"><span class="pre">htn</span></code>, which takes a value of 1 if the variable <code class="docutils literal notranslate"><span class="pre">dx</span></code> has a value of <code class="docutils literal notranslate"><span class="pre">4=Hypertensive</span></code>, and <code class="docutils literal notranslate"><span class="pre">0</span></code> otherwise. This variable should have value labels, <code class="docutils literal notranslate"><span class="pre">Yes</span></code> for 1 and <code class="docutils literal notranslate"><span class="pre">No</span></code> for 0. (Hint: what is the data type of this new variable? Is it a numeric or a string?) Run <code class="docutils literal notranslate"><span class="pre">tab</span> <span class="pre">htn</span></code> in your assignment do-file so that it would print the following result.</p>
 <div class="highlight-stata notranslate"><div class="highlight"><pre><span></span>        htn |       Freq.       Percent       Cum.
@@ -3650,11 +3678,10 @@ putexcel C3=<span class="s">&quot;XX.X&quot;</span>
 
               
               
-                <footer class="bd-footer-article">
+              
+              
+                <footer class="prev-next-footer d-print-none">
                   
-<div class="footer-article-items footer-article__inner">
-  
-    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="chapter2.html"
@@ -3674,10 +3701,7 @@ putexcel C3=<span class="s">&quot;XX.X&quot;</span>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
-</div></div>
-  
 </div>
-
                 </footer>
               
             </div>
@@ -3685,6 +3709,7 @@ putexcel C3=<span class="s">&quot;XX.X&quot;</span>
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -3830,6 +3855,7 @@ By Abimereki Muzaale & Vincent Jin
   
   <div class="footer-item">
     
+
   <p class="copyright">
     
       © Copyright 2024.
@@ -3856,8 +3882,8 @@ By Abimereki Muzaale & Vincent Jin
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>
